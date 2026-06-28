@@ -356,14 +356,13 @@ exports.onWeeklyScheduleUpdated = functions
           const endMoment = new Date(startDateTime);
           endMoment.setMinutes(endMoment.getMinutes() + durationMinutes);
 
-          try {
-            // Format to YYYY-MM-DDTHH:mm:ss
-            const endDateTime = endMoment.getFullYear() + "-" + 
-                                String(endMoment.getMonth() + 1).padStart(2, '0') + "-" + 
-                                String(endMoment.getDate()).padStart(2, '0') + "T" + 
-                                String(endMoment.getHours()).padStart(2, '0') + ":" + 
-                                String(endMoment.getMinutes()).padStart(2, '0') + ":00";
+          const endDateTime = endMoment.getFullYear() + "-" + 
+                              String(endMoment.getMonth() + 1).padStart(2, '0') + "-" + 
+                              String(endMoment.getDate()).padStart(2, '0') + "T" + 
+                              String(endMoment.getHours()).padStart(2, '0') + ":" + 
+                              String(endMoment.getMinutes()).padStart(2, '0') + ":00";
 
+          try {
             const event = {
               summary: `Reserva: ${b.clientName} (${b.data.serviceType || 'Serviço'})`,
               description: `Cliente: ${b.clientName}\nServiço: ${b.data.serviceType || 'N/A'}\nNotas: ${clientNotes}`,
