@@ -1,0 +1,862 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Client Area · Login &amp; Booking | Paulo Morais</title>
+    <link rel="shortcut icon" type="image/png" href="../images/logo/logo_ios_android.png">
+    <link rel="icon" type="image/png" href="../images/logo/logo_ios_android.png">
+    <meta name="description" content="Access your client area: book personal training or osteopathy sessions, view your history and manage your account. Paulo Morais · Lisbon.">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700;800&family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <!-- Custom Style -->
+    <link rel="stylesheet" href="../css/style.css">
+
+    <!-- SEO Meta Tags -->
+    <link rel="canonical" href="https://pmorais.pt/en/perfil.html">
+    <link rel="alternate" hreflang="pt" href="https://pmorais.pt/perfil.html">
+    <link rel="alternate" hreflang="pt-PT" href="https://pmorais.pt/perfil.html">
+    <link rel="alternate" hreflang="pt-BR" href="https://pmorais.pt/perfil.html">
+    <link rel="alternate" hreflang="en" href="https://pmorais.pt/en/perfil.html">
+    <link rel="alternate" hreflang="en-GB" href="https://pmorais.pt/en/perfil.html">
+    <link rel="alternate" hreflang="x-default" href="https://pmorais.pt/perfil.html">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://pmorais.pt/en/perfil.html">
+    <meta property="og:locale" content="en_GB">
+    <meta property="og:locale:alternate" content="pt_PT">
+    <meta property="og:title" content="Client Area | Login &amp; Booking · Paulo Morais">
+    <meta property="og:description" content="Access your client area: book sessions and view your history. Paulo Morais · Lisbon.">
+    <meta property="og:image" content="https://pmorais.pt/images/logo/paulo_morais-08.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Client Area | Paulo Morais">
+    <meta name="twitter:description" content="Login and book personal training and osteopathy sessions in Lisbon.">
+    <meta name="twitter:image" content="https://pmorais.pt/images/logo/paulo_morais-08.png">
+    
+    <!-- PWA Meta Tags -->
+    <link rel="manifest" href="/manifest.json">
+    <meta name="theme-color" content="#E6AE17">
+    <link rel="apple-touch-icon" href="/images/logo/logo_ios_android.png">
+    
+    <script src="js/lang.js"></script>
+    <script src="js/theme.js"></script>
+</head>
+
+<body class="page-auth">
+    <!-- Preloader -->
+    <div id="preloader">
+        <div class="loader-content">
+            <img src="../images/logo/logo_bw_loading.png" alt="Paulo Morais" class="loader-logo">
+            <div class="shimmer-effect"></div>
+        </div>
+    </div>
+
+    <!-- Sticky Social Bar -->
+    <!-- Social FAB -->
+    <div class="fab-container">
+        <div class="fab-trigger">
+            <i data-lucide="plus"></i>
+        </div>
+        <div class="fab-options">
+            <a href="https://wa.me/351960471537" class="fab-action-btn whatsapp" title="WhatsApp" target="_blank"
+                rel="noopener noreferrer">
+                <i data-lucide="message-circle"></i>
+            </a>
+            <a href="https://www.instagram.com/pt.paulomorais" class="fab-action-btn social-ig" title="Instagram"
+                target="_blank" rel="noopener noreferrer">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-instagram"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg>
+            </a>
+            <a href="mailto:pt@pmorais.pt?subject=Information" class="fab-action-btn email" title="Email">
+                <i data-lucide="mail"></i>
+            </a>
+            <a href="javascript:void(0)" id="lang-toggle" class="fab-action-btn lang-toggle" title="Change Language" onclick="event.preventDefault(); event.stopPropagation(); window.toggleLanguage();">
+                <i data-lucide="globe"></i>
+            </a>
+            <a href="javascript:void(0)" id="theme-toggle" class="fab-action-btn theme-toggle" title="Toggle Theme" onclick="event.preventDefault(); event.stopPropagation(); window.toggleThemeMode();">
+                <i data-lucide="sun-moon"></i>
+            </a>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header id="header">
+        <div class="container header-container">
+            <a href="index.html">
+                <img src="../images/logo/logo_amarelo_alpha.png" alt="Paulo Morais" class="logo-img">
+            </a>
+            <nav class="nav-menu">
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="sobre-mim.html">About Me</a></li>
+                    <li><a href="perfil.html" class="active">Profile</a></li>
+                    <li><a href="osteopatia.html">OSTEOPATHY</a></li>
+                </ul>
+            </nav>
+            <div class="mobile-menu-toggle" aria-label="Abrir menu de navegação" role="button" tabindex="0">
+                <i data-lucide="menu"></i>
+            </div>
+        </div>
+    </header>
+
+    <main class="auth-main">
+        <div class="container auth-card-container fade-in">
+            <!-- Auth Card -->
+            <div id="auth-card" class="auth-card glass-panel shadow-gold-extreme">
+                <div class="auth-card-header">
+                    <h1 class="auth-title-card">Welcome</h1>
+                    <p class="auth-subtitle">Access your personal training area.</p>
+                </div>
+
+                <!-- Tabs -->
+                <div class="auth-tabs">
+                    <button id="tab-login" class="tab-btn active">Log In</button>
+                    <button id="tab-register" class="tab-btn">Create Account</button>
+                </div>
+
+                <div class="auth-form-body">
+                    <!-- Login Form -->
+                    <form id="login-form" class="auth-form active">
+                        <div class="form-group">
+                            <label for="login-email">Email</label>
+                            <input type="email" id="login-email" placeholder="your@email.com" required autocomplete="off">
+                        </div>
+                        <div class="form-group">
+                            <label for="login-password">Password</label>
+                            <input type="password" id="login-password" placeholder="••••••••" required>
+                        </div>
+                        <div class="form-actions">
+                            <label class="checkbox-container">
+                                <input type="checkbox">
+                                <span>Remember me</span>
+                            </label>
+                            <a href="#" class="forgot-link">Forgot password?</a>
+                        </div>
+                        <button type="submit" id="btn-login" class="btn btn-primary btn-block">Enter</button>
+                    </form>
+
+                    <!-- Register Form -->
+                    <form id="register-form" class="auth-form hidden">
+                        <div class="form-group">
+                            <label for="reg-name">Full Name</label>
+                            <input type="text" id="reg-name" placeholder="Your Name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="reg-email">Email</label>
+                            <input type="email" id="reg-email" placeholder="your@email.com" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="reg-password">Password</label>
+                            <input type="password" id="reg-password" placeholder="Minimum 6 characters" required>
+                        </div>
+                        <button type="submit" id="btn-register" class="btn btn-primary btn-block">Create Account</button>
+                    </form>
+
+                </div>
+            </div>
+
+            <!-- Dashboard (Hidden by default) -->
+            <div id="user-dashboard" class="user-dashboard hidden fade-in">
+                <div class="help-icon-trigger" id="dashboard-help-icon" onclick="openRoleTutorial()" title="Help / Tutorial">
+                    <i data-lucide="help-circle"></i>
+                </div>
+                <h2 id="user-welcome">Hello!</h2>
+                
+                <!-- Dashboard Preview (Upcoming Bookings / Agenda) -->
+                <div id="dashboard-preview-section" class="dashboard-preview fade-in hidden" style="margin-top: 25px; border-radius: 20px; padding: 25px;">
+                    <h3 id="preview-title" style="margin-top: 0; margin-bottom: 20px; font-size: 1.1rem; font-weight: 800; color: var(--color-primary); text-transform: uppercase; letter-spacing: 0.1em; display: flex; align-items: center; gap: 10px;">
+                        <i data-lucide="layout-dashboard" style="width: 20px;"></i>
+                        <span>Agenda Summary</span>
+                    </h3>
+                    <div id="preview-list" class="preview-list">
+                        <p class="color-text-dim text-center" style="padding: 10px; margin: 0;">Loading data...</p>
+                    </div>
+                </div>
+
+                <div id="dashboard-main-actions" class="dashboard-actions" style="margin-top: 30px;">
+                    <button id="btn-show-wizard" class="btn btn-primary"><i data-lucide="user-cog"></i> <span class="btn-text">Edit Profile</span></button>
+                    <a href="historico.html" class="btn btn-outline" style="text-decoration: none;"><i data-lucide="calendar"></i> <span class="btn-text">History</span></a>
+                    <button id="btn-start-booking" class="btn btn-primary btn-premium-metallic"><i data-lucide="calendar-plus"></i> <span class="btn-text">New Booking</span></button>
+                    <button id="btn-show-profiles" class="btn btn-primary hidden"><i data-lucide="users"></i> <span class="btn-text">Profiles</span></button>
+                    <button id="btn-show-forms" class="btn btn-primary hidden"><i data-lucide="file-text"></i> <span class="btn-text">Forms</span></button>
+                    <button id="btn-logout" class="btn btn-outline"><i data-lucide="log-out"></i> <span class="btn-text">Log Out</span></button>
+                </div>
+
+                <!-- Client Booking Wizard Section -->
+                <div id="booking-wizard-section" class="calendar-section border-top-fade hidden">
+                    <div class="booking-container">
+                        <div class="help-icon-trigger" onclick="openTutorial()" title="Help / Tutorial">
+                            <i data-lucide="help-circle"></i>
+                        </div>
+                        <div class="breadcrumbs" id="booking-breadcrumbs">
+                            <!-- Injected via JS -->
+                        </div>
+
+                        <!-- Step 1: Category -->
+                        <div id="step-1" class="booking-step active">
+                            <h2 class="step-title" style="display: flex; align-items: center; justify-content: center; gap: 15px;">
+                                <i data-lucide="chevron-left" onclick="closeBookingWizard()" style="cursor:pointer; width: 24px; color: var(--color-text-dim);" title="Back to Lobby"></i>
+                                <span>What type of service are you looking for today?</span>
+                            </h2>
+                            <div class="options-grid">
+                                <div class="option-card" data-category="osteopatia" onclick="selectCategory('osteopatia')">
+                                    <div class="option-icon"><i data-lucide="activity"></i></div>
+                                    <h3 class="option-title">Osteopathy</h3>
+                                    <p class="color-text-dim">Clinical treatment and physical rehabilitation.</p>
+                                </div>
+                                <div class="option-card" data-category="treino" onclick="selectCategory('treino')">
+                                    <div class="option-icon"><i data-lucide="dumbbell"></i></div>
+                                    <h3 class="option-title">Training</h3>
+                                    <p class="color-text-dim">Conditioning, strength, and preventive health.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Step 2: Modality -->
+                        <div id="step-2" class="booking-step">
+                            <h2 class="step-title">How do you prefer to receive this service?</h2>
+                            <div class="options-grid" id="modalities-grid">
+                                <!-- Injected via JS based on Category -->
+                            </div>
+                            <div class="controls">
+                                <button class="btn btn-outline" onclick="goToStep(1)">Back</button>
+                            </div>
+                        </div>
+
+                        <!-- Step 3: Calendar -->
+                        <div id="step-3" class="booking-step">
+                            <h2 class="step-title">Select the Date and Time</h2>
+                            
+                            <div class="calendar-wrapper">
+                                <div class="calendar-header">
+                                    <button class="btn btn-outline" style="padding:5px 15px;" onclick="changeMonth(-1)">&lt;</button>
+                                    <h3 id="calendar-month-year">November 2026</h3>
+                                    <button class="btn btn-outline" style="padding:5px 15px;" onclick="changeMonth(1)">&gt;</button>
+                                </div>
+                                <div class="calendar-grid" id="calendar-days">
+                                    <div class="day-name">Sun</div><div class="day-name">Mon</div><div class="day-name">Tue</div>
+                                    <div class="day-name">Wed</div><div class="day-name">Thu</div><div class="day-name">Fri</div><div class="day-name">Sat</div>
+                                    <!-- Days injected via JS -->
+                                </div>
+                                
+                                <div id="time-slots-container" style="display:none;">
+                                    <h4 style="margin-top:20px; text-align:center;">Available Times</h4>
+                                    <div class="time-slots" id="time-slots">
+                                        <!-- Slots injected via JS -->
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="controls">
+                                <button class="btn btn-outline" onclick="goToStep(2)">Back</button>
+                                <button class="btn btn-primary" id="btn-continue-form" disabled onclick="goToStep(4)">Continue</button>
+                            </div>
+                        </div>
+
+                        <!-- Step 4: Checkout / User Data -->
+                        <div id="step-4" class="booking-step">
+                            <h2 class="step-title">Confirm Booking</h2>
+                            
+                            <div class="cart-summary" id="cart-summary">
+                                <!-- Details injected via JS -->
+                            </div>
+
+                            <form id="booking-form" onsubmit="submitBooking(event)">
+                                <div class="form-group">
+                                    <label>Additional notes (Optional)</label>
+                                    <textarea class="form-control" id="b_notes" rows="3" placeholder="Any observations for this session?"></textarea>
+                                </div>
+                                
+                                <div class="controls">
+                                    <button type="button" class="btn btn-outline" onclick="goToStep(3)">Back</button>
+                                    <button type="submit" class="btn btn-primary btn-premium-metallic">Confirm Booking</button>
+                                </div>
+                            </form>
+                        </div>
+                        
+                        <!-- Step 5: Success -->
+                        <div id="step-5" class="booking-step text-center">
+                            <div style="color: var(--color-primary); margin-bottom: 20px;">
+                                <i data-lucide="check-circle" style="width: 80px; height: 80px; margin:0 auto;"></i>
+                            </div>
+                            <h2 class="step-title">Booking Confirmed!</h2>
+                            <p>We added this session to your History.</p>
+                            
+                            <div id="calendar-sync-container" style="margin-top: 30px; display: flex; flex-direction: column; gap: 15px; align-items: center;">
+                                <!-- Calendar buttons injected by JS -->
+                            </div>
+
+                            <div style="margin-top:40px;">
+                                <button onclick="window.location.reload()" class="btn btn-outline">Back to Lobby</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Admin Global Agenda Section -->
+                <div id="global-agenda-section" class="calendar-section admin-mode border-top-fade hidden">
+                    <div class="booking-container" style="max-width: 1000px;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                            <h2 class="step-title" style="margin: 0;">Global Agenda</h2>
+                            <button onclick="window.closeGlobalAgenda()" class="btn btn-outline" style="padding: 5px 15px;">
+                                <i data-lucide="arrow-left"></i> Back to Lobby
+                            </button>
+                        </div>
+                        <div class="calendar-wrapper">
+                            <div class="calendar-header">
+                                <button class="btn btn-outline" style="padding:5px 15px;" onclick="window.changeGlobalWeek(-1)">&lt;</button>
+                                <h3 class="current-week"></h3>
+                                <button class="btn btn-outline" style="padding:5px 15px;" onclick="window.changeGlobalWeek(1)">&gt;</button>
+                            </div>
+                            <div class="calendar-legend" id="admin-user-legend">
+                                <!-- Users list populated via JS -->
+                            </div>
+                            <div class="calendar-grid" id="admin-weekly-grid">
+                                <!-- Admin grid injected via JS -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Admin Calendar Section (Intuitive Publisher) -->
+                <div id="admin-calendar-section" class="calendar-section admin-mode border-top-fade hidden">
+                    <div class="booking-container">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; position: relative;">
+                            <h2 class="step-title" style="margin: 0;">Agenda Management</h2>
+                            <div style="display: flex; align-items: center; gap: 20px;">
+                                <div onclick="openAdminTutorial()" title="Ajuda / Tutorial" style="cursor: pointer; color: var(--color-text-dim); opacity: 0.6; transition: all 0.3s; display: flex; align-items: center;" onmouseover="this.style.opacity='1'; this.style.color='var(--color-primary)'" onmouseout="this.style.opacity='0.6'; this.style.color='var(--color-text-dim)'">
+                                    <i data-lucide="help-circle" style="width: 22px;"></i>
+                                </div>
+                                <button onclick="window.closeBookingWizard()" class="btn btn-outline" style="padding: 5px 15px;">
+                                    <i data-lucide="arrow-left"></i> Back to Lobby
+                                </button>
+                            </div>
+                        </div>
+                        <div style="display: flex; justify-content: flex-end; margin-bottom: 20px;">
+                            <button id="btn-resend-broadcast" onclick="if(window.resendWeeklyBroadcast) window.resendWeeklyBroadcast(currentLoadedWeekId)" class="btn btn-outline" style="padding: 5px 15px; font-size: 13px; opacity: 0.8; display: none;">
+                                <i data-lucide="send" style="width: 16px; height: 16px;"></i> Resend Agenda Notification
+                            </button>
+                        </div>
+                        <p class="text-center color-text-dim" style="margin-bottom: 30px;">
+                            Click the days and times you wish to <strong>BLOCK</strong> (mark as unavailable). The agenda is generated by default.
+                        </p>
+
+                        <!-- Step 2: The Calendar Grid -->
+                        <div id="admin-calendar-grid-wrapper" style="transition: all 0.3s;">
+                            <div class="calendar-wrapper">
+                                <div class="calendar-header">
+                                    <button class="btn btn-outline" style="padding:5px 15px;" onclick="window.changeAdminWeek(-1)">&lt;</button>
+                                    <h3 id="admin-week-label">1 Nov - 7 Nov 2026</h3>
+                                    <button class="btn btn-outline" style="padding:5px 15px;" onclick="window.changeAdminWeek(1)">&gt;</button>
+                                </div>
+                                <div class="calendar-grid" id="admin-calendar-days">
+                                    <!-- Injected via JS -->
+                                </div>
+                                
+                                <div id="admin-time-slots-container" style="display:none;">
+                                    <h4 style="margin-top:20px; text-align:center;">Select Times to Block on <span id="admin-selected-day-label"></span></h4>
+                                    <div class="time-slots" id="admin-time-slots">
+                                        <!-- Slots injected via JS -->
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="controls" style="justify-content: center; gap: 15px; flex-wrap: wrap;">
+                                <button class="btn btn-outline" id="btn-block-all-day" style="display: none;" onclick="window.blockAllDay()">
+                                    <i data-lucide="lock"></i> Block all day
+                                </button>
+                                <button class="btn btn-outline" id="btn-clear-blocks" style="display: none;" onclick="window.clearAdminDay()">
+                                    <i data-lucide="trash-2"></i> Clear Day's Blocks
+                                </button>
+                                <button id="btn-publish-week" class="btn btn-primary btn-premium-metallic" style="display: none;" onclick="window.publishAdminWeek()">
+                                    <i data-lucide="send"></i> Publish
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Profile Wizard (Hidden by default) -->
+                <div id="profile-wizard" class="profile-wizard hidden fade-in auth-card-container" style="margin-top: 40px; padding: 0;">
+                    <div class="auth-card glass-panel shadow-gold-extreme" style="max-width: 800px; padding: clamp(30px, 5vw, 60px); text-align: left; width: 100%;">
+                        <div class="auth-card-header" style="text-align: center; margin-bottom: 40px;">
+                            <h3 class="auth-title-card" style="font-size: clamp(1.8rem, 4vw, 2.4rem); margin-bottom: 15px;">Your Health Profile</h3>
+                            <p class="auth-subtitle wizard-desc" style="margin-bottom: 0; font-size: 1rem;">Complete these details so Paulo can personalize your training.</p>
+                        </div>
+
+                        <form id="profile-form" class="auth-form">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="prof-name">Name</label>
+                                <input type="text" id="prof-name" readonly>
+                            </div>
+                            <div class="form-group">
+                                <label for="prof-email">Email</label>
+                                <input type="email" id="prof-email" readonly>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="prof-birthdate">Date of Birth * <span id="prof-age-display" class="age-badge"></span></label>
+                                <input type="date" id="prof-birthdate" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="prof-phone">Phone</label>
+                                <input type="tel" id="prof-phone" value="+351 " placeholder="+351 912 345 678">
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="prof-weight">Weight (kg) *</label>
+                                <input type="number" step="0.1" id="prof-weight" placeholder="Ex: 75.5" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="prof-height">Height (cm) *</label>
+                                <input type="number" id="prof-height" placeholder="Ex: 175" required>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="prof-fat">Body Fat (%)</label>
+                                <input type="number" step="0.1" id="prof-fat" placeholder="Ex: 15.2">
+                            </div>
+                            <div class="form-group">
+                                <label for="prof-muscle">Muscle Mass (kg)</label>
+                                <input type="number" step="0.1" id="prof-muscle" placeholder="Ex: 38.0">
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="prof-health-issues">Health Issues *</label>
+                                <select id="prof-health-issues" required>
+                                    <option value="" disabled selected>Select...</option>
+                                    <option value="não">No</option>
+                                    <option value="sim">Yes</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="prof-physical-limits">Physical Limitations *</label>
+                                <select id="prof-physical-limits" required>
+                                    <option value="" disabled selected>Select...</option>
+                                    <option value="não">No</option>
+                                    <option value="sim">Yes</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="prof-obs" id="label-obs">Observations</label>
+                            <textarea id="prof-obs" placeholder="Describe health issues or limitations, if applicable..."></textarea>
+                            <small id="obs-hint" class="form-hint hidden">Please describe your health problems or physical limitations.</small>
+                        </div>
+
+                        <div style="margin-bottom: 15px; display: flex; align-items: center; gap: 12px; padding: 15px; border-radius: 15px; background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.05);">
+                            <input type="checkbox" id="prof-tutorial-seen" style="width: 20px; height: 20px; margin: 0; cursor: pointer; accent-color: #E6AE17;">
+                            <label for="prof-tutorial-seen" style="margin: 0; font-weight: 500; font-size: 0.95rem; cursor: pointer; display: inline; color: var(--color-text);">I have completed the booking tutorial</label>
+                        </div>
+                        <div style="margin-bottom: 30px; display: flex; align-items: center; gap: 12px; padding: 15px; border-radius: 15px; background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.05);">
+                            <input type="checkbox" id="pwa-tutorial-seen" style="width: 20px; height: 20px; margin: 0; cursor: pointer; accent-color: #E6AE17;">
+                            <label for="pwa-tutorial-seen" style="margin: 0; font-weight: 500; font-size: 0.95rem; cursor: pointer; display: inline; color: var(--color-text);">I have completed the App tutorial</label>
+                        </div>
+
+                        <div class="wizard-buttons" style="display: flex; gap: 15px; align-items: center; flex-wrap: wrap; margin-top: 30px;">
+                            <button type="submit" id="btn-save-profile" class="btn btn-primary">Save Changes</button>
+                            <button type="button" id="btn-cancel-wizard" class="btn btn-outline">Cancel</button>
+                            <button type="button" id="btn-deactivate-account" class="btn" style="background-color: var(--color-danger, #ef4444); color: white; margin-left: auto;">Deactivate Account</button>
+                        </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Booking Tutorial Onboarding Popup -->
+    <div id="booking-tutorial-overlay" class="booking-tutorial-overlay">
+        <div class="tutorial-card">
+            <button class="tutorial-close-btn" onclick="closeTutorial()" title="Close tutorial">
+                <i data-lucide="x"></i>
+            </button>
+
+            <!-- Step indicators -->
+            <div class="tutorial-indicators" id="tutorial-indicators">
+                <!-- Injected via JS -->
+            </div>
+
+            <!-- Slides -->
+            <div class="tutorial-slides-wrapper" id="tutorial-slides-wrapper">
+                <!-- Slide 1: Welcome / Service Selection -->
+                <div class="tutorial-slide active" data-slide="0">
+                    <div style="text-align:center;">
+                        <div class="tutorial-slide-icon">
+                            <i data-lucide="sparkles"></i>
+                        </div>
+                        <span class="tutorial-step-badge">Welcome</span>
+                        <h3 class="tutorial-slide-title">How to make your Booking</h3>
+                        <p class="tutorial-slide-desc">
+                            We will guide you step by step through the booking process. It's quick and simple!<br><br>
+                            Start by <strong>choosing the type of service</strong> you are looking for: <strong>Osteopathy</strong> or <strong>Training</strong>.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Slide 2: Choose Day -->
+                <div class="tutorial-slide" data-slide="1">
+                    <div style="text-align:center;">
+                        <div class="tutorial-slide-icon">
+                            <i data-lucide="calendar-days"></i>
+                        </div>
+                        <span class="tutorial-step-badge">Step 1</span>
+                        <h3 class="tutorial-slide-title">Select the Day</h3>
+                        <p class="tutorial-slide-desc">
+                            After choosing the service, you will see a <strong>monthly calendar</strong>. Tap the day you want for your session.<br><br>
+                            Available days will appear in white, and past days or Sundays will be disabled.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Slide 3: Choose Hour -->
+                <div class="tutorial-slide" data-slide="2">
+                    <div style="text-align:center;">
+                        <div class="tutorial-slide-icon">
+                            <i data-lucide="clock"></i>
+                        </div>
+                        <span class="tutorial-step-badge">Step 2</span>
+                        <h3 class="tutorial-slide-title">Select the Time</h3>
+                        <p class="tutorial-slide-desc">
+                            Upon selecting a day, the <strong>available times</strong> for that day will appear. Tap the time that suits you to select it.
+                        </p>
+                        <div class="tutorial-tip">
+                            <i data-lucide="info"></i>
+                            <span>Times blocked by Paulo will not appear. You will only see those that are truly free.</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Slide 4: Multi-selection -->
+                <div class="tutorial-slide" data-slide="3">
+                    <div style="text-align:center;">
+                        <div class="tutorial-slide-icon">
+                            <i data-lucide="calendar-plus"></i>
+                        </div>
+                        <span class="tutorial-step-badge">Step 3</span>
+                        <h3 class="tutorial-slide-title">Multiple Sessions</h3>
+                        <p class="tutorial-slide-desc">
+                            You can book <strong>several sessions at once</strong>! Select different days and times — each selection is automatically saved.
+                        </p>
+                        <div class="tutorial-tip">
+                            <i data-lucide="lightbulb"></i>
+                            <span>Days with selected sessions are marked in gold on the calendar. You can tap a time again to deselect it.</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Slide 5: Notes + Confirmation -->
+                <div class="tutorial-slide" data-slide="4">
+                    <div style="text-align:center;">
+                        <div class="tutorial-slide-icon">
+                            <i data-lucide="file-check"></i>
+                        </div>
+                        <span class="tutorial-step-badge">Step 4</span>
+                        <h3 class="tutorial-slide-title">Confirm Booking</h3>
+                        <p class="tutorial-slide-desc">
+                            Before confirming, you will see a <strong>summary</strong> of all selected sessions. You can also add an <strong>optional note</strong> with observations for Paulo.
+                        </p>
+                        <div class="tutorial-tip">
+                            <i data-lucide="message-square"></i>
+                            <span>Use the notes to inform about injuries, preferences, or any relevant detail for the session.</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Slide 6: After Confirmation -->
+                <div class="tutorial-slide" data-slide="5">
+                    <div style="text-align:center;">
+                        <div class="tutorial-slide-icon">
+                            <i data-lucide="check-circle"></i>
+                        </div>
+                        <span class="tutorial-step-badge">Step 5</span>
+                        <h3 class="tutorial-slide-title">Booking Confirmed!</h3>
+                        <p class="tutorial-slide-desc">
+                            After confirming, you will see a success message. Click <strong>"Back to Lobby"</strong> to return to the main dashboard.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Slide 7: Dashboard Overview -->
+                <div class="tutorial-slide" data-slide="6">
+                    <div style="text-align:center;">
+                        <div class="tutorial-slide-icon">
+                            <i data-lucide="layout-dashboard"></i>
+                        </div>
+                        <span class="tutorial-step-badge">Dashboard</span>
+                        <h3 class="tutorial-slide-title">Manage your Bookings</h3>
+                        <p class="tutorial-slide-desc">
+                            In the <strong>Lobby</strong> you will find your <strong>Dashboard</strong> with all active bookings. From there you can <strong>cancel</strong> any session if necessary.
+                        </p>
+                        <div class="tutorial-tip">
+                            <i data-lucide="shield-check"></i>
+                            <span>Paulo is automatically notified about all bookings and cancellations.</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Navigation -->
+            <div class="tutorial-nav" id="tutorial-nav">
+                <button class="tutorial-btn tutorial-btn-skip" onclick="closeTutorial()">Skip</button>
+                <button class="tutorial-btn tutorial-btn-next" id="tutorial-btn-next" onclick="nextTutorialSlide()">
+                    Next <i data-lucide="arrow-right"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Group Booking Popup (Admin) -->
+    <div id="group-booking-popup" class="group-booking-popup">
+        <div class="group-booking-card">
+            <h4 id="popup-title">Treino Online</h4>
+            <p class="popup-subtitle" id="popup-subtitle"></p>
+            <div class="user-list" id="popup-user-list"></div>
+            <button class="close-popup-btn" id="popup-close-btn">Close</button>
+        </div>
+    </div>
+
+    <!-- Admin Tutorial Onboarding Popup -->
+    <div id="admin-tutorial-overlay" class="booking-tutorial-overlay">
+        <div class="tutorial-card">
+            <button class="tutorial-close-btn" onclick="closeAdminTutorial()" title="Close tutorial">
+                <i data-lucide="x"></i>
+            </button>
+
+            <!-- Step indicators -->
+            <div class="tutorial-indicators" id="admin-tutorial-indicators">
+                <!-- Injected via JS -->
+            </div>
+
+            <!-- Slides -->
+            <div class="tutorial-slides-wrapper" id="admin-tutorial-slides-wrapper">
+
+                <!-- Slide 1: Welcome / Lobby Overview -->
+                <div class="admin-tutorial-slide active" data-slide="0">
+                    <div style="text-align:center;">
+                        <div class="tutorial-slide-icon">
+                            <i data-lucide="crown"></i>
+                        </div>
+                        <span class="tutorial-step-badge">Dashboard Admin</span>
+                        <h3 class="tutorial-slide-title">Welcome to your Dashboard</h3>
+                        <p class="tutorial-slide-desc">
+                            Here you manage your entire operation. In the <strong>Lobby</strong> you will see a summary with the <strong>upcoming clients</strong> scheduled and have quick access to all tools.<br><br>
+                            We will guide you through the main features.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Slide 2: Agenda Management -->
+                <div class="admin-tutorial-slide" data-slide="1">
+                    <div style="text-align:center;">
+                        <div class="tutorial-slide-icon">
+                            <i data-lucide="calendar-cog"></i>
+                        </div>
+                        <span class="tutorial-step-badge">Step 1</span>
+                        <h3 class="tutorial-slide-title">Agenda Management</h3>
+                        <p class="tutorial-slide-desc">
+                            Tap <strong>"Agenda Management"</strong> in the Lobby to open the weekly control panel.<br><br>
+                            The agenda works <strong>by weeks</strong>. Use the arrows <strong>&lt;</strong> and <strong>&gt;</strong> to navigate between weeks and select the <strong>day</strong> you want to configure.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Slide 3: Bloquear Horários -->
+                <div class="admin-tutorial-slide" data-slide="2">
+                    <div style="text-align:center;">
+                        <div class="tutorial-slide-icon">
+                            <i data-lucide="lock"></i>
+                        </div>
+                        <span class="tutorial-step-badge">Step 2</span>
+                        <h3 class="tutorial-slide-title">Block Times</h3>
+                        <p class="tutorial-slide-desc">
+                            Upon selecting a day, the <strong>times from 06h to 20h</strong> will appear. Tap each time you wish to <strong>block</strong> (mark as unavailable).<br><br>
+                            You can block <strong>multiple days and times</strong> at once before publishing.
+                        </p>
+                        <div class="tutorial-tip">
+                            <i data-lucide="mouse-pointer-click"></i>
+                            <span>To remove a block, simply <strong>click again</strong> on the blocked time. The block will be reversed.</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Slide 4: Ferramentas Rápidas -->
+                <div class="admin-tutorial-slide" data-slide="3">
+                    <div style="text-align:center;">
+                        <div class="tutorial-slide-icon">
+                            <i data-lucide="zap"></i>
+                        </div>
+                        <span class="tutorial-step-badge">Step 3</span>
+                        <h3 class="tutorial-slide-title">Quick Tools</h3>
+                        <p class="tutorial-slide-desc">
+                            Two quick action buttons facilitate daily management:
+                        </p>
+                        <div class="tutorial-tip">
+                            <i data-lucide="lock"></i>
+                            <span><strong>Block entire day</strong> — Marks all times of a day as unavailable with one click.</span>
+                        </div>
+                        <div class="tutorial-tip" style="margin-top: 10px;">
+                            <i data-lucide="trash-2"></i>
+                            <span><strong>Clear Day Blocks</strong> — Removes all blocks of an already published day. Then, publish again to apply.</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Slide 5: Publicar Agenda -->
+                <div class="admin-tutorial-slide" data-slide="4">
+                    <div style="text-align:center;">
+                        <div class="tutorial-slide-icon">
+                            <i data-lucide="send"></i>
+                        </div>
+                        <span class="tutorial-step-badge">Step 4</span>
+                        <h3 class="tutorial-slide-title">Publish the Agenda</h3>
+                        <p class="tutorial-slide-desc">
+                            When you finish configuring the blocks, tap <strong>"Publish Week Agenda"</strong>. The entire week will be <strong>open for client bookings</strong>.
+                        </p>
+                        <div class="tutorial-tip">
+                            <i data-lucide="mail"></i>
+                            <span>Upon publishing, all students will receive an <strong>automatic email</strong> informing them that the week is available for booking.</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Slide 6: Perfis & Formulários -->
+                <div class="admin-tutorial-slide" data-slide="5">
+                    <div style="text-align:center;">
+                        <div class="tutorial-slide-icon">
+                            <i data-lucide="users"></i>
+                        </div>
+                        <span class="tutorial-step-badge">Step 5</span>
+                        <h3 class="tutorial-slide-title">Profiles and Forms</h3>
+                        <p class="tutorial-slide-desc">
+                            In the Lobby you have two additional buttons:
+                        </p>
+                        <div class="tutorial-tip">
+                            <i data-lucide="user-check"></i>
+                            <span><strong>Profiles</strong> — View the complete file of each student: health card, personal details, and individual booking history.</span>
+                        </div>
+                        <div class="tutorial-tip" style="margin-top: 10px;">
+                            <i data-lucide="file-text"></i>
+                            <span><strong>Forms</strong> — Consult the contact forms sent by visitors from the Osteopathy page.</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Slide 7: History -->
+                <div class="admin-tutorial-slide" data-slide="6">
+                    <div style="text-align:center;">
+                        <div class="tutorial-slide-icon">
+                            <i data-lucide="history"></i>
+                        </div>
+                        <span class="tutorial-step-badge">Step 6</span>
+                        <h3 class="tutorial-slide-title">Global History</h3>
+                        <p class="tutorial-slide-desc">
+                            Tap <strong>"History"</strong> to access the complete record of <strong>all bookings</strong> from all clients in one place.<br><br>
+                            You can consult past, active, and cancelled bookings.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Slide 8: Notificações -->
+                <div class="admin-tutorial-slide" data-slide="7">
+                    <div style="text-align:center;">
+                        <div class="tutorial-slide-icon">
+                            <i data-lucide="bell-ring"></i>
+                        </div>
+                        <span class="tutorial-step-badge">Notifications</span>
+                        <h3 class="tutorial-slide-title">Automatic Emails</h3>
+                        <p class="tutorial-slide-desc">
+                            Whenever a client <strong>makes a booking</strong> or <strong>cancels a session</strong>, you will automatically receive a <strong>notification email</strong> with all the details.
+                        </p>
+                        <div class="tutorial-tip">
+                            <i data-lucide="shield-check"></i>
+                            <span>You do not need to check the agenda constantly. The system always keeps you updated in real time via email.</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Navigation -->
+            <div class="tutorial-nav" id="admin-tutorial-nav">
+                <button class="tutorial-btn tutorial-btn-skip" onclick="closeAdminTutorial()">Skip</button>
+                <button class="tutorial-btn tutorial-btn-next" onclick="nextAdminTutorialSlide()">
+                    Next <i data-lucide="arrow-right"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Simple Footer -->
+    <footer>
+        <div class="footer-container-new">
+            <div class="footer-col branding-col">
+                <a href="index.html" class="footer-logo-link">
+                    <img src="../images/logo/logo_amarelo_alpha.png" alt="Paulo Morais" class="footer-logo-elysium">
+                </a>
+                <p class="brand-desc">Paulo Morais<br>Lisboa, Portugal</p>
+                <p class="brand-sub">The true personal training that adapts to your life.</p>
+            </div>
+
+            <div class="footer-col">
+                <ul class="footer-links-list">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="sobre-mim.html">About Me</a></li>
+                    <li><a href="osteopatia.html">Osteopathy</a></li>
+                    <li><a href="perfil.html">Profile</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <ul class="footer-links-list">
+                    <li>
+                        <a href="https://www.livroreclamacoes.pt/pedido/reclamacao" target="_blank"
+                            rel="noopener noreferrer" class="complaint-book-elysium">
+                            <img src="../images/livro-de-reclamacoes.png" alt="Livro de Reclamações">
+                        </a>
+                    </li>
+                    <li><a href="politica-privacidade.html">Privacy Policy</a></li>
+                    <li><a href="termos-e-condicoes.html">Terms and Conditions</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <ul class="footer-links-list social-text-links">
+                    <li><a href="https://www.instagram.com/pt.paulomorais" target="_blank"
+                            rel="noopener noreferrer">Instagram</a>
+                    </li>
+                    <li><a href="https://wa.me/351960471537" target="_blank" rel="noopener noreferrer">WhatsApp</a></li>
+                    <li><a href="mailto:pt@pmorais.pt?subject=Information">Email</a></li>
+                    <li><a href="osteopatia.html#contacto">Get in touch with us</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer-bar-elysium">
+            <div class="crafted-text"><a href="https://elysiumdr.eu" target="_blank" rel="noopener noreferrer">Developed by Elysium λ Development & Research.</a></div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="js/agendamento.js"></script>
+    <script src="js/script.js"></script>
+    <script type="module" src="js/auth.js"></script>
+</body>
+
+</html>
