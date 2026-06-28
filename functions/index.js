@@ -297,13 +297,19 @@ exports.onWeeklyScheduleUpdated = functions
 
       if (isPersonalCanc || isGroupCanc) {
         let name = beforeSlot.bookedName;
-        if (isGroupCanc && !name) {
+        let clientUid = beforeSlot.bookedBy;
+        if (isGroupCanc) {
           const beforeUsers = beforeSlot.bookedUsers || [];
           const afterUsers = afterSlot.bookedUsers || [];
           const leaver = beforeUsers.find(bu => !afterUsers.some(au => au.uid === bu.uid));
-          name = leaver ? leaver.name : "Aluno";
+          if (leaver) {
+             name = leaver.name;
+             clientUid = leaver.uid;
+          } else if (!name) {
+             name = "Aluno";
+          }
         }
-        newCancellations.push({ slotId, data: beforeSlot, clientName: name });
+        newCancellations.push({ slotId, data: beforeSlot, clientName: name, clientUid });
       }
     }
 
@@ -570,6 +576,51 @@ exports.onWeeklyScheduleUpdated = functions
         })
       };
       await transporter.sendMail(mailOptions).catch(console.error);
+
+      // --- Send Client Cancellation Email ---
+      const clientUid = newCancellations[0].clientUid;
+      if (clientUid) {
+        try {
+          const clientSnap = await admin.firestore().collection("users").doc(clientUid).get();
+          if (clientSnap.exists) {
+            const clientData = clientSnap.data();
+            if (clientData.email && clientData.unsubscribed !== true) {
+              const clientBodyHtml = `
+                <p style="margin:0 0 20px 0;">Olá ${mainClientName.split(' ')[0]},</p>
+                <p style="margin:0 0 20px 0;">A sua reserva foi <strong>cancelada</strong> com sucesso.</p>
+                <p style="margin:0 0 8px 0;"><strong>Resumo das Sessões Canceladas:</strong></p>
+                <ul style="margin:0 0 20px 0; padding-left:18px;">${sessionItemsHtml}</ul>
+                <p style="margin:0 0 20px 0;">Se foi um engano ou desejar reagendar, por favor, visite a sua área de cliente.</p>
+              `;
+
+              const token = Buffer.from(clientData.email).toString("base64");
+              const unsubUrl = `https://pmorais.pt/desinscrever.html?token=${encodeURIComponent(token)}`;
+
+              const clientMailOptions = {
+                from: `"Paulo Morais" <${emailUser.value()}>`,
+                to: clientData.email,
+                subject: `Reserva Cancelada`,
+                html: buildEmailHtml({
+                  title: "Reserva Cancelada",
+                  bodyHtml: clientBodyHtml,
+                  ctaText: "Aceder à minha Conta",
+                  ctaUrl: "https://pmorais.pt/perfil.html",
+                  unsubscribeUrl: unsubUrl
+                }),
+                headers: {
+                  "List-Unsubscribe": `<${unsubUrl}>`,
+                  "List-Unsubscribe-Post": "List-Unsubscribe=One-Click"
+                }
+              };
+
+              await transporter.sendMail(clientMailOptions);
+              console.log(`Cancellation email sent to client: ${clientData.email}`);
+            }
+          }
+        } catch (e) {
+          console.error("Error sending client cancellation email:", e);
+        }
+      }
     }
 
     return null;
