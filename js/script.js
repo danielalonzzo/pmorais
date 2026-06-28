@@ -297,38 +297,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // GDPR Cookie Banner
-    const cookieConsent = localStorage.getItem('cookie_consent');
-    if (!cookieConsent) {
-        const banner = document.createElement('div');
-        banner.id = 'cookie-banner';
-        banner.className = 'cookie-banner';
-        banner.innerHTML = `
-            <p>Utilizamos cookies para melhorar a sua experiência e para fins de marketing. Ao continuar, concorda com a nossa <a href="politica-privacidade.html">Política de Privacidade</a>.</p>
-            <div class="cookie-buttons">
-                <button id="accept-cookies" class="btn btn-primary btn-sm">Aceitar</button>
-                <button id="reject-cookies" class="btn btn-primary-black btn-sm" style="border: 1px solid #333;">Rejeitar</button>
-            </div>
-        `;
-        document.body.appendChild(banner);
-
-        // Animation delay
-        setTimeout(() => {
-            banner.classList.add('visible');
-        }, 1000);
-
-        document.getElementById('accept-cookies').addEventListener('click', () => {
-            localStorage.setItem('cookie_consent', 'accepted');
-            banner.classList.remove('visible');
-            setTimeout(() => banner.remove(), 300);
-        });
-
-        document.getElementById('reject-cookies').addEventListener('click', () => {
-            localStorage.setItem('cookie_consent', 'rejected');
-            banner.classList.remove('visible');
-            setTimeout(() => banner.remove(), 300);
-        });
-    }
 
     // --- Social FAB Toggle (Mobile & Tablets) ---
     const fabContainer = document.querySelector('.fab-container');
