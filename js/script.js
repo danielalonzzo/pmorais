@@ -374,3 +374,37 @@ function onPlayerStateChange(event) {
         event.target.playVideo();
     }
 }
+
+// --- LANGUAGE SWITCHER LOGIC ---
+document.addEventListener('DOMContentLoaded', () => {
+    const langSwitcherLinks = document.querySelectorAll('.footer-lang-switcher a');
+    langSwitcherLinks.forEach(link => {
+        link.addEventListener('click', (e) => {
+            e.preventDefault();
+            if (link.classList.contains('active')) return;
+            
+            const targetLang = link.textContent.trim().toLowerCase();
+            const currentPath = window.location.pathname;
+            const isEnPage = currentPath.includes('/en/') || currentPath.endsWith('/en');
+            
+            if (targetLang === 'pt' && isEnPage) {
+                localStorage.setItem('pm_lang_pref', 'pt');
+                let newPath = currentPath.replace(/\/en\//, '/').replace(/\/en$/, '/');
+                if (newPath === '') newPath = '/';
+                window.location.href = newPath + window.location.search + window.location.hash;
+            } else if (targetLang === 'en' && !isEnPage) {
+                localStorage.setItem('pm_lang_pref', 'en');
+                // Insert /en/ before the file name or at the end
+                let pathParts = currentPath.split('/');
+                let lastPart = pathParts.pop();
+                let newPath;
+                if (!lastPart.includes('.html')) {
+                    newPath = currentPath.endsWith('/') ? currentPath + 'en/' : currentPath + '/en/';
+                } else {
+                    newPath = pathParts.join('/') + '/en/' + lastPart;
+                }
+                window.location.href = newPath + window.location.search + window.location.hash;
+            }
+        });
+    });
+});

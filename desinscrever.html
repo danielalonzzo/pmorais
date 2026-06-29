@@ -159,20 +159,23 @@
     </div>
 
     <script>
-        // Get the Cloud Function URL (adjust region if needed)
+        // Get the Cloud Function URL
         const CF_URL = 'https://us-central1-paulo-morais.cloudfunctions.net/handleUnsubscribe';
 
-        function getTokenFromUrl() {
+        function getParamsFromUrl() {
             const params = new URLSearchParams(window.location.search);
-            return params.get('token');
+            return {
+                token: params.get('token'),
+                email: params.get('email')
+            };
         }
 
         async function processUnsubscribe() {
-            const token = getTokenFromUrl();
+            const { token, email } = getParamsFromUrl();
             const btn = document.getElementById('unsub-btn');
             const status = document.getElementById('unsub-status');
 
-            if (!token) {
+            if (!token || !email) {
                 status.className = 'unsub-status error';
                 status.textContent = 'Link inválido. Por favor, utilize o link enviado no seu e-mail.';
                 return;
@@ -184,7 +187,7 @@
             status.innerHTML = '<span class="spinner"></span> A processar...';
 
             try {
-                const resp = await fetch(`${CF_URL}?token=${encodeURIComponent(token)}`, {
+                const resp = await fetch(`${CF_URL}?email=${encodeURIComponent(email)}&token=${encodeURIComponent(token)}`, {
                     method: 'GET',
                     headers: { 'Accept': 'application/json' }
                 });
@@ -209,9 +212,10 @@
             }
         }
 
-        // If token exists, show ready state; if not, show error immediately
+        // If token + email exist, show ready state; if not, show error immediately
         (function () {
-            if (!getTokenFromUrl()) {
+            const { token, email } = getParamsFromUrl();
+            if (!token || !email) {
                 const status = document.getElementById('unsub-status');
                 status.className = 'unsub-status error';
                 status.textContent = 'Link inválido. Por favor, utilize o link recebido no seu e-mail.';

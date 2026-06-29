@@ -100,7 +100,7 @@
                     <li><a href="osteopatia.html">OSTEOPATIA</a></li>
                 </ul>
             </nav>
-            <div class="mobile-menu-toggle" aria-label="Abrir menu de navegação" role="button" tabindex="0">
+            <div class="mobile-menu-toggle" aria-label="Abrir menu de navegação" aria-expanded="false" role="button" tabindex="0">
                 <i data-lucide="menu"></i>
             </div>
         </div>
@@ -140,6 +140,7 @@
                             <a href="#" class="forgot-link">Esqueci-me da palavra-passe</a>
                         </div>
                         <button type="submit" id="btn-login" class="btn btn-primary btn-block">Entrar</button>
+                        <div id="login-error" class="form-error-msg" role="alert" aria-live="polite"></div>
                     </form>
 
                     <!-- Register Form -->
@@ -156,7 +157,22 @@
                             <label for="reg-password">Palavra-passe</label>
                             <input type="password" id="reg-password" placeholder="Mínimo 6 caracteres" required>
                         </div>
+                        <!-- RGPD Art. 9 — Consentimento explícito para dados de saúde -->
+                        <div class="form-group consent-group">
+                            <label class="checkbox-container consent-label">
+                                <input type="checkbox" id="reg-consent-health" required>
+                                <span>Consinto o tratamento dos meus dados de saúde (historial clínico) pela Consciênciavaliativa Unipessoal Lda, nos termos do <strong>Artigo 9.º do RGPD</strong>, para a gestão de sessões de osteopatia e treino personalizado. Consulte a nossa <a href="politica-privacidade.html" target="_blank" rel="noopener">Política de Privacidade</a>.</span>
+                            </label>
+                        </div>
+                        <!-- Termos e Condições -->
+                        <div class="form-group consent-group">
+                            <label class="checkbox-container consent-label">
+                                <input type="checkbox" id="reg-consent-terms" required>
+                                <span>Li e aceito os <a href="termos-e-condicoes.html" target="_blank" rel="noopener">Termos e Condições</a> do serviço.</span>
+                            </label>
+                        </div>
                         <button type="submit" id="btn-register" class="btn btn-primary btn-block">Criar Conta</button>
+                        <div id="register-error" class="form-error-msg" role="alert" aria-live="polite"></div>
                     </form>
 
                 </div>
@@ -829,6 +845,14 @@
                     </li>
                     <li><a href="politica-privacidade.html">Política de Privacidade</a></li>
                     <li><a href="termos-e-condicoes.html">Termos e Condições</a></li>
+                    <li>
+                        <div class="footer-lang-switcher">
+                            <a href="/" class="active" title="Português">PT</a>
+                            <span class="lang-divider">|</span>
+                            <a href="/en/" title="English">EN</a>
+                        </div>
+                    </li>
+                    
                 </ul>
             </div>
 

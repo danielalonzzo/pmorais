@@ -87,23 +87,19 @@ document.addEventListener('DOMContentLoaded', () => {
             if (window.injectPwaInstallButton) window.injectPwaInstallButton();
             if (window.maybeAutoShowPwaTutorial) window.maybeAutoShowPwaTutorial();
             
-            console.log('User signed in:', user.email);
+            console.log('User signed in');
             authCard.classList.add('hidden');
             userDashboard.classList.remove('hidden');
 
             const ADMIN_EMAIL = "pt@pmorais.pt";
             const userEmail = user.email ? user.email.toLowerCase().trim() : "no-email";
-            console.log("Auth State Changed. User:", userEmail);
             const isAdminEmail = userEmail === ADMIN_EMAIL.toLowerCase();
 
             const btnShowProfiles = document.getElementById('btn-show-profiles');
             const btnShowForms = document.getElementById('btn-show-forms');
             const btnStartBooking = document.getElementById('btn-start-booking');
             
-            console.log("Immediate Admin Check:", { userEmail, isAdminEmail });
-
             if (isAdminEmail) {
-                console.log("Admin detected by email (Immediate)");
                 if (btnShowProfiles) {
                     btnShowProfiles.classList.remove('hidden');
                     btnShowProfiles.onclick = () => window.location.href = 'perfis.html';
@@ -121,26 +117,20 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 
-            // Show dashboard IMMEDIATELY - don't wait for async data
             authCard.classList.add('hidden');
             userDashboard.classList.remove('hidden');
             const dashboardActionsImmediate = document.getElementById('dashboard-main-actions');
             if (dashboardActionsImmediate) dashboardActionsImmediate.classList.remove('hidden');
-            console.log('Dashboard shown immediately for:', user.email);
 
-            // For admin: also show preview section immediately so it's visible
-            // even if the async loadUserProfile fails or takes too long
             if (isAdminEmail) {
                 const previewSectionImmediate = document.getElementById('dashboard-preview-section');
                 if (previewSectionImmediate) {
                     previewSectionImmediate.classList.remove('hidden');
-                    console.log('Admin preview section shown immediately');
                 }
             }
 
             // Load user data and wait for it to get the role
             const userData = await loadUserProfile(user);
-            console.log("User data loaded for:", user.email, userData);
 
             const isCompleted = !!userData?.profileCompleted;
 
@@ -163,7 +153,6 @@ document.addEventListener('DOMContentLoaded', () => {
             }
 
             // Initialize Calendar System depending on Role and Profile Completion
-            console.log("Initializing calendar. Profile completed:", isCompleted);
             initCalendarMode(user, db, userData?.role, isCompleted);
         } else {
             // User is signed out
@@ -183,14 +172,24 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // Login Event
+    // ===== Helper: show inline form error =====
+    function showFormError(elementId, message) {
+        const el = document.getElementById(elementId);
+        if (!el) return;
+        el.textContent = message;
+        el.style.display = message ? 'block' : 'none';
+    }
+
+    // Login Event
     if (loginForm) {
         loginForm.addEventListener('submit', async (e) => {
             e.preventDefault();
+            showFormError('login-error', '');
             const email = document.getElementById('login-email').value;
             const password = document.getElementById('login-password').value;
 
             if (!email || !password) {
-                alert("Por favor, preencha o email e a palavra-passe.");
+                showFormError('login-error', 'Por favor, preencha o email e a palavra-passe.');
                 return;
             }
 
@@ -202,8 +201,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
                 await signInWithEmailAndPassword(auth, email, password);
             } catch (error) {
-                console.error("Login error:", error);
-                alert("Erro ao iniciar sessão: " + translateError(error.code));
+                showFormError('login-error', translateError(error.code));
                 const loginBtn = document.getElementById('btn-login');
                 if (loginBtn) {
                     loginBtn.disabled = false;
@@ -217,12 +215,23 @@ document.addEventListener('DOMContentLoaded', () => {
     if (registerForm) {
         registerForm.addEventListener('submit', async (e) => {
             e.preventDefault();
-            const name = document.getElementById('reg-name').value;
-            const email = document.getElementById('reg-email').value;
+            showFormError('register-error', '');
+            const name = document.getElementById('reg-name').value.trim();
+            const email = document.getElementById('reg-email').value.trim();
             const password = document.getElementById('reg-password').value;
+            const consentHealth = document.getElementById('reg-consent-health');
+            const consentTerms = document.getElementById('reg-consent-terms');
 
             if (!name || !email || !password) {
-                alert("Por favor, preencha todos os campos.");
+                showFormError('register-error', 'Por favor, preencha todos os campos.');
+                return;
+            }
+            if (consentHealth && !consentHealth.checked) {
+                showFormError('register-error', 'Deve consentir o tratamento dos seus dados de saúde para continuar (Art. 9º RGPD).');
+                return;
+            }
+            if (consentTerms && !consentTerms.checked) {
+                showFormError('register-error', 'Deve aceitar os Termos e Condições para continuar.');
                 return;
             }
 
@@ -242,10 +251,12 @@ document.addEventListener('DOMContentLoaded', () => {
                     role: "client",
                     profileCompleted: false,
                     isDeactivated: false,
+                    consentHealthData: true,         // RGPD Art. 9 — explicit health data consent
+                    consentHealthDataAt: new Date().toISOString(),
+                    consentTerms: true,
+                    consentTermsAt: new Date().toISOString(),
                     createdAt: new Date().toISOString()
                 });
-
-                console.log("User registered and data saved");
             } catch (error) {
                 if (error.code === 'auth/email-already-in-use') {
                     try {
@@ -257,21 +268,20 @@ document.addEventListener('DOMContentLoaded', () => {
                         
                         if (docSnap.exists() && docSnap.data().isDeactivated) {
                             await updateDoc(docRef, { isDeactivated: false });
-                            alert("A sua conta foi reativada com sucesso! Bem-vindo de volta.");
+                            showFormError('register-error', 'A sua conta foi reativada com sucesso! Será redirecionado...');
                             window.location.reload();
                             return;
                         } else {
                             await signOut(auth);
                             window.isReactivating = false;
-                            alert("Este email já está registado e a conta está ativa. Por favor, inicie sessão no separador 'Iniciar Sessão'.");
+                            showFormError('register-error', 'Este email já está registado e a conta está ativa. Por favor, inicie sessão.');
                         }
                     } catch (loginErr) {
                         window.isReactivating = false;
-                        alert("Este email já está registado. Se for o seu, inicie sessão ou recupere a palavra-passe.");
+                        showFormError('register-error', 'Este email já está registado. Se for o seu, inicie sessão ou recupere a palavra-passe.');
                     }
                 } else {
-                    console.error("Registration error:", error);
-                    alert("Erro ao registar: " + translateError(error.code));
+                    showFormError('register-error', translateError(error.code));
                 }
                 const registerBtn = document.getElementById('btn-register');
                 if (registerBtn) {
@@ -287,9 +297,10 @@ document.addEventListener('DOMContentLoaded', () => {
     if (forgotLink) {
         forgotLink.addEventListener('click', async (e) => {
             e.preventDefault();
+            showFormError('login-error', '');
             const email = document.getElementById('login-email').value;
             if (!email) {
-                alert("Por favor, introduza o seu email no campo de login primeiro.");
+                showFormError('login-error', 'Por favor, introduza o seu email no campo acima primeiro.');
                 return;
             }
 
@@ -299,10 +310,9 @@ document.addEventListener('DOMContentLoaded', () => {
                     handleCodeInApp: false
                 };
                 await sendPasswordResetEmail(auth, email, actionCodeSettings);
-                alert("Email de recuperação enviado! Verifique a sua caixa de entrada.");
+                showFormError('login-error', '✅ Email de recuperação enviado! Verifique a sua caixa de entrada.');
             } catch (error) {
-                console.error("Reset password error:", error);
-                alert("Erro ao enviar email: " + translateError(error.code));
+                showFormError('login-error', 'Erro ao enviar email: ' + translateError(error.code));
             }
         });
     }
