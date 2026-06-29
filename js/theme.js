@@ -645,6 +645,15 @@ if ('serviceWorker' in navigator) {
       .catch(err => {
         console.log('ServiceWorker registration failed: ', err);
       });
+      
+    // Auto-reload when new service worker takes control
+    let refreshing = false;
+    navigator.serviceWorker.addEventListener('controllerchange', () => {
+      if (!refreshing) {
+        refreshing = true;
+        window.location.reload();
+      }
+    });
   });
 }
 

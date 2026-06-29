@@ -1,4 +1,4 @@
-const CACHE_NAME = 'paulo-morais-pwa-v16';
+const CACHE_NAME = 'paulo-morais-pwa-v17';
 const ASSETS_TO_CACHE = [
   '/',
   '/index.html',

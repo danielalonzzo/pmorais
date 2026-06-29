@@ -426,14 +426,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 window.location.href = newPath + window.location.search + window.location.hash;
             } else if (targetLang === 'en' && !isEnPage) {
                 localStorage.setItem('pm_lang_pref', 'en');
-                // Insert /en/ before the file name or at the end
-                let pathParts = currentPath.split('/');
-                let lastPart = pathParts.pop();
                 let newPath;
-                if (!lastPart.includes('.html')) {
-                    newPath = currentPath.endsWith('/') ? currentPath + 'en/' : currentPath + '/en/';
+                if (currentPath === '/' || currentPath === '') {
+                    newPath = '/en/';
                 } else {
-                    newPath = pathParts.join('/') + '/en/' + lastPart;
+                    newPath = '/en' + currentPath;
                 }
                 window.location.href = newPath + window.location.search + window.location.hash;
             }
