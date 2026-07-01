@@ -5,6 +5,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Personal Training &amp; Osteopathy | Paulo Morais · Lisbon</title>
+    <!-- Preloads -->
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700;800&family=Poppins:wght@300;400;500;600;700&display=swap" as="style">
+    <link rel="preload" href="css/style.css" as="style">
+
     <link rel="shortcut icon" type="image/png" href="../images/logo/logo_ios_android.png">
     <link rel="icon" type="image/png" href="../images/logo/logo_ios_android.png">
     <meta name="description"
@@ -13,7 +17,7 @@
     <!-- Patron local font is defined in style.css -->
 
     <!-- Icons (Lucide) -->
-    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://unpkg.com/lucide@latest" defer></script>
 
     <!-- Custom Style -->
     <link rel="stylesheet" href="../css/style.css">
@@ -44,7 +48,7 @@
       "@context": "https://schema.org",
       "@graph": [
         {
-          "@type": ["LocalBusiness", "HealthAndBeautyBusiness"],
+          "@type": ["LocalBusiness", "MedicalBusiness"],
           "@id": "https://pmorais.pt/#business",
           "name": "Paulo Morais - Your Own Workout",
           "description": "Personal training, online training and osteopathy in Lisbon. Integrated approach to health and performance.",
@@ -123,8 +127,8 @@
     <meta name="theme-color" content="#E6AE17">
     <link rel="apple-touch-icon" href="/images/logo/logo_ios_android.png">
     
-    <script src="js/lang.js"></script>
-    <script src="js/theme.js"></script>
+    <script src="js/lang.js" defer></script>
+    <script src="js/theme.js" defer></script>
 </head>
 
 <body>
@@ -237,36 +241,36 @@
             <div class="partners-marquee">
                 <div class="partners-track">
                     <!-- Logos -->
-                    <img src="../images/index/entidades/aim-cancer-center.png" alt="AIM Cancer Center">
-                    <img src="../images/index/entidades/cancer-exercise-training-institute.png" alt="CETI">
-                    <img src="../images/index/entidades/gtf-formacao-profissional.png" alt="GTF">
-                    <img src="../images/index/entidades/universidade-lusofona.png" alt="Universidade Lusófona">
-                    <img src="../images/index/entidades/american-heart-association.png"
+                    <img loading="lazy" src="../images/index/entidades/aim-cancer-center.png" alt="AIM Cancer Center">
+                    <img loading="lazy" src="../images/index/entidades/cancer-exercise-training-institute.png" alt="CETI">
+                    <img loading="lazy" src="../images/index/entidades/gtf-formacao-profissional.png" alt="GTF">
+                    <img loading="lazy" src="../images/index/entidades/universidade-lusofona.png" alt="Universidade Lusófona">
+                    <img loading="lazy" src="../images/index/entidades/american-heart-association.png"
                         alt="American Heart Association">
-                    <img src="../images/index/entidades/escola-superior-de-saude-norte-cruz-vermelha-portuguesa.png"
+                    <img loading="lazy" src="../images/index/entidades/escola-superior-de-saude-norte-cruz-vermelha-portuguesa.png"
                         alt="Cruz Vermelha">
-                    <img src="../images/index/entidades/faculdade-de-medicina-u-lisboa.png"
+                    <img loading="lazy" src="../images/index/entidades/faculdade-de-medicina-u-lisboa.png"
                         alt="Faculdade de Medicina ULisboa">
-                    <img src="../images/index/entidades/gnosies.png" alt="Gnosies">
-                    <img src="../images/index/entidades/institute-of-motion.png" alt="Institute of Motion">
-                    <img src="../images/index/entidades/instituto-superior-de-lisboa-e-vale-do-tejo.png" alt="ISCE">
-                    <img src="../images/index/entidades/livro-de-reclamacoes.png" alt="Livro de Reclamações">
+                    <img loading="lazy" src="../images/index/entidades/gnosies.png" alt="Gnosies">
+                    <img loading="lazy" src="../images/index/entidades/institute-of-motion.png" alt="Institute of Motion">
+                    <img loading="lazy" src="../images/index/entidades/instituto-superior-de-lisboa-e-vale-do-tejo.png" alt="ISCE">
+                    <img loading="lazy" src="../images/index/entidades/livro-de-reclamacoes.png" alt="Livro de Reclamações">
 
                     <!-- Duplicate for infinite scroll effect -->
-                    <img src="../images/index/entidades/aim-cancer-center.png" alt="AIM Cancer Center">
-                    <img src="../images/index/entidades/cancer-exercise-training-institute.png" alt="CETI">
-                    <img src="../images/index/entidades/gtf-formacao-profissional.png" alt="GTF">
-                    <img src="../images/index/entidades/universidade-lusofona.png" alt="Universidade Lusófona">
-                    <img src="../images/index/entidades/american-heart-association.png"
+                    <img loading="lazy" src="../images/index/entidades/aim-cancer-center.png" alt="AIM Cancer Center">
+                    <img loading="lazy" src="../images/index/entidades/cancer-exercise-training-institute.png" alt="CETI">
+                    <img loading="lazy" src="../images/index/entidades/gtf-formacao-profissional.png" alt="GTF">
+                    <img loading="lazy" src="../images/index/entidades/universidade-lusofona.png" alt="Universidade Lusófona">
+                    <img loading="lazy" src="../images/index/entidades/american-heart-association.png"
                         alt="American Heart Association">
-                    <img src="../images/index/entidades/escola-superior-de-saude-norte-cruz-vermelha-portuguesa.png"
+                    <img loading="lazy" src="../images/index/entidades/escola-superior-de-saude-norte-cruz-vermelha-portuguesa.png"
                         alt="Cruz Vermelha">
-                    <img src="../images/index/entidades/faculdade-de-medicina-u-lisboa.png"
+                    <img loading="lazy" src="../images/index/entidades/faculdade-de-medicina-u-lisboa.png"
                         alt="Faculdade de Medicina ULisboa">
-                    <img src="../images/index/entidades/gnosies.png" alt="Gnosies">
-                    <img src="../images/index/entidades/institute-of-motion.png" alt="Institute of Motion">
-                    <img src="../images/index/entidades/instituto-superior-de-lisboa-e-vale-do-tejo.png" alt="ISCE">
-                    <img src="../images/index/entidades/livro-de-reclamacoes.png" alt="Livro de Reclamações">
+                    <img loading="lazy" src="../images/index/entidades/gnosies.png" alt="Gnosies">
+                    <img loading="lazy" src="../images/index/entidades/institute-of-motion.png" alt="Institute of Motion">
+                    <img loading="lazy" src="../images/index/entidades/instituto-superior-de-lisboa-e-vale-do-tejo.png" alt="ISCE">
+                    <img loading="lazy" src="../images/index/entidades/livro-de-reclamacoes.png" alt="Livro de Reclamações">
                 </div>
             </div>
         </section>
@@ -640,7 +644,7 @@
         <div class="footer-container-new">
             <div class="footer-col branding-col">
                 <a href="index.html" class="footer-logo-link">
-                    <img src="../images/logo/logo_amarelo_alpha.png" alt="Paulo Morais" class="footer-logo-elysium">
+                    <img loading="lazy" src="../images/logo/logo_amarelo_alpha.png" alt="Paulo Morais" class="footer-logo-elysium">
                 </a>
                 <p class="brand-desc">Paulo Morais<br>Lisboa, Portugal</p>
                 <p class="brand-sub">The true personal training that adapts to your life.</p>
@@ -660,7 +664,7 @@
                     <li>
                         <a href="https://www.livroreclamacoes.pt/pedido/reclamacao" target="_blank"
                             rel="noopener noreferrer" class="complaint-book-elysium">
-                            <img src="../images/livro-de-reclamacoes.png" alt="Livro de Reclamações">
+                            <img loading="lazy" src="../images/livro-de-reclamacoes.png" alt="Livro de Reclamações">
                         </a>
                     </li>
                     <li><a href="politica-privacidade.html">Privacy Policy</a></li>
@@ -694,7 +698,7 @@
     </footer>
 
     <!-- Scripts -->
-    <script src="js/script.js"></script>
+    <script src="js/script.js" defer></script>
 </body>
 
 </html>

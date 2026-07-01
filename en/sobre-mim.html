@@ -5,6 +5,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>About Paulo Morais · Personal Trainer &amp; Osteopath Lisbon | 20+ Years</title>
+    <!-- Preloads -->
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700;800&family=Poppins:wght@300;400;500;600;700&display=swap" as="style">
+    <link rel="preload" href="css/style.css" as="style">
+
     <link rel="shortcut icon" type="image/png" href="../images/logo/logo_ios_android.png">
     <link rel="icon" type="image/png" href="../images/logo/logo_ios_android.png">
     <meta name="description"
@@ -18,7 +22,7 @@
         rel="stylesheet">
 
     <!-- Icons (Lucide) -->
-    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://unpkg.com/lucide@latest" defer></script>
 
     <!-- Custom Style -->
     <link rel="stylesheet" href="../css/style.css">
@@ -66,8 +70,8 @@
       ]
     }
     </script>
-    <script src="js/lang.js"></script>
-    <script src="js/theme.js"></script>
+    <script src="js/lang.js" defer></script>
+    <script src="js/theme.js" defer></script>
 </head>
 
 <body class="page-about">
@@ -142,7 +146,7 @@
                     <div class="about-split-left">
                         <div class="about-photo-ig-wrapper">
                             <a href="https://www.instagram.com/pt.paulomorais/" target="_blank" rel="noopener noreferrer" class="about-hero-photo shadow-silver ig-photo-link">
-                                <img src="../images/sobre-mim/paulo-morais.png" alt="Paulo Morais">
+                                <img loading="lazy" src="../images/sobre-mim/paulo-morais.png" alt="Paulo Morais">
                                 <div class="ig-feed-overlay">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg>
                                 </div>
@@ -203,17 +207,17 @@
                     <h2 class="gallery-label">Paulo:</h2>
                     <div class="gallery-grid">
                         <div class="gallery-item">
-                            <img src="../images/sobre-mim/o-paulo-1.jpg" alt="O Paulo 1">
+                            <img loading="lazy" src="../images/sobre-mim/o-paulo-1.jpg" alt="O Paulo 1">
                         </div>
                         <div class="gallery-item">
-                            <img src="../images/sobre-mim/o-paulo-2.jpg" alt="O Paulo 2">
+                            <img loading="lazy" src="../images/sobre-mim/o-paulo-2.jpg" alt="O Paulo 2">
                         </div>
                         <div class="gallery-item">
-                            <img src="../images/sobre-mim/o-paulo-3.jpg" alt="O Paulo 3">
+                            <img loading="lazy" src="../images/sobre-mim/o-paulo-3.jpg" alt="O Paulo 3">
                         </div>
                         <!-- Using duplicate of 1 for the 4th slot to maintain grid balance, or user can provide more -->
                         <div class="gallery-item">
-                            <img src="../images/sobre-mim/o-paulo-4.jpg" alt="Paulo Morais">
+                            <img loading="lazy" src="../images/sobre-mim/o-paulo-4.jpg" alt="Paulo Morais">
                         </div>
                     </div>
                 </div>
@@ -228,7 +232,7 @@
         <div class="footer-container-new">
             <div class="footer-col branding-col">
                 <a href="index.html" class="footer-logo-link">
-                    <img src="../images/logo/logo_amarelo_alpha.png" alt="Paulo Morais" class="footer-logo-elysium">
+                    <img loading="lazy" src="../images/logo/logo_amarelo_alpha.png" alt="Paulo Morais" class="footer-logo-elysium">
                 </a>
                 <p class="brand-desc">Paulo Morais<br>Lisboa, Portugal</p>
                 <p class="brand-sub">The true personal training that adapts to your life.</p>
@@ -248,7 +252,7 @@
                     <li>
                         <a href="https://www.livroreclamacoes.pt/pedido/reclamacao" target="_blank"
                             rel="noopener noreferrer" class="complaint-book-elysium">
-                            <img src="../images/livro-de-reclamacoes.png" alt="Livro de Reclamações">
+                            <img loading="lazy" src="../images/livro-de-reclamacoes.png" alt="Livro de Reclamações">
                         </a>
                     </li>
                     <li><a href="politica-privacidade.html">Privacy Policy</a></li>
@@ -281,7 +285,7 @@
     </footer>
 
     <!-- Scripts -->
-    <script src="js/script.js"></script>
+    <script src="js/script.js" defer></script>
 </body>
 
 </html>

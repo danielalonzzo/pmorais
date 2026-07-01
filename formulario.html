@@ -5,6 +5,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Formulários de Contacto - Paulo Morais</title>
+    <!-- Preloads -->
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700;800&family=Poppins:wght@300;400;500;600;700&display=swap" as="style">
+    <link rel="preload" href="css/style.css" as="style">
+
     <link rel="shortcut icon" type="image/png" href="images/logo/logo_ios_android.png">
     <link rel="icon" type="image/png" href="images/logo/logo_ios_android.png">
     <meta name="robots" content="noindex, nofollow">
@@ -18,7 +22,7 @@
         rel="stylesheet">
 
     <!-- Icons (Lucide) -->
-    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://unpkg.com/lucide@latest" defer></script>
 
     <!-- Custom Style -->
     <link rel="stylesheet" href="css/style.css">
@@ -186,8 +190,8 @@
             letter-spacing: 2px;
         }
     </style>
-    <script src="js/lang.js"></script>
-    <script src="js/theme.js"></script>
+    <script src="js/lang.js" defer></script>
+    <script src="js/theme.js" defer></script>
 </head>
 
 <body class="bg-dark">
@@ -245,7 +249,7 @@
         <div class="footer-container-new">
             <div class="footer-col branding-col">
                 <a href="index.html" class="footer-logo-link">
-                    <img src="images/logo/logo_amarelo_alpha.png" alt="Paulo Morais" class="footer-logo-elysium">
+                    <img loading="lazy" src="images/logo/logo_amarelo_alpha.png" alt="Paulo Morais" class="footer-logo-elysium">
                 </a>
                 <p class="brand-desc">Paulo Morais<br>Lisboa, Portugal</p>
                 <p class="brand-sub">Gestão de contactos e formulários.</p>
@@ -265,7 +269,7 @@
                     <li>
                         <a href="https://www.livroreclamacoes.pt/pedido/reclamacao" target="_blank"
                             rel="noopener noreferrer" class="complaint-book-elysium">
-                            <img src="images/livro-de-reclamacoes.png" alt="Livro de Reclamações">
+                            <img loading="lazy" src="images/livro-de-reclamacoes.png" alt="Livro de Reclamações">
                         </a>
                     </li>
                     <li><a href="politica-privacidade.html">Política de Privacidade</a></li>
@@ -298,7 +302,7 @@
 
     <!-- Scripts -->
     <script type="module" src="js/admin-formularios.js"></script>
-    <script src="js/script.js"></script>
+    <script src="js/script.js" defer></script>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             if (window.lucide) window.lucide.createIcons();
