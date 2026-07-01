@@ -206,12 +206,12 @@
                     <button id="btn-start-booking" class="btn btn-primary btn-premium-metallic"><i data-lucide="calendar-plus"></i> <span class="btn-text">Nova Marcação</span></button>
                     <button id="btn-show-profiles" class="btn btn-primary hidden"><i data-lucide="users"></i> <span class="btn-text">Perfis</span></button>
                     <button id="btn-show-forms" class="btn btn-primary hidden"><i data-lucide="file-text"></i> <span class="btn-text">Formulários</span></button>
-                                        <button id="btn-show-reviews" class="btn btn-primary" onclick="window.openClientReviews()"><i data-lucide="star"></i> <span class="btn-text">Avaliações</span></button>
-                    <button id="btn-admin-reviews" class="btn btn-primary hidden" onclick="window.openAdminReviews()"><i data-lucide="star"></i> <span class="btn-text">Gerir Avaliações</span></button>
+                    <button id="btn-show-reviews" class="btn btn-primary"><i data-lucide="star"></i> <span class="btn-text">Avaliações</span></button>
+                    <button id="btn-admin-reviews" class="btn btn-primary hidden"><i data-lucide="star"></i> <span class="btn-text">Gerir Avaliações</span></button>
                     <button id="btn-logout" class="btn btn-outline"><i data-lucide="log-out"></i> <span class="btn-text">Terminar Sessão</span></button>
                 </div>
 
-                                <!-- Client Reviews Section -->
+                <!-- Client Reviews Section -->
                 <div id="client-reviews-section" class="calendar-section border-top-fade hidden">
                     <div style="max-width: 800px; margin: 0 auto;">
                         <h2 class="premium-title">AS MINHAS AVALIAÇÕES</h2>
@@ -219,24 +219,24 @@
                             <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 20px;">
                                 <button onclick="window.backToLobby()" class="btn btn-outline" style="padding: 5px 15px; font-size: 0.9rem;"><i data-lucide="arrow-left"></i> Voltar</button>
                                 <div class="segmented-control">
-                                    <button id="tab-client-treino" class="segment-btn active" onclick="window.loadMyReviews('treino')">Treino</button>
-                                    <button id="tab-client-osteo" class="segment-btn" onclick="window.loadMyReviews('osteopatia')">Osteopatia</button>
+                                    <button id="tab-review-treino" class="segment-btn active" onclick="window.switchReviewTab('treino')">Treino</button>
+                                    <button id="tab-review-osteo" class="segment-btn" onclick="window.switchReviewTab('osteopatia')">Osteopatia</button>
                                 </div>
                             </div>
-                            
+
                             <div class="glass-review-form" style="margin-bottom: 30px;">
-                                <h3>Nova Avaliação</h3>
+                                <h3>Nova Avaliação — <span id="review-service-name">Treino</span></h3>
                                 <p style="font-size:0.9rem; color: var(--color-text-dim); margin-bottom:15px;">Partilhe a sua experiência.</p>
-                                <div style="display:flex; gap: 5px; margin-bottom: 15px;" id="star-rating">
-                                    <i data-lucide="star" data-rating="1" style="cursor:pointer; width:24px; color:#ccc;"></i>
-                                    <i data-lucide="star" data-rating="2" style="cursor:pointer; width:24px; color:#ccc;"></i>
-                                    <i data-lucide="star" data-rating="3" style="cursor:pointer; width:24px; color:#ccc;"></i>
-                                    <i data-lucide="star" data-rating="4" style="cursor:pointer; width:24px; color:#ccc;"></i>
-                                    <i data-lucide="star" data-rating="5" style="cursor:pointer; width:24px; color:#ccc;"></i>
+                                <div style="display:flex; gap: 5px; margin-bottom: 15px;" id="new-review-rating">
+                                    <i data-lucide="star" data-val="1" style="cursor:pointer; width:24px; color:#E6AE17; fill:#E6AE17;"></i>
+                                    <i data-lucide="star" data-val="2" style="cursor:pointer; width:24px; color:#E6AE17; fill:#E6AE17;"></i>
+                                    <i data-lucide="star" data-val="3" style="cursor:pointer; width:24px; color:#E6AE17; fill:#E6AE17;"></i>
+                                    <i data-lucide="star" data-val="4" style="cursor:pointer; width:24px; color:#E6AE17; fill:#E6AE17;"></i>
+                                    <i data-lucide="star" data-val="5" style="cursor:pointer; width:24px; color:#E6AE17; fill:#E6AE17;"></i>
                                 </div>
-                                <textarea id="review-text" rows="4" placeholder="Escreva aqui a sua experiência..."></textarea>
-                                <button id="btn-submit-review" class="btn btn-header-premium" style="width: 100%; margin-top: 10px;">Submeter Avaliação</button>
-                                <p id="review-status" style="font-size: 0.9rem; margin-top: 10px;"></p>
+                                <textarea id="new-review-text" rows="4" placeholder="Escreva aqui a sua experiência..." style="width:100%; padding:10px; border-radius:10px; border:1px solid rgba(255,255,255,0.15); background:rgba(255,255,255,0.05); color:var(--color-text); resize:vertical;"></textarea>
+                                <button id="btn-submit-review" onclick="window.submitReview()" class="btn btn-header-premium" style="width: 100%; margin-top: 10px;">Submeter Avaliação</button>
+                                <p id="review-feedback-msg" style="font-size: 0.9rem; margin-top: 10px;"></p>
                             </div>
 
                             <h3>Histórico</h3>
@@ -926,7 +926,7 @@
         </div>
 
         <div class="footer-bar-elysium">
-            <div class="crafted-text"><a href="https://elysiumdr.eu" target="_blank" rel="noopener noreferrer">Desenvolvido por Elysium λ Development & Research.</a><br><span style="font-size: 0.8rem; opacity: 0.7; color: #a0a0a0;">v1.3.1</span></div>
+            <div class="crafted-text"><a href="https://elysiumdr.eu" target="_blank" rel="noopener noreferrer">Desenvolvido por Elysium λ Development & Research.</a><br><span style="font-size: 0.8rem; opacity: 0.7; color: #a0a0a0;">v1.3.2</span></div>
         </div>
     </footer>
 
