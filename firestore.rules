@@ -61,12 +61,19 @@ service cloud.firestore {
       allow delete: if isOwner(userId) || isAdmin();
     }
 
-    // === Calendario de reservas (crítico para el negocio) ===
+    // === Calendario de reservas ===
     match /weekly_schedules/{weekId} {
-      // Los clientes autenticados pueden VER el calendario para elegir cita
+      // Cualquier usuario autenticado puede leer el calendario
       allow read: if request.auth != null;
-      // SOLO el admin puede crear, modificar o borrar huecos del calendario
-      allow write: if isAdmin();
+
+      // El historial personal de cada usuario (doc: user_{uid}) — solo el propio usuario puede escribirlo
+      allow create, update, delete: if request.auth != null
+                                    && weekId == ('user_' + request.auth.uid);
+
+      // Los documentos de semana (doc: YYYY-MM-DD) solo los crea/borra el admin,
+      // pero cualquier cliente autenticado puede actualizar (update) slots al reservar/cancelar
+      allow create, delete: if isAdmin();
+      allow update: if request.auth != null;
     }
   }
 }
