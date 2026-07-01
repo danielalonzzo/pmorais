@@ -198,6 +198,7 @@ ul {
 
 img {
     max-width: 100%;
+    height: auto;
     display: block;
 }
 
@@ -2579,6 +2580,7 @@ header.scrolled .mobile-menu-toggle svg {
 
 .footer-reclamacoes-img {
     height: 40px;
+    width: auto;
 }
 
 .footer-center p {
@@ -3218,6 +3220,19 @@ a.about-hero-photo.ig-photo-link:hover .ig-feed-overlay {
     color: var(--color-text); /* Adaptable color: black in light mode */
     line-height: 1.7;
     margin-bottom: 40px;
+}
+
+.testimonials-image-wrapper {
+    width: 100%;
+    border-radius: 30px;
+    overflow: hidden;
+}
+
+.testimonials-image-wrapper img {
+    width: 100%;
+    height: auto;
+    display: block;
+    object-fit: cover;
 }
 
 .testimonials-split-layout {
@@ -7232,6 +7247,177 @@ body.loaded #preloader {
         box-shadow: 
             inset 1px 2px 8px rgba(255, 255, 255, 0.9), 
             inset -1px -2px 8px rgba(230, 174, 23, 0.4),
-            0 2px 10px rgba(230, 174, 23, 0.3);
+    }
+}
+
+/* ===== PREMIUM REVIEWS SECTION UI ===== */
+.reviews-dashboard-card {
+    background: rgba(17, 17, 17, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 24px;
+    padding: 35px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    margin-top: 40px;
+}
+
+.light-mode .reviews-dashboard-card {
+    background: rgba(255, 255, 255, 0.8);
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+}
+
+.reviews-header-flex {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 35px;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+/* Segmented Control Tabs */
+.segmented-control {
+    display: inline-flex;
+    background: rgba(0, 0, 0, 0.2);
+    padding: 6px;
+    border-radius: 14px;
+    margin-bottom: 30px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.light-mode .segmented-control {
+    background: rgba(0, 0, 0, 0.05);
+    border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.segmented-btn {
+    background: transparent;
+    border: none;
+    color: var(--color-text-dim);
+    padding: 10px 24px;
+    border-radius: 10px;
+    font-size: 1rem;
+    font-family: var(--font-secondary);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: 500;
+}
+
+.segmented-btn:hover {
+    color: var(--color-text);
+}
+
+.segmented-btn.active {
+    background: var(--color-primary);
+    color: #000;
+    font-weight: 700;
+    box-shadow: 0 4px 15px rgba(230, 174, 23, 0.3);
+}
+
+/* Glass Review Form */
+.glass-review-form {
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(230, 174, 23, 0.15);
+    padding: 25px;
+    border-radius: 16px;
+    margin-bottom: 35px;
+    transition: all 0.3s ease;
+}
+
+.glass-review-form:focus-within {
+    border-color: rgba(230, 174, 23, 0.5);
+    box-shadow: 0 0 20px rgba(230, 174, 23, 0.1);
+}
+
+.light-mode .glass-review-form {
+    background: rgba(0, 0, 0, 0.01);
+    border: 1px solid rgba(230, 174, 23, 0.3);
+}
+
+.glass-review-form textarea {
+    background: rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: var(--color-text);
+    border-radius: 12px;
+    padding: 15px;
+    font-family: inherit;
+    font-size: 1rem;
+    width: 100%;
+    margin-bottom: 20px;
+    resize: vertical;
+    transition: all 0.3s ease;
+}
+
+.light-mode .glass-review-form textarea {
+    background: rgba(255, 255, 255, 0.5);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.glass-review-form textarea:focus {
+    outline: none;
+    border-color: var(--color-primary);
+    background: rgba(0, 0, 0, 0.3);
+}
+
+/* Modern Review Card */
+.review-card-modern {
+    background: linear-gradient(145deg, rgba(255,255,255,0.03) 0%, rgba(255,255,255,0.01) 100%);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 16px;
+    padding: 25px;
+    transition: transform 0.3s ease, border-color 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.light-mode .review-card-modern {
+    background: linear-gradient(145deg, rgba(255,255,255,1) 0%, rgba(245,245,245,1) 100%);
+    border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.review-card-modern:hover {
+    transform: translateY(-3px);
+    border-color: rgba(230, 174, 23, 0.3);
+}
+
+.review-card-modern .rc-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.review-card-modern .rc-name {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--color-text);
+    margin: 0;
+    text-transform: uppercase;
+}
+
+.review-card-modern .rc-date {
+    font-size: 0.8rem;
+    color: var(--color-text-dim);
+    margin: 0;
+}
+
+.review-card-modern .rc-text {
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: var(--color-text-dim);
+    margin: 0;
+    font-style: italic;
+}
+
+@media (max-width: 576px) {
+    .reviews-dashboard-card {
+        padding: 25px 15px;
+    }
+    
+    .segmented-btn {
+        padding: 8px 16px;
+        font-size: 0.9rem;
     }
 }

@@ -75,5 +75,20 @@ service cloud.firestore {
       allow create, delete: if isAdmin();
       allow update: if request.auth != null;
     }
+
+    // === Sistema de Reseñas ===
+    match /reviews/{reviewId} {
+      // Cualquier persona puede leer las reseñas (para mostrarlas en la web pública)
+      allow read: if true;
+      
+      // Solo usuarios autenticados pueden crear una reseña, y deben asignar su propio userId
+      allow create: if request.auth != null 
+                    && request.resource.data.userId == request.auth.uid
+                    && request.resource.data.keys().hasAll(['userId', 'userName', 'text', 'service', 'timestamp'])
+                    && request.resource.data.text is string;
+      
+      // Solo el propietario o el admin pueden editar o borrar la reseña
+      allow update, delete: if isOwner(resource.data.userId) || isAdmin();
+    }
   }
 }

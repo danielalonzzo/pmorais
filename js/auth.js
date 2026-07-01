@@ -18,7 +18,11 @@ import {
     getDocs,
     collection,
     updateDoc,
-    serverTimestamp
+    serverTimestamp,
+    addDoc,
+    query,
+    where,
+    deleteDoc
 } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 import { initCalendarMode } from './calendar.js';
 
@@ -104,6 +108,11 @@ document.addEventListener('DOMContentLoaded', () => {
                     btnShowProfiles.classList.remove('hidden');
                     btnShowProfiles.onclick = () => window.location.href = 'perfis.html';
                 }
+                const btnShowReviews = document.getElementById('btn-show-reviews');
+                if (btnShowReviews) btnShowReviews.classList.add('hidden');
+                
+                const btnAdminReviews = document.getElementById('btn-admin-reviews');
+                if (btnAdminReviews) btnAdminReviews.classList.remove('hidden');
                 if (btnShowForms) {
                     btnShowForms.classList.remove('hidden');
                     btnShowForms.onclick = () => window.location.href = 'formulario.html';
@@ -131,6 +140,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // Load user data and wait for it to get the role
             const userData = await loadUserProfile(user);
+            
+            // Check if user should be prompted to leave a review
+            if (typeof checkReviewPrompt === 'function' && !isAdminEmail) {
+                checkReviewPrompt(user);
+            }
 
             const isCompleted = !!userData?.profileCompleted;
 
@@ -1337,4 +1351,366 @@ async function loadDashboardPreview(isAdmin, user, data) {
     }
     
     if (window.lucide) window.lucide.createIcons();
+}
+
+// ==========================================
+// ====== REVIEWS SYSTEM (CLIENT & ADMIN) ===
+// ==========================================
+
+let currentReviewTab = 'treino';
+let newReviewRating = 5;
+
+function initializeReviewEvents() {
+    const btnShowReviews = document.getElementById('btn-show-reviews');
+    if (btnShowReviews) {
+        btnShowReviews.addEventListener('click', () => {
+            hideAllDashboardSections();
+            document.getElementById('client-reviews-section').classList.remove('hidden');
+            window.switchReviewTab('treino');
+        });
+    }
+
+    const stars = document.querySelectorAll('#new-review-rating i');
+    stars.forEach(star => {
+        star.addEventListener('click', (e) => {
+            const val = parseInt(e.currentTarget.getAttribute('data-val'));
+            newReviewRating = val;
+            updateStarsUI();
+        });
+    });
+}
+
+function updateStarsUI() {
+    const stars = document.querySelectorAll('#new-review-rating i');
+    stars.forEach(star => {
+        const val = parseInt(star.getAttribute('data-val'));
+        if (val <= newReviewRating) {
+            star.style.color = '#E6AE17';
+            star.style.fill = '#E6AE17';
+        } else {
+            star.style.color = '#ddd';
+            star.style.fill = 'none';
+        }
+    });
+}
+
+window.closeReviews = function() {
+    document.getElementById('client-reviews-section').classList.add('hidden');
+    document.getElementById('dashboard-main-actions').classList.remove('hidden');
+    document.getElementById('dashboard-preview-section').classList.remove('hidden');
+};
+
+window.switchReviewTab = function(service) {
+    currentReviewTab = service;
+    const isPt = document.documentElement.lang !== 'en';
+    
+    // Update tabs UI
+    document.getElementById('tab-review-treino').style.borderBottom = service === 'treino' ? '2px solid var(--color-primary)' : 'none';
+    document.getElementById('tab-review-treino').classList.toggle('active', service === 'treino');
+    
+    document.getElementById('tab-review-osteo').style.borderBottom = service === 'osteopatia' ? '2px solid var(--color-primary)' : 'none';
+    document.getElementById('tab-review-osteo').classList.toggle('active', service === 'osteopatia');
+    
+    // Update form title
+    document.getElementById('review-service-name').textContent = service === 'treino' 
+        ? (isPt ? 'Treino' : 'Personal Training') 
+        : (isPt ? 'Osteopatia' : 'Osteopathy');
+        
+    // Reset form
+    document.getElementById('new-review-text').value = '';
+    newReviewRating = 5;
+    updateStarsUI();
+    document.getElementById('review-feedback-msg').textContent = '';
+    
+    loadMyReviews(service);
+};
+
+window.submitReview = async function() {
+    const text = document.getElementById('new-review-text').value.trim();
+    const msgDiv = document.getElementById('review-feedback-msg');
+    const isPt = document.documentElement.lang !== 'en';
+    
+    if (!text) {
+        msgDiv.style.color = '#ff3b30';
+        msgDiv.textContent = isPt ? 'Por favor, escreva a sua avaliação.' : 'Please write your review.';
+        return;
+    }
+    
+    const user = auth.currentUser;
+    if (!user) return;
+    
+    try {
+        const btn = document.getElementById('btn-submit-review');
+        btn.disabled = true;
+        btn.textContent = isPt ? 'A submeter...' : 'Submitting...';
+        
+        let userName = "Anónimo";
+        try {
+            const userDoc = await getDoc(doc(db, "users", user.uid));
+            if (userDoc.exists()) {
+                userName = userDoc.data().name || user.displayName || "Anónimo";
+            }
+        } catch(e){}
+        
+        const reviewData = {
+            userId: user.uid,
+            userName: userName,
+            text: text,
+            rating: newReviewRating,
+            service: currentReviewTab,
+            timestamp: new Date().toISOString()
+        };
+        
+        await addDoc(collection(db, "reviews"), reviewData);
+        
+        msgDiv.style.color = '#34c759';
+        msgDiv.textContent = isPt ? 'Avaliação submetida com sucesso! Obrigado.' : 'Review submitted successfully! Thank you.';
+        document.getElementById('new-review-text').value = '';
+        
+        // Remove the red badge if they submitted a review
+        const badge = document.getElementById('reviews-badge');
+        if (badge) badge.classList.add('hidden');
+        
+        loadMyReviews(currentReviewTab);
+        
+        setTimeout(() => {
+            btn.disabled = false;
+            btn.textContent = isPt ? 'Submeter Avaliação' : 'Submit Review';
+            msgDiv.textContent = '';
+        }, 3000);
+        
+    } catch (error) {
+        console.error("Error submitting review:", error);
+        msgDiv.style.color = '#ff3b30';
+        msgDiv.textContent = isPt ? 'Erro ao submeter. Tente novamente.' : 'Error submitting. Try again.';
+        document.getElementById('btn-submit-review').disabled = false;
+        document.getElementById('btn-submit-review').textContent = isPt ? 'Submeter Avaliação' : 'Submit Review';
+    }
+};
+
+async function loadMyReviews(service) {
+    const user = auth.currentUser;
+    if (!user) return;
+    
+    const listDiv = document.getElementById('my-reviews-list');
+    const isPt = document.documentElement.lang !== 'en';
+    listDiv.innerHTML = `<p class="color-text-dim">${isPt ? 'A carregar...' : 'Loading...'}</p>`;
+    
+    try {
+        const q = query(collection(db, "reviews"), where("userId", "==", user.uid), where("service", "==", service));
+        const snap = await getDocs(q);
+        
+        if (snap.empty) {
+            listDiv.innerHTML = `<p class="color-text-dim" style="text-align:center; padding: 20px; background: var(--color-bg); border-radius: 8px;">${isPt ? 'Ainda não tem avaliações neste serviço.' : 'You have no reviews for this service yet.'}</p>`;
+            return;
+        }
+        
+        // Sort in memory (since we don't want to force composite indexes right now)
+        let reviews = [];
+        snap.forEach(doc => {
+            reviews.push({ id: doc.id, ...doc.data() });
+        });
+        reviews.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
+        
+        let html = '';
+        reviews.forEach(r => {
+            const d = new Date(r.timestamp);
+            let starsHtml = '';
+            for(let i=1; i<=5; i++) {
+                starsHtml += `<i data-lucide="star" style="width:16px; color:${i<=r.rating ? '#E6AE17' : '#ddd'}; fill:${i<=r.rating ? '#E6AE17' : 'none'};"></i>`;
+            }
+            
+            html += `
+            <div class="review-card-modern">
+                <div class="rc-header">
+                    <div style="display:flex; gap: 2px;">${starsHtml}</div>
+                    <span class="rc-date">${d.toLocaleDateString()}</span>
+                </div>
+                <p class="rc-text">"${r.text}"</p>
+            </div>`;
+        });
+        
+        listDiv.innerHTML = html;
+        if (window.lucide) window.lucide.createIcons();
+        
+    } catch (e) {
+        console.error("Error loading reviews:", e);
+        listDiv.innerHTML = `<p class="color-text-dim">${isPt ? 'Erro ao carregar avaliações.' : 'Error loading reviews.'}</p>`;
+    }
+}
+
+// Function to check if user should leave a review (has past bookings but no reviews)
+async function checkReviewPrompt(user) {
+    try {
+        const bookingDocRef = doc(db, "weekly_schedules", `user_${user.uid}`);
+        const bookingSnap = await getDoc(bookingDocRef);
+        
+        if (bookingSnap.exists()) {
+            const bookings = bookingSnap.data().bookings || [];
+            const now = new Date();
+            
+            // Has at least one completed booking in the past
+            const hasCompleted = bookings.some(b => {
+                if (b.status === 'cancelled') return false;
+                // Parse b.id format: "2026-03-01T15:00"
+                const bDate = new Date(b.id);
+                return bDate < now;
+            });
+            
+            if (hasCompleted) {
+                // Check if they already left a review recently
+                const q = query(collection(db, "reviews"), where("userId", "==", user.uid));
+                const reviewsSnap = await getDocs(q);
+                
+                if (reviewsSnap.empty) {
+                    // Highlight the reviews button!
+                    const badge = document.getElementById('reviews-badge');
+                    if (badge) badge.classList.remove('hidden');
+                }
+            }
+        }
+    } catch(e) {
+        console.error("Error checking review prompt:", e);
+    }
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    // We need to wait for auth state
+    setTimeout(initializeReviewEvents, 1000); 
+});
+
+
+// ====== ADMIN REVIEWS ======
+window.loadAdminReviews = async function(service) {
+    const isPt = document.documentElement.lang !== 'en';
+    
+    // Update tabs UI
+    document.getElementById('tab-admin-treino').classList.toggle('active', service === 'treino');
+    document.getElementById('tab-admin-osteo').classList.toggle('active', service === 'osteopatia');
+    
+    const listDiv = document.getElementById('admin-reviews-list');
+    listDiv.innerHTML = `<p class="color-text-dim">${isPt ? 'A carregar avaliações...' : 'Loading reviews...'}</p>`;
+    
+    try {
+        const q = query(collection(db, "reviews"), where("service", "==", service));
+        const snap = await getDocs(q);
+        
+        if (snap.empty) {
+            listDiv.innerHTML = `<p class="color-text-dim" style="text-align:center; padding: 20px; background: var(--color-bg); border-radius: 8px;">${isPt ? 'Nenhuma avaliação encontrada.' : 'No reviews found.'}</p>`;
+            return;
+        }
+        
+        let reviewsByUser = {};
+        snap.forEach(doc => {
+            const data = doc.data();
+            const uid = data.userId || 'anonymous';
+            if (!reviewsByUser[uid]) {
+                reviewsByUser[uid] = {
+                    name: data.userName || 'Anónimo',
+                    reviews: []
+                };
+            }
+            reviewsByUser[uid].reviews.push({ id: doc.id, ...data });
+        });
+        
+        let html = '';
+        Object.keys(reviewsByUser).forEach(uid => {
+            const userGroup = reviewsByUser[uid];
+            userGroup.reviews.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
+            
+            let reviewsHtml = '';
+            userGroup.reviews.forEach(r => {
+                const d = new Date(r.timestamp);
+                let starsHtml = '';
+                for(let i=1; i<=5; i++) {
+                    starsHtml += `<i data-lucide="star" style="width:16px; color:${i<=r.rating ? '#E6AE17' : '#ddd'}; fill:${i<=r.rating ? '#E6AE17' : 'none'};"></i>`;
+                }
+                reviewsHtml += `
+                <div class="review-card-modern" style="margin-top: 10px;">
+                    <div class="rc-header">
+                        <div style="display:flex; gap: 2px;">${starsHtml}</div>
+                        <div style="text-align: right;">
+                            <span class="rc-date">${d.toLocaleDateString()}</span><br>
+                            <button onclick="window.deleteReview('${r.id}')" class="btn btn-outline" style="padding: 2px 8px; font-size: 0.8rem; margin-top: 8px; color: #ff3b30; border-color: #ff3b30;">${isPt ? 'Eliminar' : 'Delete'}</button>
+                        </div>
+                    </div>
+                    <p class="rc-text">"${r.text}"</p>
+                </div>`;
+            });
+            
+            html += `
+            <div style="border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; margin-bottom: 15px; overflow: hidden; background: rgba(0,0,0,0.2);">
+                <div onclick="this.nextElementSibling.classList.toggle('hidden'); const icon = this.querySelector('svg'); if(icon) icon.style.transform = this.nextElementSibling.classList.contains('hidden') ? 'rotate(0deg)' : 'rotate(180deg)';" style="padding: 15px 20px; cursor: pointer; display: flex; justify-content: space-between; align-items: center; transition: background 0.2s;">
+                    <strong style="color: var(--color-primary); font-size: 1.1rem; text-transform: uppercase;">${userGroup.name} <span style="font-size: 0.9rem; color: var(--color-text-dim); font-weight: normal;">(${userGroup.reviews.length} ${userGroup.reviews.length === 1 ? 'avaliação' : 'avaliações'})</span></strong>
+                    <i data-lucide="chevron-down" style="color: var(--color-text-dim); transition: transform 0.3s;"></i>
+                </div>
+                <div class="hidden" style="padding: 15px 20px; border-top: 1px solid rgba(255,255,255,0.05);">
+                    ${reviewsHtml}
+                </div>
+            </div>`;
+        });
+        
+        listDiv.innerHTML = html;
+        if (window.lucide) window.lucide.createIcons();
+        
+    } catch (e) {
+        console.error("Error loading admin reviews:", e);
+        listDiv.innerHTML = `<p class="color-text-dim">${isPt ? 'Erro ao carregar.' : 'Error loading.'}</p>`;
+    }
+};
+
+window.deleteReview = async function(reviewId) {
+    const isPt = document.documentElement.lang !== 'en';
+    if (!confirm(isPt ? 'Tem a certeza que deseja eliminar esta avaliação?' : 'Are you sure you want to delete this review?')) return;
+    
+    try {
+        await deleteDoc(doc(db, "reviews", reviewId));
+        alert(isPt ? 'Avaliação eliminada com sucesso.' : 'Review deleted successfully.');
+        const currentTab = document.getElementById('tab-admin-treino').classList.contains('active') ? 'treino' : 'osteopatia';
+        window.loadAdminReviews(currentTab);
+    } catch (e) {
+        console.error("Error deleting review:", e);
+        alert(isPt ? 'Erro ao eliminar.' : 'Error deleting.');
+    }
+};
+
+// Also attach event listener to admin button
+document.addEventListener('DOMContentLoaded', () => {
+    setTimeout(() => {
+        const btnAdminReviews = document.getElementById('btn-admin-reviews');
+        if (btnAdminReviews) {
+            btnAdminReviews.addEventListener('click', () => {
+                hideAllDashboardSections();
+                const adminSection = document.getElementById('admin-reviews-section');
+                if (adminSection) {
+                    adminSection.classList.remove('hidden');
+                    window.loadAdminReviews('treino');
+                }
+            });
+        }
+        
+        // Ensure closeReviews hides admin section too
+        const oldCloseReviews = window.closeReviews;
+        window.closeReviews = function() {
+            oldCloseReviews();
+            const adminSection = document.getElementById('admin-reviews-section');
+            if (adminSection) adminSection.classList.add('hidden');
+        };
+    }, 1500);
+});
+
+function hideAllDashboardSections() {
+    const sections = [
+        'dashboard-preview-section',
+        'dashboard-main-actions',
+        'booking-wizard-section',
+        'global-agenda-section',
+        'admin-calendar-section',
+        'client-reviews-section',
+        'admin-reviews-section'
+    ];
+    sections.forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.classList.add('hidden');
+    });
 }
