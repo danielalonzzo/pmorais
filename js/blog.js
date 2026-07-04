@@ -31,7 +31,7 @@ export async function loadBlogPosts(containerId) {
             const title = isEnglish ? data.title_en : data.title_pt;
             const summary = isEnglish ? data.summary_en : data.summary_pt;
             const articleUrl = isEnglish ? `article.html?id=${data.slug || docSnap.id}` : `artigo.html?id=${data.slug || docSnap.id}`;
-            const dateStr = data.createdAt ? new Date(data.createdAt.seconds * 1000).toLocaleDateString(isEnglish ? 'en-US' : 'pt-PT', { year: 'numeric', month: 'long', day: 'numeric' }) : '';
+            const dateStr = data.createdAt ? new Date(data.createdAt.seconds * 1000).toLocaleDateString(isEnglish ? 'en-GB' : 'pt-PT', { year: 'numeric', month: 'long', day: 'numeric' }) : '';
             
             // Only show if title exists for this language
             if (!title) return;
@@ -85,7 +85,7 @@ export async function loadSingleArticle(containerId) {
         const data = docSnap.data();
         const title = isEnglish ? data.title_en : data.title_pt;
         const content = isEnglish ? data.content_en : data.content_pt;
-        const dateStr = data.createdAt ? new Date(data.createdAt.seconds * 1000).toLocaleDateString(isEnglish ? 'en-US' : 'pt-PT', { year: 'numeric', month: 'long', day: 'numeric' }) : '';
+        const dateStr = data.createdAt ? new Date(data.createdAt.seconds * 1000).toLocaleDateString(isEnglish ? 'en-GB' : 'pt-PT', { year: 'numeric', month: 'long', day: 'numeric' }) : '';
         
         // Update Meta Tags dynamically for SEO (fallback if no Cloud Function SSR)
         document.title = `${title} - Paulo Morais`;

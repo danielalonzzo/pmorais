@@ -437,3 +437,73 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 });
+
+/* ── Oncologia Section — Reveal on Scroll ── */
+(function () {
+    const oncologiaRevealObserver = new IntersectionObserver(
+        (entries) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('is-visible');
+                }
+            });
+        },
+        { threshold: 0.12 }
+    );
+
+    document.querySelectorAll('.oncologia-section .reveal').forEach((el) => {
+        oncologiaRevealObserver.observe(el);
+    });
+})();
+
+/* ── Oncologia Lightbox Modal ── */
+(function () {
+    const trigger = document.getElementById('trigger-oncologia-modal');
+    const lightbox = document.getElementById('oncologia-lightbox');
+    const lightboxImg = document.getElementById('oncologia-lightbox-img');
+    const closeBtn = document.querySelector('.oncologia-lightbox-close');
+
+    if (!trigger || !lightbox || !lightboxImg || !closeBtn) return;
+
+    // Open lightbox
+    trigger.addEventListener('click', () => {
+        const imgElement = trigger.querySelector('img');
+        if (!imgElement) return;
+        
+        lightboxImg.src = imgElement.src;
+        lightbox.style.display = 'flex';
+        // Small timeout to allow browser to trigger transition
+        setTimeout(() => {
+            lightbox.classList.add('active');
+        }, 10);
+        document.body.style.overflow = 'hidden'; // Disable page scrolling
+    });
+
+    // Close lightbox functions
+    const closeLightbox = () => {
+        lightbox.classList.remove('active');
+        document.body.style.overflow = ''; // Enable page scrolling
+        setTimeout(() => {
+            lightbox.style.display = 'none';
+            lightboxImg.src = '';
+        }, 300);
+    };
+
+    closeBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        closeLightbox();
+    });
+
+    lightbox.addEventListener('click', (e) => {
+        if (e.target === lightbox || e.target === lightboxImg) {
+            closeLightbox();
+        }
+    });
+
+    // Support escape key
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && lightbox.classList.contains('active')) {
+            closeLightbox();
+        }
+    });
+})();
