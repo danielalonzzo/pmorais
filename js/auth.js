@@ -26,6 +26,16 @@ import {
 } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 import { initCalendarMode } from './calendar.js';
 
+// [SEC-03] Conditional logger — silent in production, verbose in dev.
+// Prevents sensitive auth data (emails, roles, Firestore payloads) from
+// leaking via DevTools in the browser on deployed builds.
+const _isDev = location.hostname === 'localhost' || location.hostname === '127.0.0.1';
+const logger = {
+    log:   (...a) => _isDev && console.log(...a),
+    warn:  (...a) => console.warn(...a),  // warnings visible in prod (no sensitive data)
+    error: (...a) => console.error(...a), // errors always visible
+};
+
 // UI Elements & State Management
 document.addEventListener('DOMContentLoaded', () => {
     // Check if we are on the profile page
@@ -89,6 +99,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             const btnShowProfiles = document.getElementById('btn-show-profiles');
             const btnShowForms = document.getElementById('btn-show-forms');
+            const btnShowBlogAdmin = document.getElementById('btn-show-blog-admin');
             const btnStartBooking = document.getElementById('btn-start-booking');
 
             if (isAdminEmail) {
@@ -104,6 +115,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (btnShowForms) {
                     btnShowForms.classList.remove('hidden');
                     btnShowForms.onclick = () => window.location.href = 'formulario.html';
+                }
+                if (btnShowBlogAdmin) {
+                    btnShowBlogAdmin.classList.remove('hidden');
                 }
                 if (btnStartBooking) {
                     const span = btnStartBooking.querySelector('.btn-text');
@@ -166,7 +180,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const pwaBtn = document.getElementById('pwa-install-btn');
             if (pwaBtn) pwaBtn.remove();
 
-            console.log('User signed out');
+            logger.log('User signed out');
             authCard.classList.remove('hidden');
             userDashboard.classList.add('hidden');
             // Reset wizard state
@@ -675,20 +689,14 @@ async function loadUserProfile(user) {
                 const isAdminEmail = userEmail === "pt@pmorais.pt";
                 const isAdmin = (data && data.role && data.role.toLowerCase() === 'admin') || isAdminEmail;
 
-                console.log("CRITICAL ADMIN CHECK", { 
-                    rawEmail: user.email,
-                    processedEmail: "[" + userEmail + "]", 
-                    isAdminEmail, 
-                    isAdmin,
-                    firestoreRole: data?.role 
-                });
+                logger.log("CRITICAL ADMIN CHECK", { rawEmail: user.email, processedEmail: "[" + userEmail + "]", isAdminEmail, isAdmin, firestoreRole: data?.role });
 
                 if (isAdmin) {
                     // AUTO-FIX: Ensure Paulo has the admin role in Firestore if he's the owner
                     if (data.role !== 'admin' && isAdminEmail) {
                         // Non-blocking auto-fix
                         setDoc(doc(db, "users", user.uid), { role: 'admin' }, { merge: true })
-                            .then(() => console.log("Admin role auto-fixed for Paulo in Firestore."))
+                            .then(() => logger.log("Admin role auto-fixed for Paulo in Firestore."))
                             .catch(e => console.warn("Could not auto-fix admin role. Possibly rules restricted.", e));
                     }
 
@@ -703,6 +711,10 @@ async function loadUserProfile(user) {
                     if (btnShowForms) {
                         btnShowForms.classList.remove('hidden');
                         btnShowForms.onclick = () => window.location.href = 'formulario.html';
+                    }
+                    const btnShowBlogAdmin = document.getElementById('btn-show-blog-admin');
+                    if (btnShowBlogAdmin) {
+                        btnShowBlogAdmin.classList.remove('hidden');
                     }
                     
                     const btnStartBooking = document.getElementById('btn-start-booking');
@@ -751,13 +763,13 @@ async function loadUserProfile(user) {
                 }
                 return data;
             } else {
-                console.log("No user document found. Checking if admin...");
+                logger.log("No user document found. Checking if admin...");
                 const ADMIN_EMAIL_CHECK = "pt@pmorais.pt";
                 const userEmailLower = user.email ? user.email.toLowerCase().trim() : "";
                 
                 if (userEmailLower === ADMIN_EMAIL_CHECK.toLowerCase()) {
                     // Admin with no Firestore doc yet — create it and show dashboard
-                    console.log("Admin with no doc - creating and showing dashboard");
+                    logger.log("Admin with no doc - creating and showing dashboard");
                     userWelcome.textContent = `Olá, Paulo!`;
                     
                     const dashboardActionsEl = document.getElementById('dashboard-main-actions');
@@ -767,8 +779,10 @@ async function loadUserProfile(user) {
 
                     const btnShowProfiles = document.getElementById('btn-show-profiles');
                     const btnShowForms = document.getElementById('btn-show-forms');
+                    const btnShowBlogAdmin = document.getElementById('btn-show-blog-admin');
                     if (btnShowProfiles) { btnShowProfiles.classList.remove('hidden'); btnShowProfiles.onclick = () => window.location.href = 'perfis.html'; }
                     if (btnShowForms) { btnShowForms.classList.remove('hidden'); btnShowForms.onclick = () => window.location.href = 'formulario.html'; }
+                    if (btnShowBlogAdmin) { btnShowBlogAdmin.classList.remove('hidden'); }
                     
                     // Create minimal admin doc
                     try {

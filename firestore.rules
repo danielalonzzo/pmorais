@@ -73,7 +73,7 @@ service cloud.firestore {
       // Los documentos de semana (doc: YYYY-MM-DD) solo los crea/borra el admin,
       // pero cualquier cliente autenticado puede actualizar (update) slots al reservar/cancelar
       allow create, delete: if isAdmin();
-      allow update: if request.auth != null;
+      allow update: if isAdmin() || (request.auth != null && !weekId.matches('^user_.*'));
     }
 
     // === Sistema de Reseñas ===

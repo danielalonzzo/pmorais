@@ -1,5 +1,5 @@
 import { db } from './firebase-config.js';
-import { collection, query, where, getDocs } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+import { collection, query, where, getDocs } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
 window.loadPublicReviews = async function(serviceType) {
     try {
@@ -49,28 +49,57 @@ window.loadPublicReviews = async function(serviceType) {
         dbReviews.forEach(r => {
             const isPt = document.documentElement.lang !== 'en';
             const cardClass = serviceType === 'osteopatia' ? 'testimonial-card-yellow' : 'testimonial-card-green';
-            
+
             const div = document.createElement('div');
             div.className = cardClass;
             div.setAttribute('data-index', nextIndex);
-            
+
             const d = new Date(r.timestamp);
             const dateStr = isPt ? `AVALIAÇÃO DE ${d.getFullYear()}` : `REVIEW FROM ${d.getFullYear()}`;
-            
+
+            // Build stars SVG (static markup — no user data)
             let starsHtml = '';
-            for(let i=1; i<=5; i++) {
-                starsHtml += `<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="${i<=r.rating ? '#E6AE17' : 'none'}" stroke="${i<=r.rating ? '#E6AE17' : '#ddd'}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right:2px;"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>`;
+            const rating = Math.min(5, Math.max(0, parseInt(r.rating, 10) || 0));
+            for (let i = 1; i <= 5; i++) {
+                const filled = i <= rating;
+                starsHtml += `<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="${filled ? '#E6AE17' : 'none'}" stroke="${filled ? '#E6AE17' : '#ddd'}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right:2px;" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>`;
             }
-            
-            div.innerHTML = `
-                <div class="testimonial-content">
-                    <h4 class="testimonial-name">${(r.userName || 'Anónimo').toUpperCase()}${badgeSvg}</h4>
-                    <p class="testimonial-role">${dateStr}</p>
-                    <div style="margin-bottom: 10px;">${starsHtml}</div>
-                    <p class="testimonial-text">${r.text}</p>
-                </div>
-            `;
-            
+
+            // [SEC-01] Construct content via safe DOM API — no innerHTML with user data.
+            // textContent automatically HTML-escapes all characters, preventing XSS.
+            const contentDiv = document.createElement('div');
+            contentDiv.className = 'testimonial-content';
+
+            // Name (safe: textContent + static SVG badge appended separately)
+            const nameEl = document.createElement('h4');
+            nameEl.className = 'testimonial-name';
+            const safeUserName = (typeof r.userName === 'string' ? r.userName : 'Anónimo').trim() || 'Anónimo';
+            nameEl.textContent = safeUserName.toUpperCase();
+            nameEl.insertAdjacentHTML('beforeend', badgeSvg); // badge is static SVG, not user data
+
+            // Date label (safe: derived from Date object, not user input)
+            const roleEl = document.createElement('p');
+            roleEl.className = 'testimonial-role';
+            roleEl.textContent = dateStr;
+
+            // Stars (safe: static SVG generated from integer rating)
+            const starsDiv = document.createElement('div');
+            starsDiv.style.marginBottom = '10px';
+            starsDiv.setAttribute('aria-label', `${rating} de 5 estrelas`);
+            starsDiv.innerHTML = starsHtml;
+
+            // Review text [SEC-01 CRITICAL FIX]: textContent escapes HTML — no XSS possible
+            const textEl = document.createElement('p');
+            textEl.className = 'testimonial-text';
+            const safeText = typeof r.text === 'string' ? r.text.slice(0, 1000) : '';
+            textEl.textContent = safeText;
+
+            contentDiv.appendChild(nameEl);
+            contentDiv.appendChild(roleEl);
+            contentDiv.appendChild(starsDiv);
+            contentDiv.appendChild(textEl);
+            div.appendChild(contentDiv);
+
             carousel.appendChild(div);
             
             if (dotsContainer) {
