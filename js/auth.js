@@ -1066,21 +1066,47 @@ window.submitWizardBooking = async function(payload, durationSlots) {
         }
         
         // Save to user booking history in weekly_schedules collection
-        const bookingDocRef = doc(db, "weekly_schedules", `user_${user.uid}`);
-        const bookingSnap = await getDoc(bookingDocRef);
-        const existingBookings = bookingSnap.exists() ? (bookingSnap.data().bookings || []) : [];
+        try {
+            const bookingDocRef = doc(db, "weekly_schedules", `user_${user.uid}`);
+            const bookingSnap = await getDoc(bookingDocRef);
+            const existingBookings = bookingSnap.exists() ? (bookingSnap.data().bookings || []) : [];
+            
+            historyToAdd.forEach(h => existingBookings.push(h));
+            
+            const safePayload = JSON.parse(JSON.stringify({
+                uid: user.uid,
+                name: realName || "Utilizador",
+                email: user.email || "",
+                bookings: existingBookings
+            }));
+            await setDoc(bookingDocRef, safePayload, { merge: true });
+        } catch(historyErr) {
+            console.error("Failed to save personal history, but booking succeeded:", historyErr);
+        }
         
-        historyToAdd.forEach(h => existingBookings.push(h));
+        // Trigger Email Confirmation
+        try {
+            const mailBody = `
+                Olá ${realName},<br><br>
+                A sua marcação para <b>${payload.serviceName}</b> foi confirmada!<br>
+                <b>Sessões:</b><br>
+                <ul>
+                    ${historyToAdd.map(h => `<li>${h.date} às ${h.time}</li>`).join('')}
+                </ul>
+                <br>Obrigado,<br>Paulo Morais.
+            `;
+            await addDoc(collection(db, "mail"), {
+                to: user.email || "",
+                message: {
+                    subject: "Confirmação de Marcação - Paulo Morais",
+                    html: mailBody
+                }
+            });
+        } catch(mailErr) {
+            console.error("Failed to queue email:", mailErr);
+        }
         
-        const safePayload = JSON.parse(JSON.stringify({
-            uid: user.uid,
-            name: realName || "Utilizador",
-            email: user.email || "",
-            bookings: existingBookings
-        }));
-        await setDoc(bookingDocRef, safePayload, { merge: true });
-        
-        return true;
+        return historyToAdd;
     } catch (e) {
         console.error("Booking error:", e);
         throw e;
@@ -1230,13 +1256,15 @@ async function loadDashboardPreview(isAdmin, user, data) {
         }
         
         const now = new Date();
-        now.setHours(0,0,0,0);
+        const yyyy = now.getFullYear();
+        const mm = String(now.getMonth() + 1).padStart(2, '0');
+        const dd = String(now.getDate()).padStart(2, '0');
+        const todayStr = `${yyyy}-${mm}-${dd}`;
         
         const upcoming = userBookings.filter(h => {
             if (!h.date) return false;
-            const bDate = new Date(h.date);
-            return bDate >= now && h.status === 'booked';
-        }).sort((a,b) => new Date(a.date + 'T' + a.time) - new Date(b.date + 'T' + b.time));
+            return h.date >= todayStr && h.status === 'booked';
+        }).sort((a,b) => (a.date + 'T' + a.time).localeCompare(b.date + 'T' + b.time));
         
         if (upcoming.length === 0) {
             listEl.innerHTML = `
