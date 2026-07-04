@@ -25,7 +25,7 @@ window.loadPublicReviews = async function(serviceType) {
             if (p.data().name) registeredNames.add(p.data().name.trim().toUpperCase());
         });
         
-        const badgeSvg = `<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#34c759" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-left: 5px; margin-bottom: 3px;" title="Cliente Verificado"><path d="M3.85 8.62a4 4 0 0 1 4.78-4.77 4 4 0 0 1 6.74 0 4 4 0 0 1 4.78 4.78 4 4 0 0 1 0 6.76 4 4 0 0 1-4.77 4.78 4 4 0 0 1-6.75 0 4 4 0 0 1-4.78-4.77 4 4 0 0 1 0-6.76Z"/><path d="m9 12 2 2 4-4"/></svg>`;
+        const badgeSvg = `<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#34c759" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-left: 6px; margin-bottom: 3px; flex-shrink: 0; color: #34c759; filter: drop-shadow(0 0 3px rgba(52,199,89,0.5));" title="Cliente Verificado"><path d="M3.85 8.62a4 4 0 0 1 4.78-4.77 4 4 0 0 1 6.74 0 4 4 0 0 1 4.78 4.78 4 4 0 0 1 0 6.76 4 4 0 0 1-4.77 4.78 4 4 0 0 1-6.75 0 4 4 0 0 1-4.78-4.77 4 4 0 0 1 0-6.76Z" stroke="#34c759" fill="rgba(52,199,89,0.12)"/><path d="m9 12 2 2 4-4" stroke="#34c759" fill="none"/></svg>`;
         
         const htmlNames = document.querySelectorAll('.testimonial-name');
         htmlNames.forEach(h4 => {

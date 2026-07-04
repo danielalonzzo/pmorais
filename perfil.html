@@ -206,8 +206,8 @@
                     <button id="btn-start-booking" class="btn btn-primary btn-premium-metallic"><i data-lucide="calendar-plus"></i> <span class="btn-text">Nova Marcação</span></button>
                     <button id="btn-show-profiles" class="btn btn-primary hidden"><i data-lucide="users"></i> <span class="btn-text">Perfis</span></button>
                     <button id="btn-show-forms" class="btn btn-primary hidden"><i data-lucide="file-text"></i> <span class="btn-text">Formulários</span></button>
-                    <button id="btn-show-reviews" class="btn btn-primary"><i data-lucide="star"></i> <span class="btn-text">Avaliações</span></button>
-                    <button id="btn-admin-reviews" class="btn btn-primary hidden"><i data-lucide="star"></i> <span class="btn-text">Gerir Avaliações</span></button>
+                    <button id="btn-show-reviews" class="btn btn-primary" onclick="window.openClientReviews()"><i data-lucide="star"></i> <span class="btn-text">Avaliações</span></button>
+                    <button id="btn-admin-reviews" class="btn btn-primary hidden" onclick="window.openAdminReviews()"><i data-lucide="star"></i> <span class="btn-text">Gerir Avaliações</span></button>
                     <button id="btn-logout" class="btn btn-outline"><i data-lucide="log-out"></i> <span class="btn-text">Terminar Sessão</span></button>
                 </div>
 
@@ -219,8 +219,8 @@
                             <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 20px;">
                                 <button onclick="window.backToLobby()" class="btn btn-outline" style="padding: 5px 15px; font-size: 0.9rem;"><i data-lucide="arrow-left"></i> Voltar</button>
                                 <div class="segmented-control">
-                                    <button id="tab-review-treino" class="segment-btn active" onclick="window.switchReviewTab('treino')">Treino</button>
-                                    <button id="tab-review-osteo" class="segment-btn" onclick="window.switchReviewTab('osteopatia')">Osteopatia</button>
+                                    <button id="tab-review-treino" class="segmented-btn active" onclick="window.switchReviewTab('treino')">Treino</button>
+                                    <button id="tab-review-osteo" class="segmented-btn" onclick="window.switchReviewTab('osteopatia')">Osteopatia</button>
                                 </div>
                             </div>
 
@@ -253,8 +253,8 @@
                             <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 20px;">
                                 <button onclick="window.backToLobby()" class="btn btn-outline" style="padding: 5px 15px; font-size: 0.9rem;"><i data-lucide="arrow-left"></i> Voltar</button>
                                 <div class="segmented-control">
-                                    <button id="tab-admin-treino" class="segment-btn active" onclick="window.loadAdminReviews('treino')">Treino</button>
-                                    <button id="tab-admin-osteo" class="segment-btn" onclick="window.loadAdminReviews('osteopatia')">Osteopatia</button>
+                                    <button id="tab-admin-treino" class="segmented-btn active" onclick="window.loadAdminReviews('treino')">Treino</button>
+                                    <button id="tab-admin-osteo" class="segmented-btn" onclick="window.loadAdminReviews('osteopatia')">Osteopatia</button>
                                 </div>
                             </div>
                             <div id="admin-reviews-list"></div>
@@ -926,7 +926,7 @@
         </div>
 
         <div class="footer-bar-elysium">
-            <div class="crafted-text"><a href="https://elysiumdr.eu" target="_blank" rel="noopener noreferrer">Desenvolvido por Elysium λ Development & Research.</a><br><span style="font-size: 0.8rem; opacity: 0.7; color: #a0a0a0;">v1.3.2</span></div>
+            <div class="crafted-text"><a href="https://elysiumdr.eu" target="_blank" rel="noopener noreferrer">Desenvolvido por Elysium λ Development & Research.</a><br><span style="font-size: 0.8rem; opacity: 0.7; color: #a0a0a0;">v1.4.0</span></div>
         </div>
     </footer>
 
