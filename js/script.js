@@ -266,26 +266,47 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Global callback for YouTube API
         window.onYouTubeIframeAPIReady = function () {
-            new YT.Player('hero-video-iframe', {
-                events: {
-                    'onReady': function (event) {
-                        try {
-                            // Attempt to prefer HD resolution
-                            event.target.setPlaybackQuality('hd1080');
-                        } catch (e) { }
-                    },
-                    'onStateChange': function (event) {
-                        // When video starts playing (state 1 = PLAYING)
-                        if (event.data === 1) { // YT.PlayerState.PLAYING 
-                            // Add a small 1.5s delay to allow initial pixelation to clear
-                            setTimeout(() => {
-                                clearTimeout(fallbackTimer);
-                                dismissPreloader();
-                            }, 1500);
+            // Initial Hero Video
+            if (document.getElementById('hero-video-iframe')) {
+                player = new YT.Player('hero-video-iframe', {
+                    events: {
+                        'onReady': function (event) {
+                            try {
+                                event.target.setPlaybackQuality('hd1080');
+                                event.target.mute();
+                                event.target.playVideo();
+                            } catch (e) { }
+                        },
+                        'onStateChange': function (event) {
+                            // When video starts playing (state 1 = PLAYING)
+                            if (event.data === 1) { // YT.PlayerState.PLAYING 
+                                setTimeout(() => {
+                                    clearTimeout(fallbackTimer);
+                                    dismissPreloader();
+                                }, 1500);
+                            }
                         }
                     }
-                }
-            });
+                });
+            }
+
+            // Final Hero CTA Video (Footer)
+            if (document.getElementById('hero-cta-video-iframe')) {
+                player2 = new YT.Player('hero-cta-video-iframe', {
+                    events: {
+                        'onReady': function (event) {
+                            try {
+                                event.target.setPlaybackQuality('hd1080');
+                                event.target.mute();
+                                event.target.playVideo();
+                            } catch (e) { }
+                        },
+                        'onStateChange': function (event) {
+                            // Optional tracking or logic for CTA video
+                        }
+                    }
+                });
+            }
         };
     } else {
         // Standard behavior for pages without the hero video
@@ -328,52 +349,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Gallery carousel desactivado — galería usa grid nativo en mobile
 });
-
-/* --- YouTube High Res Force --- */
-var tag = document.createElement('script');
-tag.src = "https://www.youtube.com/iframe_api";
-var firstScriptTag = document.getElementsByTagName('script')[0];
-firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-
-var player;
-var player2;
-
-function onYouTubeIframeAPIReady() {
-    // Initial Hero Video
-    if (document.getElementById('hero-video-iframe')) {
-        player = new YT.Player('hero-video-iframe', {
-            events: {
-                'onReady': onPlayerReady,
-                'onStateChange': onPlayerStateChange
-            }
-        });
-    }
-
-    // Final Hero CTA Video
-    if (document.getElementById('hero-cta-video-iframe')) {
-        player2 = new YT.Player('hero-cta-video-iframe', {
-            events: {
-                'onReady': onPlayerReady,
-                'onStateChange': onPlayerStateChange
-            }
-        });
-    }
-}
-
-function onPlayerReady(event) {
-    event.target.mute();
-    event.target.playVideo();
-    event.target.setPlaybackQuality('hd1080'); // Suggest to force 1080p
-}
-
-function onPlayerStateChange(event) {
-    if (event.data == YT.PlayerState.PLAYING) {
-        event.target.setPlaybackQuality('hd1080'); // Re-force when playing starts
-    }
-    if (event.data == YT.PlayerState.ENDED) {
-        event.target.playVideo();
-    }
-}
 
 // --- LANGUAGE SWITCHER LOGIC ---
 document.addEventListener('DOMContentLoaded', () => {
