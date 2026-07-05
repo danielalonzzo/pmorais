@@ -819,3 +819,52 @@ exports.purgeInactiveUsers = functions
 
     return null;
   });
+
+// ===== Mail Queue Processor =====
+// Listens for new documents in the 'mail' collection and sends them using nodemailer.
+exports.processMailQueue = functions
+  .runWith({ secrets: [emailUser, emailPass, emailHost, emailPort] })
+  .firestore
+  .document("mail/{documentId}")
+  .onCreate(async (snap, context) => {
+    const mailData = snap.data();
+    if (!mailData.to || !mailData.message) return null;
+
+    const transporter = nodemailer.createTransport({
+      host: emailHost.value(),
+      port: parseInt(emailPort.value()),
+      secure: parseInt(emailPort.value()) === 465,
+      auth: {
+        user: emailUser.value(),
+        pass: emailPass.value(),
+      },
+    });
+
+    const mailOptions = {
+      from: `"Paulo Morais" <${emailUser.value()}>`,
+      to: mailData.to,
+      subject: mailData.message.subject,
+      html: mailData.message.html,
+    };
+
+    try {
+      const info = await transporter.sendMail(mailOptions);
+      console.log(`Email sent to ${mailData.to} (ID: ${context.params.documentId}): ${info.messageId}`);
+      await snap.ref.update({
+        delivery: {
+          state: 'SUCCESS',
+          startTime: admin.firestore.FieldValue.serverTimestamp(),
+          endTime: admin.firestore.FieldValue.serverTimestamp(),
+          info: info.messageId,
+        }
+      });
+    } catch (error) {
+      console.error(`Error sending email to ${mailData.to}:`, error);
+      await snap.ref.update({
+        delivery: {
+          state: 'ERROR',
+          error: error.message,
+        }
+      });
+    }
+  });
