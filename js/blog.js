@@ -146,7 +146,17 @@ function renderPosts(containerId) {
 
 function createPostCard(data) {
     const title = (isEnglish ? data.title_en : data.title_pt) || data.title_pt || data.title_en || 'Sem Título';
-    const summary = (isEnglish ? data.summary_en : data.summary_pt) || data.summary_pt || data.summary_en || '';
+    let summaryHtml = (isEnglish ? data.summary_en : data.summary_pt) || data.summary_pt || data.summary_en || '';
+    
+    // Strip HTML and limit text for the preview
+    const tempDiv = document.createElement('div');
+    tempDiv.innerHTML = summaryHtml;
+    let summary = tempDiv.textContent || tempDiv.innerText || '';
+    summary = summary.trim();
+    if (summary.length > 150) {
+        summary = summary.substring(0, 150) + '...';
+    }
+
     const articleUrl = isEnglish ? `article.html?id=${data.slug || data.id}` : `artigo.html?id=${data.slug || data.id}`;
     const dateStr = data.createdAt ? new Date(data.createdAt.seconds * 1000).toLocaleDateString(isEnglish ? 'en-GB' : 'pt-PT', { year: 'numeric', month: 'long', day: 'numeric' }) : '';
     const readTime = data.readTime || 5;
@@ -211,9 +221,14 @@ export async function loadSingleArticle(containerId) {
         document.title = `${title} | Paulo Morais`;
         document.querySelector('meta[property="og:title"]')?.setAttribute("content", title);
         
-        const summary = (isEnglish ? data.summary_en : data.summary_pt) || data.summary_pt || data.summary_en || '';
-        document.querySelector('meta[name="description"]')?.setAttribute("content", summary);
-        document.querySelector('meta[property="og:description"]')?.setAttribute("content", summary);
+        let summaryHtml = (isEnglish ? data.summary_en : data.summary_pt) || data.summary_pt || data.summary_en || '';
+        const tempDiv = document.createElement('div');
+        tempDiv.innerHTML = summaryHtml;
+        let summaryText = tempDiv.textContent || tempDiv.innerText || '';
+        summaryText = summaryText.trim();
+        
+        document.querySelector('meta[name="description"]')?.setAttribute("content", summaryText);
+        document.querySelector('meta[property="og:description"]')?.setAttribute("content", summaryText);
 
         let content = (isEnglish ? data.content_en : data.content_pt) || data.content_pt || data.content_en || '';
         let dynamicContentHtml = '';
@@ -236,7 +251,7 @@ export async function loadSingleArticle(containerId) {
                 <div style="margin-bottom: 40px;">
                     <div style="border-left: 4px solid var(--color-primary); padding-left: 20px; margin-bottom: 30px;">
                         <h3 style="color: var(--color-primary); margin-top: 0; font-size: 1rem; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 10px;">${isEnglish ? 'Abstract' : 'Resumo'}</h3>
-                        <p style="font-size: 1.15rem; line-height: 1.6; color: var(--color-text-dim); font-style: italic; margin: 0;">"${summary}"</p>
+                        <div class="ql-editor" style="padding: 0; font-size: 1.15rem; line-height: 1.6; color: var(--color-text-dim); margin: 0;">${summaryHtml}</div>
                     </div>
                     <div class="text-left" style="margin-bottom: 10px;">
                         <a href="${data.pdfUrl}" target="_blank" style="background: var(--color-primary); color: #000; padding: 14px 28px; border-radius: 30px; font-weight: 600; text-decoration: none; display: inline-flex; align-items: center; gap: 10px;">

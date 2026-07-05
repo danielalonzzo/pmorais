@@ -308,7 +308,33 @@
             border-top-right-radius: 8px;
             border-color: color-mix(in srgb, var(--color-text), transparent 80%) !important;
         }
-        .ql-editor { color: var(--color-text); }
+        .ql-editor {
+            color: var(--color-text) !important;
+            font-family: var(--font-body) !important;
+        }
+        .ql-editor *, .ql-editor p, .ql-editor li, .ql-editor span {
+            color: var(--color-text) !important;
+            font-family: var(--font-body) !important;
+        }
+        .ql-editor h1, .ql-editor h2, .ql-editor h3, .ql-editor h4, .ql-editor h5, .ql-editor h6 {
+            color: var(--color-text) !important;
+            margin-top: 1.5em !important;
+            margin-bottom: 0.5em !important;
+            font-family: var(--font-heading) !important;
+            font-weight: 700 !important;
+        }
+        .ql-editor p {
+            margin-bottom: 1.2em !important;
+        }
+        .ql-editor a, .ql-editor a * {
+            color: var(--color-primary) !important;
+            text-decoration: underline !important;
+        }
+        .ql-editor img {
+            max-width: 100% !important;
+            border-radius: 12px !important;
+            margin: 20px 0 !important;
+        }
         .ql-editor.ql-blank::before {
             color: color-mix(in srgb, var(--color-text), transparent 50%) !important;
             font-style: normal !important;
@@ -318,9 +344,40 @@
         }
         .ql-toolbar button svg .ql-stroke { stroke: var(--color-text) !important; }
         .ql-toolbar button svg .ql-fill { fill: var(--color-text) !important; }
-        .ql-toolbar .ql-picker { color: var(--color-text) !important; }
         .ql-toolbar button:hover .ql-stroke, .ql-toolbar button.ql-active .ql-stroke { stroke: var(--color-primary) !important; }
         .ql-toolbar button:hover .ql-fill, .ql-toolbar button.ql-active .ql-fill { fill: var(--color-primary) !important; }
+
+        /* Picker / Dropdown Overrides for Dark Mode */
+        .ql-toolbar .ql-picker { color: var(--color-text) !important; }
+        .ql-toolbar .ql-picker-label { color: var(--color-text) !important; }
+        .ql-toolbar .ql-picker-label::before { color: var(--color-text) !important; }
+        .ql-toolbar .ql-picker-label svg .ql-stroke { stroke: var(--color-text) !important; }
+        .ql-toolbar .ql-picker-label:hover { color: var(--color-primary) !important; }
+        .ql-toolbar .ql-picker-label:hover svg .ql-stroke { stroke: var(--color-primary) !important; }
+
+        .ql-toolbar .ql-picker-options {
+            background-color: var(--color-surface) !important;
+            border-color: color-mix(in srgb, var(--color-text), transparent 80%) !important;
+        }
+        .ql-toolbar .ql-picker-item {
+            color: var(--color-text) !important;
+        }
+        .ql-toolbar .ql-picker-item:hover, .ql-toolbar .ql-picker-item.ql-selected {
+            color: var(--color-primary) !important;
+            background-color: color-mix(in srgb, var(--color-text), transparent 95%) !important;
+        }
+        .ql-snow .ql-picker.ql-expanded .ql-picker-label {
+             color: var(--color-primary) !important;
+             border-color: color-mix(in srgb, var(--color-text), transparent 80%) !important;
+        }
+        .ql-snow .ql-picker.ql-expanded .ql-picker-label svg .ql-stroke {
+             stroke: var(--color-primary) !important;
+        }
+        /* Color Picker blocks */
+        .ql-color-picker .ql-picker-options {
+            background-color: var(--color-surface) !important;
+            padding: 5px !important;
+        }
         
         .lang-tabs {
             display: flex;
@@ -533,7 +590,7 @@
                         <!-- Slug field removed -->
                         <div class="form-group" style="margin-top: 20px;">
                             <label>Resumo Breve</label>
-                            <textarea id="summary-pt" rows="2" placeholder="Escreve 2 ou 3 linhas resumindo isto para que as pessoas saibam do que se trata antes de entrar..."></textarea>
+                            <div id="summary-editor-pt" style="border-radius: 0 0 8px 8px; min-height: 100px;"></div>
                         </div>
                         <div class="form-group" style="margin-top: 20px;">
                             <label>O Conteúdo (Texto Principal)</label>
@@ -548,7 +605,7 @@
                         </div>
                         <div class="form-group" style="margin-top: 20px;">
                             <label>Brief Summary</label>
-                            <textarea id="summary-en" rows="2" placeholder="Write 2 or 3 lines summarizing this..."></textarea>
+                            <div id="summary-editor-en" style="border-radius: 0 0 8px 8px; min-height: 100px;"></div>
                         </div>
                         <div class="form-group" style="margin-top: 20px;">
                             <label>The Content</label>

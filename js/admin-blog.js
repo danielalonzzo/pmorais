@@ -20,15 +20,21 @@ const btnNewPost = document.getElementById('btn-new-post');
 const postForm = document.getElementById('post-form');
 
 // Initialize Quill editors
-let quillPT, quillEN;
+let quillPT, quillEN, quillSummaryPT, quillSummaryEN;
 let autoSaveInterval;
 let lastSavedData = '';
 
 function initEditors() {
     const toolbarOptions = [
-        ['bold', 'italic', 'underline'],
+        [{ 'font': [] }, { 'size': ['small', false, 'large', 'huge'] }],
+        [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+        ['bold', 'italic', 'underline', 'strike'],
+        [{ 'color': [] }, { 'background': [] }],
+        [{ 'script': 'sub'}, { 'script': 'super' }],
+        [{ 'header': 1 }, { 'header': 2 }, 'blockquote', 'code-block'],
         [{ 'list': 'ordered'}, { 'list': 'bullet' }],
-        ['link'],
+        [{ 'indent': '-1'}, { 'indent': '+1' }, { 'align': [] }],
+        ['link', 'image', 'video'],
         ['clean']
     ];
     
@@ -42,6 +48,18 @@ function initEditors() {
         theme: 'snow',
         modules: { toolbar: toolbarOptions },
         placeholder: 'Write the content here...'
+    });
+    
+    quillSummaryPT = new Quill('#summary-editor-pt', {
+        theme: 'snow',
+        modules: { toolbar: toolbarOptions },
+        placeholder: 'Escreve 2 ou 3 linhas resumindo isto...'
+    });
+    
+    quillSummaryEN = new Quill('#summary-editor-en', {
+        theme: 'snow',
+        modules: { toolbar: toolbarOptions },
+        placeholder: 'Write 2 or 3 lines summarizing this...'
     });
 }
 
@@ -175,6 +193,8 @@ function setupEventListeners() {
         document.getElementById('post-id').value = '';
         quillPT.root.innerHTML = '';
         quillEN.root.innerHTML = '';
+        quillSummaryPT.root.innerHTML = '';
+        quillSummaryEN.root.innerHTML = '';
         document.getElementById('modal-title').textContent = 'Novo Artigo';
         document.getElementById('auto-save-status').innerHTML = '<i data-lucide="cloud-off" style="width: 14px; height: 14px;"></i> Não guardado';
         handleFormatChange();
@@ -230,8 +250,8 @@ function getFormData() {
         category: document.getElementById('post-category').value || 'osteopatia',
         title_pt: document.getElementById('title-pt').value.trim(),
         title_en: document.getElementById('title-en').value.trim(),
-        summary_pt: document.getElementById('summary-pt').value.trim(),
-        summary_en: document.getElementById('summary-en').value.trim(),
+        summary_pt: quillSummaryPT.root.innerHTML,
+        summary_en: quillSummaryEN.root.innerHTML,
         content_pt: quillPT.root.innerHTML,
         content_en: quillEN.root.innerHTML,
         coverImageUrl: document.getElementById('post-cover').value,
@@ -307,8 +327,8 @@ async function editPost(id) {
             document.getElementById('post-cover').value = data.coverImageUrl || '';
             document.getElementById('title-pt').value = data.title_pt || '';
             document.getElementById('title-en').value = data.title_en || '';
-            document.getElementById('summary-pt').value = data.summary_pt || '';
-            document.getElementById('summary-en').value = data.summary_en || '';
+            quillSummaryPT.root.innerHTML = data.summary_pt || '';
+            quillSummaryEN.root.innerHTML = data.summary_en || '';
             document.getElementById('post-published').checked = data.published || false;
             
             // New fields
