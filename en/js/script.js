@@ -478,7 +478,7 @@ document.addEventListener('DOMContentLoaded', () => {
 (function() {
     // Determine current version from the footer or hardcode it based on the user's request
     const versionSpan = document.querySelector('.crafted-text span');
-    let appVersion = '1.5.3 (Build 2026-07)'; // default fallback
+    let appVersion = '1.5.6 (Build 2026-07)'; // default fallback
     if (versionSpan) {
         // Attempt to extract version
         const vText = versionSpan.textContent.trim();
@@ -512,6 +512,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     title: "INFORMAÇÃO DO SISTEMA",
                     softwareSpecs: "ESPECIFICAÇÕES DE SOFTWARE",
                     interfaceVer: "Versão da Interface",
+                    updateBtn: "Actualizar",
                     buildComp: "Compilação (Build)",
                     productLic: "Licença de Produto",
                     secCompliance: "SEGURANÇA E CONFORMIDADE",
@@ -534,6 +535,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     title: "SYSTEM INFORMATION",
                     softwareSpecs: "SOFTWARE SPECIFICATIONS",
                     interfaceVer: "Interface Version",
+                    updateBtn: "Update",
                     buildComp: "Build Compilation",
                     productLic: "Product Licence",
                     secCompliance: "SECURITY & COMPLIANCE",
@@ -581,9 +583,12 @@ document.addEventListener('DOMContentLoaded', () => {
                         <div class="sys-group">
                             <div class="sys-group-title">${t.softwareSpecs}</div>
                             <div class="sys-card">
-                                <div class="sys-row">
+                                <div class="sys-row" style="align-items: center;">
                                     <span class="sys-label">${t.interfaceVer}</span>
-                                    <span class="sys-value">${appVersion.split(' ')[0]}</span>
+                                    <div style="display: flex; align-items: center; gap: 12px;">
+                                        <span class="sys-value" style="margin: 0;">${appVersion.split(' ')[0]}</span>
+                                        <button onclick="window.forceUpdateVersion()" style="background: transparent; border: 1px solid var(--color-primary); color: var(--color-primary); border-radius: 6px; padding: 3px 10px; font-size: 0.7rem; cursor: pointer; transition: opacity 0.3s ease; white-space: nowrap;">${t.updateBtn}</button>
+                                    </div>
                                 </div>
                                 <div class="sys-row">
                                     <span class="sys-label">${t.buildComp}</span>
@@ -893,4 +898,50 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 })();
+// Global function to force update version and clear caches
+window.forceUpdateVersion = function() {
+    try {
+        // Show temporary alert or feedback
+        const btn = document.querySelector('button[onclick="window.forceUpdateVersion()"]');
+        if (btn) {
+            btn.innerHTML = btn.innerHTML === "Update" ? "Updating..." : "A atualizar...";
+            btn.style.opacity = "0.7";
+        }
 
+        // Clear cookies
+        document.cookie.split(";").forEach(function(c) { 
+            document.cookie = c.replace(/^ +/, "").replace(/=.*/, "=;expires=" + new Date().toUTCString() + ";path=/"); 
+        });
+        
+        // Clear local storage & session storage
+        localStorage.clear();
+        sessionStorage.clear();
+        
+        // Clear Service Worker Caches
+        if ('caches' in window) {
+            caches.keys().then(function(names) {
+                for (let name of names) {
+                    caches.delete(name);
+                }
+            });
+        }
+        
+        // Unregister service workers
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.getRegistrations().then(function(registrations) {
+                for(let registration of registrations) {
+                    registration.unregister();
+                }
+            });
+        }
+        
+        // Hard reload after a short delay
+        setTimeout(() => {
+            window.location.reload(true);
+        }, 800);
+        
+    } catch (e) {
+        console.error('Error clearing caches:', e);
+        window.location.reload(true);
+    }
+};

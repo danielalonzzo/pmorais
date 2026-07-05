@@ -4322,21 +4322,23 @@ body.loaded #preloader {
     .footer-container-new {
         grid-template-columns: 1fr;
         gap: 40px;
-        text-align: left;
+        text-align: center;
+        padding: 0 20px;
     }
 
     .branding-col {
-        align-items: flex-start;
+        align-items: center;
         padding-right: 0;
     }
 
     .footer-links-list {
-        align-items: flex-start;
+        align-items: center;
     }
 
     .footer-logo-elysium {
-        align-self: flex-start;
+        align-self: center;
         transform: scale(1.2);
+        transform-origin: center center;
         /* Slightly smaller on mobile */
     }
 
@@ -4344,6 +4346,7 @@ body.loaded #preloader {
         align-items: center;
         text-align: center;
         width: 100%;
+        margin: 0;
     }
 }
 
@@ -5661,6 +5664,27 @@ body.loaded #preloader {
     margin-right: -2px;
 }
 
+/* Discreet Logout Button */
+#btn-logout {
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    color: var(--color-text-dim) !important;
+    font-size: 0.85rem !important;
+    opacity: 0.6;
+    padding: 10px !important;
+    text-transform: none;
+    letter-spacing: normal;
+    transition: opacity 0.3s ease, color 0.3s ease;
+}
+
+#btn-logout:hover {
+    background: transparent !important;
+    color: var(--color-text) !important;
+    opacity: 1;
+    transform: none !important;
+}
+
 /* Dashboard Actions Responsiveness - IMPROVED */
 @media (max-width: 768px) {
     .dashboard-actions {
@@ -5689,8 +5713,7 @@ body.loaded #preloader {
     #btn-logout {
         grid-column: span 2;
         flex-direction: row !important;
-        padding: 15px 20px !important;
-        margin-top: 5px;
+        margin-top: 15px;
     }
     
     .dashboard-actions .btn-admin-premium {
@@ -5830,7 +5853,7 @@ body.loaded #preloader {
     padding: 20px;
     background: var(--color-surface);
     border-radius: 20px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.08);
     border: 1px solid rgba(230, 174, 23, 0.2);
     position: relative;
     overflow-x: hidden; /* Prevent Android horizontal bleed */
