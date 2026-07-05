@@ -21,28 +21,27 @@ const postForm = document.getElementById('post-form');
 
 // Initialize Quill editors
 let quillPT, quillEN;
+let autoSaveInterval;
+let lastSavedData = '';
 
 function initEditors() {
     const toolbarOptions = [
-        [{ 'header': [2, 3, 4, false] }],
-        ['bold', 'italic', 'underline', 'strike'],
-        ['blockquote', 'code-block'],
+        ['bold', 'italic', 'underline'],
         [{ 'list': 'ordered'}, { 'list': 'bullet' }],
-        [{ 'color': [] }, { 'background': [] }],
-        ['link', 'image', 'video'],
+        ['link'],
         ['clean']
     ];
     
     quillPT = new Quill('#editor-pt', {
         theme: 'snow',
         modules: { toolbar: toolbarOptions },
-        placeholder: 'Escreve aqui o conteúdo em Português...'
+        placeholder: 'Escreve aqui o conteúdo...'
     });
     
     quillEN = new Quill('#editor-en', {
         theme: 'snow',
         modules: { toolbar: toolbarOptions },
-        placeholder: 'Write the English content here...'
+        placeholder: 'Write the content here...'
     });
 }
 
@@ -97,8 +96,7 @@ async function loadPosts() {
             const statusText = data.published ? 'Publicado' : 'Rascunho';
             
             card.innerHTML = `
-                <img src="${data.coverImageUrl || 'images/default-blog.jpg'}" alt="Capa" loading="lazy" onerror="this.src='images/logo/logo_amarelo.png'">
-                <h3>${data.title_pt}</h3>
+                <h3 style="margin-top: 10px;">${data.title_pt || data.title_en || 'Sem Título'}</h3>
                 <p class="status ${statusClass}"><i data-lucide="${data.published ? 'check-circle' : 'edit-3'}" style="width:14px;height:14px;margin-bottom:-2px;"></i> ${statusText}</p>
                 <div class="post-actions">
                     <button class="btn-edit" data-id="${docSnap.id}"><i data-lucide="edit-2"></i> Editar</button>
@@ -120,80 +118,183 @@ async function loadPosts() {
 
     } catch (error) {
         console.error("Error loading posts:", error);
-        blogGrid.innerHTML = `<p style="grid-column: 1/-1; text-align: center; color: red;">Erro ao carregar artigos.</p>`;
+        blogGrid.innerHTML = `<p style="grid-column: 1/-1; text-align: center; color: red;">Erro ao carregar artigos: ${error.message}</p>`;
+    }
+}
+
+function handleFormatChange() {
+    const format = document.getElementById('post-format').value;
+    const dynamicFields = document.querySelectorAll('.format-fields');
+    
+    dynamicFields.forEach(el => el.style.display = 'none');
+    
+    if (format === 'video') {
+        document.getElementById('dynamic-fields-video').style.display = 'block';
+    } else if (format === 'pdf') {
+        document.getElementById('dynamic-fields-pdf').style.display = 'block';
+    } else if (format === 'clinical_case') {
+        document.getElementById('dynamic-fields-case').style.display = 'block';
     }
 }
 
 function setupEventListeners() {
+    document.getElementById('post-format').addEventListener('change', handleFormatChange);
+
+    // Video Preview Logic
+    const videoUrlInput = document.getElementById('post-video-url');
+    const videoPreviewContainer = document.getElementById('video-preview-container');
+    const videoPreviewIframe = document.getElementById('video-preview-iframe');
+
+    videoUrlInput.addEventListener('input', () => {
+        let url = videoUrlInput.value;
+        if (!url) {
+            videoPreviewContainer.style.display = 'none';
+            return;
+        }
+        
+        let embedUrl = url;
+        if (url.includes('youtube.com/watch?v=')) {
+            embedUrl = url.replace('watch?v=', 'embed/');
+        } else if (url.includes('youtu.be/')) {
+            embedUrl = url.replace('youtu.be/', 'youtube.com/embed/');
+        }
+        
+        if (embedUrl !== url || embedUrl.includes('embed')) {
+            videoPreviewIframe.src = embedUrl;
+            videoPreviewContainer.style.display = 'block';
+        } else {
+            videoPreviewContainer.style.display = 'none';
+        }
+    });
+
+    // Video Preview Logic
+
+    // Modal behavior
     btnNewPost.addEventListener('click', () => {
         postForm.reset();
         document.getElementById('post-id').value = '';
         quillPT.root.innerHTML = '';
         quillEN.root.innerHTML = '';
         document.getElementById('modal-title').textContent = 'Novo Artigo';
+        document.getElementById('auto-save-status').innerHTML = '<i data-lucide="cloud-off" style="width: 14px; height: 14px;"></i> Não guardado';
+        handleFormatChange();
+        videoPreviewContainer.style.display = 'none';
+        lastSavedData = JSON.stringify(getFormData());
         modal.classList.add('active');
+        if (window.lucide) window.lucide.createIcons();
     });
 
     btnCloseModal.addEventListener('click', () => {
         modal.classList.remove('active');
+        clearInterval(autoSaveInterval);
     });
+
+    // Auto-save logic
+    autoSaveInterval = setInterval(async () => {
+        if (modal.classList.contains('active')) {
+            const id = document.getElementById('post-id').value;
+            // Only auto-save if an ID exists (meaning it's not the very first keystroke of a new post without manual save)
+            if (id || document.getElementById('title-pt').value.trim() !== '') {
+                const currentData = JSON.stringify(getFormData());
+                if (currentData !== lastSavedData) {
+                    await autoSavePost();
+                }
+            }
+        }
+    }, 30000); // 30 seconds
 
     postForm.addEventListener('submit', async (e) => {
         e.preventDefault();
         
         const submitBtn = document.getElementById('btn-save-post');
         submitBtn.disabled = true;
-        submitBtn.innerHTML = '<i data-lucide="loader-2" class="spin"></i> A Guardar...';
+        submitBtn.innerHTML = '<i data-lucide="loader-2" class="spin"></i> A Publicar...';
         if (window.lucide) window.lucide.createIcons();
 
         try {
-            const id = document.getElementById('post-id').value;
-            const slug = document.getElementById('post-slug').value.trim().toLowerCase();
-            const isNew = !id;
-            const docId = isNew ? slug : id;
-            
-            if (isNew && !slug) {
-                throw new Error("Slug é obrigatório");
-            }
-
-            const postData = {
-                slug: slug,
-                title_pt: document.getElementById('title-pt').value,
-                title_en: document.getElementById('title-en').value,
-                summary_pt: document.getElementById('summary-pt').value,
-                summary_en: document.getElementById('summary-en').value,
-                content_pt: quillPT.root.innerHTML,
-                content_en: quillEN.root.innerHTML,
-                coverImageUrl: document.getElementById('post-cover').value,
-                published: document.getElementById('post-published').checked,
-                updatedAt: serverTimestamp()
-            };
-
-            if (isNew) {
-                // Check if slug exists
-                const existingDoc = await getDoc(doc(db, "blog_posts", docId));
-                if (existingDoc.exists()) {
-                    throw new Error("Já existe um artigo com este Slug. Escolhe outro.");
-                }
-                postData.createdAt = serverTimestamp();
-                postData.author = "Paulo Morais";
-                postData.views = 0;
-            }
-
-            await setDoc(doc(db, "blog_posts", docId), postData, { merge: true });
-            
-            modal.classList.remove('active');
-            loadPosts();
-            
+            await savePost(true); // true means full save + close
         } catch (error) {
             console.error("Error saving post:", error);
             alert("Erro: " + error.message);
         } finally {
             submitBtn.disabled = false;
-            submitBtn.innerHTML = '<i data-lucide="save"></i> Guardar Artigo';
+            submitBtn.innerHTML = '<i data-lucide="upload-cloud"></i> Publicar Alterações';
             if (window.lucide) window.lucide.createIcons();
         }
     });
+}
+
+function getFormData() {
+    return {
+        format: document.getElementById('post-format').value || 'article',
+        category: document.getElementById('post-category').value || 'osteopatia',
+        title_pt: document.getElementById('title-pt').value.trim(),
+        title_en: document.getElementById('title-en').value.trim(),
+        summary_pt: document.getElementById('summary-pt').value.trim(),
+        summary_en: document.getElementById('summary-en').value.trim(),
+        content_pt: quillPT.root.innerHTML,
+        content_en: quillEN.root.innerHTML,
+        coverImageUrl: document.getElementById('post-cover').value,
+        published: document.getElementById('post-published').checked,
+        videoUrl: document.getElementById('post-video-url').value,
+        pdfUrl: document.getElementById('post-pdf-url').value,
+        beforeImageUrl: document.getElementById('post-before-img').value,
+        afterImageUrl: document.getElementById('post-after-img').value,
+    };
+}
+
+async function savePost(isManualSave = false) {
+    const id = document.getElementById('post-id').value;
+    const isNew = !id;
+    
+    const postData = getFormData();
+
+    if (isManualSave) {
+        const hasPT = postData.title_pt && postData.summary_pt;
+        const hasEN = postData.title_en && postData.summary_en;
+        
+        if (!hasPT && !hasEN) {
+            throw new Error("Tem de preencher o Título e Resumo em pelo menos um idioma (Português ou Inglês).");
+        }
+    }
+
+    postData.updatedAt = serverTimestamp();
+
+    let docRef;
+    if (isNew) {
+        postData.createdAt = serverTimestamp();
+        postData.author = "Paulo Morais";
+        postData.views = 0;
+        docRef = doc(collection(db, "blog_posts")); // Generate auto ID
+        document.getElementById('post-id').value = docRef.id;
+    } else {
+        docRef = doc(db, "blog_posts", id);
+    }
+
+    await setDoc(docRef, postData, { merge: true });
+    lastSavedData = JSON.stringify(postData);
+
+    const statusEl = document.getElementById('auto-save-status');
+    const now = new Date();
+    statusEl.innerHTML = `<i data-lucide="check-circle" style="width: 14px; height: 14px; color: green;"></i> Guardado às ${now.getHours()}:${now.getMinutes().toString().padStart(2, '0')}`;
+    if (window.lucide) window.lucide.createIcons();
+
+    if (isManualSave) {
+        modal.classList.remove('active');
+        loadPosts();
+    }
+}
+
+async function autoSavePost() {
+    try {
+        const statusEl = document.getElementById('auto-save-status');
+        statusEl.innerHTML = `<i data-lucide="loader-2" class="spin" style="width: 14px; height: 14px;"></i> A guardar...`;
+        if (window.lucide) window.lucide.createIcons();
+        
+        await savePost(false); // background save
+    } catch (e) {
+        console.warn("Auto-save failed:", e);
+    }
 }
 
 async function editPost(id) {
@@ -203,7 +304,6 @@ async function editPost(id) {
             const data = docSnap.data();
             
             document.getElementById('post-id').value = id;
-            document.getElementById('post-slug').value = data.slug || id;
             document.getElementById('post-cover').value = data.coverImageUrl || '';
             document.getElementById('title-pt').value = data.title_pt || '';
             document.getElementById('title-en').value = data.title_en || '';
@@ -211,11 +311,30 @@ async function editPost(id) {
             document.getElementById('summary-en').value = data.summary_en || '';
             document.getElementById('post-published').checked = data.published || false;
             
+            // New fields
+            document.getElementById('post-format').value = data.format || 'article';
+            document.getElementById('post-category').value = data.category || 'osteopatia';
+            document.getElementById('post-video-url').value = data.videoUrl || '';
+            document.getElementById('post-pdf-url').value = data.pdfUrl || '';
+            document.getElementById('post-before-img').value = data.beforeImageUrl || '';
+            document.getElementById('post-after-img').value = data.afterImageUrl || '';
+
+            handleFormatChange();
+            
+            // Trigger video preview if exists
+            if (data.videoUrl) {
+                document.getElementById('post-video-url').dispatchEvent(new Event('input'));
+            }
+
             quillPT.root.innerHTML = data.content_pt || '';
             quillEN.root.innerHTML = data.content_en || '';
             
-            document.getElementById('modal-title').textContent = 'Editar Artigo';
+            document.getElementById('modal-title').textContent = 'Editar Publicação';
+            document.getElementById('auto-save-status').innerHTML = `<i data-lucide="cloud" style="width: 14px; height: 14px;"></i> Em rascunho`;
+            
+            lastSavedData = JSON.stringify(getFormData());
             modal.classList.add('active');
+            if (window.lucide) window.lucide.createIcons();
         }
     } catch (error) {
         console.error("Error fetching post:", error);
