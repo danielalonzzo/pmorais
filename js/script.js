@@ -470,3 +470,423 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 })();
 
+/* ── System Info Modal (Footer Version) ── */
+(function() {
+    // Determine current version from the footer or hardcode it based on the user's request
+    const versionSpan = document.querySelector('.crafted-text span');
+    let appVersion = '1.5.3 (Build 2026-07)'; // default fallback
+    if (versionSpan) {
+        // Attempt to extract version
+        const vText = versionSpan.textContent.trim();
+        if (vText) appVersion = vText + ' (Build 2026-07)';
+        
+        // Make span clickable
+        versionSpan.style.cursor = 'pointer';
+        versionSpan.style.textDecoration = 'underline';
+        versionSpan.title = 'Ver información del sistema';
+        
+        versionSpan.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            showSystemInfoModal();
+        });
+    }
+
+    function showSystemInfoModal() {
+        // Check if modal already exists
+        let modal = document.getElementById('system-info-modal');
+        if (!modal) {
+            modal = document.createElement('div');
+            modal.id = 'system-info-modal';
+            modal.className = 'system-info-modal';
+            
+            // Detect Language
+            const isEn = window.location.pathname.includes('/en/') || window.location.pathname.endsWith('/en');
+            
+            const i18n = {
+                pt: {
+                    title: "INFORMAÇÃO DO SISTEMA",
+                    softwareSpecs: "ESPECIFICAÇÕES DE SOFTWARE",
+                    interfaceVer: "Versão da Interface",
+                    buildComp: "Compilação (Build)",
+                    productLic: "Licença de Produto",
+                    secCompliance: "SEGURANÇA E CONFORMIDADE",
+                    privacyDir: "Diretiva de Privacidade",
+                    secInfra: "Infraestrutura de Segurança",
+                    terms: "Termos e Condições",
+                    privacyPol: "Política de Privacidade",
+                    viewDoc: "Ver documento",
+                    corpInfo: "INFORMAÇÃO CORPORATIVA",
+                    org: "Organização",
+                    webPortal: "Portal Web",
+                    supportChannel: "Canal de Suporte",
+                    techSupport: "Canal de Suporte Técnico",
+                    softAttr: "ATRIBUIÇÕES DE SOFTWARE",
+                    iconEco: "Ecossistema de Ícones",
+                    devBy: 'Desenvolvido por <a href="https://elysiumdr.eu" target="_blank" rel="noopener noreferrer" class="sys-link" style="color: inherit; text-decoration: underline;">Elysium λ Development & Research</a>.',
+                    rights: "© 2026 Consciênciavaliativa Unipessoal Lda. Todos os direitos reservados."
+                },
+                en: {
+                    title: "SYSTEM INFORMATION",
+                    softwareSpecs: "SOFTWARE SPECIFICATIONS",
+                    interfaceVer: "Interface Version",
+                    buildComp: "Build Compilation",
+                    productLic: "Product Licence",
+                    secCompliance: "SECURITY & COMPLIANCE",
+                    privacyDir: "Privacy Directive",
+                    secInfra: "Security Infrastructure",
+                    terms: "Terms & Conditions",
+                    privacyPol: "Privacy Policy",
+                    viewDoc: "View document",
+                    corpInfo: "CORPORATE INFORMATION",
+                    org: "Organisation",
+                    webPortal: "Web Portal",
+                    supportChannel: "Support Channel",
+                    techSupport: "Technical Support Channel",
+                    softAttr: "SOFTWARE ATTRIBUTIONS",
+                    iconEco: "Icon Ecosystem",
+                    devBy: 'Developed by <a href="https://elysiumdr.eu" target="_blank" rel="noopener noreferrer" class="sys-link" style="color: inherit; text-decoration: underline;">Elysium λ Development & Research</a>.',
+                    rights: "© 2026 Consciênciavaliativa Unipessoal Lda. All rights reserved."
+                }
+            };
+
+            const t = isEn ? i18n.en : i18n.pt;
+            const termsLink = isEn ? '../termos-e-condicoes.html' : 'termos-e-condicoes.html';
+            const privacyLink = isEn ? '../politica-privacidade.html' : 'politica-privacidade.html';
+            
+            const isLight = document.body.classList.contains('light-mode');
+            const logoFile = isLight ? 'paulo_morais-08.png' : 'logo_amarelo_alpha.png';
+            const logoPath = isEn ? '../images/logo/' + logoFile : 'images/logo/' + logoFile;
+            
+            // Dynamic Build Date based on last modified time
+            const lastModDate = new Date(document.lastModified);
+            const buildDate = !isNaN(lastModDate.getTime()) 
+                ? lastModDate.getFullYear() + '-' + String(lastModDate.getMonth() + 1).padStart(2, '0')
+                : '2026-07';
+            
+            modal.innerHTML = `
+                <div class="system-info-content-ios">
+                    <div class="sys-header">
+                        <span class="system-info-close-ios"><i data-lucide="x"></i></span>
+                        <div class="sys-logo"><img src="${logoPath}" alt="Paulo Morais" class="logo-img"></div>
+                        <h1>Paulo Morais</h1>
+                        <div class="sys-subtitle">${t.title}</div>
+                    </div>
+                    
+                    <div class="sys-scroll-area">
+                        <div class="sys-group">
+                            <div class="sys-group-title">${t.softwareSpecs}</div>
+                            <div class="sys-card">
+                                <div class="sys-row">
+                                    <span class="sys-label">${t.interfaceVer}</span>
+                                    <span class="sys-value">${appVersion.split(' ')[0]}</span>
+                                </div>
+                                <div class="sys-row">
+                                    <span class="sys-label">${t.buildComp}</span>
+                                    <span class="sys-value">${buildDate}</span>
+                                </div>
+                                <div class="sys-row">
+                                    <span class="sys-label">${t.productLic}</span>
+                                    <span class="sys-value">ELY-6QU2-HYL4-UER4</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="sys-group">
+                            <div class="sys-group-title">${t.secCompliance}</div>
+                            <div class="sys-card">
+                                <div class="sys-row">
+                                    <span class="sys-label">${t.privacyDir}</span>
+                                    <span class="sys-value">Cookie Consent v1.0 Compliant</span>
+                                </div>
+                                <div class="sys-row">
+                                    <span class="sys-label">${t.secInfra}</span>
+                                    <span class="sys-value">CSP Level 3 Implemented</span>
+                                </div>
+                                <div class="sys-row">
+                                    <span class="sys-label">${t.terms}</span>
+                                    <a href="${termsLink}" class="sys-link">${t.viewDoc}</a>
+                                </div>
+                                <div class="sys-row">
+                                    <span class="sys-label">${t.privacyPol}</span>
+                                    <a href="${privacyLink}" class="sys-link">${t.viewDoc}</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="sys-group">
+                            <div class="sys-group-title">${t.corpInfo}</div>
+                            <div class="sys-card">
+                                <div class="sys-row">
+                                    <span class="sys-label">${t.org}</span>
+                                    <span class="sys-value">Consciênciavaliativa Unipessoal Lda.</span>
+                                </div>
+                                <div class="sys-row">
+                                    <span class="sys-label">${t.webPortal}</span>
+                                    <a href="https://pmorais.pt" target="_blank" rel="noopener noreferrer" class="sys-link">pmorais.pt</a>
+                                </div>
+                                <div class="sys-row">
+                                    <span class="sys-label">${t.supportChannel}</span>
+                                    <a href="mailto:pt@pmorais.pt" class="sys-link">pt@pmorais.pt</a>
+                                </div>
+                                <div class="sys-row">
+                                    <span class="sys-label">${t.techSupport}</span>
+                                    <a href="mailto:daniel.morales@elysiumdr.eu" class="sys-link">daniel.morales@elysiumdr.eu</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="sys-group">
+                            <div class="sys-group-title">${t.softAttr}</div>
+                            <div class="sys-card">
+                                <div class="sys-row">
+                                    <span class="sys-label">${t.iconEco}</span>
+                                    <span class="sys-value">Lucide Icons v0.460.0</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="sys-footer">
+                            ${t.devBy}<br>
+                            ${t.rights}
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            // Add Styles
+            const style = document.createElement('style');
+            style.textContent = `
+                .system-info-modal {
+                    position: fixed;
+                    top: 0; left: 0; width: 100%; height: 100%;
+                    background: rgba(0, 0, 0, 0.6);
+                    backdrop-filter: blur(5px);
+                    -webkit-backdrop-filter: blur(5px);
+                    z-index: 9999;
+                    display: none;
+                    justify-content: center;
+                    align-items: center;
+                    opacity: 0;
+                    transition: opacity 0.3s ease;
+                }
+                .system-info-modal.active {
+                    display: flex;
+                    opacity: 1;
+                }
+                .system-info-content-ios {
+                    background: var(--color-bg, #0B0B0B);
+                    width: 100%;
+                    max-width: 650px;
+                    height: 90vh;
+                    max-height: 850px;
+                    border-radius: 14px;
+                    display: flex;
+                    flex-direction: column;
+                    position: relative;
+                    font-family: var(--font-body, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif);
+                    box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+                    overflow: hidden;
+                    color: var(--color-text, #ffffff);
+                    border: 1px solid rgba(255,255,255,0.1);
+                }
+                body.light-mode .system-info-content-ios {
+                    border: 1px solid rgba(0,0,0,0.1);
+                    box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+                }
+                .system-info-close-ios {
+                    position: absolute;
+                    top: 16px;
+                    right: 16px;
+                    cursor: pointer;
+                    color: var(--color-text-dim, #cccccc);
+                    background: var(--color-surface, #111111);
+                    border-radius: 50%;
+                    padding: 6px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    transition: background 0.2s, color 0.2s;
+                    border: 1px solid rgba(255,255,255,0.1);
+                }
+                body.light-mode .system-info-close-ios {
+                    background: #e5e5ea;
+                    border: none;
+                    color: #8e8e93;
+                }
+                .system-info-close-ios:hover {
+                    color: var(--color-text, #ffffff);
+                    background: rgba(255,255,255,0.1);
+                }
+                body.light-mode .system-info-close-ios:hover {
+                    background: #d1d1d6;
+                    color: #000;
+                }
+                .system-info-close-ios svg {
+                    width: 20px;
+                    height: 20px;
+                }
+                .sys-header {
+                    padding: 40px 20px 20px;
+                    text-align: center;
+                    background: var(--color-bg, #0B0B0B);
+                    flex-shrink: 0;
+                }
+                .sys-logo {
+                    margin-bottom: 15px;
+                }
+                .sys-logo img {
+                    width: 70px;
+                    height: auto;
+                    display: block;
+                    margin: 0 auto;
+                }
+                body.light-mode .sys-logo img {
+                    /* If logo needs to be fully dark on light mode, invert and brightness(0) could be used */
+                    /* filter: invert(1) brightness(0); */
+                }
+                .sys-header h1 {
+                    font-size: 24px;
+                    font-weight: 600;
+                    margin: 0 0 4px 0;
+                    color: var(--color-text, #ffffff);
+                    font-family: var(--font-heading, inherit);
+                }
+                .sys-subtitle {
+                    font-size: 13px;
+                    font-weight: 500;
+                    color: var(--color-text-dim, #cccccc);
+                    text-transform: uppercase;
+                    letter-spacing: 0.5px;
+                }
+                .sys-scroll-area {
+                    flex: 1;
+                    overflow-y: auto;
+                    padding: 0 20px 40px;
+                }
+                .sys-group {
+                    margin-top: 24px;
+                }
+                .sys-group-title {
+                    font-size: 13px;
+                    color: var(--color-text-dim, #cccccc);
+                    margin-bottom: 8px;
+                    margin-left: 16px;
+                    text-transform: uppercase;
+                }
+                .sys-card {
+                    background: var(--color-surface, #111111);
+                    border-radius: 10px;
+                    overflow: hidden;
+                    border: 1px solid rgba(255,255,255,0.05);
+                }
+                body.light-mode .sys-card {
+                    background: #ffffff;
+                    border: 1px solid rgba(0,0,0,0.1);
+                }
+                .sys-row {
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    padding: 14px 16px;
+                    border-bottom: 1px solid rgba(255,255,255,0.05);
+                    font-size: 15px;
+                }
+                body.light-mode .sys-row {
+                    border-bottom: 1px solid rgba(0,0,0,0.1);
+                }
+                .sys-row:last-child {
+                    border-bottom: none;
+                }
+                .sys-label {
+                    color: var(--color-text, #ffffff);
+                }
+                .sys-value {
+                    color: var(--color-text-dim, #cccccc);
+                    text-align: right;
+                }
+                .sys-link {
+                    color: var(--color-primary, #E6AE17);
+                    text-decoration: none;
+                }
+                .sys-link:hover {
+                    text-decoration: underline;
+                    color: var(--color-primary-hover, #d5a015);
+                }
+                .sys-footer {
+                    margin-top: 40px;
+                    text-align: center;
+                    font-size: 12px;
+                    color: var(--color-text-dim, #cccccc);
+                    line-height: 1.5;
+                }
+                /* Scrollbar for modal */
+                .sys-scroll-area::-webkit-scrollbar {
+                    width: 6px;
+                }
+                .sys-scroll-area::-webkit-scrollbar-track {
+                    background: transparent;
+                }
+                .sys-scroll-area::-webkit-scrollbar-thumb {
+                    background: var(--color-surface, #333);
+                    border-radius: 4px;
+                }
+                body.light-mode .sys-scroll-area::-webkit-scrollbar-thumb {
+                    background: #c7c7cc;
+                }
+                @media (max-width: 600px) {
+                    .system-info-content-ios {
+                        height: 100vh;
+                        max-height: 100vh;
+                        border-radius: 0;
+                        border: none;
+                    }
+                }
+            `;
+            document.head.appendChild(style);
+            document.body.appendChild(modal);
+
+            // Re-initialize Lucide Icons for the new close icon
+            if (typeof lucide !== 'undefined') {
+                lucide.createIcons({
+                    root: modal
+                });
+            }
+
+            // Close events
+            const closeBtn = modal.querySelector('.system-info-close-ios');
+            closeBtn.addEventListener('click', closeSystemInfoModal);
+            
+            modal.addEventListener('click', function(e) {
+                if (e.target === modal) {
+                    closeSystemInfoModal();
+                }
+            });
+            
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape' && modal.classList.contains('active')) {
+                    closeSystemInfoModal();
+                }
+            });
+        }
+        
+        // Show modal
+        modal.style.display = 'flex';
+        // Force reflow
+        void modal.offsetWidth;
+        modal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeSystemInfoModal() {
+        const modal = document.getElementById('system-info-modal');
+        if (modal) {
+            modal.classList.remove('active');
+            document.body.style.overflow = '';
+            setTimeout(() => {
+                modal.style.display = 'none';
+            }, 300);
+        }
+    }
+})();
+
