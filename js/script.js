@@ -10,6 +10,16 @@ document.addEventListener('DOMContentLoaded', () => {
         console.warn('Lucide library not loaded');
     }
 
+    // Toggle "Leave a review" CTA based on auth state
+    const reviewCta = document.getElementById('leave-review-cta');
+    if (reviewCta) {
+        if (localStorage.getItem('pm_is_logged_in') === 'true') {
+            reviewCta.style.display = 'block';
+        } else {
+            reviewCta.style.display = 'none';
+        }
+    }
+
     // Header Scroll Effect
     const header = document.getElementById('header');
     window.addEventListener('scroll', () => {
