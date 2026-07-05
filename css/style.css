@@ -3253,7 +3253,7 @@ a.about-hero-photo.ig-photo-link:hover .ig-feed-overlay {
     background: linear-gradient(to bottom, #E6AE17 0%, #FFC107 100%);
     border-radius: 50px;
     box-shadow: 0 25px 60px rgba(230, 174, 23, 0.45);
-    padding: 60px 50px;
+    padding: 60px 50px 80px 50px;
     position: absolute;
     top: 0;
     left: 0;
@@ -3313,22 +3313,7 @@ a.about-hero-photo.ig-photo-link:hover .ig-feed-overlay {
     text-align: center;
 }
 
-/* Testimonial Pagination */
-.testimonial-pagination {
-    display: flex;
-    gap: 10px;
-    justify-content: center;
-    margin-top: 20px;
-}
 
-.testimonial-pagination .dot {
-    width: 12px;
-    height: 12px;
-    border-radius: 50%;
-    background-color: rgba(255, 255, 255, 0.3);
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
 
 .testimonial-pagination .dot.active {
     background-color: var(--color-primary);
