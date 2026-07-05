@@ -96,15 +96,18 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // --- Testimonial Carousel System ---
-    const setupCarousel = () => {
+    let _carouselTimer = null;
+    window.setupCarousel = () => {
         const testimonials = document.querySelectorAll('.testimonial-card-gold, .testimonial-card-yellow');
         const paginations = document.querySelectorAll('.testimonial-pagination');
 
         if (testimonials.length === 0) return;
 
         let currentIndex = 0;
-        let timer;
         const speed = 6000;
+
+        // Clear any previous timer from a prior initialisation
+        if (_carouselTimer) clearInterval(_carouselTimer);
 
         const updateUI = (index) => {
             // Update Cards
@@ -133,19 +136,21 @@ document.addEventListener('DOMContentLoaded', () => {
         };
 
         const startTimer = () => {
-            clearInterval(timer);
-            timer = setInterval(goToNext, speed);
+            clearInterval(_carouselTimer);
+            _carouselTimer = setInterval(goToNext, speed);
         };
 
         // Initialize
         updateUI(0);
         startTimer();
 
-        // Event Listeners for Dots
+        // Event Listeners for Dots — re-attach by cloning to avoid duplicate listeners
         paginations.forEach(p => {
             const dots = p.querySelectorAll('.dot');
             dots.forEach((dot, i) => {
-                dot.addEventListener('click', () => {
+                const freshDot = dot.cloneNode(true);
+                dot.parentNode.replaceChild(freshDot, dot);
+                freshDot.addEventListener('click', () => {
                     currentIndex = i;
                     updateUI(currentIndex);
                     startTimer(); // Reset timer on interaction
@@ -174,14 +179,14 @@ document.addEventListener('DOMContentLoaded', () => {
         const containers = document.querySelectorAll('.testimonial-carousel-wrapper, .testimonials-right');
         containers.forEach(container => {
             // Pause on Hover
-            container.addEventListener('mouseenter', () => clearInterval(timer));
+            container.addEventListener('mouseenter', () => clearInterval(_carouselTimer));
             container.addEventListener('mouseleave', startTimer);
 
             // Touch events
             container.addEventListener('touchstart', e => {
                 touchStartX = e.changedTouches[0].screenX;
                 // Optionally pause timer on manual touch
-                clearInterval(timer);
+                clearInterval(_carouselTimer);
             }, { passive: true });
 
             container.addEventListener('touchend', e => {
@@ -191,7 +196,11 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     };
 
-    setupCarousel();
+    // Expose for dynamic reviews to re-initialise after appending new cards
+    window.initTestimonialCarousel = setupCarousel;
+
+    window.setupCarousel();
+
 
 
     // Force Video Autoplay (Robustness for Large Files)

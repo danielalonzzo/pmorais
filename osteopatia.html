@@ -637,7 +637,7 @@
                                 </div>
                             </div>
 
-                            <!-- Shared Pagination -->
+                            <!-- Testimonial pagination -->
                             <div class="testimonial-pagination">
                                 <span class="dot active"></span>
                                 <span class="dot"></span>
@@ -653,6 +653,12 @@
                                 <span class="dot"></span>
                                 <span class="dot"></span>
                             </div>
+
+                            <!-- Leave Review CTA (Hidden by default, shown via auth.js if logged in) -->
+                            <div id="leave-review-cta" style="display: none; text-align: center; margin-top: 30px;">
+                                <a href="perfil.html?tab=review-osteopatia" class="btn btn-primary" style="padding: 12px 30px; border-radius: 50px; font-weight: 600;">Deixar avaliação</a>
+                            </div>
+
                         </div>
                     </div>
                 </div>
@@ -858,6 +864,105 @@
         });
     </script>
     <script nonce="pmorais-2026" src="js/cookie-consent.js" defer></script>
+    <!-- Dynamic Reviews Loader for Osteopatia -->
+    <script nonce="pmorais-2026">
+        document.addEventListener('DOMContentLoaded', async function () {
+            try {
+                const snap = await db.collection('reviews')
+                    .where('service', '==', 'osteopatia')
+                    .where('hidden', '==', false)
+                    .get();
+
+                if (snap.empty) return;
+
+                const dbReviews = [];
+                snap.forEach(function (docSnap) {
+                    const data = docSnap.data();
+                    if (!data.isFromHTML) {
+                        dbReviews.push(data);
+                    }
+                });
+                dbReviews.sort(function (a, b) {
+                    return new Date(b.timestamp) - new Date(a.timestamp);
+                });
+
+                const carousel = document.querySelector('.testimonial-carousel-wrapper');
+                const dotsContainer = document.querySelector('.testimonial-pagination');
+                if (!carousel) return;
+
+                const firstCard = carousel.querySelector('.testimonial-card-gold, .testimonial-card-yellow');
+                let firstDot = null;
+                if (dotsContainer) {
+                    firstDot = dotsContainer.firstElementChild;
+                }
+
+                // We ignore existing data-index since script.js uses DOM position
+                let nextIndex = carousel.querySelectorAll('.testimonial-card-gold, .testimonial-card-yellow').length;
+
+                dbReviews.forEach(function (r) {
+                    const year = new Date(r.timestamp).getFullYear();
+                    const safeUserName = (typeof r.userName === 'string' ? r.userName : 'Anónimo').trim() || 'Anónimo';
+                    
+                    // Use exact original black badge to match design perfectly
+                    const badgeSvg = ' <i data-lucide="badge-check" style="width:18px; height:18px; color:#000; fill:#000; vertical-align: text-bottom;" aria-hidden="true"></i>';
+
+                    const div = document.createElement('div');
+                    div.className = 'testimonial-card-yellow';
+                    div.setAttribute('data-index', nextIndex);
+
+                    const contentDiv = document.createElement('div');
+                    contentDiv.className = 'testimonial-content';
+
+                    const nameEl = document.createElement('h4');
+                    nameEl.className = 'testimonial-name';
+                    nameEl.innerHTML = safeUserName.toUpperCase() + badgeSvg;
+
+                    const roleEl = document.createElement('p');
+                    roleEl.className = 'testimonial-role';
+                    roleEl.textContent = 'CLIENTE DESDE ' + year;
+
+                    const textEl = document.createElement('p');
+                    textEl.className = 'testimonial-text';
+                    textEl.textContent = typeof r.text === 'string' ? r.text.slice(0, 1000) : '';
+
+                    contentDiv.appendChild(nameEl);
+                    contentDiv.appendChild(roleEl);
+                    contentDiv.appendChild(textEl);
+                    div.appendChild(contentDiv);
+                    
+                    if (firstCard) {
+                        carousel.insertBefore(div, firstCard);
+                    } else {
+                        // fallback if no cards exist
+                        if (dotsContainer) {
+                            carousel.insertBefore(div, dotsContainer);
+                        } else {
+                            carousel.appendChild(div);
+                        }
+                    }
+
+                    const dot = document.createElement('span');
+                    dot.className = 'dot';
+                    if (firstDot) {
+                        dotsContainer.insertBefore(dot, firstDot);
+                    } else {
+                        dotsContainer.appendChild(dot);
+                    }
+
+                    nextIndex++;
+                });
+
+                if (typeof window.setupCarousel === 'function') {
+                    window.setupCarousel();
+                }
+                if (typeof lucide !== 'undefined') {
+                    lucide.createIcons();
+                }
+            } catch (err) {
+                console.error("Error loading osteopatia reviews:", err);
+            }
+        });
+    </script>
 </body>
 
 </html>

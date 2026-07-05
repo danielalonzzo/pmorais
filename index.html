@@ -752,6 +752,7 @@
                                 </div>
                             </div>
 
+                            <!-- Testimonial pagination -->
                             <div class="testimonial-pagination">
                                 <span class="dot active"></span>
                                 <span class="dot"></span>
@@ -762,6 +763,18 @@
                                 <span class="dot"></span>
                                 <span class="dot"></span>
                                 <span class="dot"></span>
+                            </div>
+
+                            <!-- Leave Review CTA (Hidden by default, shown via auth.js if logged in) -->
+                            <div id="leave-review-cta" style="display: none; text-align: center; margin-top: 30px;">
+                                <a href="perfil.html?tab=review-treino" class="btn btn-primary" style="padding: 12px 30px; border-radius: 50px; font-weight: 600;">Deixar avaliação</a>
+                            </div>
+
+                            <!-- CTA Review Button for Logged in Users -->
+                            <div class="review-cta-container auth-required hidden" style="text-align: center; margin-top: 30px;">
+                                <a href="perfil.html?tab=review-treino" class="btn btn-header-premium" style="display: inline-flex; align-items: center; gap: 8px;">
+                                    <i data-lucide="message-square" style="width: 18px; height: 18px;"></i> Deixar review
+                                </a>
                             </div>
                         </div>
                     </div>
@@ -1131,6 +1144,123 @@
                 }
             });
         }
+    </script>
+
+    <!-- Dynamic Reviews Loader: loads client reviews from Firestore and appends to carousel -->
+    <script nonce="pmorais-2026">
+        document.addEventListener('DOMContentLoaded', function () {
+            // Wait for Firebase to be ready (it's initialised in the block above)
+            async function loadIndexReviews() {
+                try {
+                    // Load reviews for 'treino' service (shown on index)
+                    const snap = await db.collection('reviews')
+                        .where('service', '==', 'treino')
+                        .where('hidden', '==', false)
+                        .get();
+
+                    if (snap.empty) return;
+
+                    // Sort by most recent
+                    const dbReviews = [];
+                    snap.forEach(function (docSnap) {
+                        const data = docSnap.data();
+                        if (!data.isFromHTML) {
+                            dbReviews.push(data);
+                        }
+                    });
+                    dbReviews.sort(function (a, b) {
+                        return new Date(b.timestamp) - new Date(a.timestamp);
+                    });
+
+                    const carousel = document.querySelector('.testimonial-carousel-wrapper');
+                    const dotsContainer = document.querySelector('.testimonial-pagination');
+                    if (!carousel) return;
+
+                    const firstCard = carousel.querySelector('.testimonial-card-gold, .testimonial-card-yellow');
+                    let firstDot = null;
+                    if (dotsContainer) {
+                        firstDot = dotsContainer.firstElementChild;
+                    }
+
+                    // We ignore existing data-index since script.js uses DOM position
+                    let nextIndex = carousel.querySelectorAll('.testimonial-card-gold, .testimonial-card-yellow').length;
+
+                    dbReviews.forEach(function (r) {
+                        const year = new Date(r.timestamp).getFullYear();
+                        const safeUserName = (typeof r.userName === 'string' ? r.userName : 'Anónimo').trim() || 'Anónimo';
+                        
+                        // Use exact original black badge to match design perfectly
+                        const badgeSvg = ' <i data-lucide="badge-check" style="width:18px; height:18px; color:#000; fill:#000; vertical-align: text-bottom;" aria-hidden="true"></i>';
+
+                        const div = document.createElement('div');
+                        div.className = 'testimonial-card-yellow';
+                        div.setAttribute('data-index', nextIndex);
+
+                        const contentDiv = document.createElement('div');
+                        contentDiv.className = 'testimonial-content';
+
+                        const nameEl = document.createElement('h4');
+                        nameEl.className = 'testimonial-name';
+                        nameEl.textContent = safeUserName.toUpperCase();
+                        nameEl.insertAdjacentHTML('beforeend', badgeSvg);
+
+                        const roleEl = document.createElement('p');
+                        roleEl.className = 'testimonial-role';
+                        roleEl.textContent = 'AVALIAÇÃO DE ' + year;
+
+                        const textEl = document.createElement('p');
+                        textEl.className = 'testimonial-text';
+                        textEl.textContent = typeof r.text === 'string' ? r.text.slice(0, 1000) : '';
+
+                        contentDiv.appendChild(nameEl);
+                        contentDiv.appendChild(roleEl);
+                        contentDiv.appendChild(textEl);
+                        div.appendChild(contentDiv);
+                        
+                        if (firstCard) {
+                            carousel.insertBefore(div, firstCard);
+                        } else {
+                            // fallback if no cards exist
+                            if (dotsContainer) {
+                                carousel.insertBefore(div, dotsContainer);
+                            } else {
+                                carousel.appendChild(div);
+                            }
+                        }
+
+                        // Add dot to existing pagination
+                        if (dotsContainer) {
+                            const dot = document.createElement('span');
+                            dot.className = 'dot';
+                            if (firstDot) {
+                                dotsContainer.insertBefore(dot, firstDot);
+                            } else {
+                                dotsContainer.appendChild(dot);
+                            }
+                        }
+
+                        nextIndex++;
+                    });
+
+                    // Re-initialise carousel dots if the carousel JS exposes a refresh hook
+                    if (typeof window.setupCarousel === 'function') {
+                        window.setupCarousel();
+                    }
+                    if (typeof lucide !== 'undefined') {
+                        lucide.createIcons();
+                    }
+                    if (typeof window.initTestimonialCarousel === 'function') {
+                        window.initTestimonialCarousel();
+                    }
+
+                } catch (e) {
+                    console.error('Error loading dynamic reviews on index:', e);
+                }
+            }
+
+            // Small delay to ensure db is ready (Firebase compat is synchronous after initializeApp)
+            setTimeout(loadIndexReviews, 500);
+        });
     </script>
 </body>
 

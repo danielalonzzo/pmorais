@@ -90,5 +90,14 @@ service cloud.firestore {
       // Solo el propietario o el admin pueden editar o borrar la reseña
       allow update, delete: if isOwner(resource.data.userId) || isAdmin();
     }
+
+    // === Envíos de Emails (Trigger Email Extension) ===
+    match /mail/{document} {
+      // El admin puede leer todos los emails.
+      allow read: if isAdmin();
+      // Cualquier usuario autenticado puede encolar un email.
+      allow create: if request.auth != null;
+      allow update, delete: if false;
+    }
   }
 }

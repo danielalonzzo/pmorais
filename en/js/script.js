@@ -96,7 +96,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // --- Testimonial Carousel System ---
-    const setupCarousel = () => {
+    window.setupCarousel = () => {
         const testimonials = document.querySelectorAll('.testimonial-card-gold, .testimonial-card-yellow');
         const paginations = document.querySelectorAll('.testimonial-pagination');
 
@@ -191,7 +191,10 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     };
 
-    setupCarousel();
+    // Expose for dynamic reviews to re-initialise after appending new cards
+    window.initTestimonialCarousel = window.setupCarousel;
+
+    window.setupCarousel();
 
 
     // Force Video Autoplay (Robustness for Large Files)
@@ -326,38 +329,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // GDPR Cookie Banner
-    const cookieConsent = localStorage.getItem('cookie_consent');
-    if (!cookieConsent) {
-        const banner = document.createElement('div');
-        banner.id = 'cookie-banner';
-        banner.className = 'cookie-banner';
-        banner.innerHTML = `
-            <p>We use cookies to improve your experience and for marketing purposes. By continuing, you agree to our <a href="politica-privacidade.html">Privacy Policy</a>.</p>
-            <div class="cookie-buttons">
-                <button id="accept-cookies" class="btn btn-primary btn-sm">Accept</button>
-                <button id="reject-cookies" class="btn btn-primary-black btn-sm" style="border: 1px solid #333;">Reject</button>
-            </div>
-        `;
-        document.body.appendChild(banner);
 
-        // Animation delay
-        setTimeout(() => {
-            banner.classList.add('visible');
-        }, 1000);
-
-        document.getElementById('accept-cookies').addEventListener('click', () => {
-            localStorage.setItem('cookie_consent', 'accepted');
-            banner.classList.remove('visible');
-            setTimeout(() => banner.remove(), 300);
-        });
-
-        document.getElementById('reject-cookies').addEventListener('click', () => {
-            localStorage.setItem('cookie_consent', 'rejected');
-            banner.classList.remove('visible');
-            setTimeout(() => banner.remove(), 300);
-        });
-    }
 
     // --- Social FAB Toggle (Mobile & Tablets) ---
     const fabContainer = document.querySelector('.fab-container');

@@ -151,6 +151,11 @@ document.addEventListener('DOMContentLoaded', () => {
                     checkReviewPrompt(user);
                 }
 
+                const reviewCta = document.getElementById('leave-review-cta');
+                if (reviewCta && !isAdminEmail) {
+                    reviewCta.style.display = 'block';
+                }
+
                 const isCompleted = !!userData?.profileCompleted;
 
                 // Check for booking parameter and auto-trigger wizard for clients
@@ -179,6 +184,11 @@ document.addEventListener('DOMContentLoaded', () => {
             localStorage.setItem('pm_is_logged_in', 'false');
             const pwaBtn = document.getElementById('pwa-install-btn');
             if (pwaBtn) pwaBtn.remove();
+            
+            const reviewCta = document.getElementById('leave-review-cta');
+            if (reviewCta) {
+                reviewCta.style.display = 'none';
+            }
 
             logger.log('User signed out');
             authCard.classList.remove('hidden');
@@ -1392,33 +1402,49 @@ async function loadDashboardPreview(isAdmin, user, data) {
 // ==========================================
 
 let currentReviewTab = 'treino';
-let newReviewRating = 5;
+let newReviewRating = 0; // 0 = unselected — user MUST choose before submitting
+
+// ── Star UI helpers ─────────────────────────────────────────────────────────
 
 function initializeReviewEvents() {
-    // Star rating interaction
-    const stars = document.querySelectorAll('#new-review-rating i');
+    const stars = document.querySelectorAll('#new-review-rating svg.review-star');
     stars.forEach(star => {
-        star.addEventListener('click', (e) => {
-            const val = parseInt(e.currentTarget.getAttribute('data-val'));
-            newReviewRating = val;
+        star.addEventListener('mouseenter', () => {
+            const hoverVal = parseInt(star.getAttribute('data-val'));
+            stars.forEach(s => {
+                const v = parseInt(s.getAttribute('data-val'));
+                s.style.color = v <= hoverVal ? '#E6AE17' : '#555';
+                s.style.fill  = v <= hoverVal ? '#E6AE17' : 'none';
+            });
+        });
+        star.addEventListener('mouseleave', () => { updateStarsUI(); });
+        star.addEventListener('click', () => {
+            newReviewRating = parseInt(star.getAttribute('data-val'));
             updateStarsUI();
         });
     });
 }
 
 function updateStarsUI() {
-    const stars = document.querySelectorAll('#new-review-rating i');
+    const stars = document.querySelectorAll('#new-review-rating svg.review-star');
     stars.forEach(star => {
         const val = parseInt(star.getAttribute('data-val'));
-        if (val <= newReviewRating) {
+        if (newReviewRating > 0 && val <= newReviewRating) {
             star.style.color = '#E6AE17';
-            star.style.fill = '#E6AE17';
+            star.style.fill  = '#E6AE17';
         } else {
-            star.style.color = '#ddd';
-            star.style.fill = 'none';
+            star.style.color = '#555';
+            star.style.fill  = 'none';
         }
     });
 }
+
+function resetStarsUI() {
+    newReviewRating = 0;
+    updateStarsUI();
+}
+
+// ── Panel navigation ─────────────────────────────────────────────────────────
 
 window.closeReviews = function() {
     document.getElementById('client-reviews-section').classList.add('hidden');
@@ -1428,7 +1454,6 @@ window.closeReviews = function() {
     if (previewSection) previewSection.classList.remove('hidden');
 };
 
-// Open client reviews panel
 window.openClientReviews = function() {
     hideAllDashboardSections();
     const section = document.getElementById('client-reviews-section');
@@ -1436,7 +1461,6 @@ window.openClientReviews = function() {
     window.switchReviewTab('treino');
 };
 
-// Open admin reviews panel
 window.openAdminReviews = function() {
     hideAllDashboardSections();
     const section = document.getElementById('admin-reviews-section');
@@ -1446,7 +1470,6 @@ window.openAdminReviews = function() {
     }
 };
 
-// Back to lobby
 window.backToLobby = function() {
     hideAllDashboardSections();
     const actions = document.getElementById('dashboard-main-actions');
@@ -1459,13 +1482,11 @@ window.switchReviewTab = function(service) {
     currentReviewTab = service;
     const isPt = document.documentElement.lang !== 'en';
 
-    // Update segmented control UI
     const tabTreino = document.getElementById('tab-review-treino');
-    const tabOsteo = document.getElementById('tab-review-osteo');
+    const tabOsteo  = document.getElementById('tab-review-osteo');
     if (tabTreino) tabTreino.classList.toggle('active', service === 'treino');
-    if (tabOsteo) tabOsteo.classList.toggle('active', service === 'osteopatia');
+    if (tabOsteo)  tabOsteo.classList.toggle('active',  service === 'osteopatia');
 
-    // Update form title
     const serviceNameEl = document.getElementById('review-service-name');
     if (serviceNameEl) {
         serviceNameEl.textContent = service === 'treino'
@@ -1476,76 +1497,176 @@ window.switchReviewTab = function(service) {
     // Reset form
     const textEl = document.getElementById('new-review-text');
     if (textEl) textEl.value = '';
-    newReviewRating = 5;
-    updateStarsUI();
+    resetStarsUI();
     const msgEl = document.getElementById('review-feedback-msg');
-    if (msgEl) msgEl.textContent = '';
+    if (msgEl) { msgEl.textContent = ''; msgEl.style.color = ''; }
 
     window.loadMyReviews(service);
 };
 
+// ── Submit review ────────────────────────────────────────────────────────────
+
 window.submitReview = async function() {
-    const text = document.getElementById('new-review-text').value.trim();
+    const text   = document.getElementById('new-review-text').value.trim();
     const msgDiv = document.getElementById('review-feedback-msg');
-    const isPt = document.documentElement.lang !== 'en';
-    
-    if (!text) {
+    const isPt   = document.documentElement.lang !== 'en';
+
+    // Validate stars
+    if (newReviewRating < 1) {
         msgDiv.style.color = '#ff3b30';
-        msgDiv.textContent = isPt ? 'Por favor, escreva a sua avaliação.' : 'Please write your review.';
+        msgDiv.textContent = isPt
+            ? 'Por favor, selecione uma classificação de 1 a 5 estrelas.'
+            : 'Please select a star rating from 1 to 5.';
+        const starsEl = document.getElementById('new-review-rating');
+        if (starsEl) {
+            starsEl.classList.add('shake-error');
+            setTimeout(() => starsEl.classList.remove('shake-error'), 500);
+        }
         return;
     }
-    
+
+    // Validate text
+    if (!text) {
+        msgDiv.style.color = '#ff3b30';
+        msgDiv.textContent = isPt
+            ? 'Por favor, escreva a sua avaliação antes de submeter.'
+            : 'Please write your review before submitting.';
+        return;
+    }
+
     const user = auth.currentUser;
     if (!user) return;
-    
+
     try {
         const btn = document.getElementById('btn-submit-review');
-        btn.disabled = true;
+        btn.disabled    = true;
         btn.textContent = isPt ? 'A submeter...' : 'Submitting...';
-        
-        let userName = "Anónimo";
+
+        let userName  = 'Anónimo';
+        let userEmail = user.email || '';
         try {
-            const userDoc = await getDoc(doc(db, "users", user.uid));
+            const userDoc = await getDoc(doc(db, 'users', user.uid));
             if (userDoc.exists()) {
-                userName = userDoc.data().name || user.displayName || "Anónimo";
+                userName  = userDoc.data().name  || user.displayName || 'Anónimo';
+                userEmail = userDoc.data().email || user.email || '';
             }
-        } catch(e){}
-        
+        } catch(e) {}
+
         const reviewData = {
-            userId: user.uid,
-            userName: userName,
-            text: text,
-            rating: newReviewRating,
-            service: currentReviewTab,
-            timestamp: new Date().toISOString()
+            userId:     user.uid,
+            userName:   userName,
+            text:       text,
+            rating:     newReviewRating,
+            service:    currentReviewTab,
+            timestamp:  new Date().toISOString(),
+            hidden:     false,
+            isFromHTML: false,
         };
-        
-        await addDoc(collection(db, "reviews"), reviewData);
-        
+
+        await addDoc(collection(db, 'reviews'), reviewData);
+
+        // ── Email notifications ──
+        const serviceLabel = currentReviewTab === 'treino'
+            ? (isPt ? 'Treino' : 'Personal Training')
+            : (isPt ? 'Osteopatia' : 'Osteopathy');
+        const starsStr = '★'.repeat(newReviewRating) + '☆'.repeat(5 - newReviewRating);
+        const dateStr  = new Date().toLocaleDateString(isPt ? 'pt-PT' : 'en-GB');
+
+        try {
+            // Admin notification (always PT-PT)
+            await addDoc(collection(db, 'mail'), {
+                to: 'pt@pmorais.pt',
+                message: {
+                    subject: `Nova avaliação recebida — ${userName} (${serviceLabel})`,
+                    html: `<p>Olá Paulo,</p>
+<p>Recebeu uma nova avaliação de <strong>${userName}</strong> para o serviço <strong>${serviceLabel}</strong>.</p>
+<table style="border-collapse:collapse;margin:16px 0;">
+  <tr><td style="padding:4px 12px 4px 0;color:#888;">Cliente</td><td><strong>${userName}</strong></td></tr>
+  <tr><td style="padding:4px 12px 4px 0;color:#888;">Serviço</td><td>${serviceLabel}</td></tr>
+  <tr><td style="padding:4px 12px 4px 0;color:#888;">Classificação</td><td style="color:#E6AE17;font-size:1.3em;">${starsStr} (${newReviewRating}/5)</td></tr>
+  <tr><td style="padding:4px 12px 4px 0;color:#888;">Data</td><td>${dateStr}</td></tr>
+</table>
+<blockquote style="border-left:3px solid #E6AE17;padding:10px 16px;background:#f9f9f9;margin:0;font-style:italic;">"${text}"</blockquote>
+<br><p>Esta avaliação já está visível no carrusel público.<br>Pode geri-la no painel de administração do perfil.</p>
+<p>— Sistema de Avaliações · Paulo Morais</p>`
+                }
+            });
+
+            // User confirmation email
+            if (userEmail) {
+                await addDoc(collection(db, 'mail'), {
+                    to: userEmail,
+                    message: {
+                        subject: isPt
+                            ? 'A sua avaliação foi publicada — Paulo Morais'
+                            : 'Your review has been published — Paulo Morais',
+                        html: isPt
+                            ? `<p>Olá ${userName},</p>
+<p>A sua avaliação para <strong>${serviceLabel}</strong> foi publicada com sucesso! Obrigado pela sua partilha.</p>
+<blockquote style="border-left:3px solid #E6AE17;padding:10px 16px;background:#f9f9f9;margin:16px 0;font-style:italic;">"${text}"</blockquote>
+<p style="color:#E6AE17;font-size:1.4em;margin:0;">${starsStr}</p>
+<p>A sua avaliação aparecerá no carrusel público do site.<br>Pode ocultá-la a qualquer momento a partir do seu perfil.</p>
+<br><p>Com os melhores cumprimentos,<br><strong>Paulo Morais</strong></p>`
+                            : `<p>Hello ${userName},</p>
+<p>Your review for <strong>${serviceLabel}</strong> has been published successfully! Thank you for sharing your experience.</p>
+<blockquote style="border-left:3px solid #E6AE17;padding:10px 16px;background:#f9f9f9;margin:16px 0;font-style:italic;">"${text}"</blockquote>
+<p style="color:#E6AE17;font-size:1.4em;margin:0;">${starsStr}</p>
+<p>Your review will appear in the public carousel on the website.<br>You can hide it at any time from your profile.</p>
+<br><p>Kind regards,<br><strong>Paulo Morais</strong></p>`
+                    }
+                });
+            }
+        } catch(mailErr) {
+            console.error('Failed to queue review emails:', mailErr);
+        }
+
         msgDiv.style.color = '#34c759';
-        msgDiv.textContent = isPt ? 'Avaliação submetida com sucesso! Obrigado.' : 'Review submitted successfully! Thank you.';
+        msgDiv.textContent = isPt
+            ? 'Avaliação publicada com sucesso! Obrigado.'
+            : 'Review published successfully! Thank you.';
         document.getElementById('new-review-text').value = '';
-        
-        // Remove the red badge if they submitted a review
+        resetStarsUI();
+
         const badge = document.getElementById('reviews-badge');
         if (badge) badge.classList.add('hidden');
-        
+
         loadMyReviews(currentReviewTab);
-        
+
         setTimeout(() => {
-            btn.disabled = false;
+            btn.disabled    = false;
             btn.textContent = isPt ? 'Submeter Avaliação' : 'Submit Review';
             msgDiv.textContent = '';
-        }, 3000);
-        
+        }, 4000);
+
     } catch (error) {
-        console.error("Error submitting review:", error);
+        console.error('Error submitting review:', error);
+        const isPt2 = document.documentElement.lang !== 'en';
         msgDiv.style.color = '#ff3b30';
-        msgDiv.textContent = isPt ? 'Erro ao submeter. Tente novamente.' : 'Error submitting. Try again.';
-        document.getElementById('btn-submit-review').disabled = false;
-        document.getElementById('btn-submit-review').textContent = isPt ? 'Submeter Avaliação' : 'Submit Review';
+        msgDiv.textContent = isPt2
+            ? 'Erro ao submeter. Tente novamente.'
+            : 'Error submitting. Please try again.';
+        const b = document.getElementById('btn-submit-review');
+        if (b) {
+            b.disabled    = false;
+            b.textContent = isPt2 ? 'Submeter Avaliação' : 'Submit Review';
+        }
     }
 };
+
+// ── Toggle review visibility (client) ────────────────────────────────────────
+
+window.toggleReviewVisibility = async function(reviewId, isCurrentlyHidden) {
+    const isPt = document.documentElement.lang !== 'en';
+    try {
+        await updateDoc(doc(db, 'reviews', reviewId), { hidden: !isCurrentlyHidden });
+        window.loadMyReviews(currentReviewTab);
+    } catch(e) {
+        console.error('Error toggling review visibility:', e);
+        alert(isPt ? 'Erro ao atualizar. Tente novamente.' : 'Error updating. Please try again.');
+    }
+};
+
+// ── Load client's own reviews ────────────────────────────────────────────────
 
 window.loadMyReviews = async function(service) {
     const user = auth.currentUser;
@@ -1557,36 +1678,47 @@ window.loadMyReviews = async function(service) {
     listDiv.innerHTML = `<p class="color-text-dim">${isPt ? 'A carregar...' : 'Loading...'}</p>`;
 
     try {
-        const q = query(collection(db, "reviews"), where("userId", "==", user.uid), where("service", "==", service));
+        const q    = query(collection(db, 'reviews'), where('userId', '==', user.uid), where('service', '==', service));
         const snap = await getDocs(q);
 
         if (snap.empty) {
-            listDiv.innerHTML = `<p class="color-text-dim" style="text-align:center; padding: 20px; background: var(--color-bg); border-radius: 8px;">${isPt ? 'Ainda não tem avaliações neste serviço.' : 'You have no reviews for this service yet.'}</p>`;
+            listDiv.innerHTML = `<p class="color-text-dim" style="text-align:center;padding:20px;background:var(--color-bg);border-radius:8px;">${isPt ? 'Ainda não tem avaliações neste serviço.' : 'You have no reviews for this service yet.'}</p>`;
             return;
         }
 
-        // Sort in memory (avoids composite indexes)
         let reviews = [];
-        snap.forEach(d => {
-            reviews.push({ id: d.id, ...d.data() });
-        });
+        snap.forEach(d => reviews.push({ id: d.id, ...d.data() }));
         reviews.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
 
         let html = '';
         reviews.forEach(r => {
             const d = new Date(r.timestamp);
             let starsHtml = '';
-            for(let i=1; i<=5; i++) {
-                starsHtml += `<i data-lucide="star" style="width:16px; color:${i<=r.rating ? '#E6AE17' : '#ddd'}; fill:${i<=r.rating ? '#E6AE17' : 'none'};"></i>`;
+            for (let i = 1; i <= 5; i++) {
+                starsHtml += `<i data-lucide="star" style="width:16px;color:${i <= r.rating ? '#E6AE17' : '#555'};fill:${i <= r.rating ? '#E6AE17' : 'none'};"></i>`;
             }
+            const hiddenBadge = r.hidden
+                ? `<span style="background:#ff3b30;color:#fff;font-size:0.7rem;padding:2px 8px;border-radius:99px;margin-left:8px;font-weight:700;text-transform:uppercase;">${isPt ? 'Oculta' : 'Hidden'}</span>`
+                : `<span style="background:#34c759;color:#fff;font-size:0.7rem;padding:2px 8px;border-radius:99px;margin-left:8px;font-weight:700;text-transform:uppercase;">${isPt ? 'Visível' : 'Visible'}</span>`;
+            const toggleLabel = r.hidden
+                ? (isPt ? 'Mostrar no carrusel' : 'Show in carousel')
+                : (isPt ? 'Ocultar do carrusel' : 'Hide from carousel');
 
             html += `
-            <div class="review-card-modern">
+            <div class="review-card-modern" style="margin-bottom:16px;">
                 <div class="rc-header">
-                    <div style="display:flex; gap: 2px;">${starsHtml}</div>
-                    <span class="rc-date">${d.toLocaleDateString()}</span>
+                    <div style="display:flex;gap:2px;align-items:center;">${starsHtml}${hiddenBadge}</div>
+                    <span class="rc-date">${d.toLocaleDateString(isPt ? 'pt-PT' : 'en-GB')}</span>
                 </div>
                 <p class="rc-text">"${r.text}"</p>
+                <div style="display:flex;justify-content:flex-end;margin-top:10px;">
+                    <button onclick="window.toggleReviewVisibility('${r.id}', ${!!r.hidden})"
+                        class="btn btn-outline"
+                        style="padding:4px 12px;font-size:0.8rem;color:${r.hidden ? '#34c759' : '#ff9500'};border-color:${r.hidden ? '#34c759' : '#ff9500'};">
+                        <i data-lucide="${r.hidden ? 'eye' : 'eye-off'}" style="width:14px;"></i>
+                        ${toggleLabel}
+                    </button>
+                </div>
             </div>`;
         });
 
@@ -1594,7 +1726,7 @@ window.loadMyReviews = async function(service) {
         if (window.lucide) window.lucide.createIcons();
 
     } catch (e) {
-        console.error("Error loading reviews:", e);
+        console.error('Error loading reviews:', e);
         listDiv.innerHTML = `<p class="color-text-dim">${isPt ? 'Erro ao carregar avaliações.' : 'Error loading reviews.'}</p>`;
     }
 };
@@ -1602,142 +1734,181 @@ window.loadMyReviews = async function(service) {
 // Alias for backward compat
 const loadMyReviews = window.loadMyReviews;
 
-// Function to check if user should leave a review (has past bookings but no reviews)
+// ── Review prompt badge ──────────────────────────────────────────────────────
+
 async function checkReviewPrompt(user) {
     try {
-        const bookingDocRef = doc(db, "weekly_schedules", `user_${user.uid}`);
-        const bookingSnap = await getDoc(bookingDocRef);
-        
+        const bookingDocRef  = doc(db, 'weekly_schedules', `user_${user.uid}`);
+        const bookingSnap    = await getDoc(bookingDocRef);
         if (bookingSnap.exists()) {
-            const bookings = bookingSnap.data().bookings || [];
-            const now = new Date();
-            
-            // Has at least one completed booking in the past
+            const bookings     = bookingSnap.data().bookings || [];
+            const now          = new Date();
             const hasCompleted = bookings.some(b => {
                 if (b.status === 'cancelled') return false;
-                // Parse b.id format: "2026-03-01T15:00"
-                const bDate = new Date(b.id);
-                return bDate < now;
+                return new Date(b.id) < now;
             });
-            
             if (hasCompleted) {
-                // Check if they already left a review recently
-                const q = query(collection(db, "reviews"), where("userId", "==", user.uid));
+                const q           = query(collection(db, 'reviews'), where('userId', '==', user.uid));
                 const reviewsSnap = await getDocs(q);
-                
                 if (reviewsSnap.empty) {
-                    // Highlight the reviews button!
                     const badge = document.getElementById('reviews-badge');
                     if (badge) badge.classList.remove('hidden');
                 }
             }
         }
     } catch(e) {
-        console.error("Error checking review prompt:", e);
+        console.error('Error checking review prompt:', e);
     }
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-    // We need to wait for auth state
-    setTimeout(initializeReviewEvents, 1000); 
+    setTimeout(initializeReviewEvents, 1000);
+
+    // Auto-open reviews panel when redirected from CTA button on index/osteopatia
+    setTimeout(() => {
+        const params = new URLSearchParams(window.location.search);
+        const tab    = params.get('tab');
+        if (!tab) return;
+        if (tab === 'review-treino' || tab === 'review-osteopatia') {
+            const service = tab === 'review-treino' ? 'treino' : 'osteopatia';
+            const unsub = auth.onAuthStateChanged(u => {
+                if (u) {
+                    unsub();
+                    setTimeout(() => {
+                        if (typeof window.openClientReviews === 'function') {
+                            window.openClientReviews();
+                            window.switchReviewTab(service);
+                        }
+                    }, 800);
+                }
+            });
+        }
+    }, 200);
 });
 
 
-// ====== ADMIN REVIEWS ======
+// ── Admin Reviews ────────────────────────────────────────────────────────────
+
 window.loadAdminReviews = async function(service) {
     const isPt = document.documentElement.lang !== 'en';
-    
-    // Update tabs UI
+
     document.getElementById('tab-admin-treino').classList.toggle('active', service === 'treino');
-    document.getElementById('tab-admin-osteo').classList.toggle('active', service === 'osteopatia');
-    
+    document.getElementById('tab-admin-osteo').classList.toggle('active',  service === 'osteopatia');
+
     const listDiv = document.getElementById('admin-reviews-list');
     listDiv.innerHTML = `<p class="color-text-dim">${isPt ? 'A carregar avaliações...' : 'Loading reviews...'}</p>`;
-    
+
     try {
-        const q = query(collection(db, "reviews"), where("service", "==", service));
+        const q    = query(collection(db, 'reviews'), where('service', '==', service));
         const snap = await getDocs(q);
-        
+
         if (snap.empty) {
-            listDiv.innerHTML = `<p class="color-text-dim" style="text-align:center; padding: 20px; background: var(--color-bg); border-radius: 8px;">${isPt ? 'Nenhuma avaliação encontrada.' : 'No reviews found.'}</p>`;
+            listDiv.innerHTML = `<p class="color-text-dim" style="text-align:center;padding:20px;background:var(--color-bg);border-radius:8px;">${isPt ? 'Nenhuma avaliação encontrada.' : 'No reviews found.'}</p>`;
             return;
         }
-        
+
         let reviewsByUser = {};
-        snap.forEach(doc => {
-            const data = doc.data();
-            const uid = data.userId || 'anonymous';
-            if (!reviewsByUser[uid]) {
-                reviewsByUser[uid] = {
-                    name: data.userName || 'Anónimo',
-                    reviews: []
-                };
-            }
-            reviewsByUser[uid].reviews.push({ id: doc.id, ...data });
+        snap.forEach(docSnap => {
+            const data = docSnap.data();
+            const uid  = data.userId || 'anonymous';
+            if (!reviewsByUser[uid]) reviewsByUser[uid] = { name: data.userName || 'Anónimo', reviews: [] };
+            reviewsByUser[uid].reviews.push({ id: docSnap.id, ...data });
         });
-        
+
         let html = '';
         Object.keys(reviewsByUser).forEach(uid => {
             const userGroup = reviewsByUser[uid];
             userGroup.reviews.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
-            
+
             let reviewsHtml = '';
             userGroup.reviews.forEach(r => {
                 const d = new Date(r.timestamp);
                 let starsHtml = '';
-                for(let i=1; i<=5; i++) {
-                    starsHtml += `<i data-lucide="star" style="width:16px; color:${i<=r.rating ? '#E6AE17' : '#ddd'}; fill:${i<=r.rating ? '#E6AE17' : 'none'};"></i>`;
+                for (let i = 1; i <= 5; i++) {
+                    starsHtml += `<i data-lucide="star" style="width:16px;color:${i <= r.rating ? '#E6AE17' : '#555'};fill:${i <= r.rating ? '#E6AE17' : 'none'};"></i>`;
                 }
+                const hiddenLabel = r.hidden
+                    ? `<span style="background:#ff3b30;color:#fff;font-size:0.7rem;padding:2px 8px;border-radius:99px;font-weight:700;text-transform:uppercase;">${isPt ? 'OCULTA' : 'HIDDEN'}</span>`
+                    : `<span style="background:#34c759;color:#fff;font-size:0.7rem;padding:2px 8px;border-radius:99px;font-weight:700;text-transform:uppercase;">${isPt ? 'VISÍVEL' : 'VISIBLE'}</span>`;
+                const toggleAdminLabel = r.hidden
+                    ? (isPt ? 'Mostrar' : 'Show')
+                    : (isPt ? 'Ocultar' : 'Hide');
+
                 reviewsHtml += `
-                <div class="review-card-modern" style="margin-top: 10px;">
+                <div class="review-card-modern" style="margin-top:10px;">
                     <div class="rc-header">
-                        <div style="display:flex; gap: 2px;">${starsHtml}</div>
-                        <div style="text-align: right;">
-                            <span class="rc-date">${d.toLocaleDateString()}</span><br>
-                            <button onclick="window.deleteReview('${r.id}')" class="btn btn-outline" style="padding: 2px 8px; font-size: 0.8rem; margin-top: 8px; color: #ff3b30; border-color: #ff3b30;">${isPt ? 'Eliminar' : 'Delete'}</button>
+                        <div style="display:flex;gap:2px;align-items:center;">${starsHtml} ${hiddenLabel}</div>
+                        <div style="text-align:right;display:flex;flex-direction:column;gap:6px;align-items:flex-end;">
+                            <span class="rc-date">${d.toLocaleDateString(isPt ? 'pt-PT' : 'en-GB')}</span>
+                            <div style="display:flex;gap:6px;">
+                                <button onclick="window.adminToggleReview('${r.id}', ${!!r.hidden})" class="btn btn-outline"
+                                    style="padding:2px 8px;font-size:0.8rem;color:${r.hidden ? '#34c759' : '#ff9500'};border-color:${r.hidden ? '#34c759' : '#ff9500'};">
+                                    ${toggleAdminLabel}
+                                </button>
+                                <button onclick="window.deleteReview('${r.id}')" class="btn btn-outline"
+                                    style="padding:2px 8px;font-size:0.8rem;color:#ff3b30;border-color:#ff3b30;">
+                                    ${isPt ? 'Eliminar' : 'Delete'}
+                                </button>
+                            </div>
                         </div>
                     </div>
                     <p class="rc-text">"${r.text}"</p>
                 </div>`;
             });
-            
+
             html += `
-            <div style="border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; margin-bottom: 15px; overflow: hidden; background: rgba(0,0,0,0.2);">
-                <div onclick="this.nextElementSibling.classList.toggle('hidden'); const icon = this.querySelector('svg'); if(icon) icon.style.transform = this.nextElementSibling.classList.contains('hidden') ? 'rotate(0deg)' : 'rotate(180deg)';" style="padding: 15px 20px; cursor: pointer; display: flex; justify-content: space-between; align-items: center; transition: background 0.2s;">
-                    <strong style="color: var(--color-primary); font-size: 1.1rem; text-transform: uppercase;">${userGroup.name} <span style="font-size: 0.9rem; color: var(--color-text-dim); font-weight: normal;">(${userGroup.reviews.length} ${userGroup.reviews.length === 1 ? 'avaliação' : 'avaliações'})</span></strong>
-                    <i data-lucide="chevron-down" style="color: var(--color-text-dim); transition: transform 0.3s;"></i>
+            <div style="border:1px solid rgba(255,255,255,0.1);border-radius:12px;margin-bottom:15px;overflow:hidden;background:rgba(0,0,0,0.2);">
+                <div onclick="this.nextElementSibling.classList.toggle('hidden'); const icon=this.querySelector('svg'); if(icon) icon.style.transform=this.nextElementSibling.classList.contains('hidden')?'rotate(0deg)':'rotate(180deg)';"
+                    style="padding:15px 20px;cursor:pointer;display:flex;justify-content:space-between;align-items:center;transition:background 0.2s;">
+                    <strong style="color:var(--color-primary);font-size:1.1rem;text-transform:uppercase;">
+                        ${userGroup.name}
+                        <span style="font-size:0.9rem;color:var(--color-text-dim);font-weight:normal;">
+                            (${userGroup.reviews.length} ${userGroup.reviews.length === 1 ? (isPt ? 'avaliação' : 'review') : (isPt ? 'avaliações' : 'reviews')})
+                        </span>
+                    </strong>
+                    <i data-lucide="chevron-down" style="color:var(--color-text-dim);transition:transform 0.3s;"></i>
                 </div>
-                <div class="hidden" style="padding: 15px 20px; border-top: 1px solid rgba(255,255,255,0.05);">
+                <div class="hidden" style="padding:15px 20px;border-top:1px solid rgba(255,255,255,0.05);">
                     ${reviewsHtml}
                 </div>
             </div>`;
         });
-        
+
         listDiv.innerHTML = html;
         if (window.lucide) window.lucide.createIcons();
-        
+
     } catch (e) {
-        console.error("Error loading admin reviews:", e);
+        console.error('Error loading admin reviews:', e);
         listDiv.innerHTML = `<p class="color-text-dim">${isPt ? 'Erro ao carregar.' : 'Error loading.'}</p>`;
+    }
+};
+
+window.adminToggleReview = async function(reviewId, isCurrentlyHidden) {
+    const isPt = document.documentElement.lang !== 'en';
+    try {
+        await updateDoc(doc(db, 'reviews', reviewId), { hidden: !isCurrentlyHidden });
+        const curTab = document.getElementById('tab-admin-treino').classList.contains('active') ? 'treino' : 'osteopatia';
+        window.loadAdminReviews(curTab);
+    } catch(e) {
+        console.error('Error toggling review:', e);
+        alert(isPt ? 'Erro ao atualizar.' : 'Error updating.');
     }
 };
 
 window.deleteReview = async function(reviewId) {
     const isPt = document.documentElement.lang !== 'en';
-    if (!confirm(isPt ? 'Tem a certeza que deseja eliminar esta avaliação?' : 'Are you sure you want to delete this review?')) return;
-    
+    if (!confirm(isPt ? 'Tem a certeza que deseja eliminar esta avaliação permanentemente?' : 'Are you sure you want to permanently delete this review?')) return;
+
     try {
-        await deleteDoc(doc(db, "reviews", reviewId));
+        await deleteDoc(doc(db, 'reviews', reviewId));
         alert(isPt ? 'Avaliação eliminada com sucesso.' : 'Review deleted successfully.');
-        const currentTab = document.getElementById('tab-admin-treino').classList.contains('active') ? 'treino' : 'osteopatia';
-        window.loadAdminReviews(currentTab);
+        const curTab = document.getElementById('tab-admin-treino').classList.contains('active') ? 'treino' : 'osteopatia';
+        window.loadAdminReviews(curTab);
     } catch (e) {
-        console.error("Error deleting review:", e);
+        console.error('Error deleting review:', e);
         alert(isPt ? 'Erro ao eliminar.' : 'Error deleting.');
     }
 };
-
-// Admin button wired via inline onclick in HTML — no extra listener needed here
 
 function hideAllDashboardSections() {
     const sections = [

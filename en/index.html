@@ -588,6 +588,13 @@
                                 <span class="dot"></span>
                                 <span class="dot"></span>
                             </div>
+                            
+                            <!-- CTA Review Button for Logged in Users -->
+                            <div id="leave-review-cta" style="display: none; text-align: center; margin-top: 30px;">
+                                <a href="perfil.html?tab=review-treino" class="btn btn-header-premium" style="display: inline-flex; align-items: center; gap: 8px;">
+                                    <i data-lucide="message-square" style="width: 18px; height: 18px;"></i> Leave a review
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -778,6 +785,123 @@
 
     <!-- Scripts -->
     <script nonce="pmorais-2026" src="js/script.js?v=1.5.1" defer></script>
+    <script nonce="pmorais-2026" src="../js/cookie-consent.js" defer></script>
+
+    <!-- Firebase SDK for Reviews -->
+    <script nonce="pmorais-2026" src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+    <script nonce="pmorais-2026" src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+
+    <!-- Firebase Configuration & Reviews Loader -->
+    <script nonce="pmorais-2026">
+        const firebaseConfig = {
+            apiKey: "AIzaSyCROYGriQ-5RWiLVCRwGz9KaDUKE6zNR2w",
+            authDomain: "paulo-morais.firebaseapp.com",
+            projectId: "paulo-morais",
+            storageBucket: "paulo-morais.firebasestorage.app",
+            messagingSenderId: "431406968000",
+            appId: "1:431406968000:web:01e40cb3eb4044ddc69125"
+        };
+        if (!firebase.apps.length) {
+            firebase.initializeApp(firebaseConfig);
+        }
+        const db = firebase.firestore();
+
+        document.addEventListener('DOMContentLoaded', async function () {
+            try {
+                const badgeSvg = ' <i data-lucide="badge-check" style="width:18px; height:18px; color:#000; fill:#000; vertical-align: text-bottom;" aria-hidden="true"></i>';
+
+                const snap = await db.collection('reviews')
+                    .where('service', '==', 'treino')
+                    .where('hidden', '==', false)
+                    .get();
+
+                if (snap.empty) return;
+
+                const dbReviews = [];
+                snap.forEach(function (docSnap) {
+                    const data = docSnap.data();
+                    if (!data.isFromHTML) {
+                        dbReviews.push(data);
+                    }
+                });
+                dbReviews.sort(function (a, b) {
+                    return new Date(b.timestamp) - new Date(a.timestamp);
+                });
+
+                const carousel = document.querySelector('.testimonial-carousel-wrapper');
+                const dotsContainer = document.querySelector('.testimonial-pagination');
+                if (!carousel) return;
+
+                const firstCard = carousel.querySelector('.testimonial-card-gold, .testimonial-card-yellow');
+                let firstDot = null;
+                if (dotsContainer) {
+                    firstDot = dotsContainer.firstElementChild;
+                }
+
+                let nextIndex = carousel.querySelectorAll('.testimonial-card-gold, .testimonial-card-yellow').length;
+
+                dbReviews.forEach(function (r) {
+                    const year = new Date(r.timestamp).getFullYear();
+                    const safeUserName = (typeof r.userName === 'string' ? r.userName : 'Anonymous').trim() || 'Anonymous';
+                    
+                    const div = document.createElement('div');
+                    div.className = 'testimonial-card-yellow';
+                    div.setAttribute('data-index', nextIndex);
+
+                    const contentDiv = document.createElement('div');
+                    contentDiv.className = 'testimonial-content';
+
+                    const nameEl = document.createElement('h4');
+                    nameEl.className = 'testimonial-name';
+                    nameEl.innerHTML = safeUserName.toUpperCase() + badgeSvg;
+
+                    const roleEl = document.createElement('p');
+                    roleEl.className = 'testimonial-role';
+                    roleEl.textContent = 'CLIENT SINCE ' + year;
+
+                    const textEl = document.createElement('p');
+                    textEl.className = 'testimonial-text';
+                    textEl.textContent = typeof r.text === 'string' ? r.text.slice(0, 1000) : '';
+
+                    contentDiv.appendChild(nameEl);
+                    contentDiv.appendChild(roleEl);
+                    contentDiv.appendChild(textEl);
+                    div.appendChild(contentDiv);
+                    
+                    if (firstCard) {
+                        carousel.insertBefore(div, firstCard);
+                    } else {
+                        if (dotsContainer) {
+                            carousel.insertBefore(div, dotsContainer);
+                        } else {
+                            carousel.appendChild(div);
+                        }
+                    }
+
+                    const dot = document.createElement('span');
+                    dot.className = 'dot';
+                    if (firstDot) {
+                        dotsContainer.insertBefore(dot, firstDot);
+                    } else {
+                        dotsContainer.appendChild(dot);
+                    }
+
+                    nextIndex++;
+                });
+                
+                if (typeof window.setupCarousel === 'function') {
+                    window.setupCarousel();
+                } else if (typeof window.initTestimonialCarousel === 'function') {
+                    window.initTestimonialCarousel();
+                }
+                if (typeof lucide !== 'undefined') {
+                    lucide.createIcons();
+                }
+            } catch (err) {
+                console.error("Error loading index reviews:", err);
+            }
+        });
+    </script>
 </body>
 
 </html>
