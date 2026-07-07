@@ -2,6 +2,11 @@ rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
 
+    // === Permisos universales para Root ===
+    match /{document=**} {
+      allow read, write, delete: if request.auth != null && request.auth.token.role == 'root';
+    }
+
     // === Funciones de ayuda reutilizables ===
 
     // Comprueba si el usuario autenticado es admin (por rol en Firestore o por email fijo)

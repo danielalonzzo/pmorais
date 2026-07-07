@@ -26,6 +26,9 @@ import {
 } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 import { initCalendarMode } from './calendar.js';
 
+window.forceFirebaseLogout = async () => { try { await signOut(auth); } catch(e) {} };
+window.addEventListener('force-firebase-logout', window.forceFirebaseLogout);
+
 // [SEC-03] Conditional logger — silent in production, verbose in dev.
 // Prevents sensitive auth data (emails, roles, Firestore payloads) from
 // leaking via DevTools in the browser on deployed builds.
@@ -85,6 +88,16 @@ document.addEventListener('DOMContentLoaded', () => {
     onAuthStateChanged(auth, async (user) => {
         if (window.isReactivating) return;
         if (user) {
+            // Check for root claim
+            const idTokenResult = await user.getIdTokenResult();
+            const isRoot = idTokenResult.claims.role === 'root';
+            window.isRootUser = isRoot;
+
+            if (isRoot) {
+                const rootControl = document.getElementById('root-dashboard-control');
+                if (rootControl) rootControl.classList.remove('hidden');
+            }
+
             // Show the dashboard immediately — do NOT wait for Firestore reads
             localStorage.setItem('pm_is_logged_in', 'true');
             if (window.injectPwaInstallButton) window.injectPwaInstallButton();
@@ -178,6 +191,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 // Initialize Calendar System depending on Role and Profile Completion
                 initCalendarMode(user, db, userData?.role, isCompleted);
+                
+                if (window.isRootUser) {
+                    window.switchDashboardView('root');
+                }
             })();
         } else {
             // User is signed out
@@ -350,11 +367,16 @@ document.addEventListener('DOMContentLoaded', () => {
     // Logout Event
     const logoutBtn = document.getElementById('btn-logout');
     if (logoutBtn) {
-        logoutBtn.addEventListener('click', async () => {
-            try {
-                await signOut(auth);
-            } catch (error) {
-                console.error("Logout error:", error);
+        logoutBtn.addEventListener('click', async (e) => {
+            e.preventDefault();
+            if (typeof window.forceUpdateVersion === 'function') {
+                await window.forceUpdateVersion(true);
+            } else {
+                try {
+                    await signOut(auth);
+                } catch (error) {
+                    console.error("Logout error:", error);
+                }
             }
         });
     }
@@ -1912,6 +1934,7 @@ window.deleteReview = async function(reviewId) {
 
 function hideAllDashboardSections() {
     const sections = [
+        'root-dashboard-section',
         'dashboard-preview-section',
         'dashboard-main-actions',
         'booking-wizard-section',
@@ -1925,3 +1948,43 @@ function hideAllDashboardSections() {
         if (el) el.classList.add('hidden');
     });
 }
+
+window.switchDashboardView = function(view) {
+    if (!window.isRootUser) return;
+    
+    // Update segmented control buttons
+    document.getElementById('tab-dash-root')?.classList.remove('active');
+    document.getElementById('tab-dash-admin')?.classList.remove('active');
+    document.getElementById('tab-dash-user')?.classList.remove('active');
+    document.getElementById(`tab-dash-${view}`)?.classList.add('active');
+
+    hideAllDashboardSections();
+
+    const rootSection = document.getElementById('root-dashboard-section');
+    const previewSection = document.getElementById('dashboard-preview-section');
+    const actionsSection = document.getElementById('dashboard-main-actions');
+
+    if (view === 'root') {
+        if (rootSection) rootSection.classList.remove('hidden');
+    } else if (view === 'admin') {
+        if (previewSection) previewSection.classList.remove('hidden');
+        if (actionsSection) actionsSection.classList.remove('hidden');
+        
+        // Show Admin Buttons
+        document.getElementById('btn-show-profiles')?.classList.remove('hidden');
+        document.getElementById('btn-show-forms')?.classList.remove('hidden');
+        document.getElementById('btn-show-blog-admin')?.classList.remove('hidden');
+        document.getElementById('btn-admin-reviews')?.classList.remove('hidden');
+        document.getElementById('btn-show-reviews')?.classList.add('hidden');
+    } else if (view === 'user') {
+        if (previewSection) previewSection.classList.remove('hidden');
+        if (actionsSection) actionsSection.classList.remove('hidden');
+        
+        // Hide Admin Buttons
+        document.getElementById('btn-show-profiles')?.classList.add('hidden');
+        document.getElementById('btn-show-forms')?.classList.add('hidden');
+        document.getElementById('btn-show-blog-admin')?.classList.add('hidden');
+        document.getElementById('btn-admin-reviews')?.classList.add('hidden');
+        document.getElementById('btn-show-reviews')?.classList.remove('hidden');
+    }
+};

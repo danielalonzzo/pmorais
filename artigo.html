@@ -1,116 +1,124 @@
 <!DOCTYPE html>
 <html lang="pt">
+
 <head>
     <meta name="view-transition" content="same-origin" />
     <style nonce="pmorais-2026" id="critical-css">
-    :root {
-        /* Colors */
-        --color-bg: #0B0B0B;
-        --color-surface: #111111;
-        --color-primary: #E6AE17;
-        /* Updated to match target */
-        --color-primary-hover: #d5a015;
-        --color-light-gray: #F2F2F2;
-        /* New split section color */
-        --color-text: #ffffff;
-        --color-text-dim: #cccccc;
-        --color-accent: #ffffff;
-        --color-brand-primary: #ffffff;
-        --color-brand-secondary: var(--color-primary);
-        --color-brand-tertiary: #0A6FE8;
-    
-        /* Typography */
-        --font-heading: 'Patron', sans-serif;
-        --font-body: 'Patron', sans-serif;
-        /* Clean, modern sans-serif */
-    
-        /* Spacing */
-        --container-width: 1200px;
-        --section-padding: clamp(60px, 10vw, 100px) 20px;
-        /* Fluid section padding */
-    
-        /* Transitions */
-        --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-    body {
-        background-color: var(--color-bg);
-        color: var(--color-text);
-        font-family: var(--font-body);
-        line-height: 1.6;
-        overflow-x: hidden;
-        /* Scrollbar natural del sistema, sin personalización */
-    }
-    #preloader {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background-color: #F4B618;
-        z-index: 9999;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        transition: opacity 0.5s ease, visibility 0.5s ease;
-    }
-    .loader-content {
-        position: relative;
-        width: 250px;
-        /* Ajustado para el logo */
-        height: auto;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
-    .loader-logo {
-        width: 100%;
-        height: auto;
-        display: block;
-        position: relative;
-        z-index: 1;
-    }
-    .shimmer-effect {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        z-index: 2;
-        pointer-events: none;
-    
-        /* Mask the shimmer to the logo shape */
-        -webkit-mask-image: url('images/logo/logo_bw_loading.png');
-        mask-image: url('images/logo/logo_bw_loading.png');
-        -webkit-mask-size: contain;
-        mask-size: contain;
-        -webkit-mask-repeat: no-repeat;
-        mask-repeat: no-repeat;
-        -webkit-mask-position: center;
-        mask-position: center;
-    
-        /* The Moving Light Gradient */
-        background: linear-gradient(135deg,
-                rgba(255, 255, 255, 0) 30%,
-                rgba(255, 255, 255, 0.7) 50%,
-                rgba(255, 255, 255, 0) 70%);
-        background-size: 200% 100%;
-        background-position: 150% 0;
-        animation: lightSweep 2s infinite ease-in-out;
-    }
+        :root {
+            /* Colors */
+            --color-bg: #0B0B0B;
+            --color-surface: #111111;
+            --color-primary: #E6AE17;
+            /* Updated to match target */
+            --color-primary-hover: #d5a015;
+            --color-light-gray: #F2F2F2;
+            /* New split section color */
+            --color-text: #ffffff;
+            --color-text-dim: #cccccc;
+            --color-accent: #ffffff;
+            --color-brand-primary: #ffffff;
+            --color-brand-secondary: var(--color-primary);
+            --color-brand-tertiary: #0A6FE8;
+
+            /* Typography */
+            --font-heading: 'Patron', sans-serif;
+            --font-body: 'Patron', sans-serif;
+            /* Clean, modern sans-serif */
+
+            /* Spacing */
+            --container-width: 1200px;
+            --section-padding: clamp(60px, 10vw, 100px) 20px;
+            /* Fluid section padding */
+
+            /* Transitions */
+            --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        body {
+            background-color: var(--color-bg);
+            color: var(--color-text);
+            font-family: var(--font-body);
+            line-height: 1.6;
+            overflow-x: hidden;
+            /* Scrollbar natural del sistema, sin personalización */
+        }
+
+        #preloader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #F4B618;
+            z-index: 9999;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: opacity 0.5s ease, visibility 0.5s ease;
+        }
+
+        .loader-content {
+            position: relative;
+            width: 250px;
+            /* Ajustado para el logo */
+            height: auto;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .loader-logo {
+            width: 100%;
+            height: auto;
+            display: block;
+            position: relative;
+            z-index: 1;
+        }
+
+        .shimmer-effect {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 2;
+            pointer-events: none;
+
+            /* Mask the shimmer to the logo shape */
+            -webkit-mask-image: url('images/logo/logo_bw_loading.png');
+            mask-image: url('images/logo/logo_bw_loading.png');
+            -webkit-mask-size: contain;
+            mask-size: contain;
+            -webkit-mask-repeat: no-repeat;
+            mask-repeat: no-repeat;
+            -webkit-mask-position: center;
+            mask-position: center;
+
+            /* The Moving Light Gradient */
+            background: linear-gradient(135deg,
+                    rgba(255, 255, 255, 0) 30%,
+                    rgba(255, 255, 255, 0.7) 50%,
+                    rgba(255, 255, 255, 0) 70%);
+            background-size: 200% 100%;
+            background-position: 150% 0;
+            animation: lightSweep 2s infinite ease-in-out;
+        }
     </style>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Artigo - Paulo Morais</title>
     <meta name="description" content="Artigo de osteopatia e bem-estar por Paulo Morais">
-    
+
     <!-- OpenGraph Tags that will be overwritten by JS (for bots that execute JS) -->
     <meta property="og:title" content="Artigo - Paulo Morais">
     <meta property="og:description" content="Artigo de osteopatia e bem-estar por Paulo Morais">
     <meta property="og:type" content="article">
 
     <!-- Preloads -->
-    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700;800&family=Poppins:wght@300;400;500;600;700&display=swap" as="style">
-    <link rel="preload" href="css/style.css?v=1.5.1" as="style">
+    <link rel="preload"
+        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700;800&family=Poppins:wght@300;400;500;600;700&display=swap"
+        as="style">
+    <link rel="preload" href="css/style.css?v=1.5.2" as="style">
 
     <link rel="shortcut icon" type="image/png" href="images/logo/logo_ios_android.png">
     <link rel="icon" type="image/png" href="images/logo/logo_ios_android.png">
@@ -118,24 +126,118 @@
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700;800&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700;800&family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
 
     <!-- Quill Snow Core for viewing content correctly -->
     <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
 
     <!-- Icons (Lucide) -->
-    <script nonce="pmorais-2026" src="https://unpkg.com/lucide@0.460.0/dist/umd/lucide.min.js" integrity="sha384-ieG+IKD0d/ZPXyCBTMVAbqsQdns8QGJR/e26WMw7M4fkaI/rHcS/YIoi+ah9WGge" crossorigin="anonymous" defer></script>
+    <script nonce="pmorais-2026" src="https://unpkg.com/lucide@0.460.0/dist/umd/lucide.min.js"
+        integrity="sha384-ieG+IKD0d/ZPXyCBTMVAbqsQdns8QGJR/e26WMw7M4fkaI/rHcS/YIoi+ah9WGge" crossorigin="anonymous"
+        defer></script>
 
     <!-- Custom Style -->
-    <link rel="stylesheet" href="css/style.css?v=1.5.1">
-    
-    <style nonce="pmorais-2026">
+    <link rel="stylesheet" href="css/style.css?v=1.5.2">
+
+    <style nonce="pmorais-2026">        /* Article Reading Redesign */
         .article-container {
-            max-width: 800px;
+            max-width: 720px;
             margin: 0 auto;
-            padding: 40px 20px 100px;
+            padding: clamp(80px, 10vh, 120px) 20px 100px; /* Responsive top padding */
         }
-        
+
+        #scroll-progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: var(--color-primary);
+            transform-origin: 0 50%;
+            transform: scaleX(0);
+            z-index: 1000;
+        }
+
+        /* Improved TOC */
+        .article-toc {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-left: 4px solid var(--color-primary);
+            padding: clamp(15px, 4vw, 25px);
+            border-radius: 0 12px 12px 0;
+            margin-bottom: clamp(30px, 6vw, 50px);
+        }
+
+        .toc-title {
+            margin-top: 0;
+            margin-bottom: 15px;
+            font-size: clamp(1rem, 3vw, 1.1rem);
+            color: var(--color-text);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 700;
+        }
+
+        .toc-list {
+            list-style: none;
+            padding-left: 0;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .toc-item a,
+        .toc-subitem a {
+            color: var(--color-text);
+            text-decoration: none;
+            transition: color 0.2s, padding-left 0.2s;
+            display: inline-block;
+        }
+
+        .toc-item a {
+            font-weight: 600;
+        }
+
+        .toc-subitem {
+            padding-left: 20px;
+        }
+
+        .toc-subitem a {
+            opacity: 0.8;
+            font-size: 0.95rem;
+        }
+
+        .toc-item a:hover,
+        .toc-subitem a:hover {
+            color: var(--color-primary);
+            padding-left: 5px;
+        }
+
+        /* Dynamic Columns - Mobile First */
+        .dynamic-columns {
+            column-count: 1; /* Default to 1 column for mobile */
+            column-gap: 0;
+            margin-bottom: 1.6em;
+            text-align: justify;
+        }
+
+        .dynamic-columns p {
+            margin-bottom: 1.5em !important;
+        }
+
+        @media (min-width: 769px) {
+            .dynamic-columns {
+                column-count: 2;
+                column-gap: 40px;
+            }
+        }
+
         /* Overrides for Quill viewer inside dark mode */
         .ql-editor {
             padding: 0;
@@ -143,34 +245,102 @@
             color: var(--color-text) !important;
             font-family: var(--font-body) !important;
         }
-        .ql-editor *, .ql-editor p, .ql-editor li, .ql-editor span {
+
+        .ql-editor *,
+        .ql-editor p,
+        .ql-editor li,
+        .ql-editor span {
             color: var(--color-text) !important;
             font-family: var(--font-body) !important;
         }
-        .ql-editor h1, .ql-editor h2, .ql-editor h3, .ql-editor h4, .ql-editor h5, .ql-editor h6 {
+
+        .ql-editor p {
+            margin-bottom: 2.2em !important;
+            /* Increased space between paragraphs */
+            font-size: 1.15rem !important;
+            line-height: 1.8 !important;
+        }
+
+        .ql-editor ul,
+        .ql-editor ol {
+            margin-top: 2.2em !important;
+            margin-bottom: 2.2em !important;
+            padding-left: 1.5em !important;
+        }
+
+        .ql-editor li {
+            margin-bottom: 1em !important;
+            font-size: 1.15rem !important;
+            line-height: 1.8 !important;
+        }
+
+        /* Drop Cap for first paragraph */
+        .ql-editor>p:first-of-type::first-letter {
+            float: left;
+            font-size: 3.5rem;
+            line-height: 1;
+            padding-top: 4px;
+            padding-right: 12px;
+            padding-left: 3px;
+            font-family: var(--font-heading);
+            font-weight: 800;
+            color: var(--color-primary);
+        }
+
+        .ql-editor h1,
+        .ql-editor h2,
+        .ql-editor h3,
+        .ql-editor h4,
+        .ql-editor h5,
+        .ql-editor h6 {
             color: var(--color-text) !important;
-            margin-top: 1.5em !important;
-            margin-bottom: 0.5em !important;
+            margin-top: 2em !important;
+            margin-bottom: 0.8em !important;
             font-family: var(--font-heading) !important;
             font-weight: 700 !important;
         }
-        .ql-editor p {
-            margin-bottom: 1.2em !important;
+
+        .ql-editor h2 {
+            font-size: 1.8rem !important;
         }
-        .ql-editor a {
-            color: var(--color-primary) !important;
-            text-decoration: underline !important;
+
+        .ql-editor h3 {
+            font-size: 1.4rem !important;
         }
+
+        .ql-editor a,
         .ql-editor a * {
             color: var(--color-primary) !important;
+            text-decoration: none !important;
+            border-bottom: 1px solid rgba(230, 174, 23, 0.3);
+            transition: border-bottom-color 0.2s;
         }
+
+        .ql-editor a:hover {
+            border-bottom-color: var(--color-primary);
+        }
+
         .ql-editor img {
             max-width: 100% !important;
             border-radius: 12px !important;
-            margin: 20px 0 !important;
+            margin: 30px 0 !important;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .ql-editor blockquote {
+            border-left: 4px solid var(--color-primary) !important;
+            background: rgba(255, 255, 255, 0.03) !important;
+            padding: 20px 30px !important;
+            margin: 30px 0 !important;
+            font-style: italic !important;
+            border-radius: 0 12px 12px 0 !important;
+        }
+
+        .ql-editor blockquote p {
+            margin-bottom: 0 !important;
         }
     </style>
-    
+
     <script nonce="pmorais-2026" src="js/lang.js" defer></script>
     <script nonce="pmorais-2026" src="js/theme.js" defer></script>
 </head>
@@ -180,9 +350,10 @@
     <div id="preloader">
         <div class="loader-content">
             <picture>
-    <source srcset="images/logo/logo_bw_loading.webp" type="image/webp">
-    <img src="images/logo/logo_bw_loading.png" width="500" height="411" fetchpriority="high" alt="Paulo Morais" class="loader-logo">
-</picture>
+                <source srcset="images/logo/logo_bw_loading.webp" type="image/webp">
+                <img src="images/logo/logo_bw_loading.png" width="500" height="411" fetchpriority="high"
+                    alt="Paulo Morais" class="loader-logo">
+            </picture>
             <div class="shimmer-effect"></div>
         </div>
     </div>
@@ -191,23 +362,54 @@
     <header id="header">
         <div class="container header-container">
             <a href="index.html">
-                <img src="images/logo/logo_amarelo_alpha.png" width="3563" height="2930" alt="Paulo Morais" class="logo-img">
+                <img src="images/logo/logo_amarelo_alpha.png" width="3563" height="2930" alt="Paulo Morais"
+                    class="logo-img">
             </a>
             <nav class="nav-menu">
                 <ul>
-<li><a href="index.html" data-i18n="nav.home">Início</a></li>
-<li><a href="sobre-mim.html" data-i18n="nav.about">Sobre Mim</a></li>
-<li><a href="osteopatia.html">Osteopatia</a></li>
-<li><a href="perfil.html" data-i18n="nav.profile">Perfil</a></li>
-<li><a href="blog.html" class="active" data-i18n="nav.blog">Blog</a></li>
-<li><a href="perfil.html?booking=true" class="btn-header-premium" data-i18n="nav.book">AGENDAR</a></li>
-</ul>
+                    <li><a href="index.html" data-i18n="nav.home">Início</a></li>
+                    <li><a href="sobre-mim.html" data-i18n="nav.about">Sobre Mim</a></li>
+                    <li><a href="osteopatia.html">Osteopatia</a></li>
+                    <li><a href="perfil.html" data-i18n="nav.profile">Perfil</a></li>
+                    <li><a href="blog.html" class="active" data-i18n="nav.blog">Blog</a></li>
+                    <li><a href="perfil.html?booking=true" class="btn-header-premium" data-i18n="nav.book">AGENDAR</a>
+                    </li>
+                </ul>
             </nav>
             <div class="mobile-menu-toggle" aria-label="Abrir menu de navegação" role="button" tabindex="0">
                 <i data-lucide="menu" aria-hidden="true"></i>
             </div>
         </div>
     </header>
+
+    <!-- Social FAB -->
+    <div class="fab-container">
+        <div class="fab-trigger">
+            <i data-lucide="plus" aria-hidden="true"></i>
+        </div>
+        <div class="fab-options">
+            <a href="https://wa.me/351960471537" class="fab-action-btn whatsapp" title="WhatsApp" target="_blank"
+                rel="noopener noreferrer" aria-label="WhatsApp">
+                <i data-lucide="message-circle" aria-hidden="true"></i>
+            </a>
+            <a href="https://www.instagram.com/pt.paulomorais" class="fab-action-btn social-ig" title="Instagram"
+                target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+                <i data-lucide="instagram" aria-hidden="true"></i>
+            </a>
+            <a href="mailto:pt@pmorais.pt?subject=Informação" class="fab-action-btn email" title="Email"
+                aria-label="Email">
+                <i data-lucide="mail" aria-hidden="true"></i>
+            </a>
+            <button type="button" id="lang-toggle" class="fab-action-btn lang-toggle" title="Mudar Idioma"
+                onclick="event.preventDefault(); event.stopPropagation(); window.toggleLanguage();">
+                <i data-lucide="globe" aria-hidden="true"></i>
+            </button>
+            <button type="button" id="theme-toggle" class="fab-action-btn theme-toggle" title="Mudar Tema"
+                onclick="event.preventDefault(); event.stopPropagation(); window.toggleThemeMode();">
+                <i data-lucide="sun-moon" aria-hidden="true"></i>
+            </button>
+        </div>
+    </div>
 
     <main style="padding-top: 150px;">
         <div class="article-container" id="article-content">
@@ -223,7 +425,8 @@
         <div class="footer-container-new">
             <div class="footer-col branding-col">
                 <a href="index.html" class="footer-logo-link">
-                    <img loading="lazy" src="images/logo/logo_amarelo_alpha.png" width="3563" height="2930" alt="Paulo Morais" class="footer-logo-elysium">
+                    <img loading="lazy" src="images/logo/logo_amarelo_alpha.png" width="3563" height="2930"
+                        alt="Paulo Morais" class="footer-logo-elysium">
                 </a>
                 <p class="brand-desc">Paulo Morais<br>Lisboa, Portugal</p>
                 <p class="brand-sub">O verdadeiro treino personalizado que se adapta à tua vida.</p>
@@ -241,7 +444,8 @@
                     <li>
                         <a href="https://www.livroreclamacoes.pt/pedido/reclamacao" target="_blank"
                             rel="noopener noreferrer" class="complaint-book-elysium">
-                            <img loading="lazy" src="images/livro-de-reclamacoes.png" width="224" height="80" alt="Livro de Reclamações" style="height: 40px; width: auto; display: block;">
+                            <img loading="lazy" src="images/livro-de-reclamacoes.png" width="224" height="80"
+                                alt="Livro de Reclamações" style="height: 40px; width: auto; display: block;">
                         </a>
                     </li>
                     <li><a href="politica-privacidade.html">Política de Privacidade</a></li>
@@ -257,14 +461,17 @@
             </div>
             <div class="footer-col">
                 <ul class="footer-links-list social-text-links">
-                    <li><a href="https://www.instagram.com/pt.paulomorais" target="_blank" rel="noopener noreferrer">Instagram</a></li>
+                    <li><a href="https://www.instagram.com/pt.paulomorais" target="_blank"
+                            rel="noopener noreferrer">Instagram</a></li>
                     <li><a href="https://wa.me/351960471537" target="_blank" rel="noopener noreferrer">WhatsApp</a></li>
                     <li><a href="mailto:pt@pmorais.pt?subject=Informação">Email</a></li>
                 </ul>
             </div>
         </div>
         <div class="footer-bar-elysium">
-            <div class="crafted-text"><a href="https://elysiumdr.eu" target="_blank" rel="noopener noreferrer">Desenvolvido por Elysium λ Development & Research.</a><br><span style="font-size: 0.8rem; opacity: 0.7; color: #a0a0a0;">V1.5.7</span></div>
+            <div class="crafted-text"><a href="https://elysiumdr.eu" target="_blank"
+                    rel="noopener noreferrer">Desenvolvido por Elysium λ Development & Research.</a><br><span
+                    style="font-size: 0.8rem; opacity: 0.7; color: #a0a0a0;">V1.6.0</span></div>
         </div>
     </footer>
 
@@ -275,11 +482,12 @@
             loadSingleArticle('article-content');
         });
     </script>
-    <script nonce="pmorais-2026" src="js/script.js?v=1.5.1" defer></script>
+    <script nonce="pmorais-2026" src="js/script.js?v=1.5.2" defer></script>
     <script nonce="pmorais-2026">
         document.addEventListener('DOMContentLoaded', () => {
             if (window.lucide) window.lucide.createIcons();
         });
     </script>
 </body>
+
 </html>

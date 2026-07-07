@@ -179,9 +179,8 @@ function createPostCard(data) {
                 <div style="margin-bottom: 20px;">
                     ${badgesHtml}
                 </div>
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                <div style="margin-bottom: 15px;">
                     <p class="blog-date" style="margin-bottom: 0;">${dateStr}</p>
-                    <p style="font-size: 0.8rem; color: var(--color-text-dim); display: flex; align-items: center; gap: 5px;"><i data-lucide="clock" style="width:12px; height:12px;"></i> ${readTime} min</p>
                 </div>
                 <h3 style="margin-top: 0;">${title}</h3>
                 <p class="blog-summary">${summary}</p>
@@ -277,44 +276,85 @@ export async function loadSingleArticle(containerId) {
                     ` : ''}
                 </div>
             `;
-        } else if (format === 'article') {
+        }
+
+        // Apply TOC and Dynamic Columns to ALL formats
+        let tocHtml = '';
+        if (content) {
             let tempDiv = document.createElement('div');
             tempDiv.innerHTML = content;
             let headings = tempDiv.querySelectorAll('h2, h3');
             
-            let tocHtml = '';
             if (headings.length > 0) {
-                tocHtml = '<div style="background: rgba(255,255,255,0.05); padding: 30px; border-radius: 16px; margin-bottom: 40px; border: 1px solid rgba(255,255,255,0.1);">';
-                tocHtml += '<h3 style="margin-top: 0; margin-bottom: 15px; color: var(--color-primary); font-size: 1.2rem;"><i data-lucide="list"></i> Índice</h3><ul style="list-style: none; padding-left: 0; margin: 0; display: flex; flex-direction: column; gap: 10px;">';
+                tocHtml = '<div class="article-toc">';
+                tocHtml += `<h3 class="toc-title"><i data-lucide="list"></i> ${isEnglish ? 'Table of Contents' : 'Índice'}</h3><ul class="toc-list">`;
                 
                 headings.forEach((heading, index) => {
                     const id = heading.id || `toc-heading-${index}`;
                     heading.id = id;
                     
                     const isSubHeading = heading.tagName.toLowerCase() === 'h3';
-                    const padding = isSubHeading ? 'padding-left: 20px;' : '';
-                    const opacity = isSubHeading ? 'opacity: 0.8;' : 'font-weight: 600;';
+                    const liClass = isSubHeading ? 'toc-subitem' : 'toc-item';
                     
-                    tocHtml += `<li style="${padding}"><a href="#${id}" style="color: var(--color-text); text-decoration: none; transition: color 0.2s; ${opacity}" onmouseover="this.style.color='var(--color-primary)'" onmouseout="this.style.color='var(--color-text)'">${heading.innerText}</a></li>`;
+                    tocHtml += `<li class="${liClass}"><a href="#${id}">${heading.innerText}</a></li>`;
                 });
                 tocHtml += '</ul></div>';
-                
-                content = tempDiv.innerHTML; // Update content with IDs
             }
             
-            dynamicContentHtml = tocHtml;
+            // Dynamic Columns Logic
+            let newNodes = [];
+            let pBuffer = [];
+            
+            Array.from(tempDiv.childNodes).forEach(node => {
+                if (node.tagName && node.tagName.toLowerCase() === 'p' && !node.querySelector('img, iframe, video')) {
+                    pBuffer.push(node);
+                } else {
+                    flushPBuffer();
+                    newNodes.push(node);
+                }
+            });
+            flushPBuffer();
+            
+            function flushPBuffer() {
+                if (pBuffer.length > 0) {
+                    let textLen = pBuffer.reduce((sum, p) => sum + (p.textContent || '').length, 0);
+                    // Skip the first paragraphs (newNodes.length === 0) so Drop Cap is untouched
+                    if (pBuffer.length >= 2 && textLen > 400 && newNodes.length > 0) {
+                        let wrapper = document.createElement('div');
+                        wrapper.className = 'dynamic-columns';
+                        pBuffer.forEach(p => wrapper.appendChild(p));
+                        newNodes.push(wrapper);
+                    } else {
+                        pBuffer.forEach(p => newNodes.push(p));
+                    }
+                    pBuffer = [];
+                }
+            }
+            
+            tempDiv.innerHTML = '';
+            newNodes.forEach(node => tempDiv.appendChild(node));
+            
+            content = tempDiv.innerHTML; // Update content with IDs and dynamic columns
         }
 
-        container.innerHTML = `
-            <div class="article-header" style="margin-bottom: 50px; text-align: left;">
-                <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 20px; flex-wrap: wrap;">
+            const splitTitleHtml = title.split(' ').map(word => {
+                const wordHtml = word.split('').map(char => {
+                    return `<span class="scroll-char" style="display: inline-block; will-change: transform;">${char}</span>`;
+                }).join('');
+                return `<span class="word-wrapper" style="display: inline-block; white-space: nowrap;">${wordHtml}</span>`;
+            }).join(' ');
+
+            container.innerHTML = `
+            <div id="scroll-progress" aria-hidden="true"></div>
+            <div class="article-header" style="margin-bottom: 30px; text-align: left;">
+                <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 15px; flex-wrap: wrap;">
                     <span style="background: rgba(230, 174, 23, 0.1); color: var(--color-primary); padding: 6px 14px; border-radius: 20px; font-size: 0.85rem; font-weight: 600; letter-spacing: 0.5px;">${dateStr}</span>
-                    <span style="color: var(--color-text-dim); font-size: 0.95rem; display: flex; align-items: center; gap: 6px;"><i data-lucide="clock" style="width: 16px; height: 16px;"></i> ${data.readTime || 5} min read</span>
                 </div>
-                <h1 style="font-family: var(--font-heading); font-size: clamp(2rem, 6vw, 3.5rem); line-height: 1.15; font-weight: 800; color: var(--color-text); margin-bottom: 0;">${title}</h1>
+                <h1 style="font-family: var(--font-heading); font-size: clamp(1.8rem, 4vw, 2.5rem); line-height: 1.2; font-weight: 700; color: var(--color-text); margin-bottom: 0; position: relative;">${splitTitleHtml}</h1>
             </div>
             
             ${dynamicContentHtml}
+            ${tocHtml}
             
             <div class="article-body ql-editor" style="font-size: 1.15rem; line-height: 1.8; color: var(--color-text);">
                 ${content}
@@ -335,6 +375,44 @@ export async function loadSingleArticle(containerId) {
         `;
         
         if (window.lucide) window.lucide.createIcons();
+        
+        // Scroll Effects (Title & Progress)
+        const progress = document.getElementById('scroll-progress');
+        const titleElement = container.querySelector('.article-header h1');
+        const titleChars = titleElement ? Array.from(titleElement.querySelectorAll('.scroll-char')) : [];
+        const centerIdx = titleChars.length / 2;
+        
+        let isTicking = false;
+        
+        window.addEventListener('scroll', () => {
+            if (!isTicking) {
+                window.requestAnimationFrame(() => {
+                    const scrollable = document.documentElement.scrollHeight - window.innerHeight;
+                    const scrolled = window.scrollY;
+                    
+                    if (progress) {
+                        const progressPercentage = scrollable > 0 ? (scrolled / scrollable) : 0;
+                        progress.style.transform = `scaleX(${progressPercentage})`;
+                    }
+                    
+                    if (titleChars.length > 0) {
+                        // Effect completes in the first 350px of scroll
+                        let scrollFraction = Math.min(scrolled / 350, 1); 
+                        
+                        // Use an ease-in curve so it starts slow and accelerates
+                        const easeFraction = scrollFraction * scrollFraction;
+                        const maxShift = easeFraction * 25; // 25px max shift per index distance
+                        
+                        titleChars.forEach((char, i) => {
+                            const dist = i - centerIdx;
+                            char.style.transform = `translateX(${dist * maxShift}px)`;
+                        });
+                    }
+                    isTicking = false;
+                });
+                isTicking = true;
+            }
+        });
     } catch (error) {
         console.error("Error loading article:", error);
         container.innerHTML = `<p class="text-center text-red" style="padding: 100px 0;">${isEnglish ? 'Error loading article.' : 'Erro ao carregar artigo.'}</p>`;

@@ -38,7 +38,7 @@ onAuthStateChanged(auth, async (user) => {
 
         logger.log("User data from Firestore:", userData);
 
-        if (userData?.role !== 'admin' && user.email !== ADMIN_EMAIL) {
+        if (userData?.role !== 'admin' && userData?.role !== 'root' && user.email !== ADMIN_EMAIL) {
             alert("Acesso restrito a administradores.");
             window.location.href = 'perfil.html';
             return;
@@ -63,7 +63,7 @@ async function loadProfiles() {
         });
 
         // Filter out admins and Paulo himself
-        const clients = users.filter(u => u.role !== 'admin' && u.email !== ADMIN_EMAIL).sort((a,b) => (a.name || "").localeCompare(b.name || ""));
+        const clients = users.filter(u => u.role !== 'admin' && u.role !== 'root' && u.email !== ADMIN_EMAIL).sort((a,b) => (a.name || "").localeCompare(b.name || ""));
 
         if (clients.length === 0) {
             profilesGrid.innerHTML = `<p style="grid-column: 1/-1; text-align: center; opacity: 0.5;">Nenhum aluno registado.</p>`;

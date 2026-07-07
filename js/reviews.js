@@ -1,6 +1,33 @@
 import { db } from './firebase-config.js';
 import { collection, query, where, getDocs } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
+window.showBadgeInfo = function(role) {
+    const isPt = document.documentElement.lang !== 'en';
+    let msg = isPt ? '✓ Check Verde: Cliente verificado que agendou e completou serviços.' : '✓ Green Check: Verified client who booked and completed services.';
+    if (role === 'admin') msg = isPt ? '✓ Check Dourado: Paulo Morais (Administrador e Especialista).' : '✓ Gold Check: Paulo Morais (Administrator and Specialist).';
+    if (role === 'root') msg = isPt ? '✓ Check Azul: Desenvolvedor / Superuser (Root).' : '✓ Blue Check: Developer / Superuser (Root).';
+    alert(msg);
+};
+
+function getBadgeHtml(name) {
+    const upperName = (name || '').trim().toUpperCase();
+    let role = 'user';
+    if (upperName === 'PAULO MORAIS') role = 'admin';
+    if (upperName === 'DANIEL ALONZZO') role = 'root';
+
+    let color = '#34c759'; // green
+    let title = 'Cliente Verificado';
+    if (role === 'admin') {
+        color = '#E6AE17'; // gold
+        title = 'Administrador';
+    } else if (role === 'root') {
+        color = '#0A84FF'; // blue
+        title = 'Superuser';
+    }
+    
+    return `<svg onclick="window.showBadgeInfo('${role}')" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="${color}" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-left: 6px; margin-bottom: 3px; flex-shrink: 0; color: ${color}; filter: drop-shadow(0 0 3px ${color}80); cursor: pointer;" title="${title}"><path d="M3.85 8.62a4 4 0 0 1 4.78-4.77 4 4 0 0 1 6.74 0 4 4 0 0 1 4.78 4.78 4 4 0 0 1 0 6.76 4 4 0 0 1-4.77 4.78 4 4 0 0 1-6.75 0 4 4 0 0 1-4.78-4.77 4 4 0 0 1 0-6.76Z" stroke="${color}" fill="${color}20"/><path d="m9 12 2 2 4-4" stroke="${color}" fill="none"/></svg>`;
+}
+
 window.loadPublicReviews = async function(serviceType) {
     try {
         const q = query(collection(db, "reviews"), where("service", "==", serviceType));
@@ -25,15 +52,16 @@ window.loadPublicReviews = async function(serviceType) {
             if (p.data().name) registeredNames.add(p.data().name.trim().toUpperCase());
         });
         
-        const badgeSvg = `<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#34c759" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-left: 6px; margin-bottom: 3px; flex-shrink: 0; color: #34c759; filter: drop-shadow(0 0 3px rgba(52,199,89,0.5));" title="Cliente Verificado"><path d="M3.85 8.62a4 4 0 0 1 4.78-4.77 4 4 0 0 1 6.74 0 4 4 0 0 1 4.78 4.78 4 4 0 0 1 0 6.76 4 4 0 0 1-4.77 4.78 4 4 0 0 1-6.75 0 4 4 0 0 1-4.78-4.77 4 4 0 0 1 0-6.76Z" stroke="#34c759" fill="rgba(52,199,89,0.12)"/><path d="m9 12 2 2 4-4" stroke="#34c759" fill="none"/></svg>`;
-        
         const htmlNames = document.querySelectorAll('.testimonial-name');
         htmlNames.forEach(h4 => {
             const name = h4.textContent.trim().toUpperCase();
-            if (registeredNames.has(name) || verifiedNames.has(name)) {
-                if (!h4.innerHTML.includes('svg')) {
-                    h4.innerHTML += badgeSvg;
+            if (registeredNames.has(name) || verifiedNames.has(name) || name === 'PAULO MORAIS' || name === 'DANIEL ALONZZO') {
+                // If it already has an SVG or i tag from Lucide, we replace it with ours
+                const existingIcon = h4.querySelector('svg, i');
+                if (existingIcon) {
+                    existingIcon.remove();
                 }
+                h4.innerHTML += getBadgeHtml(name);
             }
         });
         
@@ -75,7 +103,7 @@ window.loadPublicReviews = async function(serviceType) {
             nameEl.className = 'testimonial-name';
             const safeUserName = (typeof r.userName === 'string' ? r.userName : 'Anónimo').trim() || 'Anónimo';
             nameEl.textContent = safeUserName.toUpperCase();
-            nameEl.insertAdjacentHTML('beforeend', badgeSvg); // badge is static SVG, not user data
+            nameEl.insertAdjacentHTML('beforeend', getBadgeHtml(safeUserName)); // badge is static SVG, not user data
 
             // Date label (safe: derived from Date object, not user input)
             const roleEl = document.createElement('p');

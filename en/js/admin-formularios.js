@@ -28,7 +28,7 @@ onAuthStateChanged(auth, async (user) => {
         const userDoc = await getDoc(doc(db, "users", user.uid));
         const userData = userDoc.data();
 
-        if (userData?.role !== 'admin' && user.email !== ADMIN_EMAIL) {
+        if (userData?.role !== 'admin' && userData?.role !== 'root' && user.email !== ADMIN_EMAIL) {
             alert("Access restricted to administrators.");
             window.location.href = 'perfil.html';
             return;

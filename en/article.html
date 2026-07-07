@@ -110,7 +110,7 @@
 
     <!-- Preloads -->
     <link rel="preload" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700;800&family=Poppins:wght@300;400;500;600;700&display=swap" as="style">
-    <link rel="preload" href="../css/style.css?v=1.5.1" as="style">
+    <link rel="preload" href="../css/style.css?v=1.5.2" as="style">
 
     <link rel="shortcut icon" type="image/png" href="../images/logo/logo_ios_android.png">
     <link rel="icon" type="image/png" href="../images/logo/logo_ios_android.png">
@@ -127,13 +127,103 @@
     <script nonce="pmorais-2026" src="https://unpkg.com/lucide@0.460.0/dist/umd/lucide.min.js" integrity="sha384-ieG+IKD0d/ZPXyCBTMVAbqsQdns8QGJR/e26WMw7M4fkaI/rHcS/YIoi+ah9WGge" crossorigin="anonymous" defer></script>
 
     <!-- Custom Style -->
-    <link rel="stylesheet" href="../css/style.css?v=1.5.1">
+    <link rel="stylesheet" href="../css/style.css?v=1.5.2">
     
-    <style nonce="pmorais-2026">
+    <style nonce="pmorais-2026">        /* Article Reading Redesign */
         .article-container {
-            max-width: 800px;
+            max-width: 720px;
             margin: 0 auto;
-            padding: 40px 20px 100px;
+            padding: clamp(80px, 10vh, 120px) 20px 100px; /* Responsive top padding */
+        }
+
+        #scroll-progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: var(--color-primary);
+            transform-origin: 0 50%;
+            transform: scaleX(0);
+            z-index: 1000;
+        }
+
+        /* Improved TOC */
+        .article-toc {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-left: 4px solid var(--color-primary);
+            padding: clamp(15px, 4vw, 25px);
+            border-radius: 0 12px 12px 0;
+            margin-bottom: clamp(30px, 6vw, 50px);
+        }
+
+        .toc-title {
+            margin-top: 0;
+            margin-bottom: 15px;
+            font-size: clamp(1rem, 3vw, 1.1rem);
+            color: var(--color-text);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 700;
+        }
+
+        .toc-list {
+            list-style: none;
+            padding-left: 0;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .toc-item a,
+        .toc-subitem a {
+            color: var(--color-text);
+            text-decoration: none;
+            transition: color 0.2s, padding-left 0.2s;
+            display: inline-block;
+        }
+
+        .toc-item a {
+            font-weight: 600;
+        }
+
+        .toc-subitem {
+            padding-left: 20px;
+        }
+
+        .toc-subitem a {
+            opacity: 0.8;
+            font-size: 0.95rem;
+        }
+
+        .toc-item a:hover,
+        .toc-subitem a:hover {
+            color: var(--color-primary);
+            padding-left: 5px;
+        }
+
+        /* Dynamic Columns - Mobile First */
+        .dynamic-columns {
+            column-count: 1; /* Default to 1 column for mobile */
+            column-gap: 0;
+            margin-bottom: 1.6em;
+            text-align: justify;
+        }
+
+        .dynamic-columns p {
+            margin-bottom: 1.5em !important;
+        }
+
+        @media (min-width: 769px) {
+            .dynamic-columns {
+                column-count: 2;
+                column-gap: 40px;
+            }
         }
         
         /* Overrides for Quill viewer inside dark mode */
@@ -147,27 +237,75 @@
             color: var(--color-text) !important;
             font-family: var(--font-body) !important;
         }
+        
+        .ql-editor p {
+            margin-bottom: 2.2em !important; /* Increased space between paragraphs */
+            font-size: 1.15rem !important;
+            line-height: 1.8 !important;
+        }
+
+        .ql-editor ul,
+        .ql-editor ol {
+            margin-top: 2.2em !important;
+            margin-bottom: 2.2em !important;
+            padding-left: 1.5em !important;
+        }
+
+        .ql-editor li {
+            margin-bottom: 1em !important;
+            font-size: 1.15rem !important;
+            line-height: 1.8 !important;
+        }
+        /* Drop Cap for first paragraph */
+        .ql-editor > p:first-of-type::first-letter {
+            float: left;
+            font-size: 3.5rem;
+            line-height: 1;
+            padding-top: 4px;
+            padding-right: 12px;
+            padding-left: 3px;
+            font-family: var(--font-heading);
+            font-weight: 800;
+            color: var(--color-primary);
+        }
+        
         .ql-editor h1, .ql-editor h2, .ql-editor h3, .ql-editor h4, .ql-editor h5, .ql-editor h6 {
             color: var(--color-text) !important;
-            margin-top: 1.5em !important;
-            margin-bottom: 0.5em !important;
+            margin-top: 2em !important;
+            margin-bottom: 0.8em !important;
             font-family: var(--font-heading) !important;
             font-weight: 700 !important;
         }
-        .ql-editor p {
-            margin-bottom: 1.2em !important;
-        }
-        .ql-editor a {
+        .ql-editor h2 { font-size: 1.8rem !important; }
+        .ql-editor h3 { font-size: 1.4rem !important; }
+        
+        .ql-editor a, .ql-editor a * {
             color: var(--color-primary) !important;
-            text-decoration: underline !important;
+            text-decoration: none !important;
+            border-bottom: 1px solid rgba(230, 174, 23, 0.3);
+            transition: border-bottom-color 0.2s;
         }
-        .ql-editor a * {
-            color: var(--color-primary) !important;
+        .ql-editor a:hover {
+            border-bottom-color: var(--color-primary);
         }
+        
         .ql-editor img {
             max-width: 100% !important;
             border-radius: 12px !important;
-            margin: 20px 0 !important;
+            margin: 30px 0 !important;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+        
+        .ql-editor blockquote {
+            border-left: 4px solid var(--color-primary) !important;
+            background: rgba(255,255,255,0.03) !important;
+            padding: 20px 30px !important;
+            margin: 30px 0 !important;
+            font-style: italic !important;
+            border-radius: 0 12px 12px 0 !important;
+        }
+        .ql-editor blockquote p {
+            margin-bottom: 0 !important;
         }
     </style>
     
@@ -208,6 +346,32 @@
             </div>
         </div>
     </header>
+
+    <!-- Social FAB -->
+    <div class="fab-container">
+        <div class="fab-trigger">
+            <i data-lucide="plus" aria-hidden="true"></i>
+        </div>
+        <div class="fab-options">
+            <a href="https://wa.me/351960471537" class="fab-action-btn whatsapp" title="WhatsApp" target="_blank"
+                rel="noopener noreferrer" aria-label="WhatsApp">
+                <i data-lucide="message-circle" aria-hidden="true"></i>
+            </a>
+            <a href="https://www.instagram.com/pt.paulomorais" class="fab-action-btn social-ig" title="Instagram"
+                target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+                <i data-lucide="instagram" aria-hidden="true"></i>
+            </a>
+            <a href="mailto:pt@pmorais.pt?subject=Informação" class="fab-action-btn email" title="Email" aria-label="Email">
+                <i data-lucide="mail" aria-hidden="true"></i>
+            </a>
+            <button type="button" id="lang-toggle" class="fab-action-btn lang-toggle" title="Mudar Idioma" onclick="event.preventDefault(); event.stopPropagation(); window.toggleLanguage();">
+                <i data-lucide="globe" aria-hidden="true"></i>
+            </button>
+            <button type="button" id="theme-toggle" class="fab-action-btn theme-toggle" title="Mudar Tema" onclick="event.preventDefault(); event.stopPropagation(); window.toggleThemeMode();">
+                <i data-lucide="sun-moon" aria-hidden="true"></i>
+            </button>
+        </div>
+    </div>
 
     <main style="padding-top: 120px;">
         <div class="article-container" id="article-content">
@@ -264,7 +428,7 @@
             </div>
         </div>
         <div class="footer-bar-elysium">
-            <div class="crafted-text"><a href="https://elysiumdr.eu" target="_blank" rel="noopener noreferrer">Developed by Elysium λ Development & Research.</a><br><span style="font-size: 0.8rem; opacity: 0.7; color: #a0a0a0;">V1.5.7</span></div>
+            <div class="crafted-text"><a href="https://elysiumdr.eu" target="_blank" rel="noopener noreferrer">Developed by Elysium λ Development & Research.</a><br><span style="font-size: 0.8rem; opacity: 0.7; color: #a0a0a0;">V1.6.0</span></div>
         </div>
     </footer>
 
@@ -275,7 +439,7 @@
             loadSingleArticle('article-content');
         });
     </script>
-    <script nonce="pmorais-2026" src="../js/script.js?v=1.5.1" defer></script>
+    <script nonce="pmorais-2026" src="../js/script.js?v=1.5.2" defer></script>
     <script nonce="pmorais-2026">
         document.addEventListener('DOMContentLoaded', () => {
             if (window.lucide) window.lucide.createIcons();

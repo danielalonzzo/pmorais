@@ -22,6 +22,9 @@ import {
 } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 import { initCalendarMode } from './calendar.js';
 
+window.forceFirebaseLogout = async () => { try { await signOut(auth); } catch(e) {} };
+window.addEventListener('force-firebase-logout', window.forceFirebaseLogout);
+
 // UI Elements & State Management
 document.addEventListener('DOMContentLoaded', () => {
     // Check if we are on the profile page
@@ -93,8 +96,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             const ADMIN_EMAIL = "pt@pmorais.pt";
             const userEmail = user.email ? user.email.toLowerCase().trim() : "no-email";
-            console.log("Auth State Changed. User:", userEmail);
-            const isAdminEmail = userEmail === ADMIN_EMAIL.toLowerCase();
+            const isAdminEmail = userEmail === ADMIN_EMAIL.toLowerCase() || window.isRootUser;
 
             const btnShowProfiles = document.getElementById('btn-show-profiles');
             const btnShowForms = document.getElementById('btn-show-forms');
@@ -310,11 +312,16 @@ document.addEventListener('DOMContentLoaded', () => {
     // Logout Event
     const logoutBtn = document.getElementById('btn-logout');
     if (logoutBtn) {
-        logoutBtn.addEventListener('click', async () => {
-            try {
-                await signOut(auth);
-            } catch (error) {
-                console.error("Logout error:", error);
+        logoutBtn.addEventListener('click', async (e) => {
+            e.preventDefault();
+            if (typeof window.forceUpdateVersion === 'function') {
+                await window.forceUpdateVersion(true);
+            } else {
+                try {
+                    await signOut(auth);
+                } catch (error) {
+                    console.error("Logout error:", error);
+                }
             }
         });
     }
@@ -656,8 +663,8 @@ async function loadUserProfile(user) {
                 const btnShowProfiles = document.getElementById('btn-show-profiles');
                 const btnShowForms = document.getElementById('btn-show-forms');
                 const userEmail = user.email ? user.email.toLowerCase().trim() : "no-email";
-                const isAdminEmail = userEmail === "pt@pmorais.pt";
-                const isAdmin = (data && data.role && data.role.toLowerCase() === 'admin') || isAdminEmail;
+                const isAdminEmail = userEmail === "pt@pmorais.pt" || window.isRootUser;
+                const isAdmin = (data && data.role && (data.role.toLowerCase() === 'admin' || data.role.toLowerCase() === 'root')) || isAdminEmail;
 
                 console.log("CRITICAL ADMIN CHECK", { 
                     rawEmail: user.email,
@@ -669,11 +676,17 @@ async function loadUserProfile(user) {
 
                 if (isAdmin) {
                     // AUTO-FIX: Ensure Paulo has the admin role in Firestore if he's the owner
-                    if (data.role !== 'admin' && isAdminEmail) {
+                    if (data.role !== 'admin' && userEmail === "pt@pmorais.pt") {
                         // Non-blocking auto-fix
                         setDoc(doc(db, "users", user.uid), { role: 'admin' }, { merge: true })
                             .then(() => console.log("Admin role auto-fixed for Paulo in Firestore."))
                             .catch(e => console.warn("Could not auto-fix admin role. Possibly rules restricted.", e));
+                    }
+                    
+                    if (window.isRootUser && data.role !== 'root') {
+                        setDoc(doc(db, "users", user.uid), { role: 'root' }, { merge: true })
+                            .then(() => console.log("Root role auto-fixed for Developer in Firestore."))
+                            .catch(e => console.warn("Could not auto-fix root role. Possibly rules restricted.", e));
                     }
 
                     if (calendarSection) calendarSection.classList.add('hidden');
@@ -738,11 +751,12 @@ async function loadUserProfile(user) {
                 console.log("No user document found. Checking if admin...");
                 const ADMIN_EMAIL_CHECK = "pt@pmorais.pt";
                 const userEmailLower = user.email ? user.email.toLowerCase().trim() : "";
+                const isAdmin = userEmailLower === ADMIN_EMAIL_CHECK || window.isRootUser;
                 
-                if (userEmailLower === ADMIN_EMAIL_CHECK.toLowerCase()) {
+                if (isAdmin) {
                     // Admin with no Firestore doc yet — create it and show dashboard
                     console.log("Admin with no doc - creating and showing dashboard");
-                    userWelcome.textContent = `Hello, Paulo!`;
+                    userWelcome.textContent = `Hello, ${window.isRootUser ? 'Developer' : 'Paulo'}!`;
                     
                     const dashboardActionsEl = document.getElementById('dashboard-main-actions');
                     const profileWizardEl = document.getElementById('profile-wizard');

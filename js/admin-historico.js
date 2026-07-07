@@ -25,7 +25,7 @@ onAuthStateChanged(auth, async (user) => {
     try {
         const userDoc = await getDoc(doc(db, "users", user.uid));
         const userData = userDoc.data();
-        const isAdmin = userData?.role === 'admin' || user.email === "pt@pmorais.pt";
+        const isAdmin = userData?.role === 'admin' || userData?.role === 'root' || user.email === "pt@pmorais.pt";
         
         pageTitle.textContent = isAdmin ? "Histórico Global de Reservas" : "O Seu Histórico";
         

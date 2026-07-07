@@ -35,7 +35,7 @@ export function initCalendarMode(user, db, role = null, profileCompleted = false
     if (!calendarSection || !adminSection) return;
 
     // Determine if user is admin
-    const isAdmin = role === 'admin' || user.email === ADMIN_EMAIL;
+    const isAdmin = role === 'admin' || role === 'root' || user.email === ADMIN_EMAIL || window.isRootUser;
     console.log("initCalendarMode - isAdmin:", isAdmin, "profileCompleted:", profileCompleted);
 
     // Initial load logic is handled by auth.js loadDashboardPreview

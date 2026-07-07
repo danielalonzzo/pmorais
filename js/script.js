@@ -2,6 +2,38 @@
  * Developed by Elysium λ Development & Research
  * A European company
  */
+(function() {
+    try {
+        const sysAction = sessionStorage.getItem('sys_action');
+        if (sysAction) {
+            sessionStorage.removeItem('sys_action');
+            const isLogout = sysAction === 'logout';
+            const loadingText = isLogout ? (window.location.pathname.includes('/en/') ? "Logging out..." : "A terminar sessão...") : (window.location.pathname.includes('/en/') ? "Updating..." : "A atualizar...");
+            
+            const preloader = document.getElementById('preloader');
+            if (preloader) {
+                preloader.style.display = 'none';
+            }
+            
+            if (document.body) {
+                showSystemUpdateLoader(loadingText);
+                window.addEventListener('load', () => {
+                    setTimeout(() => {
+                        const overlay = document.querySelector('.sys-update-overlay');
+                        if (overlay) {
+                            overlay.style.opacity = '0';
+                            setTimeout(() => {
+                                overlay.remove();
+                                document.body.classList.add('loaded');
+                            }, 300);
+                        }
+                    }, 500);
+                });
+            }
+        }
+    } catch (e) {}
+})();
+
 document.addEventListener('DOMContentLoaded', () => {
     // Initialize Lucide icons
     if (typeof lucide !== 'undefined') {
@@ -894,47 +926,122 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 })();
-// Global function to force update version and clear caches
-window.forceUpdateVersion = function() {
-    try {
-        // Show temporary alert or feedback
-        const btn = document.querySelector('button[onclick="window.forceUpdateVersion()"]');
-        if (btn) {
-            btn.innerHTML = btn.innerHTML === "Update" ? "Updating..." : "A atualizar...";
-            btn.style.opacity = "0.7";
+// System Update Loader
+function showSystemUpdateLoader(text) {
+    return new Promise(resolve => {
+        try {
+            const isEn = window.location.pathname.includes('/en/');
+            const imgPath = isEn ? '../images/logo/logo_bw_loading.png' : 'images/logo/logo_bw_loading.png';
+
+            const overlay = document.createElement('div');
+            overlay.className = 'sys-update-overlay';
+
+            overlay.innerHTML = `
+                <div class="sys-update-logo-wrapper">
+                    <img src="${imgPath}" alt="Loading..." class="sys-update-logo">
+                    <div class="sys-update-shimmer" id="sys-update-shimmer-mask"></div>
+                </div>
+                <div class="sys-update-progress-container">
+                    <div class="sys-update-progress-bar" id="update-progress-bar"></div>
+                </div>
+                <div class="sys-update-text">${text}</div>
+            `;
+
+            document.body.appendChild(overlay);
+
+            const shimmerMask = document.getElementById('sys-update-shimmer-mask');
+            if (shimmerMask) {
+                shimmerMask.style.webkitMaskImage = `url('${imgPath}')`;
+                shimmerMask.style.maskImage = `url('${imgPath}')`;
+            }
+
+            // Trigger reflow and fade in
+            overlay.offsetHeight;
+            overlay.style.opacity = '1';
+
+            setTimeout(() => {
+                const bar = document.getElementById('update-progress-bar');
+                if (bar) bar.style.width = '100%';
+            }, 50);
+        } catch (err) {
+            console.error("Error displaying update loader:", err);
         }
 
-        // Clear cookies
+        // Always resolve after 2 seconds to ensure the loader duration
+        setTimeout(() => { resolve(); }, 2000);
+    });
+}
+
+// Global function to force update version and clear caches
+window.forceUpdateVersion = async function(isLogout = false) {
+    try {
+        // Show loading overlay
+        const loadingText = isLogout ? "A terminar sessão..." : "A atualizar...";
+        await showSystemUpdateLoader(loadingText);
+
+        // Trigger explicit Firebase signout if auth.js is loaded
+        if (typeof window.forceFirebaseLogout === 'function') {
+            try { await window.forceFirebaseLogout(); } catch(e) {}
+        }
+        window.dispatchEvent(new Event('force-firebase-logout'));
+
+        // Clear cookies completely for all paths
         document.cookie.split(";").forEach(function(c) { 
-            document.cookie = c.replace(/^ +/, "").replace(/=.*/, "=;expires=" + new Date().toUTCString() + ";path=/"); 
+            const cookieName = c.replace(/^ +/, "").split("=")[0];
+            document.cookie = cookieName + "=;expires=" + new Date().toUTCString() + ";path=/"; 
+            document.cookie = cookieName + "=;expires=" + new Date().toUTCString() + ";path=/;domain=" + window.location.hostname;
         });
         
         // Clear local storage & session storage
         localStorage.clear();
         sessionStorage.clear();
         
+        // Pass a flag to indicate we just performed an update/logout
+        sessionStorage.setItem('sys_action', isLogout ? 'logout' : 'update');
+
+        // Helper to delete IndexedDB
+        const deleteDB = (name) => new Promise((resolve) => {
+            try {
+                const req = window.indexedDB.deleteDatabase(name);
+                req.onsuccess = resolve;
+                req.onerror = resolve;
+                req.onblocked = resolve;
+            } catch (e) { resolve(); }
+        });
+
+        // Clear all IndexedDB databases (this clears Firebase auth state, offline data, etc.)
+        if (window.indexedDB) {
+            let dbsToDelete = ['firebaseLocalStorageDb', 'firebase-heartbeat-database', 'firebase-installations-database'];
+            if (window.indexedDB.databases) {
+                try {
+                    const dbs = await window.indexedDB.databases();
+                    dbs.forEach(db => { if (db.name && !dbsToDelete.includes(db.name)) dbsToDelete.push(db.name); });
+                } catch(e) { console.error("Error listing IndexedDBs:", e); }
+            }
+            
+            await Promise.all(dbsToDelete.map(name => deleteDB(name)));
+        }
+        
         // Clear Service Worker Caches
         if ('caches' in window) {
-            caches.keys().then(function(names) {
-                for (let name of names) {
-                    caches.delete(name);
-                }
-            });
+            try {
+                const names = await caches.keys();
+                await Promise.all(names.map(name => caches.delete(name)));
+            } catch(e) { console.error("Error clearing caches:", e); }
         }
         
         // Unregister service workers
         if ('serviceWorker' in navigator) {
-            navigator.serviceWorker.getRegistrations().then(function(registrations) {
-                for(let registration of registrations) {
-                    registration.unregister();
-                }
-            });
+            try {
+                const registrations = await navigator.serviceWorker.getRegistrations();
+                await Promise.all(registrations.map(reg => reg.unregister()));
+            } catch(e) { console.error("Error unregistering service workers:", e); }
         }
         
-        // Hard reload after a short delay
+        // Hard reload
         setTimeout(() => {
             window.location.reload(true);
-        }, 800);
+        }, 300);
         
     } catch (e) {
         console.error('Error clearing caches:', e);
