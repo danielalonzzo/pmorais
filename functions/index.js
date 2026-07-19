@@ -245,7 +245,7 @@ exports.onWeeklyScheduleUpdated = functions
           // Send individually so each user gets their own unsubscribe link
           for (const clientEmail of bccList) {
             const token = generateUnsubToken(clientEmail, unsubSecret.value());
-            const unsubUrl = `https://pmorais.pt/desinscrever.html?email=${encodeURIComponent(clientEmail)}&token=${encodeURIComponent(token)}`;
+            const unsubUrl = `https://pmorais.pt/desinscrever?email=${encodeURIComponent(clientEmail)}&token=${encodeURIComponent(token)}`;
             const mailOptions = {
               from: `"Paulo Morais" <${emailUser.value()}>`,
               to: clientEmail,
@@ -254,7 +254,7 @@ exports.onWeeklyScheduleUpdated = functions
                 title: "Agenda Semanal Disponível",
                 bodyHtml,
                 ctaText: "&#128197;&nbsp;&nbsp;Agendar Agora",
-                ctaUrl: "https://pmorais.pt/perfil.html?booking=true",
+                ctaUrl: "https://pmorais.pt/perfil?booking=true",
                 unsubscribeUrl: unsubUrl
               }),
               headers: {
@@ -457,7 +457,7 @@ exports.onWeeklyScheduleUpdated = functions
           title: "Nova Reserva no Sistema",
           bodyHtml,
           ctaText: "Ver Painel de Gestão",
-          ctaUrl: "https://pmorais.pt/perfil.html"
+          ctaUrl: "https://pmorais.pt/perfil"
         })
       };
       await transporter.sendMail(mailOptions).catch(console.error);
@@ -481,7 +481,7 @@ exports.onWeeklyScheduleUpdated = functions
               `;
 
               const token = generateUnsubToken(clientData.email, unsubSecret.value());
-              const unsubUrl = `https://pmorais.pt/desinscrever.html?email=${encodeURIComponent(clientData.email)}&token=${encodeURIComponent(token)}`;
+              const unsubUrl = `https://pmorais.pt/desinscrever?email=${encodeURIComponent(clientData.email)}&token=${encodeURIComponent(token)}`;
 
               const clientMailOptions = {
                 from: `"Paulo Morais" <${emailUser.value()}>`,
@@ -491,7 +491,7 @@ exports.onWeeklyScheduleUpdated = functions
                   title: "Reserva Confirmada",
                   bodyHtml: clientBodyHtml,
                   ctaText: "Ver no meu Perfil",
-                  ctaUrl: "https://pmorais.pt/perfil.html",
+                  ctaUrl: "https://pmorais.pt/perfil",
                   unsubscribeUrl: unsubUrl
                 }),
                 attachments: [
@@ -588,7 +588,7 @@ exports.onWeeklyScheduleUpdated = functions
           title: "Reserva Cancelada",
           bodyHtml,
           ctaText: "Ver Painel de Gestão",
-          ctaUrl: "https://pmorais.pt/perfil.html"
+          ctaUrl: "https://pmorais.pt/perfil"
         })
       };
       await transporter.sendMail(mailOptions).catch(console.error);
@@ -610,7 +610,7 @@ exports.onWeeklyScheduleUpdated = functions
               `;
 
               const token = generateUnsubToken(clientData.email, unsubSecret.value());
-              const unsubUrl = `https://pmorais.pt/desinscrever.html?email=${encodeURIComponent(clientData.email)}&token=${encodeURIComponent(token)}`;
+              const unsubUrl = `https://pmorais.pt/desinscrever?email=${encodeURIComponent(clientData.email)}&token=${encodeURIComponent(token)}`;
 
               const clientMailOptions = {
                 from: `"Paulo Morais" <${emailUser.value()}>`,
@@ -620,7 +620,7 @@ exports.onWeeklyScheduleUpdated = functions
                   title: "Reserva Cancelada",
                   bodyHtml: clientBodyHtml,
                   ctaText: "Aceder à minha Conta",
-                  ctaUrl: "https://pmorais.pt/perfil.html",
+                  ctaUrl: "https://pmorais.pt/perfil",
                   unsubscribeUrl: unsubUrl
                 }),
                 headers: {

@@ -1,5 +1,53 @@
+# Public pages are crawlable. Account, administration and workflow routes are not.
 User-agent: *
 Allow: /
-Disallow: /admin-*
-Disallow: /en/admin-*
+Disallow: /admin-blog
+Disallow: /auth-action
+Disallow: /desinscrever
+Disallow: /formulario
+Disallow: /historico
+Disallow: /perfil
+Disallow: /perfis
+Disallow: /en/auth-action
+Disallow: /en/desinscrever
+Disallow: /en/formulario
+Disallow: /en/historico
+Disallow: /en/perfil
+Disallow: /en/perfis
+
+# AI assistants and AI search crawlers receive the same safety boundaries.
+User-agent: GPTBot
+User-agent: ChatGPT-User
+User-agent: OAI-SearchBot
+User-agent: ClaudeBot
+User-agent: Claude-SearchBot
+User-agent: Claude-User
+User-agent: PerplexityBot
+User-agent: Perplexity-User
+User-agent: Google-Extended
+User-agent: GoogleOther
+User-agent: CCBot
+User-agent: Applebot
+User-agent: Applebot-Extended
+User-agent: Amazonbot
+User-agent: Bytespider
+User-agent: cohere-ai
+User-agent: MistralAI-User
+User-agent: meta-externalagent
+User-agent: meta-externalfetcher
+Allow: /
+Disallow: /admin-blog
+Disallow: /auth-action
+Disallow: /desinscrever
+Disallow: /formulario
+Disallow: /historico
+Disallow: /perfil
+Disallow: /perfis
+Disallow: /en/auth-action
+Disallow: /en/desinscrever
+Disallow: /en/formulario
+Disallow: /en/historico
+Disallow: /en/perfil
+Disallow: /en/perfis
+
 Sitemap: https://pmorais.pt/sitemap.xml

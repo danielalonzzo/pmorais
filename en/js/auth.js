@@ -108,11 +108,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 console.log("Admin detected by email (Immediate)");
                 if (btnShowProfiles) {
                     btnShowProfiles.classList.remove('hidden');
-                    btnShowProfiles.onclick = () => window.location.href = 'perfis.html';
+                    btnShowProfiles.onclick = () => window.location.href = 'perfis';
                 }
                 if (btnShowForms) {
                     btnShowForms.classList.remove('hidden');
-                    btnShowForms.onclick = () => window.location.href = 'formulario.html';
+                    btnShowForms.onclick = () => window.location.href = 'formulario';
                 }
                 if (btnStartBooking) {
                     const span = btnStartBooking.querySelector('.btn-text');
@@ -695,11 +695,11 @@ async function loadUserProfile(user) {
                     if (profileWizard) profileWizard.classList.add('hidden');
                     if (btnShowProfiles) {
                         btnShowProfiles.classList.remove('hidden');
-                        btnShowProfiles.onclick = () => window.location.href = 'perfis.html';
+                        btnShowProfiles.onclick = () => window.location.href = 'perfis';
                     }
                     if (btnShowForms) {
                         btnShowForms.classList.remove('hidden');
-                        btnShowForms.onclick = () => window.location.href = 'formulario.html';
+                        btnShowForms.onclick = () => window.location.href = 'formulario';
                     }
                     
                     const btnStartBooking = document.getElementById('btn-start-booking');
@@ -765,8 +765,8 @@ async function loadUserProfile(user) {
 
                     const btnShowProfiles = document.getElementById('btn-show-profiles');
                     const btnShowForms = document.getElementById('btn-show-forms');
-                    if (btnShowProfiles) { btnShowProfiles.classList.remove('hidden'); btnShowProfiles.onclick = () => window.location.href = 'perfis.html'; }
-                    if (btnShowForms) { btnShowForms.classList.remove('hidden'); btnShowForms.onclick = () => window.location.href = 'formulario.html'; }
+                    if (btnShowProfiles) { btnShowProfiles.classList.remove('hidden'); btnShowProfiles.onclick = () => window.location.href = 'perfis'; }
+                    if (btnShowForms) { btnShowForms.classList.remove('hidden'); btnShowForms.onclick = () => window.location.href = 'formulario'; }
                     
                     // Create minimal admin doc
                     try {

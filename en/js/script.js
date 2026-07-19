@@ -589,8 +589,8 @@ document.addEventListener('DOMContentLoaded', () => {
             };
 
             const t = isEn ? i18n.en : i18n.pt;
-            const termsLink = isEn ? '../termos-e-condicoes.html' : 'termos-e-condicoes.html';
-            const privacyLink = isEn ? '../politica-privacidade.html' : 'politica-privacidade.html';
+            const termsLink = isEn ? '/en/termos-e-condicoes' : '/termos-e-condicoes';
+            const privacyLink = isEn ? '/en/politica-privacidade' : '/politica-privacidade';
             
             const isLight = document.body.classList.contains('light-mode');
             const logoFile = isLight ? 'paulo_morais-08.png' : 'logo_amarelo_alpha.png';

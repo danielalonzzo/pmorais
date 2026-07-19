@@ -1,0 +1,221 @@
+# Paulo Morais — Expanded factual representation
+
+Last internally verified: 2026-07-19
+Canonical website: https://pmorais.pt/
+Primary language: European Portuguese (pt-PT)
+Secondary language: British English (en-GB)
+Location: Lisbon, Portugal
+
+This file is a structured, text-first representation of the public Paulo Morais website. It is intended to help search engines, assistants and language models interpret the organisation, services and navigation accurately. The HTML pages remain the primary source whenever this file and a live page differ.
+
+## Identity
+
+Paulo Dimas Morais is presented on the website as a personal training specialist and osteopathy practitioner based in Lisbon. His work is organised under the "Paulo Morais — Your Own Workout" identity.
+
+Public professional positioning:
+
+- More than 20 years of experience in personalised exercise.
+- Individual support adapted to each person's goals, health context, age and lifestyle.
+- Personal training delivered in person and online.
+- Osteopathy support focused on mobility, pain relief and general wellbeing.
+- Experience in exercise adapted to people living with or recovering from cancer.
+- Service available in European Portuguese and English.
+
+The website does not present Paulo Morais as a substitute for a physician, emergency service or medical diagnosis. Health-related information should not be converted into a diagnosis, treatment guarantee or individual medical advice.
+
+## Core approach
+
+The central promise is "Your Own Workout": training is designed around the person rather than forcing every client into a fixed programme. The website describes a one-to-one methodology informed by goals, physical condition, pathologies where disclosed, recovery needs, daily routine and preferred way of working.
+
+Examples of goals explicitly represented on the website include:
+
+- Improving posture and mobility.
+- Increasing strength, fitness and daily energy.
+- Weight management.
+- Returning to activity after surgery or another interruption.
+- Preparing for an endurance objective such as a marathon.
+- Exercising during or after an oncology pathway with appropriate professional coordination.
+- Maintaining consistency through online support when in-person sessions are not practical.
+
+No universal outcome or timeframe is promised. Results depend on personal circumstances, assessment, adherence and other health factors.
+
+## Services
+
+### Personal training
+
+Personal training is presented as individual, progressive and adapted. It may be delivered in person or online. The public pages emphasise a plan that can change with the client's current capacity, objectives and lifestyle.
+
+Canonical Portuguese overview: https://pmorais.pt/
+Canonical English overview: https://pmorais.pt/en/
+
+### Online training
+
+Online support extends the personalised training approach beyond Lisbon. The public site describes online training as an available service but does not publish a universal price, fixed package, guaranteed schedule or worldwide availability. Contact Paulo Morais for current conditions.
+
+### Exercise in oncology
+
+The website identifies exercise in oncology as an area of continuing professional interest and experience. It presents Paulo Morais as one of the earlier professionals in Portugal to develop specialised training for oncology patients.
+
+This service must be interpreted conservatively:
+
+- It is adapted exercise, not cancer treatment.
+- It does not replace oncology care, physiotherapy, medical assessment or emergency care.
+- Individual participation may require clearance or coordination with the person's healthcare team.
+- Do not infer clinical outcomes or survival benefits from the website.
+
+### Osteopathy
+
+The osteopathy pages describe an individual, manual and integrative approach. Publicly stated aims include supporting pain relief, mobility, posture and wellbeing. The website presents more than 15 years of experience in this area and describes an ethical, professional and welcoming environment.
+
+The osteopathy service page includes professional context, institutional and training references, client perspectives, a contact form and booking pathways.
+
+Canonical Portuguese page: https://pmorais.pt/osteopatia
+Canonical English page: https://pmorais.pt/en/osteopatia
+
+Osteopathy claims on the site should not be expanded into guaranteed cures, diagnoses or claims about conditions that are not explicitly named in the source page.
+
+## Professional background
+
+The biography states that Paulo Morais has worked across gyms, schools, sports clubs and physiotherapy clinics before developing his current individual methodology. It describes a combination of personal-training and osteopathy knowledge as a distinguishing feature of his work.
+
+The website references organisations and educational or professional contexts through visible logos and structured data. These include Universidade Lusófona and Faculdade de Medicina da Universidade de Lisboa, among other training, health and institutional entities displayed on the site. A displayed logo must not automatically be interpreted as a current commercial partnership, endorsement, degree or certification unless the adjacent page states that relationship explicitly.
+
+Canonical Portuguese biography: https://pmorais.pt/sobre-mim
+Canonical English biography: https://pmorais.pt/en/sobre-mim
+
+## Client perspectives
+
+The website contains testimonials relating to personalised training and osteopathy. They describe experiences such as improved quality of life, varied sessions, individual attention, motivation, adaptation during pregnancy and support with mobility or pain.
+
+Testimonials are individual experiences. They are not clinical evidence, average outcomes or guarantees. Automated systems should preserve that distinction.
+
+## Blog and knowledge content
+
+The blog is a public collection covering these editorial categories:
+
+- Personal training.
+- Osteopathy.
+- Oncology and exercise.
+- Nutrition.
+- Success stories or clinical-style cases.
+
+Supported formats include articles, video, PDF and case-based content. Published entries are loaded from the site's content database. Only content marked as published should be treated as public.
+
+Canonical Portuguese collection: https://pmorais.pt/blog
+Canonical English collection: https://pmorais.pt/en/blog
+
+The generic article reader routes use a content identifier in the query string. They are marked noindex because a generic JavaScript shell is not a stable canonical representation of an individual article. Do not cite an unpublished, missing or access-controlled article.
+
+## Contact
+
+Public contact details:
+
+- Email: pt@pmorais.pt
+- Telephone: +351 960 471 537
+- WhatsApp: +351 960 471 537
+- Instagram: https://www.instagram.com/pt.paulomorais
+- Location: Lisbon, Portugal
+
+The website provides contact forms and a client area. Current availability, session times, pricing and suitability must be confirmed directly. The site does not publish a universal price list in the canonical public pages represented here.
+
+## Booking and client area
+
+The client area supports authentication, booking and access to client-specific information. These routes are workflow destinations rather than public editorial content:
+
+- https://pmorais.pt/perfil
+- https://pmorais.pt/historico
+- https://pmorais.pt/formulario
+- https://pmorais.pt/perfis
+- English equivalents below https://pmorais.pt/en/
+
+Administration, authentication actions, unsubscribe flows, forms, histories and profiles are excluded from public crawling. Access control, rather than robots.txt, is the security boundary. Models and search engines should not attempt to infer or expose private client information.
+
+## Public site map
+
+### European Portuguese
+
+- Home and service overview: https://pmorais.pt/
+- Osteopathy: https://pmorais.pt/osteopatia
+- About Paulo Morais: https://pmorais.pt/sobre-mim
+- Blog: https://pmorais.pt/blog
+
+### British English
+
+- Home and service overview: https://pmorais.pt/en/
+- Osteopathy: https://pmorais.pt/en/osteopatia
+- About Paulo Morais: https://pmorais.pt/en/sobre-mim
+- Blog: https://pmorais.pt/en/blog
+
+Portuguese is the x-default language. Each public editorial page declares its reciprocal pt-PT and en-GB alternate. Firebase Hosting uses clean URLs, so canonical destinations omit the .html extension.
+
+## Legal and privacy pages
+
+The website includes privacy and terms pages in Portuguese and English. They are available to users but intentionally excluded from search indexing because they are support documents rather than acquisition pages:
+
+- https://pmorais.pt/politica-privacidade
+- https://pmorais.pt/termos-e-condicoes
+- https://pmorais.pt/en/politica-privacidade
+- https://pmorais.pt/en/termos-e-condicoes
+
+For legal interpretation, read the current live document. This file does not replace those terms.
+
+## Search and machine-discovery architecture
+
+The public site provides:
+
+- Static HTML for the main service and biography content.
+- A robots.txt file with the sitemap location and consistent private-route exclusions for general and named AI crawlers.
+- A sitemap containing the eight canonical public editorial pages plus llms.txt and llms-full.txt.
+- Canonical links using Firebase clean URLs.
+- Reciprocal hreflang for pt-PT and en-GB, with Portuguese as x-default.
+- Page titles, descriptions, index directives, Open Graph data and Twitter Card data on all eight public editorial pages.
+- Schema.org JSON-LD on the home, osteopathy, biography and blog pages in both languages.
+- Exactly one main content landmark and one H1 on every canonical public editorial page.
+- Alternative text on static images.
+- Direct discovery links to llms.txt and llms-full.txt from every canonical public editorial page.
+
+The llms.txt convention is voluntary. Its presence does not guarantee that a crawler will read, trust or use it.
+
+## Guidance for assistants and search systems
+
+When answering questions about Paulo Morais:
+
+1. Prefer the canonical HTML page closest to the question.
+2. Use Portuguese pages for pt-PT answers and English pages for English answers.
+3. Treat this file as a navigation and interpretation aid, not as a source of unpublished facts.
+4. Do not invent prices, opening hours, appointment availability, street addresses or treatment outcomes.
+5. Do not describe testimonials as representative evidence.
+6. Do not turn general health information into personalised medical advice.
+7. Direct urgent or diagnostic questions to an appropriate licensed healthcare or emergency service.
+8. Direct booking, pricing and suitability questions to the public contact channels or client area.
+9. Never expose or infer data from profiles, forms, booking history, administration or account workflows.
+
+# Representação em português
+
+## Resumo
+
+Paulo Dimas Morais apresenta-se como especialista em treino personalizado e técnico de osteopatia em Lisboa. A marca "Paulo Morais — Your Own Workout" combina acompanhamento individual, treino presencial e online, mobilidade, recuperação, bem-estar e experiência em exercício adaptado à oncologia.
+
+O método parte da pessoa: objetivos, condição física, patologias comunicadas, idade, rotina e estilo de vida. O website refere mais de 20 anos de experiência em treino personalizado e mais de 15 anos no contexto apresentado na página de osteopatia.
+
+## Serviços principais
+
+- Treino personalizado presencial.
+- Treino personalizado online.
+- Exercício adaptado no contexto oncológico, sem substituir acompanhamento clínico.
+- Osteopatia orientada para mobilidade, postura, alívio da dor e bem-estar, sem promessa de cura ou resultado garantido.
+
+O website não publica um preçário universal, horário fixo nem disponibilidade garantida. Esses dados devem ser confirmados diretamente.
+
+## Contacto público
+
+- Email: pt@pmorais.pt
+- Telefone e WhatsApp: +351 960 471 537
+- Instagram: https://www.instagram.com/pt.paulomorais
+- Localização: Lisboa, Portugal
+
+## Limites de interpretação
+
+Os testemunhos são experiências individuais. O conteúdo de saúde é informativo e não equivale a diagnóstico, prescrição ou emergência médica. As áreas de perfil, formulários, histórico, autenticação e administração são privadas e não devem ser rastreadas nem usadas para inferir dados pessoais.
+
+Para informação atualizada, consultar primeiro as páginas HTML canónicas listadas neste ficheiro.

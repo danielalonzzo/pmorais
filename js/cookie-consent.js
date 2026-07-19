@@ -26,7 +26,7 @@
       analytics: 'Cookies Analíticos',
       analyticsDesc: 'Ajudam-nos a perceber como utiliza o site (Google Analytics, etc.). Só são ativados com o seu consentimento.',
       savePrefs: 'Guardar Preferências',
-      privacyLink: '/politica-privacidade.html',
+      privacyLink: '/politica-privacidade',
       privacyText: 'Política de Privacidade',
     },
     en: {
@@ -41,7 +41,7 @@
       analytics: 'Analytics Cookies',
       analyticsDesc: 'Help us understand how you use the site. Only activated with your consent.',
       savePrefs: 'Save Preferences',
-      privacyLink: '/en/politica-privacidade.html',
+      privacyLink: '/en/politica-privacidade',
       privacyText: 'Privacy Policy',
     }
   };

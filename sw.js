@@ -1,10 +1,10 @@
-const CACHE_NAME = 'paulo-morais-pwa-v18';
+const CACHE_NAME = 'paulo-morais-pwa-v19';
 const ASSETS_TO_CACHE = [
   '/',
-  '/index.html',
-  '/perfil.html',
-  '/osteopatia.html',
-  '/sobre-mim.html',
+  '/',
+  '/perfil',
+  '/osteopatia',
+  '/sobre-mim',
   '/css/style.css',
   '/js/theme.js',
   '/js/lang.js',

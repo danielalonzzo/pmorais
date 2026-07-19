@@ -4,58 +4,64 @@
  * Other languages -> defaults to EN
  */
 
+const LANGUAGE_ROUTES = new Map([
+    ['/', '/en/'],
+    ['/osteopatia', '/en/osteopatia'],
+    ['/sobre-mim', '/en/sobre-mim'],
+    ['/blog', '/en/blog'],
+    ['/artigo', '/en/article'],
+    ['/perfil', '/en/perfil'],
+    ['/perfis', '/en/perfis'],
+    ['/formulario', '/en/formulario'],
+    ['/historico', '/en/historico'],
+    ['/politica-privacidade', '/en/politica-privacidade'],
+    ['/termos-e-condicoes', '/en/termos-e-condicoes'],
+    ['/desinscrever', '/en/desinscrever'],
+    ['/auth-action', '/en/auth-action']
+]);
+
+const REVERSE_LANGUAGE_ROUTES = new Map([...LANGUAGE_ROUTES].map(([pt, en]) => [en, pt]));
+
+function cleanPath(pathname) {
+    let path = pathname.replace(/\.html$/, '');
+    if (path === '/index' || path === '') path = '/';
+    if (path === '/en' || path === '/en/index') path = '/en/';
+    return path;
+}
+
+function languageDestination(language, pathname) {
+    const path = cleanPath(pathname);
+    if (language === 'en') return LANGUAGE_ROUTES.get(path) || null;
+    return REVERSE_LANGUAGE_ROUTES.get(path) || null;
+}
+
 (function() {
-    // List of Romance language codes (ISO 639-1)
     const romanceLangs = ['pt', 'es', 'fr', 'it', 'ro', 'ca', 'gl'];
-    
-    // Get stored preference or detect from browser
     let preferredLang = localStorage.getItem('pm_lang_pref');
-    
+
     if (!preferredLang) {
-        // Detect from browser
         const browserLang = (navigator.language || navigator.userLanguage || '').toLowerCase().split('-')[0];
-        if (romanceLangs.includes(browserLang)) {
-            preferredLang = 'pt';
-        } else {
-            preferredLang = 'en';
-        }
-        // Do not save to localStorage automatically to allow browser language changes to reflect,
-        // unless they explicitly toggled it.
+        preferredLang = romanceLangs.includes(browserLang) ? 'pt' : 'en';
     }
 
-    const currentPath = window.location.pathname;
-    const isEnPage = currentPath.startsWith('/en/') || currentPath === '/en';
+    const currentPath = cleanPath(window.location.pathname);
+    const isEnglish = currentPath.startsWith('/en/');
+    const destination = preferredLang === 'en' && !isEnglish
+        ? languageDestination('en', currentPath)
+        : preferredLang === 'pt' && isEnglish
+            ? languageDestination('pt', currentPath)
+            : null;
 
-    // Redirect logic
-    if (preferredLang === 'en' && !isEnPage) {
-        // Redirect to EN
-        // Avoid redirecting if it's not an HTML page or root
-        if (currentPath.endsWith('.html') || currentPath.endsWith('/') || currentPath === '') {
-            let newPath = '/en' + currentPath;
-            window.location.replace(newPath);
-        }
-    } else if (preferredLang === 'pt' && isEnPage) {
-        // Redirect to PT
-        let newPath = currentPath.replace(/^\/en\/?/, '/');
-        if (newPath === '') newPath = '/';
-        window.location.replace(newPath);
+    if (destination && destination !== currentPath) {
+        window.location.replace(`${destination}${window.location.search}${window.location.hash}`);
     }
 })();
 
 window.toggleLanguage = function() {
-    const currentPath = window.location.pathname;
-    const isEnPage = currentPath.startsWith('/en/') || currentPath === '/en';
-    
-    if (isEnPage) {
-        // Switch to PT
-        localStorage.setItem('pm_lang_pref', 'pt');
-        let newPath = currentPath.replace(/^\/en\/?/, '/');
-        if (newPath === '') newPath = '/';
-        window.location.href = newPath;
-    } else {
-        // Switch to EN
-        localStorage.setItem('pm_lang_pref', 'en');
-        let newPath = '/en' + currentPath;
-        window.location.href = newPath;
-    }
+    const currentPath = cleanPath(window.location.pathname);
+    const isEnglish = currentPath.startsWith('/en/');
+    const language = isEnglish ? 'pt' : 'en';
+    const destination = languageDestination(language, currentPath) || (language === 'en' ? '/en/' : '/');
+    localStorage.setItem('pm_lang_pref', language);
+    window.location.href = `${destination}${window.location.search}${window.location.hash}`;
 };

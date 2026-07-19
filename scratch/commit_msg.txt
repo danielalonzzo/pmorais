@@ -1,0 +1,61 @@
+V1.6.0: Clean URLs, CSP, SEO & LLM, CI/CD
+
+# Informe Técnico Detallado: Cambios Locales Pendientes de Subir a GitHub
+
+**Fecha del análisis:** 19 de Julio de 2026
+**Rama local actual:** codex/seo-ai-pmorais
+**Estado general del repositorio:** 50+ archivos modificados, 5 rutas no rastreadas (untracked), pruebas automatizadas de validación superadas (npm test pasa correctamente).
+
+## 1. Resumen de la Intervención y Objetivos
+Los cambios pendientes consolidan la infraestructura SEO, accesibilidad, compatibilidad con agentes de IA y seguridad (CSP/nonces) del sitio web. El objetivo principal es migrar de URLs legadas (con la extensión .html) a Clean URLs (rutas limpias sin extensión) gestionadas de forma consistente a través de Firebase Hosting, correos electrónicos, Service Workers, manifiestos y scripts de automatización.
+
+## 2. Cambios de Configuración y Rutas Limpias (Clean URLs)
+
+Se ha implementado un sistema para eliminar el sufijo .html en los enlaces internos y recursos del sistema:
+
+* manifest.json: Se actualizó la URL de inicio (start_url) de /perfil.html a /perfil.
+* sw.js (Service Worker):
+  * Se incrementó el número de versión de caché a paulo-morais-pwa-v19 para forzar la actualización en los navegadores de los clientes.
+  * Se actualizaron los recursos cacheados para usar rutas limpias (/perfil, /osteopatia, /sobre-mim).
+* firebase.json:
+  * Se excluyeron directorios de desarrollo/pruebas (functions/**, scripts/**, tests/**, scratch/**, etc.) de la subida a Firebase Hosting.
+  * Se añadieron encabezados específicos por tipo de archivo para forzar la codificación utf-8 y evitar el almacenamiento en caché agresivo en llms.txt, llms-full.txt, robots.txt y sitemap.xml.
+  * Se agregaron cabeceras X-Robots-Tag: noindex, nofollow, noarchive automáticas para rutas privadas y páginas de soporte legal.
+
+## 3. Seguridad y CSP (Content Security Policy)
+
+Se actualizó la política de seguridad en firebase.json para permitir la integración correcta de Google Tag Manager (GTM) e inyectar un mecanismo de validación de scripts mediante nonces (nonce-pmorais-2026):
+
+* Configuración CSP (firebase.json):
+  * Se incluyeron directivas avanzadas: base-uri 'self', object-src 'none', script-src-attr 'unsafe-inline', style-src-attr 'unsafe-inline', y worker-src 'self'.
+  * Se habilitaron las conexiones a dominios de analíticas: https://www.googletagmanager.com, https://*.google-analytics.com y https://*.analytics.google.com.
+* Inyección de Nonce en Plantillas HTML:
+  * Los bloques de inicialización de GTM en todos los archivos HTML ahora incluyen de forma segura el atributo nonce="pmorais-2026" para evitar bloqueos por parte del navegador.
+
+## 4. Adaptación para Buscadores y Asistentes de IA (SEO & LLM)
+
+Se preparó al sitio web para ser fácilmente indexado por motores de búsqueda tradicionales y descubierto por modelos de lenguaje de última generación (LLMs):
+
+* robots.txt:
+  * Configuración simétrica para el rastreador público y 20+ bots de inteligencia artificial.
+  * Bloqueo explícito de accesos a zonas transaccionales y de administración.
+* sitemap.xml:
+  * Generación dinámica de la estructura de mapas del sitio utilizando URLs limpias y declarando las prioridades de indexación.
+* Archivos LLM (llms.txt y llms-full.txt):
+  * llms.txt: Resumen conciso en inglés de los objetivos del negocio y su oferta.
+  * llms-full.txt: Documento extenso y factual que describe en detalle la metodología del entrenamiento personalizado, las directrices éticas, el descargo de responsabilidad médica y los servicios del sitio.
+* Metadata unificada: Se aplicó automáticamente a las páginas públicas las metaetiquetas canónicas, de idioma (hreflang cruzado entre pt-PT y en-GB, y x-default), títulos y descripciones desde una única fuente de verdad.
+
+## 5. Automatización de Tareas (Directorio scripts/)
+
+Se creó una suite de utilidades en Node.js que ejecutan las tareas recurrentes del flujo de desarrollo de SEO:
+1. scripts/seo-config.mjs: Define la fuente de verdad (títulos, descripciones, páginas públicas, rutas privadas, rastreadores permitidos y versiones de assets).
+2. scripts/apply-seo.mjs: Inyecta los bloques de metadatos SEO, OpenGraph, JSON-LD para blogs, el hreflang dinámico y los nonces en los archivos HTML correspondientes.
+3. scripts/normalize-internal-urls.mjs: Se encarga de barrer el código buscando referencias físicas a .html y convertirlas a clean URLs.
+4. scripts/generate-discovery.mjs: Genera dinámicamente robots.txt, sitemap.xml y llms.txt.
+5. scripts/check-seo.mjs: El script de validación que revisa de forma local más de 20 reglas SEO y de integridad de links.
+
+## 6. Pruebas y CI/CD Integrado
+
+* CI de GitHub Actions: Se implementó el flujo de trabajo .github/workflows/seo-consistency.yml que en cada push o pull request comprueba automáticamente la consistencia de los datos SEO compilándolos y corriendo npm test.
+* Pruebas de navegación: Se modificó tests/booking.spec.js para asegurar que las pruebas de extremo a extremo de Playwright naveguen correctamente a /perfil en lugar de /perfil.html.
