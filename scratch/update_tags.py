@@ -5,12 +5,22 @@ import re
 google_site_verification = '<meta name="google-site-verification" content="6pM3Hbid02G0pl99EAhm1wfoVfeGjHTrc8scb37aRdk" />'
 
 gtm_head = """<!-- Google Tag Manager -->
-<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+<script nonce="pmorais-2026">(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
 new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
 j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
 })(window,document,'script','dataLayer','GTM-TNKJXJ9X');</script>
 <!-- End Google Tag Manager -->"""
+
+ga_head = """<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-GYWR102Y9N"></script>
+<script nonce="pmorais-2026">
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-GYWR102Y9N');
+</script>"""
 
 gtm_body = """<!-- Google Tag Manager (noscript) -->
 <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TNKJXJ9X"
@@ -34,6 +44,10 @@ for filepath in files:
                 content = content.replace('<head>', '<head>\n    ' + google_site_verification, 1)
                 changed = True
         
+        if ga_head not in content:
+            content = content.replace('<head>', '<head>\n    ' + ga_head, 1)
+            changed = True
+
         if gtm_head not in content:
             content = content.replace('<head>', '<head>\n    ' + gtm_head, 1)
             changed = True
