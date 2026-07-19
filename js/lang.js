@@ -42,7 +42,15 @@ window.toggleLanguage = function() {
     const currentPath = cleanPath(window.location.pathname);
     const isEnglish = currentPath.startsWith('/en/');
     const language = isEnglish ? 'pt' : 'en';
-    const destination = languageDestination(language, currentPath) || (language === 'en' ? '/en/' : '/');
+    let destination = languageDestination(language, currentPath) || (language === 'en' ? '/en/' : '/');
     localStorage.setItem('pm_lang_pref', language);
+    
+    if (window.location.hostname === '127.0.0.1' || window.location.hostname === 'localhost') {
+        if (destination === '/en/' || destination === '/') {
+            destination = destination + 'index.html';
+        } else {
+            destination = destination + '.html';
+        }
+    }
     window.location.href = `${destination}${window.location.search}${window.location.hash}`;
 };

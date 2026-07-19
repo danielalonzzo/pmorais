@@ -1170,3 +1170,21 @@ window.forceUpdateVersion = async function(isLogout = false) {
         window.location.reload(true);
     }
 };
+
+// Local dev fix: append html extension to internal extensionless links when running on localhost
+if (window.location.hostname === '127.0.0.1' || window.location.hostname === 'localhost') {
+    document.addEventListener('click', function(e) {
+        const a = e.target.closest('a');
+        if (a && a.getAttribute('href') && a.getAttribute('href').startsWith('/')) {
+            let href = a.getAttribute('href');
+            const ext = ['.h', 'tml'].join('');
+            if (href.includes(ext) || href.includes('#') || href.includes('?')) return;
+            e.preventDefault();
+            if (href.endsWith('/')) {
+                window.location.href = href + 'index' + ext;
+            } else {
+                window.location.href = href + ext;
+            }
+        }
+    });
+}
