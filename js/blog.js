@@ -157,7 +157,8 @@ function createPostCard(data) {
         summary = summary.substring(0, 150) + '...';
     }
 
-    const articleUrl = isEnglish ? `article.html?id=${data.slug || data.id}` : `artigo.html?id=${data.slug || data.id}`;
+    const articlePath = isEnglish ? '/en/article' : '/artigo';
+    const articleUrl = `${articlePath}?id=${data.slug || data.id}`;
     const dateStr = data.createdAt ? new Date(data.createdAt.seconds * 1000).toLocaleDateString(isEnglish ? 'en-GB' : 'pt-PT', { year: 'numeric', month: 'long', day: 'numeric' }) : '';
     const readTime = data.readTime || 5;
     
@@ -366,10 +367,10 @@ export async function loadSingleArticle(containerId) {
                         <h4 style="margin-top: 0; font-size: 1.1rem; font-weight: 600; color: var(--color-text); margin-bottom: 4px;">${isEnglish ? 'Need personalized help?' : 'Precisas de ajuda personalizada?'}</h4>
                         <p style="color: var(--color-text-dim); margin-bottom: 0; font-size: 0.9rem;">${isEnglish ? 'Book a session and let us take care of your health.' : 'Agenda uma sessão e deixa-me cuidar da tua saúde.'}</p>
                     </div>
-                    <a href="perfil.html?booking=true" style="background: transparent; border: 1px solid var(--color-primary); color: var(--color-primary); font-weight: 600; font-size: 0.85rem; padding: 8px 20px; border-radius: 30px; text-decoration: none; display: inline-flex; align-items: center; gap: 8px; transition: all 0.2s; margin-top: 10px;" onmouseover="this.style.background='var(--color-primary)'; this.style.color='#000';" onmouseout="this.style.background='transparent'; this.style.color='var(--color-primary)';"><i data-lucide="calendar" style="width:14px; height:14px;"></i> ${isEnglish ? 'Book Session' : 'Agendar Sessão'}</a>
+                    <a href="perfil?booking=true" style="background: transparent; border: 1px solid var(--color-primary); color: var(--color-primary); font-weight: 600; font-size: 0.85rem; padding: 8px 20px; border-radius: 30px; text-decoration: none; display: inline-flex; align-items: center; gap: 8px; transition: all 0.2s; margin-top: 10px;" onmouseover="this.style.background='var(--color-primary)'; this.style.color='#000';" onmouseout="this.style.background='transparent'; this.style.color='var(--color-primary)';"><i data-lucide="calendar" style="width:14px; height:14px;"></i> ${isEnglish ? 'Book Session' : 'Agendar Sessão'}</a>
                 </div>
                 <div style="margin-top: 30px; display: flex; justify-content: flex-start;">
-                    <a href="blog.html" style="color: var(--color-text-dim); text-decoration: none; display: inline-flex; align-items: center; gap: 8px; transition: opacity 0.3s; font-size: 0.9rem; font-weight: 500;" onmouseover="this.style.opacity='0.7'" onmouseout="this.style.opacity='1'"><i data-lucide="arrow-left" style="width: 16px; height: 16px;"></i> ${isEnglish ? 'Back to Blog' : 'Voltar ao Blog'}</a>
+                    <a href="blog" style="color: var(--color-text-dim); text-decoration: none; display: inline-flex; align-items: center; gap: 8px; transition: opacity 0.3s; font-size: 0.9rem; font-weight: 500;" onmouseover="this.style.opacity='0.7'" onmouseout="this.style.opacity='1'"><i data-lucide="arrow-left" style="width: 16px; height: 16px;"></i> ${isEnglish ? 'Back to Blog' : 'Voltar ao Blog'}</a>
                 </div>
             </div>
         `;

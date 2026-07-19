@@ -26,7 +26,7 @@ onAuthStateChanged(auth, async (user) => {
     try {
         if (!user) {
             logger.log("No user found, redirecting...");
-            window.location.href = 'perfil.html';
+            window.location.href = 'perfil';
             return;
         }
 
@@ -40,7 +40,7 @@ onAuthStateChanged(auth, async (user) => {
 
         if (userData?.role !== 'admin' && userData?.role !== 'root' && user.email !== ADMIN_EMAIL) {
             alert("Acesso restrito a administradores.");
-            window.location.href = 'perfil.html';
+            window.location.href = 'perfil';
             return;
         }
 

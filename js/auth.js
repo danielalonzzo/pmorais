@@ -118,7 +118,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (isAdminEmail) {
                 if (btnShowProfiles) {
                     btnShowProfiles.classList.remove('hidden');
-                    btnShowProfiles.onclick = () => window.location.href = 'perfis.html';
+                    btnShowProfiles.onclick = () => window.location.href = 'perfis';
                 }
                 const btnShowReviews = document.getElementById('btn-show-reviews');
                 if (btnShowReviews) btnShowReviews.classList.add('hidden');
@@ -127,7 +127,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (btnAdminReviews) btnAdminReviews.classList.remove('hidden');
                 if (btnShowForms) {
                     btnShowForms.classList.remove('hidden');
-                    btnShowForms.onclick = () => window.location.href = 'formulario.html';
+                    btnShowForms.onclick = () => window.location.href = 'formulario';
                 }
                 if (btnShowBlogAdmin) {
                     btnShowBlogAdmin.classList.remove('hidden');
@@ -738,11 +738,11 @@ async function loadUserProfile(user) {
                     if (profileWizard) profileWizard.classList.add('hidden');
                     if (btnShowProfiles) {
                         btnShowProfiles.classList.remove('hidden');
-                        btnShowProfiles.onclick = () => window.location.href = 'perfis.html';
+                        btnShowProfiles.onclick = () => window.location.href = 'perfis';
                     }
                     if (btnShowForms) {
                         btnShowForms.classList.remove('hidden');
-                        btnShowForms.onclick = () => window.location.href = 'formulario.html';
+                        btnShowForms.onclick = () => window.location.href = 'formulario';
                     }
                     const btnShowBlogAdmin = document.getElementById('btn-show-blog-admin');
                     if (btnShowBlogAdmin) {
@@ -812,8 +812,8 @@ async function loadUserProfile(user) {
                     const btnShowProfiles = document.getElementById('btn-show-profiles');
                     const btnShowForms = document.getElementById('btn-show-forms');
                     const btnShowBlogAdmin = document.getElementById('btn-show-blog-admin');
-                    if (btnShowProfiles) { btnShowProfiles.classList.remove('hidden'); btnShowProfiles.onclick = () => window.location.href = 'perfis.html'; }
-                    if (btnShowForms) { btnShowForms.classList.remove('hidden'); btnShowForms.onclick = () => window.location.href = 'formulario.html'; }
+                    if (btnShowProfiles) { btnShowProfiles.classList.remove('hidden'); btnShowProfiles.onclick = () => window.location.href = 'perfis'; }
+                    if (btnShowForms) { btnShowForms.classList.remove('hidden'); btnShowForms.onclick = () => window.location.href = 'formulario'; }
                     if (btnShowBlogAdmin) { btnShowBlogAdmin.classList.remove('hidden'); }
                     
                     // Create minimal admin doc

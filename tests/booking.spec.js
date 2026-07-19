@@ -17,7 +17,7 @@ test.describe('Booking Flow (Fluxo de Reserva)', () => {
     });
 
     // Go to perfil.html which contains the booking calendar
-    await page.goto('/perfil.html');
+    await page.goto('/perfil');
 
     // Wait for the calendar container to be visible
     const calendarSection = page.locator('#calendar-section');
@@ -47,7 +47,7 @@ test.describe('Booking Flow (Fluxo de Reserva)', () => {
     });
 
     // Attempt to access perfil directly or click "AGENDAR"
-    await page.goto('/perfil.html?booking=true');
+    await page.goto('/perfil?booking=true');
 
     // It should show the login form instead of the calendar
     const loginForm = page.locator('#loginForm');

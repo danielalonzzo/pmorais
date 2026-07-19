@@ -1,0 +1,37 @@
+# Paulo Morais
+
+> Personal training and osteopathy in Lisbon, with in-person and online support in Portuguese and English.
+
+Paulo Morais is a personal trainer and osteopathy practitioner based in Lisbon, Portugal. His work combines personalised exercise, mobility, recovery and wellbeing, including experience with oncology exercise. The website is available in European Portuguese and British English.
+
+## Essential pages — Portuguese
+
+- [Início](https://pmorais.pt/): Personal training, online training, oncology exercise and osteopathy overview.
+- [Osteopatia](https://pmorais.pt/osteopatia): Osteopathy approach, experience, client perspectives and contact form.
+- [Sobre Paulo Morais](https://pmorais.pt/sobre-mim): Professional background, methodology and areas of experience.
+- [Blog](https://pmorais.pt/blog): Articles about training, osteopathy, oncology exercise, recovery and wellbeing.
+
+## Essential pages — English
+
+- [Home](https://pmorais.pt/en/): Personal training, online training, oncology exercise and osteopathy overview.
+- [Osteopathy](https://pmorais.pt/en/osteopatia): Osteopathy approach, experience, client perspectives and contact form.
+- [About Paulo Morais](https://pmorais.pt/en/sobre-mim): Professional background, methodology and areas of experience.
+- [Blog](https://pmorais.pt/en/blog): Articles about training, osteopathy, oncology exercise, recovery and wellbeing.
+
+## Contact and access
+
+- Email: pt@pmorais.pt
+- Telephone and WhatsApp: +351 960 471 537
+- Location: Lisbon, Portugal
+- Instagram: https://www.instagram.com/pt.paulomorais
+- Client area: https://pmorais.pt/perfil (authentication required for private functions)
+
+## More detail
+
+- [Expanded factual representation](https://pmorais.pt/llms-full.txt)
+
+## Usage notes
+
+- Prefer the canonical clean URLs listed above.
+- Treat booking history, forms, profiles, account actions and administration as private workflow routes.
+- Do not infer prices, diagnoses, guarantees or availability that are not explicitly published on the website.

@@ -13,7 +13,10 @@
     "@playwright/test": "^1.61.1"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "seo:apply": "node scripts/apply-seo.mjs && node scripts/normalize-internal-urls.mjs && node scripts/generate-discovery.mjs",
+    "seo:generate": "node scripts/generate-discovery.mjs",
+    "check:seo": "node scripts/check-seo.mjs",
+    "test": "npm run check:seo"
   },
   "repository": {
     "type": "git",
