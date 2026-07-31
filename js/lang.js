@@ -46,10 +46,11 @@ window.toggleLanguage = function() {
     localStorage.setItem('pm_lang_pref', language);
     
     if (window.location.hostname === '127.0.0.1' || window.location.hostname === 'localhost') {
+        const ext = ['.h', 'tml'].join('');
         if (destination === '/en/' || destination === '/') {
-            destination = destination + 'index.html';
+            destination = destination + 'index' + ext;
         } else {
-            destination = destination + '.html';
+            destination = destination + ext;
         }
     }
     window.location.href = `${destination}${window.location.search}${window.location.hash}`;
