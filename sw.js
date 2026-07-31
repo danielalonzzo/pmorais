@@ -1,84 +1,93 @@
-const CACHE_NAME = 'paulo-morais-pwa-v19';
-const ASSETS_TO_CACHE = [
-  '/',
-  '/',
-  '/perfil',
-  '/osteopatia',
-  '/sobre-mim',
-  '/css/style.css',
-  '/js/theme.js',
-  '/js/lang.js',
-  '/images/logo/logo_ios_android.png',
-  '/images/logo/logo_bw_loading.png',
-  '/images/logo/paulo_morais-08.png'
-];
+const CACHE_NAME = 'paulo-morais-pwa-v201';
+const STATIC_DESTINATIONS = new Set([
+  'style',
+  'script',
+  'image',
+  'font',
+  'audio',
+  'video'
+]);
 
-// Install Event - Precache essential assets
-self.addEventListener('install', event => {
+async function cacheSuccessfulResponse(cache, request, response) {
+  if (response.ok) {
+    await cache.put(request, response.clone());
+  }
+  return response;
+}
+
+// Create the runtime cache without duplicating the initial page load.
+self.addEventListener('install', (event) => {
   event.waitUntil(
     caches.open(CACHE_NAME)
-      .then(cache => {
-        console.log('[Service Worker] Precaching app shell');
-        return cache.addAll(ASSETS_TO_CACHE);
-      })
       .then(() => self.skipWaiting())
   );
 });
 
-// Activate Event - Clean up old caches
-self.addEventListener('activate', event => {
+// Remove previous app-shell versions.
+self.addEventListener('activate', (event) => {
   event.waitUntil(
-    caches.keys().then(cacheNames => {
-      return Promise.all(
-        cacheNames.map(cacheName => {
-          if (cacheName !== CACHE_NAME) {
-            console.log('[Service Worker] Removing old cache', cacheName);
-            return caches.delete(cacheName);
-          }
-        })
-      );
-    }).then(() => self.clients.claim())
+    caches.keys()
+      .then((cacheNames) => Promise.all(
+        cacheNames
+          .filter((cacheName) => cacheName.startsWith('paulo-morais-pwa-') && cacheName !== CACHE_NAME)
+          .map((cacheName) => caches.delete(cacheName))
+      ))
+      .then(() => self.clients.claim())
   );
 });
 
-// Fetch Event - Network first strategy for HTML, Cache first for others
-self.addEventListener('fetch', event => {
-  const url = new URL(event.request.url);
-  
-  // Exclude API requests and external scripts
-  if (url.pathname.startsWith('/__/') || !url.protocol.startsWith('http')) {
+async function networkFirst(request) {
+  const cache = await caches.open(CACHE_NAME);
+
+  try {
+    const response = await fetch(request);
+    // Preserve real HTTP statuses (404, 500, redirects, etc.). Only an actual
+    // network failure should fall back to an offline copy.
+    if (!response.ok) return response;
+    return cacheSuccessfulResponse(cache, request, response);
+  } catch (error) {
+    const cachedResponse = await cache.match(request);
+    const fallbackResponse = cachedResponse || await cache.match('/');
+    return fallbackResponse || Response.error();
+  }
+}
+
+async function staleWhileRevalidate(event) {
+  const { request } = event;
+  const cache = await caches.open(CACHE_NAME);
+  const cachedResponse = await cache.match(request);
+  const networkResponse = fetch(request)
+    .then((response) => cacheSuccessfulResponse(cache, request, response));
+
+  if (cachedResponse) {
+    event.waitUntil(networkResponse.catch(() => undefined));
+    return cachedResponse;
+  }
+
+  return networkResponse;
+}
+
+// Intercept only same-origin GET navigations and browser-declared static assets.
+self.addEventListener('fetch', (event) => {
+  const { request } = event;
+  if (request.method !== 'GET') return;
+
+  const url = new URL(request.url);
+  if (url.origin !== self.location.origin) return;
+
+  const isApiRequest =
+    url.pathname.startsWith('/__/') ||
+    url.pathname === '/api' ||
+    url.pathname.startsWith('/api/') ||
+    url.pathname.toLowerCase().endsWith('.json');
+  if (isApiRequest) return;
+
+  if (request.mode === 'navigate') {
+    event.respondWith(networkFirst(request));
     return;
   }
 
-  // Use Network-First for HTML to ensure freshness
-  if (event.request.mode === 'navigate') {
-    event.respondWith(
-      fetch(event.request)
-        .then(response => {
-          return caches.open(CACHE_NAME).then(cache => {
-            cache.put(event.request, response.clone());
-            return response;
-          });
-        })
-        .catch(() => caches.match(event.request))
-    );
-    return;
+  if (STATIC_DESTINATIONS.has(request.destination)) {
+    event.respondWith(staleWhileRevalidate(event));
   }
-
-  // Use Cache-First for static assets (images, css, js)
-  event.respondWith(
-    caches.match(event.request).then(cachedResponse => {
-      if (cachedResponse) {
-        return cachedResponse;
-      }
-      return fetch(event.request).then(networkResponse => {
-        return caches.open(CACHE_NAME).then(cache => {
-          cache.put(event.request, networkResponse.clone());
-          return networkResponse;
-        });
-      });
-    })
-  );
 });
-
-

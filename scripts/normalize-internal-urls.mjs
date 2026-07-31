@@ -69,7 +69,11 @@ function normalizeHtml(file, routes) {
   // navigation/privacy behavior is maintained by this SEO normalization pass.
   source = source
     .replace(
-      /(src=["'][^"']*(?:lang|cookie-consent|script)\.js)(?:\?v=[^"']*)?(["'])/g,
+      /(src=["'][^"']*(?:lang|cookie-consent|script|theme)\.js)(?:\?v=[^"']*)?(["'])/g,
+      `$1?v=${ASSET_VERSION}$2`
+    )
+    .replace(
+      /(href=["'][^"']*css\/style\.css)(?:\?v=[^"']*)?(["'])/g,
       `$1?v=${ASSET_VERSION}$2`
     )
     .replace(
@@ -113,7 +117,7 @@ fs.writeFileSync(manifestFile, `${JSON.stringify(manifest, null, 2)}\n`);
 
 const serviceWorkerFile = path.join(root, 'sw.js');
 let serviceWorker = fs.readFileSync(serviceWorkerFile, 'utf8')
-  .replace("const CACHE_NAME = 'paulo-morais-pwa-v18';", "const CACHE_NAME = 'paulo-morais-pwa-v19';");
+  .replace(/const CACHE_NAME = 'paulo-morais-pwa-v\d+';/, `const CACHE_NAME = 'paulo-morais-pwa-v${ASSET_VERSION.replaceAll('.', '')}';`);
 for (const [from, to] of Object.entries(portugueseRoutes)) serviceWorker = replaceQuotedRoute(serviceWorker, `/${from}`, to);
 fs.writeFileSync(serviceWorkerFile, serviceWorker);
 

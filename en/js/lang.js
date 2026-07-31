@@ -1,7 +1,10 @@
 /*
- * Language detection and routing logic
- * Automatically detects Romance languages -> defaults to PT
- * Other languages -> defaults to EN
+ * Language routing logic.
+ *
+ * Language changes are always initiated by the visitor. Automatically
+ * redirecting from the canonical URL based on navigator.language caused a
+ * second full page load, confused crawlers and made performance measurements
+ * depend on the browser locale.
  */
 
 const LANGUAGE_ROUTES = new Map([
@@ -34,28 +37,6 @@ function languageDestination(language, pathname) {
     if (language === 'en') return LANGUAGE_ROUTES.get(path) || null;
     return REVERSE_LANGUAGE_ROUTES.get(path) || null;
 }
-
-(function() {
-    const romanceLangs = ['pt', 'es', 'fr', 'it', 'ro', 'ca', 'gl'];
-    let preferredLang = localStorage.getItem('pm_lang_pref');
-
-    if (!preferredLang) {
-        const browserLang = (navigator.language || navigator.userLanguage || '').toLowerCase().split('-')[0];
-        preferredLang = romanceLangs.includes(browserLang) ? 'pt' : 'en';
-    }
-
-    const currentPath = cleanPath(window.location.pathname);
-    const isEnglish = currentPath.startsWith('/en/');
-    const destination = preferredLang === 'en' && !isEnglish
-        ? languageDestination('en', currentPath)
-        : preferredLang === 'pt' && isEnglish
-            ? languageDestination('pt', currentPath)
-            : null;
-
-    if (destination && destination !== currentPath) {
-        window.location.replace(`${destination}${window.location.search}${window.location.hash}`);
-    }
-})();
 
 window.toggleLanguage = function() {
     const currentPath = cleanPath(window.location.pathname);

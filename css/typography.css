@@ -1,20 +1,26 @@
 /* --- FONTS --- */
-/* Utilizing Variable Fonts for Core Web Vitals optimization */
+/* Local WOFF2 subsets replace the two non-existent variable-font URLs. */
 @font-face {
     font-family: 'Patron';
-    src: url('../assets/fonts/Patron-Variable.woff2') format('woff2 supports variations'),
-         url('../assets/fonts/Patron-Variable.woff2') format('woff2-variations');
-    font-weight: 100 900;
+    src: url('../assets/fonts/Patron-Light.woff2') format('woff2');
+    font-weight: 100 300;
     font-style: normal;
     font-display: swap;
 }
 
 @font-face {
     font-family: 'Patron';
-    src: url('../assets/fonts/Patron-VariableItalic.woff2') format('woff2 supports variations'),
-         url('../assets/fonts/Patron-VariableItalic.woff2') format('woff2-variations');
-    font-weight: 100 900;
-    font-style: italic;
+    src: url('../assets/fonts/Patron-Regular.woff2') format('woff2');
+    font-weight: 400 600;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Patron';
+    src: url('../assets/fonts/Patron-Bold.woff2') format('woff2');
+    font-weight: 700 900;
+    font-style: normal;
     font-display: swap;
 }
 
@@ -138,4 +144,3 @@ h4 {
     transition: var(--transition-smooth);
     border: none;
 }
-

@@ -2,22 +2,7 @@
 <html lang="pt-PT">
 
 <head>
-    <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-GYWR102Y9N"></script>
-<script nonce="pmorais-2026">
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-GYWR102Y9N');
-</script>
-    <!-- Google Tag Manager -->
-<script nonce="pmorais-2026">(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-})(window,document,'script','dataLayer','GTM-TNKJXJ9X');</script>
-<!-- End Google Tag Manager -->
+    <meta charset="UTF-8">
     <meta name="view-transition" content="same-origin" />
     <style nonce="pmorais-2026" id="critical-css">
     :root {
@@ -25,6 +10,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         --color-bg: #0B0B0B;
         --color-surface: #111111;
         --color-primary: #E6AE17;
+        --color-primary-text: #E6AE17;
         /* Updated to match target */
         --color-primary-hover: #d5a015;
         --color-light-gray: #F2F2F2;
@@ -47,9 +33,10 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         /* Fluid section padding */
     
         /* Transitions */
-        --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        --transition-smooth: opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1), transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     }
     body {
+        margin: 0;
         background-color: var(--color-bg);
         color: var(--color-text);
         font-family: var(--font-body);
@@ -115,12 +102,11 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         animation: lightSweep 2s infinite ease-in-out;
     }
     </style>
-    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Blog de Treino, Osteopatia e Bem-Estar | Paulo Morais</title>
     <!-- Preloads -->
     <link rel="preload" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700;800&family=Poppins:wght@300;400;500;600;700&display=swap" as="style">
-    <link rel="preload" href="css/style.css?v=1.5.2" as="style">
+    <link rel="preload" href="css/style.css?v=2.0.0" as="style">
 
     <link rel="shortcut icon" type="image/png" href="images/logo/logo_ios_android.png">
     <link rel="icon" type="image/png" href="images/logo/logo_ios_android.png">
@@ -137,7 +123,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     <script nonce="pmorais-2026" src="https://unpkg.com/lucide@0.460.0/dist/umd/lucide.min.js" integrity="sha384-ieG+IKD0d/ZPXyCBTMVAbqsQdns8QGJR/e26WMw7M4fkaI/rHcS/YIoi+ah9WGge" crossorigin="anonymous" defer></script>
 
     <!-- Custom Style -->
-    <link rel="stylesheet" href="css/style.css?v=1.5.2">
+    <link rel="stylesheet" href="css/style.css?v=2.0.0">
     
     <style nonce="pmorais-2026">
         .blog-grid {
@@ -336,8 +322,8 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         }
     </style>
     
-    <script nonce="pmorais-2026" src="js/lang.js?v=1.6.1" defer></script>
-    <script nonce="pmorais-2026" src="js/theme.js" defer></script>
+    <script nonce="pmorais-2026" src="js/lang.js?v=2.0.0" defer></script>
+    <script nonce="pmorais-2026" src="js/theme.js?v=2.0.0" defer></script>
     <!-- SEO Architecture: generated from scripts/seo-config.mjs -->
     <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
     <meta name="googlebot" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
@@ -410,10 +396,6 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 </head>
 
 <body class="bg-dark">
-    <!-- Google Tag Manager (noscript) -->
-<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TNKJXJ9X"
-height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-<!-- End Google Tag Manager (noscript) -->
     <!-- Preloader -->
     <div id="preloader">
         <div class="loader-content">
@@ -429,7 +411,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <header id="header">
         <div class="container header-container">
             <a href="/">
-                <img src="images/logo/logo_amarelo_alpha.png" width="3563" height="2930" alt="Paulo Morais" class="logo-img">
+                <img src="images/logo/logo_amarelo_alpha.webp" width="438" height="360" alt="Paulo Morais" class="logo-img">
             </a>
             <nav class="nav-menu">
                 <ul>
@@ -504,7 +486,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <div class="footer-container-new">
             <div class="footer-col branding-col">
                 <a href="/" class="footer-logo-link">
-                    <img loading="lazy" src="images/logo/logo_amarelo_alpha.png" width="3563" height="2930" alt="Paulo Morais" class="footer-logo-elysium">
+                    <img loading="lazy" src="images/logo/logo_amarelo_alpha.webp" width="438" height="360" alt="Paulo Morais" class="footer-logo-elysium">
                 </a>
                 <p class="brand-desc">Paulo Morais<br>Lisboa, Portugal</p>
                 <p class="brand-sub">O verdadeiro treino personalizado que se adapta à tua vida.</p>
@@ -545,22 +527,23 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             </div>
         </div>
         <div class="footer-bar-elysium">
-            <div class="crafted-text"><a href="https://elysiumdr.eu" target="_blank" rel="noopener noreferrer">Desenvolvido por Elysium λ Development & Research.</a><br><span style="font-size: 0.8rem; opacity: 0.7; color: #a0a0a0;">V1.6.1</span></div>
+            <div class="crafted-text"><a href="https://elysiumdr.eu" target="_blank" rel="noopener noreferrer">Desenvolvido por Elysium λ Development & Research.</a><br><span class="version-label">V2.0.0</span></div>
         </div>
     </footer>
 
     <!-- Scripts -->
     <script nonce="pmorais-2026" type="module">
-        import { loadBlogPosts } from './js/blog.js?v=1.6.1';
+        import { loadBlogPosts } from './js/blog.js?v=2.0.0';
         document.addEventListener('DOMContentLoaded', () => {
             loadBlogPosts('public-blog-grid');
         });
     </script>
-    <script nonce="pmorais-2026" src="js/script.js?v=1.6.1" defer></script>
+    <script nonce="pmorais-2026" src="js/script.js?v=2.0.0" defer></script>
     <script nonce="pmorais-2026">
         document.addEventListener('DOMContentLoaded', () => {
             if (window.lucide) window.lucide.createIcons();
         });
     </script>
+    <script nonce="pmorais-2026" src="js/cookie-consent.js?v=2.0.0" defer></script>
 </body>
 </html>

@@ -3,6 +3,7 @@
     --color-bg: #0B0B0B;
     --color-surface: #111111;
     --color-primary: #E6AE17;
+    --color-primary-text: #E6AE17;
     /* Updated to match target */
     --color-primary-hover: #d5a015;
     --color-light-gray: #F2F2F2;
@@ -35,5 +36,5 @@ body.light-mode {
     --color-text: #111111;
     --color-text-dim: #666666;
     --color-accent: #000000;
+    --color-primary-text: #765500;
 }
-

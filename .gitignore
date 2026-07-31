@@ -5,3 +5,10 @@ firebase-debug.log
 firebase-debug*.log
 .firebase/
 .DS_Store
+tmp/
+
+# iCloud Drive writes conflict copies as "name 2.ext". They are never part of
+# the site and must not reach the cPanel deployment.
+*\ 2.*
+*\ 3.*
+.icloud-duplicados/

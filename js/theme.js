@@ -7,19 +7,19 @@
 function applyDynamicTheme() {
     // Check manual override
     const savedTheme = localStorage.getItem('theme');
-    
+
     setTimeout(() => {
         updateFabPositions();
     }, 100);
-    
+
     const manualMode = localStorage.getItem('theme_mode') || 'auto'; // 'light', 'dark', 'auto'
-    
+
     // Premium Dark Mode Defaults
     let bgRGB = [11, 11, 11]; // #0B0B0B - Deep black
     let surfaceRGB = [24, 24, 26]; // #18181A - Elevated dark surface
     let textRGB = [245, 245, 247]; // #F5F5F7 - Soft white (easier on eyes than pure #FFF)
     let textDimRGB = [161, 161, 166]; // #A1A1A6 - Elegant muted text
-    let accentRGB = [245, 245, 247]; 
+    let accentRGB = [245, 245, 247];
     let osteoRGB = [245, 245, 247];
     let heroLegalOverlay = 'linear-gradient(135deg, rgba(0, 0, 0, 0.85), rgba(30, 30, 30, 0.85))';
 
@@ -29,8 +29,8 @@ function applyDynamicTheme() {
         surfaceRGB = [255, 255, 255]; // #FFFFFF - Pure white elevating cards/sections
         textRGB = [29, 29, 31]; // #1D1D1F - Rich charcoal (softer contrast than raw black)
         textDimRGB = [110, 110, 115]; // #6E6E73 - Premium mid-grey for secondary text
-        accentRGB = [29, 29, 31]; 
-        osteoRGB = [29, 29, 31]; 
+        accentRGB = [29, 29, 31];
+        osteoRGB = [29, 29, 31];
         heroLegalOverlay = 'linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05))';
     };
 
@@ -39,22 +39,32 @@ function applyDynamicTheme() {
     } else if (manualMode === 'dark') {
         // Keeps default dark values
     } else {
-        // Auto mode: Light from 6 AM to 4 PM, Dark otherwise
+        // Auto mode: Light between custom startLight and startDark, Dark otherwise
         const now = new Date();
         const hours = now.getHours();
         const minutes = now.getMinutes();
         const timeInMinutes = hours * 60 + minutes;
-        
-        const startLight = 6 * 60;  // 6:00 AM
-        const startDark = 16 * 60;  // 4:00 PM
-        
-        if (timeInMinutes >= startLight && timeInMinutes < startDark) {
-            setLightMode();
+
+        const lightStartStr = localStorage.getItem('theme_auto_light_start') || '06:00';
+        const darkStartStr = localStorage.getItem('theme_auto_dark_start') || '16:00';
+
+        const [lightH, lightM] = lightStartStr.split(':').map(Number);
+        const [darkH, darkM] = darkStartStr.split(':').map(Number);
+
+        const startLight = (isNaN(lightH) ? 6 : lightH) * 60 + (isNaN(lightM) ? 0 : lightM);
+        const startDark = (isNaN(darkH) ? 16 : darkH) * 60 + (isNaN(darkM) ? 0 : darkM);
+
+        if (startLight < startDark) {
+            if (timeInMinutes >= startLight && timeInMinutes < startDark) {
+                setLightMode();
+            }
         } else {
-            // It's after 4 PM or before 6 AM: keep default dark mode values
+            if (timeInMinutes >= startLight || timeInMinutes < startDark) {
+                setLightMode();
+            }
         }
     }
-    
+
     // Apply CSS Variables directly to the :root element
     document.documentElement.style.setProperty('--color-bg', `rgb(${bgRGB.join(',')})`);
     document.documentElement.style.setProperty('--color-surface', `rgb(${surfaceRGB.join(',')})`);
@@ -63,26 +73,6 @@ function applyDynamicTheme() {
     document.documentElement.style.setProperty('--color-accent', `rgb(${accentRGB.join(',')})`);
     document.documentElement.style.setProperty('--color-brand-primary', `rgb(${osteoRGB.join(',')})`);
     document.documentElement.style.setProperty('--hero-legal-overlay', heroLegalOverlay);
-    
-    // Inject smooth transition styles gracefully (if not present)
-    if (!document.getElementById('theme-transition-styles')) {
-        const style = document.createElement('style');
-        style.id = 'theme-transition-styles';
-        style.textContent = `
-            .theme-transitioning,
-            .theme-transitioning * {
-                transition: background-color 0.5s ease-in-out, color 0.5s ease-in-out, border-color 0.5s ease-in-out, border 0.5s ease-in-out, box-shadow 0.5s ease-in-out, fill 0.5s ease-in-out, stroke 0.5s ease-in-out !important;
-            }
-            @keyframes icon-pop {
-                0% { transform: scale(0.5) rotate(-30deg); opacity: 0; }
-                100% { transform: scale(1) rotate(0deg); opacity: 1; }
-            }
-            #theme-toggle svg {
-                animation: icon-pop 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            }
-        `;
-        document.head.appendChild(style);
-    }
 
     // Update logos
     const isLightMode = bgRGB[0] > 127; // Threshold for "Light"
@@ -102,12 +92,12 @@ function applyDynamicTheme() {
     logos.forEach(logo => {
         const currentSrc = logo.getAttribute('src');
         if (isLightMode) {
-            if (currentSrc && !currentSrc.includes('paulo_morais-08.png')) {
-                logo.src = basePath + 'images/logo/paulo_morais-08.png';
+            if (currentSrc && !currentSrc.includes('paulo_morais-08.webp')) {
+                logo.src = basePath + 'images/logo/paulo_morais-08.webp';
             }
         } else {
-            if (currentSrc && !currentSrc.includes('logo_amarelo_alpha.png')) {
-                logo.src = basePath + 'images/logo/logo_amarelo_alpha.png';
+            if (currentSrc && !currentSrc.includes('logo_amarelo_alpha.webp')) {
+                logo.src = basePath + 'images/logo/logo_amarelo_alpha.webp';
             }
         }
     });
@@ -118,14 +108,15 @@ function applyDynamicTheme() {
         if (!logo.hasAttribute('data-original-src')) {
             logo.setAttribute('data-original-src', logo.getAttribute('src') || '');
         }
-        
+
         const originalSrc = logo.getAttribute('data-original-src');
         if (!originalSrc) return;
         const filename = originalSrc.split('/').pop();
-        
+
         if (isLightMode) {
             let targetFilename = filename;
             if (filename === 'livro-de-reclamacoes.png') targetFilename = 'livro_de_reclamacoes.png';
+            if (filename === 'livro-de-reclamacoes.webp') targetFilename = 'livro_de_reclamacoes.webp';
             logo.src = basePath + 'images/claro/' + targetFilename;
         } else {
             logo.src = originalSrc;
@@ -137,17 +128,17 @@ function applyDynamicTheme() {
     if (ipadVideo) {
         const targetVideoSrc = basePath + (isLightMode ? 'images/osteopatia/ipadclaro.mp4' : 'images/osteopatia/ipad.mp4');
         const currentSrc = ipadVideo.src || '';
-        
+
         if (!currentSrc.endsWith(targetVideoSrc)) {
             // Set directly on the video element for cross-browser compatibility
             ipadVideo.src = targetVideoSrc;
-            
+
             // Also update the source tag for semantic consistency
             const source = ipadVideo.querySelector('source');
             if (source) {
                 source.setAttribute('src', targetVideoSrc);
             }
-            
+
             ipadVideo.load();
             if (ipadVideo.hasAttribute('autoplay')) {
                 ipadVideo.play().catch(e => console.log("Playback interrupted or blocked"));
@@ -160,11 +151,11 @@ function applyDynamicTheme() {
     if (toggleBtnIcon) {
         // Use sun if light mode (manual or auto), moon if dark mode
         let iconName = isLightMode ? 'sun' : 'moon';
-        
+
         const newIcon = document.createElement('i');
         newIcon.setAttribute('data-lucide', iconName);
         toggleBtnIcon.parentNode.replaceChild(newIcon, toggleBtnIcon);
-        
+
         if (typeof lucide !== 'undefined') {
             lucide.createIcons();
         }
@@ -175,33 +166,59 @@ function applyDynamicTheme() {
 window.toggleThemeMode = function() {
     // Add transition class to html for broader coverage
     document.documentElement.classList.add('theme-transitioning');
-    
+
     const currentMode = localStorage.getItem('theme_mode') || 'auto';
     let newMode = 'light';
-    
+
     // Simplified Cycle: if currently light (or auto-light), go to dark. Otherwise go to light.
     // This removes the "auto" step from manual cycling.
     const isActuallyLight = document.body.classList.contains('light-mode');
-    
+
     if (isActuallyLight) {
         newMode = 'dark';
     } else {
         newMode = 'light';
     }
-    
+
     localStorage.setItem('theme_mode', newMode);
     applyDynamicTheme();
-    
+
     // Remove transition class after it's done (600ms to be safe)
     setTimeout(() => {
         document.documentElement.classList.remove('theme-transitioning');
     }, 600);
 };
 
+// Expose Theme API Helpers for System Info / Settings Modal
+window.applyDynamicTheme = applyDynamicTheme;
+window.setThemeAutoMode = function(isAuto) {
+    if (isAuto) {
+        localStorage.setItem('theme_mode', 'auto');
+    } else {
+        const isLight = document.body && document.body.classList.contains('light-mode');
+        localStorage.setItem('theme_mode', isLight ? 'light' : 'dark');
+    }
+    applyDynamicTheme();
+};
+window.getThemeAutoMode = function() {
+    return (localStorage.getItem('theme_mode') || 'auto') === 'auto';
+};
+window.setThemeSchedule = function(lightStart, darkStart) {
+    if (lightStart) localStorage.setItem('theme_auto_light_start', lightStart);
+    if (darkStart) localStorage.setItem('theme_auto_dark_start', darkStart);
+    applyDynamicTheme();
+};
+window.getThemeSchedule = function() {
+    return {
+        lightStart: localStorage.getItem('theme_auto_light_start') || '06:00',
+        darkStart: localStorage.getItem('theme_auto_dark_start') || '16:00'
+    };
+};
+
 // Initial application for CSS variables (immediate)
 applyDynamicTheme();
 
-// Ensure logos/icons update once DOM is ready
+// Ensure logos/icons update once DOM is ready and load version modal
 document.addEventListener('DOMContentLoaded', () => {
     applyDynamicTheme();
     injectPwaInstallButton();
@@ -223,26 +240,26 @@ window.addEventListener('beforeinstallprompt', (e) => {
     e.preventDefault();
     deferredPrompt = e;
     console.log('PWA installation prompt captured.');
-    
+
     // Ensure button is injected
     injectPwaInstallButton();
 });
 
 function injectPwaInstallButton() {
     if (isStandalone) return;
-    
+
     if (localStorage.getItem('pm_is_logged_in') !== 'true') {
         const existingBtn = document.getElementById('pwa-install-btn');
         if (existingBtn) existingBtn.remove();
         return;
     }
-    
+
     const fabOptions = document.querySelector('.fab-options');
     if (!fabOptions) return;
-    
+
     // Check if button already exists
     if (document.getElementById('pwa-install-btn')) return;
-    
+
     const pwaBtn = document.createElement('a');
     pwaBtn.href = 'javascript:void(0)';
     pwaBtn.id = 'pwa-install-btn';
@@ -253,20 +270,20 @@ function injectPwaInstallButton() {
         e.stopPropagation();
         openPwaTutorial();
     };
-    
+
     pwaBtn.innerHTML = '<i data-lucide="download"></i>';
-    
+
     const themeToggle = document.getElementById('theme-toggle');
     if (themeToggle) {
         fabOptions.insertBefore(pwaBtn, themeToggle);
     } else {
         fabOptions.appendChild(pwaBtn);
     }
-    
+
     if (window.lucide) {
         window.lucide.createIcons();
     }
-    
+
     updateFabPositions();
 }
 
@@ -278,7 +295,7 @@ function updateFabPositions() {
     if (pwaBtn) slots.push(pwaBtn);
     const langBtn = document.getElementById('lang-toggle');
     if (langBtn) slots.push(langBtn);
-    
+
     slots.forEach((btn, index) => {
         btn.style.right = (75 + index * 65) + 'px';
     });
@@ -286,14 +303,14 @@ function updateFabPositions() {
 
 function injectPwaInstallOverlay() {
     if (document.getElementById('pwa-install-overlay')) return;
-    
+
     const overlay = document.createElement('div');
     overlay.id = 'pwa-install-overlay';
     overlay.className = 'booking-tutorial-overlay';
-    
+
     const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
     let slidesHTML = '';
-    
+
     if (isIOS) {
         pwaTotalSlides = 4;
         slidesHTML = `
@@ -386,7 +403,7 @@ function injectPwaInstallOverlay() {
                     <p class="android-prompt-desc" style="font-size: 0.92rem; color: var(--color-text-dim); text-align: center; line-height: 1.7; margin-bottom: 0;">
                         Clique no botão abaixo para instalar a aplicação diretamente no seu telemóvel de forma automática.
                     </p>
-                    
+
                     <div id="pwa-install-prompt-action-div" style="margin-top: 25px; text-align: center;">
                         <button id="pwa-native-install-btn" class="tutorial-btn tutorial-btn-start" style="max-width: 100%; margin: 0 auto; display: inline-flex; align-items: center; justify-content: center; gap: 8px;">
                             Instalar Agora
@@ -415,28 +432,28 @@ function injectPwaInstallOverlay() {
             </div>
         `;
     }
-    
+
     overlay.innerHTML = `
         <div class="tutorial-card">
             <button class="tutorial-close-btn" onclick="closePwaTutorial()" title="Fechar">
                 <i data-lucide="x"></i>
             </button>
-            
+
             <!-- Indicators -->
             <div class="tutorial-indicators" id="pwa-indicators"></div>
-            
+
             <!-- Slides -->
             <div class="tutorial-slides-wrapper" id="pwa-slides-wrapper">
                 ${slidesHTML}
             </div>
-            
+
             <!-- Navigation -->
             <div class="tutorial-nav" id="pwa-nav"></div>
         </div>
     `;
-    
+
     document.body.appendChild(overlay);
-    
+
     if (!isIOS) {
         const nativeBtn = document.getElementById('pwa-native-install-btn');
         if (nativeBtn) {
@@ -482,54 +499,54 @@ function updatePwaIndicators() {
 function updatePwaNav() {
     const nav = document.getElementById('pwa-nav');
     if (!nav) return;
-    
+
     const isLast = pwaCurrentSlide === pwaTotalSlides - 1;
     const isFirst = pwaCurrentSlide === 0;
-    
+
     let html = '';
     if (isFirst) {
         html += `<button class="tutorial-btn tutorial-btn-skip" onclick="closePwaTutorial()">Saltar</button>`;
     } else {
         html += `<button class="tutorial-btn tutorial-btn-prev" onclick="prevPwaSlide()"><i data-lucide="arrow-left"></i> Anterior</button>`;
     }
-    
+
     if (isLast) {
         html += `<button class="tutorial-btn tutorial-btn-start" onclick="closePwaTutorial()">Concluir</button>`;
     } else {
         html += `<button class="tutorial-btn tutorial-btn-next" onclick="nextPwaSlide()">Seguinte <i data-lucide="arrow-right"></i></button>`;
     }
-    
+
     nav.innerHTML = html;
     if (window.lucide) window.lucide.createIcons();
 }
 
 function goToPwaSlide(index) {
     if (index < 0 || index >= pwaTotalSlides || index === pwaCurrentSlide) return;
-    
+
     const slides = document.querySelectorAll('#pwa-slides-wrapper .tutorial-slide');
     const currentSlide = slides[pwaCurrentSlide];
     const nextSlide = slides[index];
     if (!currentSlide || !nextSlide) return;
-    
+
     const goingForward = index > pwaCurrentSlide;
-    
+
     currentSlide.classList.remove('active');
     currentSlide.classList.add(goingForward ? 'exit-left' : '');
     currentSlide.style.transform = goingForward ? 'translateX(-60px)' : 'translateX(60px)';
-    
+
     nextSlide.style.transform = goingForward ? 'translateX(60px)' : 'translateX(-60px)';
     nextSlide.style.opacity = '0';
-    
+
     setTimeout(() => {
         currentSlide.classList.remove('exit-left');
         currentSlide.style.transform = '';
         currentSlide.style.opacity = '';
-        
+
         nextSlide.classList.add('active');
         nextSlide.style.transform = '';
         nextSlide.style.opacity = '';
     }, 50);
-    
+
     pwaCurrentSlide = index;
     updatePwaIndicators();
     updatePwaNav();
@@ -545,9 +562,9 @@ function prevPwaSlide() {
 
 function openPwaTutorial() {
     injectPwaInstallOverlay();
-    
+
     pwaCurrentSlide = 0;
-    
+
     const slides = document.querySelectorAll('#pwa-slides-wrapper .tutorial-slide');
     slides.forEach((slide, i) => {
         slide.classList.remove('active', 'exit-left');
@@ -555,7 +572,7 @@ function openPwaTutorial() {
         slide.style.opacity = '';
         if (i === 0) slide.classList.add('active');
     });
-    
+
     const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
     if (!isIOS) {
         const actionDiv = document.getElementById('pwa-install-prompt-action-div');
@@ -563,7 +580,7 @@ function openPwaTutorial() {
         const titleEl = document.querySelector('.android-prompt-title');
         const descEl = document.querySelector('.android-prompt-desc');
         const tipEl = document.getElementById('android-install-tip-box');
-        
+
         if (deferredPrompt) {
             if (actionDiv) actionDiv.style.display = 'block';
             if (manualDiv) manualDiv.style.display = 'none';
@@ -578,16 +595,16 @@ function openPwaTutorial() {
             if (tipEl) tipEl.style.display = 'none';
         }
     }
-    
+
     initPwaIndicators();
     updatePwaNav();
-    
+
     const overlay = document.getElementById('pwa-install-overlay');
     if (overlay) {
         overlay.classList.add('active');
         document.body.style.overflow = 'hidden';
     }
-    
+
     if (window.lucide) window.lucide.createIcons();
 }
 
@@ -606,19 +623,19 @@ function closePwaTutorial() {
 
 function maybeAutoShowPwaTutorial() {
     if (isStandalone) return;
-    
+
     if (localStorage.getItem('pm_is_logged_in') !== 'true') return;
-    
+
     const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
     if (!isMobile) return;
-    
+
     try {
         const dismissed = localStorage.getItem(PWA_DISMISSED_KEY);
         if (dismissed === 'true') return;
     } catch (e) {
         console.warn(e);
     }
-    
+
     setTimeout(() => {
         const currentStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
         if (!currentStandalone) {
@@ -638,22 +655,8 @@ window.maybeAutoShowPwaTutorial = maybeAutoShowPwaTutorial;
 // PWA Service Worker Registration
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
-    navigator.serviceWorker.register('/sw.js')
-      .then(registration => {
-        console.log('ServiceWorker registration successful with scope: ', registration.scope);
-      })
-      .catch(err => {
-        console.log('ServiceWorker registration failed: ', err);
-      });
-      
-    // Auto-reload when new service worker takes control
-    let refreshing = false;
-    navigator.serviceWorker.addEventListener('controllerchange', () => {
-      if (!refreshing) {
-        refreshing = true;
-        window.location.reload();
-      }
-    });
+    window.setTimeout(() => {
+      navigator.serviceWorker.register('/sw.js').catch(() => {});
+    }, 3000);
   });
 }
-

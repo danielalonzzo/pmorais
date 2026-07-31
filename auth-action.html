@@ -1,22 +1,7 @@
 <!DOCTYPE html>
 <html lang="pt-PT">
 <head>
-    <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-GYWR102Y9N"></script>
-<script nonce="pmorais-2026">
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-GYWR102Y9N');
-</script>
-    <!-- Google Tag Manager -->
-<script nonce="pmorais-2026">(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-})(window,document,'script','dataLayer','GTM-TNKJXJ9X');</script>
-<!-- End Google Tag Manager -->
+    <meta charset="UTF-8">
     <meta name="view-transition" content="same-origin" />
     <style nonce="pmorais-2026" id="critical-css">
     :root {
@@ -24,6 +9,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         --color-bg: #0B0B0B;
         --color-surface: #111111;
         --color-primary: #E6AE17;
+        --color-primary-text: #E6AE17;
         /* Updated to match target */
         --color-primary-hover: #d5a015;
         --color-light-gray: #F2F2F2;
@@ -46,9 +32,10 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         /* Fluid section padding */
     
         /* Transitions */
-        --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        --transition-smooth: opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1), transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     }
     body {
+        margin: 0;
         background-color: var(--color-bg);
         color: var(--color-text);
         font-family: var(--font-body);
@@ -114,7 +101,6 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         animation: lightSweep 2s infinite ease-in-out;
     }
     </style>
-    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Paulo Morais — Recuperação de Conta</title>
     <meta name="description" content="Área segura para confirmação de email e recuperação da conta Paulo Morais.">
@@ -458,13 +444,9 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             }
         }
     </style>
-    <script nonce="pmorais-2026" src="js/lang.js?v=1.6.1"></script>
+    <script nonce="pmorais-2026" src="js/lang.js?v=2.0.0"></script>
 </head>
 <body>
-    <!-- Google Tag Manager (noscript) -->
-<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TNKJXJ9X"
-height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-<!-- End Google Tag Manager (noscript) -->
 
 <div class="auth-container">
     <!-- Logo -->
@@ -705,5 +687,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     handleAction();
 </script>
 
+    <script nonce="pmorais-2026" src="js/cookie-consent.js?v=2.0.0" defer></script>
 </body>
 </html>

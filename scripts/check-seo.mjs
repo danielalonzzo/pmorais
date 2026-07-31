@@ -113,8 +113,11 @@ for (const file of htmlFiles) {
   const html = read(file);
   if (/<!-- Google Tag Manager -->\s*<script>(?=\(function\(w,d,s,l,i\))/i.test(html)) fail(`${file}: GTM bootstrap lacks CSP nonce`);
   if (/https:\/\/pmorais\.pt\/[^"'\s]+\.html/i.test(html)) fail(`${file}: contains an absolute legacy .html URL`);
-  for (const match of html.matchAll(/src=["']([^"']*(?:lang|cookie-consent|script)\.js(?:\?v=[^"']*)?)["']/g)) {
+  for (const match of html.matchAll(/src=["']([^"']*(?:lang|cookie-consent|script|theme)\.js(?:\?v=[^"']*)?)["']/g)) {
     if (!match[1].endsWith(`?v=${ASSET_VERSION}`)) fail(`${file}: shared script lacks current cache version: ${match[1]}`);
+  }
+  for (const match of html.matchAll(/href=["']([^"']*css\/style\.css(?:\?v=[^"']*)?)["']/g)) {
+    if (!match[1].endsWith(`?v=${ASSET_VERSION}`)) fail(`${file}: shared stylesheet lacks current cache version: ${match[1]}`);
   }
   for (const match of html.matchAll(/from\s+["']([^"']*\/blog\.js(?:\?v=[^"']*)?)["']/g)) {
     if (!match[1].endsWith(`?v=${ASSET_VERSION}`)) fail(`${file}: blog module lacks current cache version: ${match[1]}`);
@@ -152,10 +155,38 @@ for (const file of htmlFiles) {
   }
 }
 
+// Check static asset references as well. This catches wrong ../ prefixes in
+// language folders and missing files before a cPanel deployment can create 404s.
+for (const file of htmlFiles) {
+  const html = read(file);
+  for (const match of html.matchAll(/<(?:link|script|img|source|video)\b[^>]*?\b(?:src|href|poster)=["']([^"']+)["'][^>]*>/gi)) {
+    const rawReference = match[1];
+    if (/^(?:https?:|data:|blob:|\/\/)/i.test(rawReference)) continue;
+    const reference = rawReference.split(/[?#]/)[0];
+    if (!reference) continue;
+    const resolved = reference.startsWith('/')
+      ? path.join(root, reference)
+      : path.resolve(root, path.dirname(file), reference);
+    if (!fs.existsSync(resolved)) fail(`${file}: missing local asset ${rawReference}`);
+  }
+}
+
+for (const cssFile of ['css/style.css', 'css/tokens.css', 'css/typography.css', 'css/components/breadcrumb.css']) {
+  const css = read(cssFile);
+  for (const match of css.matchAll(/url\(\s*["']?([^"')]+)["']?\s*\)/gi)) {
+    const rawReference = match[1].trim();
+    if (/^(?:https?:|data:|blob:|#|var\()/i.test(rawReference)) continue;
+    const reference = rawReference.split(/[?#]/)[0];
+    const resolved = path.resolve(root, path.dirname(cssFile), reference);
+    if (!fs.existsSync(resolved)) fail(`${cssFile}: missing local asset ${rawReference}`);
+  }
+}
+
 notes.push(`${PUBLIC_PAGES.length} canonical pages checked`);
 notes.push(`${htmlFiles.length - PUBLIC_PAGES.length} non-public/support pages checked for noindex`);
 notes.push(`${sitemapUrls.length} sitemap URLs checked`);
 notes.push(`${htmlFiles.length} pages checked for local link targets`);
+notes.push(`${htmlFiles.length} pages checked for local assets`);
 
 if (failures.length) {
   console.error(`SEO validation failed with ${failures.length} issue(s):`);

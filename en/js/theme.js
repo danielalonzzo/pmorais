@@ -39,19 +39,23 @@ function applyDynamicTheme() {
     } else if (manualMode === 'dark') {
         // Keeps default dark values
     } else {
-        // Auto mode: Light from 6 AM to 4 PM, Dark otherwise
+        // Auto mode: Light between the configured start and end times.
         const now = new Date();
         const hours = now.getHours();
         const minutes = now.getMinutes();
         const timeInMinutes = hours * 60 + minutes;
-        
-        const startLight = 6 * 60;  // 6:00 AM
-        const startDark = 16 * 60;  // 4:00 PM
-        
-        if (timeInMinutes >= startLight && timeInMinutes < startDark) {
-            setLightMode();
+
+        const lightStartStr = localStorage.getItem('theme_auto_light_start') || '06:00';
+        const darkStartStr = localStorage.getItem('theme_auto_dark_start') || '16:00';
+        const [lightH, lightM] = lightStartStr.split(':').map(Number);
+        const [darkH, darkM] = darkStartStr.split(':').map(Number);
+        const startLight = (isNaN(lightH) ? 6 : lightH) * 60 + (isNaN(lightM) ? 0 : lightM);
+        const startDark = (isNaN(darkH) ? 16 : darkH) * 60 + (isNaN(darkM) ? 0 : darkM);
+
+        if (startLight < startDark) {
+            if (timeInMinutes >= startLight && timeInMinutes < startDark) setLightMode();
         } else {
-            // It's after 4 PM or before 6 AM: keep default dark mode values
+            if (timeInMinutes >= startLight || timeInMinutes < startDark) setLightMode();
         }
     }
     
@@ -61,29 +65,9 @@ function applyDynamicTheme() {
     document.documentElement.style.setProperty('--color-text', `rgb(${textRGB.join(',')})`);
     document.documentElement.style.setProperty('--color-text-dim', `rgb(${textDimRGB.join(',')})`);
     document.documentElement.style.setProperty('--color-accent', `rgb(${accentRGB.join(',')})`);
-    document.documentElement.style.setProperty('--color-osteo', `rgb(${osteoRGB.join(',')})`);
+    document.documentElement.style.setProperty('--color-brand-primary', `rgb(${osteoRGB.join(',')})`);
     document.documentElement.style.setProperty('--hero-legal-overlay', heroLegalOverlay);
     
-    // Inject smooth transition styles gracefully (if not present)
-    if (!document.getElementById('theme-transition-styles')) {
-        const style = document.createElement('style');
-        style.id = 'theme-transition-styles';
-        style.textContent = `
-            .theme-transitioning,
-            .theme-transitioning * {
-                transition: background-color 0.5s ease-in-out, color 0.5s ease-in-out, border-color 0.5s ease-in-out, border 0.5s ease-in-out, box-shadow 0.5s ease-in-out, fill 0.5s ease-in-out, stroke 0.5s ease-in-out !important;
-            }
-            @keyframes icon-pop {
-                0% { transform: scale(0.5) rotate(-30deg); opacity: 0; }
-                100% { transform: scale(1) rotate(0deg); opacity: 1; }
-            }
-            #theme-toggle svg {
-                animation: icon-pop 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            }
-        `;
-        document.head.appendChild(style);
-    }
-
     // Update logos
     const isLightMode = bgRGB[0] > 127; // Threshold for "Light"
 
@@ -102,12 +86,12 @@ function applyDynamicTheme() {
     logos.forEach(logo => {
         const currentSrc = logo.getAttribute('src');
         if (isLightMode) {
-            if (currentSrc && !currentSrc.includes('paulo_morais-08.png')) {
-                logo.src = basePath + 'images/logo/paulo_morais-08.png';
+            if (currentSrc && !currentSrc.includes('paulo_morais-08.webp')) {
+                logo.src = basePath + 'images/logo/paulo_morais-08.webp';
             }
         } else {
-            if (currentSrc && !currentSrc.includes('logo_amarelo_alpha.png')) {
-                logo.src = basePath + 'images/logo/logo_amarelo_alpha.png';
+            if (currentSrc && !currentSrc.includes('logo_amarelo_alpha.webp')) {
+                logo.src = basePath + 'images/logo/logo_amarelo_alpha.webp';
             }
         }
     });
@@ -126,6 +110,7 @@ function applyDynamicTheme() {
         if (isLightMode) {
             let targetFilename = filename;
             if (filename === 'livro-de-reclamacoes.png') targetFilename = 'livro_de_reclamacoes.png';
+            if (filename === 'livro-de-reclamacoes.webp') targetFilename = 'livro_de_reclamacoes.webp';
             logo.src = basePath + 'images/claro/' + targetFilename;
         } else {
             logo.src = originalSrc;
@@ -196,6 +181,32 @@ window.toggleThemeMode = function() {
     setTimeout(() => {
         document.documentElement.classList.remove('theme-transitioning');
     }, 600);
+};
+
+// Theme settings API used by the settings modal.
+window.applyDynamicTheme = applyDynamicTheme;
+window.setThemeAutoMode = function(isAuto) {
+    if (isAuto) {
+        localStorage.setItem('theme_mode', 'auto');
+    } else {
+        const isLight = document.body && document.body.classList.contains('light-mode');
+        localStorage.setItem('theme_mode', isLight ? 'light' : 'dark');
+    }
+    applyDynamicTheme();
+};
+window.getThemeAutoMode = function() {
+    return (localStorage.getItem('theme_mode') || 'auto') === 'auto';
+};
+window.setThemeSchedule = function(lightStart, darkStart) {
+    if (lightStart) localStorage.setItem('theme_auto_light_start', lightStart);
+    if (darkStart) localStorage.setItem('theme_auto_dark_start', darkStart);
+    applyDynamicTheme();
+};
+window.getThemeSchedule = function() {
+    return {
+        lightStart: localStorage.getItem('theme_auto_light_start') || '06:00',
+        darkStart: localStorage.getItem('theme_auto_dark_start') || '16:00'
+    };
 };
 
 // Initial application for CSS variables (immediate)
@@ -638,13 +649,8 @@ window.maybeAutoShowPwaTutorial = maybeAutoShowPwaTutorial;
 // PWA Service Worker Registration
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
-    navigator.serviceWorker.register('/sw.js')
-      .then(registration => {
-        console.log('ServiceWorker registration successful with scope: ', registration.scope);
-      })
-      .catch(err => {
-        console.log('ServiceWorker registration failed: ', err);
-      });
+    window.setTimeout(() => {
+      navigator.serviceWorker.register('/sw.js').catch(() => {});
+    }, 3000);
   });
 }
-

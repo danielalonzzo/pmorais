@@ -8,17 +8,7 @@ const crypto = require("crypto");
 
 
 // ===== Google Calendar Integration =====
-const serviceAccount = require("./service-account.json");
 const SCOPES = ['https://www.googleapis.com/auth/calendar.events'];
-// Initialize Google Calendar API
-const auth = new google.auth.GoogleAuth({
-  credentials: {
-    client_email: serviceAccount.client_email,
-    private_key: serviceAccount.private_key,
-  },
-  scopes: SCOPES,
-});
-const calendar = google.calendar({ version: 'v3', auth });
 const CALENDAR_ID = 'pt.pmorais.agenda@gmail.com';
 
 // Define secrets stored in Google Cloud Secret Manager
@@ -27,6 +17,8 @@ const emailPass = defineSecret("EMAIL_PASS");
 const emailHost = defineSecret("EMAIL_HOST");
 const emailPort = defineSecret("EMAIL_PORT");
 const unsubSecret = defineSecret("UNSUB_SECRET");
+const googleClientEmail = defineSecret("GOOGLE_CLIENT_EMAIL");
+const googlePrivateKey = defineSecret("GOOGLE_PRIVATE_KEY");
 
 // ===== HMAC Token Helpers (unsubscribe tokens) =====
 function generateUnsubToken(email, secret) {
@@ -175,11 +167,32 @@ function buildEmailHtml({ title, bodyHtml, ctaText, ctaUrl, unsubscribeUrl }) {
 }
 
 exports.onWeeklyScheduleUpdated = functions
-  .runWith({ secrets: [emailUser, emailPass, emailHost, emailPort, unsubSecret] })
+  .runWith({
+    secrets: [
+      emailUser,
+      emailPass,
+      emailHost,
+      emailPort,
+      unsubSecret,
+      googleClientEmail,
+      googlePrivateKey
+    ]
+  })
   .firestore
   .document("weekly_schedules/{weekId}")
   .onWrite(async (change, context) => {
     if (!change.after.exists) return null;
+
+    // Build the Calendar client at invocation time, when bound secrets are available.
+    const auth = new google.auth.GoogleAuth({
+      credentials: {
+        client_email: googleClientEmail.value(),
+        private_key: googlePrivateKey.value().replace(/\\n/g, "\n"),
+      },
+      scopes: SCOPES,
+    });
+    const calendar = google.calendar({ version: 'v3', auth });
+
     // Configurar el transporte de nodemailer usando los secretos
     const transporter = nodemailer.createTransport({
       host: emailHost.value(),

@@ -9,12 +9,7 @@
             sessionStorage.removeItem('sys_action');
             const isLogout = sysAction === 'logout';
             const loadingText = isLogout ? (window.location.pathname.includes('/en/') ? "Logging out..." : "A terminar sessão...") : (window.location.pathname.includes('/en/') ? "Updating..." : "A atualizar...");
-            
-            const preloader = document.getElementById('preloader');
-            if (preloader) {
-                preloader.style.display = 'none';
-            }
-            
+
             if (document.body) {
                 showSystemUpdateLoader(loadingText);
                 window.addEventListener('load', () => {
@@ -164,6 +159,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 const dotsInThisBar = dot.parentElement.querySelectorAll('.dot');
                 const dotIdx = Array.from(dotsInThisBar).indexOf(dot);
                 dot.classList.toggle('active', dotIdx === index);
+                dot.setAttribute('aria-pressed', String(dotIdx === index));
             });
         };
 
@@ -203,7 +199,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // Touch / Swipe Support
         let touchStartX = 0;
         let touchEndX = 0;
-        
+
         const handleGesture = () => {
             const swipeThreshold = 50; // Minimum distance (px) for a valid swipe
             if (touchEndX < touchStartX - swipeThreshold) {
@@ -291,84 +287,28 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Preloader Logic with YouTube API integration for Hero Video
+    // --- Preloader Dismissal Logic ---
     const preloader = document.getElementById('preloader');
-    const heroIframe = document.getElementById('hero-video-iframe');
-    let preloaderDismissed = false;
-
-    function dismissPreloader() {
-        if (preloaderDismissed || !preloader) return;
-        preloaderDismissed = true;
-        document.body.classList.add('loaded');
-        setTimeout(() => {
-            preloader.style.display = 'none';
-        }, 500);
-    }
-
-    // Fallback: forcefully remove preloader after 8 seconds if anything fails
-    const fallbackTimer = setTimeout(dismissPreloader, 8000);
-
-    if (preloader && heroIframe) {
-        // Dynamically load the YouTube Iframe API
-        const tag = document.createElement('script');
-        tag.src = "https://www.youtube.com/iframe_api";
-        const firstScriptTag = document.getElementsByTagName('script')[0];
-        firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-
-        // Global callback for YouTube API
-        window.onYouTubeIframeAPIReady = function () {
-            // Initial Hero Video
-            if (document.getElementById('hero-video-iframe')) {
-                player = new YT.Player('hero-video-iframe', {
-                    events: {
-                        'onReady': function (event) {
-                            try {
-                                event.target.setPlaybackQuality('hd1080');
-                                event.target.mute();
-                                event.target.playVideo();
-                            } catch (e) { }
-                        },
-                        'onStateChange': function (event) {
-                            // When video starts playing (state 1 = PLAYING)
-                            if (event.data === 1) { // YT.PlayerState.PLAYING 
-                                setTimeout(() => {
-                                    clearTimeout(fallbackTimer);
-                                    dismissPreloader();
-                                }, 1500);
-                            }
-                        }
-                    }
-                });
-            }
-
-            // Final Hero CTA Video (Footer)
-            if (document.getElementById('hero-cta-video-iframe')) {
-                player2 = new YT.Player('hero-cta-video-iframe', {
-                    events: {
-                        'onReady': function (event) {
-                            try {
-                                event.target.setPlaybackQuality('hd1080');
-                                event.target.mute();
-                                event.target.playVideo();
-                            } catch (e) { }
-                        },
-                        'onStateChange': function (event) {
-                            // Optional tracking or logic for CTA video
-                        }
-                    }
-                });
-            }
-        };
-    } else {
-        // Standard behavior for pages without the hero video
-        window.addEventListener('load', () => {
+    if (preloader) {
+        let preloaderDismissed = false;
+        const dismissPreloader = () => {
+            if (preloaderDismissed) return;
+            preloaderDismissed = true;
+            document.body.classList.add('loaded');
+            preloader.style.opacity = '0';
             setTimeout(() => {
-                clearTimeout(fallbackTimer);
-                dismissPreloader();
+                preloader.style.display = 'none';
             }, 500);
-        });
-    }
+        };
 
+        if (document.readyState === 'complete') {
+            dismissPreloader();
+        } else {
+            window.addEventListener('load', dismissPreloader);
+            // Fallback timeout so page never gets stuck if resources fail to load
+            setTimeout(dismissPreloader, 2000);
+        }
+    }
 
     // --- Social FAB Toggle (Mobile & Tablets) ---
     const fabContainer = document.querySelector('.fab-container');
@@ -381,12 +321,14 @@ document.addEventListener('DOMContentLoaded', () => {
                 e.preventDefault();
                 e.stopPropagation();
                 fabContainer.classList.toggle('active');
+                fabTrigger.setAttribute('aria-expanded', String(fabContainer.classList.contains('active')));
             }
         });
 
         // Close FAB when clicking anywhere else
         document.addEventListener('click', () => {
             fabContainer.classList.remove('active');
+            fabTrigger.setAttribute('aria-expanded', 'false');
         });
 
         // Prevent closing when clicking the options themselves
@@ -408,11 +350,11 @@ document.addEventListener('DOMContentLoaded', () => {
         link.addEventListener('click', (e) => {
             e.preventDefault();
             if (link.classList.contains('active')) return;
-            
+
             const targetLang = link.textContent.trim().toLowerCase();
             const currentPath = window.location.pathname;
             const isEnPage = currentPath.includes('/en/') || currentPath.endsWith('/en');
-            
+
             if (targetLang === 'pt' && isEnPage) {
                 localStorage.setItem('pm_lang_pref', 'pt');
                 let newPath = currentPath.replace(/\/en\//, '/').replace(/\/en$/, '/');
@@ -460,26 +402,38 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!trigger || !lightbox || !lightboxImg || !closeBtn) return;
 
     // Open lightbox
-    trigger.addEventListener('click', () => {
+    const openLightbox = () => {
         const imgElement = trigger.querySelector('img');
         if (!imgElement) return;
-        
+
         lightboxImg.src = imgElement.src;
         lightbox.style.display = 'flex';
         // Small timeout to allow browser to trigger transition
         setTimeout(() => {
             lightbox.classList.add('active');
+            closeBtn.focus();
         }, 10);
+        lightbox.setAttribute('aria-hidden', 'false');
         document.body.style.overflow = 'hidden'; // Disable page scrolling
+    };
+
+    trigger.addEventListener('click', openLightbox);
+    trigger.addEventListener('keydown', (event) => {
+        if (event.key === 'Enter' || event.key === ' ') {
+            event.preventDefault();
+            openLightbox();
+        }
     });
 
     // Close lightbox functions
     const closeLightbox = () => {
         lightbox.classList.remove('active');
+        lightbox.setAttribute('aria-hidden', 'true');
         document.body.style.overflow = ''; // Enable page scrolling
         setTimeout(() => {
             lightbox.style.display = 'none';
             lightboxImg.src = '';
+            trigger.focus();
         }, 300);
     };
 
@@ -511,12 +465,12 @@ document.addEventListener('DOMContentLoaded', () => {
         // Attempt to extract version
         const vText = versionSpan.textContent.trim();
         if (vText) appVersion = vText + ' (Build 2026-07)';
-        
+
         // Make span clickable
         versionSpan.style.cursor = 'pointer';
         versionSpan.style.textDecoration = 'underline';
         versionSpan.title = 'Ver información del sistema';
-        
+
         versionSpan.addEventListener('click', function(e) {
             e.preventDefault();
             e.stopPropagation();
@@ -531,10 +485,10 @@ document.addEventListener('DOMContentLoaded', () => {
             modal = document.createElement('div');
             modal.id = 'system-info-modal';
             modal.className = 'system-info-modal';
-            
+
             // Detect Language
             const isEn = window.location.pathname.includes('/en/') || window.location.pathname.endsWith('/en');
-            
+
             const i18n = {
                 pt: {
                     title: "INFORMAÇÃO DO SISTEMA",
@@ -557,7 +511,20 @@ document.addEventListener('DOMContentLoaded', () => {
                     softAttr: "ATRIBUIÇÕES DE SOFTWARE",
                     iconEco: "Ecossistema de Ícones",
                     devBy: 'Desenvolvido por <a href="https://elysiumdr.eu" target="_blank" rel="noopener noreferrer" class="sys-link" style="color: inherit; text-decoration: underline;">Elysium λ Development & Research</a>.',
-                    rights: "© 2026 Consciênciavaliativa Unipessoal Lda. Todos os direitos reservados."
+                    rights: "© 2026 Consciênciavaliativa Unipessoal Lda. Todos os direitos reservados.",
+                    sysSettings: "AJUSTES DO SISTEMA",
+                    autoTheme: "Mudança Automática de Tema",
+                    themeLightStart: "Hora Início Tema Claro",
+                    themeDarkStart: "Hora Início Tema Escuro",
+                    sysLanguage: "Idioma do Sistema",
+                    sysRegion: "Região do Utilizador",
+                    langPT: "Português",
+                    langEN: "Inglês",
+                    regPT: "Portugal",
+                    regBR: "Brasil",
+                    regUK: "Reino Unido",
+                    regUS: "Estados Unidos",
+                    regOth: "Outro"
                 },
                 en: {
                     title: "SYSTEM INFORMATION",
@@ -580,24 +547,37 @@ document.addEventListener('DOMContentLoaded', () => {
                     softAttr: "SOFTWARE ATTRIBUTIONS",
                     iconEco: "Icon Ecosystem",
                     devBy: 'Developed by <a href="https://elysiumdr.eu" target="_blank" rel="noopener noreferrer" class="sys-link" style="color: inherit; text-decoration: underline;">Elysium λ Development & Research</a>.',
-                    rights: "© 2026 Consciênciavaliativa Unipessoal Lda. All rights reserved."
+                    rights: "© 2026 Consciênciavaliativa Unipessoal Lda. All rights reserved.",
+                    sysSettings: "SYSTEM SETTINGS",
+                    autoTheme: "Automatic Theme Switch",
+                    themeLightStart: "Light Theme Start Time",
+                    themeDarkStart: "Dark Theme Start Time",
+                    sysLanguage: "System Language",
+                    sysRegion: "User Region",
+                    langPT: "Portuguese",
+                    langEN: "English",
+                    regPT: "Portugal",
+                    regBR: "Brazil",
+                    regUK: "United Kingdom",
+                    regUS: "United States",
+                    regOth: "Other"
                 }
             };
 
             const t = isEn ? i18n.en : i18n.pt;
             const termsLink = isEn ? '/en/termos-e-condicoes' : '/termos-e-condicoes';
             const privacyLink = isEn ? '/en/politica-privacidade' : '/politica-privacidade';
-            
+
             const isLight = document.body.classList.contains('light-mode');
             const logoFile = isLight ? 'paulo_morais-08.png' : 'logo_amarelo_alpha.png';
             const logoPath = isEn ? '../images/logo/' + logoFile : 'images/logo/' + logoFile;
-            
+
             // Dynamic Build Date based on last modified time
             const lastModDate = new Date(document.lastModified);
-            const buildDate = !isNaN(lastModDate.getTime()) 
+            const buildDate = !isNaN(lastModDate.getTime())
                 ? lastModDate.getFullYear() + '-' + String(lastModDate.getMonth() + 1).padStart(2, '0')
                 : '2026-07';
-            
+
             modal.innerHTML = `
                 <div class="system-info-content-ios">
                     <div class="sys-header">
@@ -606,7 +586,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         <h1>Paulo Morais</h1>
                         <div class="sys-subtitle">${t.title}</div>
                     </div>
-                    
+
                     <div class="sys-scroll-area">
                         <div class="sys-group">
                             <div class="sys-group-title">${t.softwareSpecs}</div>
@@ -625,6 +605,44 @@ document.addEventListener('DOMContentLoaded', () => {
                                 <div class="sys-row">
                                     <span class="sys-label">${t.productLic}</span>
                                     <span class="sys-value">ELY-6QU2-HYL4-UER4</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="sys-group">
+                            <div class="sys-group-title">${t.sysSettings}</div>
+                            <div class="sys-card">
+                                <div class="sys-row" style="align-items: center;">
+                                    <span class="sys-label">${t.autoTheme}</span>
+                                    <label class="sys-toggle-switch">
+                                        <input type="checkbox" id="sys-auto-theme-toggle">
+                                        <span class="sys-slider"></span>
+                                    </label>
+                                </div>
+                                <div class="sys-row" style="align-items: center;">
+                                    <span class="sys-label">${t.themeLightStart}</span>
+                                    <input type="time" id="sys-light-time" class="sys-select" style="padding: 2px 5px; width: 100px;">
+                                </div>
+                                <div class="sys-row" style="align-items: center;">
+                                    <span class="sys-label">${t.themeDarkStart}</span>
+                                    <input type="time" id="sys-dark-time" class="sys-select" style="padding: 2px 5px; width: 100px;">
+                                </div>
+                                <div class="sys-row" style="align-items: center;">
+                                    <span class="sys-label">${t.sysLanguage}</span>
+                                    <select id="sys-lang-select" class="sys-select">
+                                        <option value="pt">${t.langPT}</option>
+                                        <option value="en">${t.langEN}</option>
+                                    </select>
+                                </div>
+                                <div class="sys-row" style="align-items: center;">
+                                    <span class="sys-label">${t.sysRegion}</span>
+                                    <select id="sys-region-select" class="sys-select">
+                                        <option value="PT">${t.regPT}</option>
+                                        <option value="BR">${t.regBR}</option>
+                                        <option value="UK">${t.regUK}</option>
+                                        <option value="US">${t.regUS}</option>
+                                        <option value="Other">${t.regOth}</option>
+                                    </select>
                                 </div>
                             </div>
                         </div>
@@ -690,7 +708,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     </div>
                 </div>
             `;
-            
+
             // Add Styles
             const style = document.createElement('style');
             style.textContent = `
@@ -850,6 +868,68 @@ document.addEventListener('DOMContentLoaded', () => {
                     text-decoration: underline;
                     color: var(--color-primary-hover, #d5a015);
                 }
+                .sys-toggle-switch {
+                    position: relative;
+                    display: inline-block;
+                    width: 46px;
+                    height: 24px;
+                    margin-left: 10px;
+                }
+                .sys-toggle-switch input {
+                    opacity: 0;
+                    width: 0;
+                    height: 0;
+                }
+                .sys-slider {
+                    position: absolute;
+                    cursor: pointer;
+                    top: 0; left: 0; right: 0; bottom: 0;
+                    background-color: var(--color-surface, #111111);
+                    transition: .4s;
+                    border-radius: 24px;
+                    border: 1px solid rgba(255,255,255,0.2);
+                }
+                body.light-mode .sys-slider {
+                    background-color: #e5e5ea;
+                    border: 1px solid rgba(0,0,0,0.1);
+                }
+                .sys-slider:before {
+                    position: absolute;
+                    content: "";
+                    height: 18px;
+                    width: 18px;
+                    left: 2px;
+                    bottom: 2px;
+                    background-color: #fff;
+                    transition: .4s;
+                    border-radius: 50%;
+                }
+                body.light-mode .sys-slider:before {
+                    background-color: #fff;
+                    box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+                }
+                input:checked + .sys-slider {
+                    background-color: var(--color-primary, #E6AE17);
+                    border-color: var(--color-primary, #E6AE17);
+                }
+                input:checked + .sys-slider:before {
+                    transform: translateX(22px);
+                }
+                .sys-select {
+                    background: var(--color-bg, #0B0B0B);
+                    color: var(--color-text, #ffffff);
+                    border: 1px solid rgba(255,255,255,0.2);
+                    border-radius: 6px;
+                    padding: 4px 8px;
+                    font-size: 14px;
+                    outline: none;
+                    cursor: pointer;
+                }
+                body.light-mode .sys-select {
+                    background: #ffffff;
+                    color: #000;
+                    border: 1px solid rgba(0,0,0,0.2);
+                }
                 .sys-footer {
                     margin-top: 40px;
                     text-align: center;
@@ -883,6 +963,48 @@ document.addEventListener('DOMContentLoaded', () => {
             document.head.appendChild(style);
             document.body.appendChild(modal);
 
+            // --- System Settings Initialization ---
+            const autoThemeToggle = modal.querySelector('#sys-auto-theme-toggle');
+            const lightTimeInput = modal.querySelector('#sys-light-time');
+            const darkTimeInput = modal.querySelector('#sys-dark-time');
+            const langSelect = modal.querySelector('#sys-lang-select');
+            const regionSelect = modal.querySelector('#sys-region-select');
+
+            // 1. Theme Auto Mode
+            if (window.getThemeAutoMode) {
+                autoThemeToggle.checked = window.getThemeAutoMode();
+                autoThemeToggle.addEventListener('change', function() {
+                    window.setThemeAutoMode(this.checked);
+                });
+            }
+            // 2. Theme Schedule
+            if (window.getThemeSchedule) {
+                const schedule = window.getThemeSchedule();
+                lightTimeInput.value = schedule.lightStart;
+                darkTimeInput.value = schedule.darkStart;
+                const updateSchedule = () => {
+                    window.setThemeSchedule(lightTimeInput.value, darkTimeInput.value);
+                };
+                lightTimeInput.addEventListener('change', updateSchedule);
+                darkTimeInput.addEventListener('change', updateSchedule);
+            }
+            // 3. Language
+            const currentLang = window.location.pathname.includes('/en/') ? 'en' : 'pt';
+            langSelect.value = currentLang;
+            langSelect.addEventListener('change', function() {
+                const selectedLang = this.value;
+                if (selectedLang !== currentLang && typeof window.toggleLanguage === 'function') {
+                    window.toggleLanguage();
+                }
+            });
+            // 4. Region
+            const currentRegion = localStorage.getItem('user_region') || 'PT';
+            regionSelect.value = currentRegion;
+            regionSelect.addEventListener('change', function() {
+                localStorage.setItem('user_region', this.value);
+            });
+            // --------------------------------------
+
             // Re-initialize Lucide Icons for the new close icon
             if (typeof lucide !== 'undefined') {
                 lucide.createIcons({
@@ -893,20 +1015,20 @@ document.addEventListener('DOMContentLoaded', () => {
             // Close events
             const closeBtn = modal.querySelector('.system-info-close-ios');
             closeBtn.addEventListener('click', closeSystemInfoModal);
-            
+
             modal.addEventListener('click', function(e) {
                 if (e.target === modal) {
                     closeSystemInfoModal();
                 }
             });
-            
+
             document.addEventListener('keydown', function(e) {
                 if (e.key === 'Escape' && modal.classList.contains('active')) {
                     closeSystemInfoModal();
                 }
             });
         }
-        
+
         // Show modal
         modal.style.display = 'flex';
         // Force reflow
@@ -986,16 +1108,16 @@ window.forceUpdateVersion = async function(isLogout = false) {
         window.dispatchEvent(new Event('force-firebase-logout'));
 
         // Clear cookies completely for all paths
-        document.cookie.split(";").forEach(function(c) { 
+        document.cookie.split(";").forEach(function(c) {
             const cookieName = c.replace(/^ +/, "").split("=")[0];
-            document.cookie = cookieName + "=;expires=" + new Date().toUTCString() + ";path=/"; 
+            document.cookie = cookieName + "=;expires=" + new Date().toUTCString() + ";path=/";
             document.cookie = cookieName + "=;expires=" + new Date().toUTCString() + ";path=/;domain=" + window.location.hostname;
         });
-        
+
         // Clear local storage & session storage
         localStorage.clear();
         sessionStorage.clear();
-        
+
         // Pass a flag to indicate we just performed an update/logout
         sessionStorage.setItem('sys_action', isLogout ? 'logout' : 'update');
 
@@ -1018,10 +1140,10 @@ window.forceUpdateVersion = async function(isLogout = false) {
                     dbs.forEach(db => { if (db.name && !dbsToDelete.includes(db.name)) dbsToDelete.push(db.name); });
                 } catch(e) { console.error("Error listing IndexedDBs:", e); }
             }
-            
+
             await Promise.all(dbsToDelete.map(name => deleteDB(name)));
         }
-        
+
         // Clear Service Worker Caches
         if ('caches' in window) {
             try {
@@ -1029,7 +1151,7 @@ window.forceUpdateVersion = async function(isLogout = false) {
                 await Promise.all(names.map(name => caches.delete(name)));
             } catch(e) { console.error("Error clearing caches:", e); }
         }
-        
+
         // Unregister service workers
         if ('serviceWorker' in navigator) {
             try {
@@ -1037,12 +1159,12 @@ window.forceUpdateVersion = async function(isLogout = false) {
                 await Promise.all(registrations.map(reg => reg.unregister()));
             } catch(e) { console.error("Error unregistering service workers:", e); }
         }
-        
+
         // Hard reload
         setTimeout(() => {
             window.location.reload(true);
         }, 300);
-        
+
     } catch (e) {
         console.error('Error clearing caches:', e);
         window.location.reload(true);

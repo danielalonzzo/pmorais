@@ -1,6 +1,14 @@
 ---
 deployment:
   tasks:
-    - export DEPLOYPATH=/home/pmoraisp/public_html/
-    - /bin/cp -R * $DEPLOYPATH
-    - /bin/cp .htaccess $DEPLOYPATH
+    - export DEPLOYPATH=/home/pmoraisp/public_html
+    - /bin/cp .htaccess "$DEPLOYPATH/.htaccess"
+    - /bin/rm -rf "$DEPLOYPATH/functions" "$DEPLOYPATH/scripts" "$DEPLOYPATH/tests" "$DEPLOYPATH/scratch" "$DEPLOYPATH/node_modules" "$DEPLOYPATH/tmp" "$DEPLOYPATH/assets"
+    - /bin/rm -f "$DEPLOYPATH/firebase.json" "$DEPLOYPATH/firebase-debug 2.log" "$DEPLOYPATH/firestore.indexes.json" "$DEPLOYPATH/firestore.rules" "$DEPLOYPATH/package.json" "$DEPLOYPATH/package-lock.json" "$DEPLOYPATH/playwright.config.js" "$DEPLOYPATH/README.md" "$DEPLOYPATH/.env" "$DEPLOYPATH/service-account.json" "$DEPLOYPATH/logs.txt" "$DEPLOYPATH/FILE_NAME" "$DEPLOYPATH/convert_webp.js"
+    - /bin/rm -f "$DEPLOYPATH/add_nonces.py" "$DEPLOYPATH/add_view_transition.py" "$DEPLOYPATH/fix_images.py" "$DEPLOYPATH/inject_critical_css.py" "$DEPLOYPATH/test_regex.py" "$DEPLOYPATH/update_firebase_sdk.py" "$DEPLOYPATH/update_html.py" "$DEPLOYPATH/.DS_Store"
+    - /bin/mkdir -p "$DEPLOYPATH/assets/fonts"
+    - /bin/cp assets/fonts/Patron-Light.woff2 assets/fonts/Patron-Regular.woff2 assets/fonts/Patron-Bold.woff2 "$DEPLOYPATH/assets/fonts/"
+    - /bin/cp -R css en images js "$DEPLOYPATH/"
+    - /usr/bin/find "$DEPLOYPATH/css" "$DEPLOYPATH/en" "$DEPLOYPATH/images" "$DEPLOYPATH/js" -type f -name .DS_Store -delete
+    - /bin/cp admin-blog.html artigo.html auth-action.html blog.html desinscrever.html formulario.html google0ef2004b37f69f6d.html historico.html index.html osteopatia.html perfil.html perfis.html politica-privacidade.html sobre-mim.html termos-e-condicoes.html "$DEPLOYPATH/"
+    - /bin/cp manifest.json robots.txt sitemap.xml llms.txt llms-full.txt sw.js firebase-messaging-sw.js "$DEPLOYPATH/"
