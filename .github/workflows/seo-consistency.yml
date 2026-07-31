@@ -55,4 +55,11 @@ jobs:
       - name: Verify generated files are committed
         run: |
           npm run seo:apply
-          git diff --exit-code
+          if ! git diff --quiet; then
+            echo "SEO-generated files are not committed. Changed files:"
+            git --no-pager diff --name-only
+            echo
+            echo "Full diff:"
+            git --no-pager diff
+            exit 1
+          fi
