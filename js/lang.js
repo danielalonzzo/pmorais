@@ -45,12 +45,13 @@ window.toggleLanguage = function() {
     let destination = languageDestination(language, currentPath) || (language === 'en' ? '/en/' : '/');
     localStorage.setItem('pm_lang_pref', language);
     
+    // A static dev server has no rewrite rules, so clean URLs have to be mapped
+    // back to real files. Template literals keep these paths out of reach of the
+    // quoted-route rewriting in scripts/normalize-internal-urls.mjs.
     if (window.location.hostname === '127.0.0.1' || window.location.hostname === 'localhost') {
-        if (destination === '/en/' || destination === '/') {
-            destination = destination + 'index.html';
-        } else {
-            destination = destination + '.html';
-        }
+        destination = destination.endsWith('/')
+            ? `${destination}index.html`
+            : `${destination}.html`;
     }
     window.location.href = `${destination}${window.location.search}${window.location.hash}`;
 };
