@@ -329,6 +329,7 @@
                     <button id="btn-show-blog-admin" class="btn btn-primary hidden" onclick="window.location.href='/admin-blog'"><i data-lucide="file-edit" aria-hidden="true"></i> <span class="btn-text">Gestão de Blog</span></button>
                     <button id="btn-show-reviews" class="btn btn-primary" onclick="window.openClientReviews()"><i data-lucide="star" aria-hidden="true"></i> <span class="btn-text">Avaliações</span></button>
                     <button id="btn-admin-reviews" class="btn btn-primary hidden" onclick="window.openAdminReviews()"><i data-lucide="star" aria-hidden="true"></i> <span class="btn-text">Gerir Avaliações</span></button>
+                    <button id="btn-agenda-manual" class="btn btn-primary hidden" onclick="window.openAgendaManual()"><i data-lucide="calendar-clock" aria-hidden="true"></i> <span class="btn-text">Agenda Manual</span></button>
                     <button id="btn-logout" class="btn btn-outline"><i data-lucide="log-out" aria-hidden="true"></i> <span class="btn-text">Terminar Sessão</span></button>
                 </div>
 
@@ -450,7 +451,27 @@
 
                             <div class="controls">
                                 <button class="btn btn-outline" onclick="goToStep(2)">Voltar</button>
-                                <button class="btn btn-primary" id="btn-continue-form" disabled onclick="goToStep(4)">Continuar</button>
+                                <button class="btn btn-primary" id="btn-continue-form" disabled onclick="continueFromCalendar()">Continuar</button>
+                            </div>
+                        </div>
+
+                        <!-- Step Clientes: apenas na Agenda Manual (admin). Fica entre o
+                             calendário e o resumo; no fluxo do cliente nunca é mostrado. -->
+                        <div id="step-clientes" class="booking-step">
+                            <h2 class="step-title">Para quem é esta marcação?</h2>
+                            <p class="color-text-dim text-center" id="manual-clients-hint"></p>
+
+                            <div class="form-group">
+                                <input type="search" class="form-control" id="manual-client-search" placeholder="Procurar por nome ou telemóvel..." autocomplete="off">
+                            </div>
+
+                            <div class="manual-clients-list" id="manual-clients-list">
+                                <p class="manual-clients-empty">A carregar clientes...</p>
+                            </div>
+
+                            <div class="controls">
+                                <button class="btn btn-outline" onclick="goToStep(3)">Voltar</button>
+                                <button class="btn btn-primary" id="btn-continue-clientes" disabled onclick="goToStep(4)">Continuar</button>
                             </div>
                         </div>
 
@@ -469,7 +490,7 @@
                                 </div>
                                 
                                 <div class="controls">
-                                    <button type="button" class="btn btn-outline" onclick="goToStep(3)">Voltar</button>
+                                    <button type="button" class="btn btn-outline" onclick="backFromSummary()">Voltar</button>
                                     <button type="submit" id="btn-submit-booking" class="btn btn-primary btn-premium-metallic">Confirmar Marcação</button>
                                 </div>
                             </form>
@@ -1056,7 +1077,7 @@
         </div>
 
         <div class="footer-bar-elysium">
-            <div class="crafted-text"><a href="https://elysiumdr.eu" target="_blank" rel="noopener noreferrer">Desenvolvido por Elysium λ Development & Research.</a><br><span class="version-label">V2.0.0</span></div>
+            <div class="crafted-text"><a href="https://elysiumdr.eu" target="_blank" rel="noopener noreferrer">Desenvolvido por Elysium λ Development & Research.</a><br><span class="version-label">V2.5.0</span></div>
         </div>
     </footer>
 

@@ -26,6 +26,16 @@ import {
 } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 import { initCalendarMode } from './calendar.js';
 
+// Um servidor estático de desenvolvimento não tem as reescritas de URL limpo que
+// existem em produção (.htaccess e firebase.json), por isso "perfis" dá 404 em
+// localhost. Mesmo remendo que js/lang.js aplica à troca de idioma.
+// Os literais de template mantêm estes caminhos fora do alcance da reescrita de
+// rotas em scripts/normalize-internal-urls.mjs.
+function adminPagePath(page) {
+    const host = window.location.hostname;
+    return (host === 'localhost' || host === '127.0.0.1') ? `${page}.html` : page;
+}
+
 window.forceFirebaseLogout = async () => { try { await signOut(auth); } catch(e) {} };
 window.addEventListener('force-firebase-logout', window.forceFirebaseLogout);
 
@@ -118,16 +128,19 @@ document.addEventListener('DOMContentLoaded', () => {
             if (isAdminEmail) {
                 if (btnShowProfiles) {
                     btnShowProfiles.classList.remove('hidden');
-                    btnShowProfiles.onclick = () => window.location.href = 'perfis';
+                    btnShowProfiles.onclick = () => window.location.href = adminPagePath('perfis');
                 }
                 const btnShowReviews = document.getElementById('btn-show-reviews');
                 if (btnShowReviews) btnShowReviews.classList.add('hidden');
 
                 const btnAdminReviews = document.getElementById('btn-admin-reviews');
                 if (btnAdminReviews) btnAdminReviews.classList.remove('hidden');
+
+                const btnAgendaManual = document.getElementById('btn-agenda-manual');
+                if (btnAgendaManual) btnAgendaManual.classList.remove('hidden');
                 if (btnShowForms) {
                     btnShowForms.classList.remove('hidden');
-                    btnShowForms.onclick = () => window.location.href = 'formulario';
+                    btnShowForms.onclick = () => window.location.href = adminPagePath('formulario');
                 }
                 if (btnShowBlogAdmin) {
                     btnShowBlogAdmin.classList.remove('hidden');
@@ -451,6 +464,11 @@ document.addEventListener('DOMContentLoaded', () => {
     
     if (btnStartBooking) {
         btnStartBooking.addEventListener('click', () => {
+            // Este botão nunca é a Agenda Manual — limpa o modo para o caso de o
+            // admin ter recuado sem recarregar a página.
+            window.manualBookingMode = false;
+            if (window.applyManualBookingCopy) window.applyManualBookingCopy();
+
             // Determine if admin by checking button
             const isAdmin = document.getElementById('btn-show-profiles') && !document.getElementById('btn-show-profiles').classList.contains('hidden');
             const targetSection = isAdmin ? document.getElementById('admin-calendar-section') : document.getElementById('booking-wizard-section');
@@ -738,17 +756,19 @@ async function loadUserProfile(user) {
                     if (profileWizard) profileWizard.classList.add('hidden');
                     if (btnShowProfiles) {
                         btnShowProfiles.classList.remove('hidden');
-                        btnShowProfiles.onclick = () => window.location.href = 'perfis';
+                        btnShowProfiles.onclick = () => window.location.href = adminPagePath('perfis');
                     }
                     if (btnShowForms) {
                         btnShowForms.classList.remove('hidden');
-                        btnShowForms.onclick = () => window.location.href = 'formulario';
+                        btnShowForms.onclick = () => window.location.href = adminPagePath('formulario');
                     }
                     const btnShowBlogAdmin = document.getElementById('btn-show-blog-admin');
                     if (btnShowBlogAdmin) {
                         btnShowBlogAdmin.classList.remove('hidden');
                     }
-                    
+                    const btnAgendaManualRole = document.getElementById('btn-agenda-manual');
+                    if (btnAgendaManualRole) btnAgendaManualRole.classList.remove('hidden');
+
                     const btnStartBooking = document.getElementById('btn-start-booking');
                     if (btnStartBooking) btnStartBooking.innerHTML = '<i data-lucide="calendar"></i> <span class="btn-text">Gestão da Agenda</span>';
                     
@@ -812,8 +832,8 @@ async function loadUserProfile(user) {
                     const btnShowProfiles = document.getElementById('btn-show-profiles');
                     const btnShowForms = document.getElementById('btn-show-forms');
                     const btnShowBlogAdmin = document.getElementById('btn-show-blog-admin');
-                    if (btnShowProfiles) { btnShowProfiles.classList.remove('hidden'); btnShowProfiles.onclick = () => window.location.href = 'perfis'; }
-                    if (btnShowForms) { btnShowForms.classList.remove('hidden'); btnShowForms.onclick = () => window.location.href = 'formulario'; }
+                    if (btnShowProfiles) { btnShowProfiles.classList.remove('hidden'); btnShowProfiles.onclick = () => window.location.href = adminPagePath('perfis'); }
+                    if (btnShowForms) { btnShowForms.classList.remove('hidden'); btnShowForms.onclick = () => window.location.href = adminPagePath('formulario'); }
                     if (btnShowBlogAdmin) { btnShowBlogAdmin.classList.remove('hidden'); }
                     
                     // Create minimal admin doc
@@ -1145,12 +1165,179 @@ window.submitWizardBooking = async function(payload, durationSlots) {
     }
 };
 
-window.cancelClientBooking = async function(bookingId, isoDate, startTime, serviceType) {
-    if (!confirm("Tem a certeza que pretende desmarcar esta sessão?")) return;
+// Lotação máxima de uma aula online (o mesmo limite aplicado em submitWizardBooking).
+const MAX_ONLINE_GROUP = 10;
 
+// Agenda Manual: o admin cria a reserva em nome de um ou mais clientes sem conta.
+//
+// Escreve exactamente na mesma estrutura que submitWizardBooking, porque é isso que
+// faz o resto do sistema funcionar sem alterações: o trigger onWeeklyScheduleUpdated
+// (functions/index.js) reage à escrita dos slots e trata sozinho do evento no Google
+// Calendar e do email de nova reserva para o admin. Não enfileiramos email para o
+// cliente — clientes sem conta não têm endereço.
+window.submitManualBooking = async function(payload, durationSlots, targets) {
     try {
-        const user = auth.currentUser;
-        if (!user) throw new Error("Não autenticado");
+        // O admin tem de estar autenticado: é a identidade que as regras do Firestore veem.
+        const adminUser = auth.currentUser;
+        if (!adminUser) throw new Error("Sessão expirada. Volte a iniciar sessão.");
+
+        if (!Array.isArray(targets) || targets.length === 0) {
+            throw new Error("Selecione pelo menos um cliente para esta marcação.");
+        }
+
+        const isOnline = payload.modality === 'tr_online';
+        if (!isOnline && targets.length > 1) {
+            throw new Error("Só as sessões de treino online admitem vários clientes.");
+        }
+
+        // Agrupar as sessões escolhidas por semana (um documento por semana).
+        const weeks = {};
+        payload.selections.forEach(sel => {
+            const dateObj = new Date(sel.isoDate);
+            const dayOfWeek = dateObj.getDay();
+            dateObj.setDate(dateObj.getDate() - dayOfWeek);
+            const weekYear = dateObj.getFullYear();
+            const weekMonth = String(dateObj.getMonth() + 1).padStart(2, '0');
+            const weekDay = String(dateObj.getDate()).padStart(2, '0');
+            const weekId = `${weekYear}-${weekMonth}-${weekDay}`;
+
+            if (!weeks[weekId]) weeks[weekId] = [];
+            weeks[weekId].push(sel);
+        });
+
+        // Histórico a acrescentar, por cliente.
+        const historyByTarget = {};
+        targets.forEach(t => { historyByTarget[t.id] = []; });
+
+        for (const weekId of Object.keys(weeks)) {
+            const docRef = doc(db, "weekly_schedules", weekId);
+            const snap = await getDoc(docRef);
+            const slots = snap.exists() ? (snap.data().slots || {}) : {};
+
+            const slotsToMerge = {};
+
+            for (const sel of weeks[weekId]) {
+                const [hStr, mStr] = sel.time.split(':');
+                let h = parseInt(hStr);
+                let m = parseInt(mStr);
+
+                for (let i = 0; i < durationSlots; i++) {
+                    const timeStr = `${h.toString().padStart(2,'0')}:${m === 0 ? '00' : '30'}`;
+                    const slotId = `${sel.isoDate}T${timeStr}`;
+                    const existingSlot = slots[slotId] || {};
+
+                    if (isOnline) {
+                        // O ecrã de horários já filtra isto, mas o admin pode estar a
+                        // trabalhar sobre dados carregados há algum tempo.
+                        if (existingSlot.status === 'blocked') {
+                            throw new Error(`O horário de ${sel.dateStr} às ${timeStr} está bloqueado.`);
+                        }
+                        if (existingSlot.status === 'booked' && existingSlot.serviceType !== 'grupal') {
+                            throw new Error(`O horário de ${sel.dateStr} às ${timeStr} já tem uma sessão individual marcada.`);
+                        }
+
+                        const users = existingSlot.bookedUsers || [];
+                        const already = targets.filter(t => users.some(u => u.uid === t.id));
+                        if (already.length > 0) {
+                            throw new Error(`${already[0].name} já está inscrito na aula online de ${sel.dateStr} às ${timeStr}.`);
+                        }
+                        if (users.length + targets.length > MAX_ONLINE_GROUP) {
+                            const livres = MAX_ONLINE_GROUP - users.length;
+                            throw new Error(`A aula online de ${sel.dateStr} às ${timeStr} só tem ${livres} vaga(s) e selecionou ${targets.length} cliente(s).`);
+                        }
+
+                        const newUsers = [...users, ...targets.map(t => ({ uid: t.id, name: t.name }))];
+                        slotsToMerge[slotId] = {
+                            status: 'booked',
+                            serviceType: 'grupal',
+                            bookedUsers: newUsers,
+                            bookedCount: newUsers.length,
+                            clientNotes: payload.notes || '',
+                            bookedByAdmin: true
+                        };
+                    } else {
+                        if (existingSlot.status === 'booked' || existingSlot.status === 'blocked') {
+                            throw new Error(`O horário de ${sel.dateStr} às ${timeStr} já não está disponível.`);
+                        }
+
+                        const sType = payload.category === 'osteopatia' ? 'osteopatia' : 'treino_personalizado';
+                        slotsToMerge[slotId] = {
+                            status: 'booked',
+                            serviceType: sType,
+                            bookedBy: targets[0].id,
+                            bookedName: targets[0].name,
+                            clientNotes: payload.notes || '',
+                            bookedByAdmin: true
+                        };
+                    }
+
+                    m += 30;
+                    if (m >= 60) { h += 1; m = 0; }
+                }
+
+                let historyType = payload.category === 'osteopatia' ? 'osteopatia' : 'treino';
+                if (isOnline) historyType = 'grupal';
+
+                targets.forEach(t => {
+                    historyByTarget[t.id].push({
+                        id: `bk_${Date.now()}_${Math.floor(Math.random()*10000)}`,
+                        date: sel.isoDate,
+                        time: sel.time,
+                        serviceType: historyType,
+                        serviceName: payload.serviceName,
+                        bookedName: t.name,
+                        status: 'booked',
+                        clientNotes: payload.notes || '',
+                        createdAt: new Date().toISOString(),
+                        createdByAdmin: true
+                    });
+                });
+            }
+
+            // Escrever os slots dispara o email ao admin e o evento no Google Calendar.
+            if (Object.keys(slotsToMerge).length > 0) {
+                await setDoc(docRef, { slots: slotsToMerge }, { merge: true });
+            }
+        }
+
+        // Histórico por cliente — é daqui que saem o dashboard, o histórico global
+        // e a ficha do cliente em /perfis.
+        for (const t of targets) {
+            try {
+                const bookingDocRef = doc(db, "weekly_schedules", `user_${t.id}`);
+                const bookingSnap = await getDoc(bookingDocRef);
+                const existingBookings = bookingSnap.exists() ? (bookingSnap.data().bookings || []) : [];
+
+                const safePayload = JSON.parse(JSON.stringify({
+                    uid: t.id,
+                    name: t.name,
+                    email: t.email || "",
+                    bookings: [...existingBookings, ...historyByTarget[t.id]]
+                }));
+                await setDoc(bookingDocRef, safePayload, { merge: true });
+
+                // Mantém o cliente "activo" para o purge RGPD (functions/index.js).
+                await setDoc(doc(db, "users", t.id), { lastActivityAt: new Date().toISOString() }, { merge: true });
+            } catch (historyErr) {
+                console.error(`Failed to save manual history for ${t.id}, but booking succeeded:`, historyErr);
+            }
+        }
+
+        // Devolve o histórico do primeiro cliente para o ecrã de sucesso poder
+        // gerar os botões de sincronização de calendário.
+        return historyByTarget[targets[0].id];
+    } catch (e) {
+        console.error("Manual booking error:", e);
+        throw e;
+    }
+};
+
+// Desmarca uma sessão de `targetUid`. Extraído de cancelClientBooking para que o
+// admin possa desmarcar reservas de clientes sem conta, que nunca fazem login.
+async function cancelBookingFor(targetUid, bookingId, isoDate, startTime, serviceType) {
+    try {
+        if (!auth.currentUser) throw new Error("Não autenticado");
+        if (!targetUid) throw new Error("Reserva sem cliente associado.");
 
         // 1. Calculate duration slots
         let durationSlots = 1;
@@ -1186,7 +1373,7 @@ window.cancelClientBooking = async function(bookingId, isoDate, startTime, servi
                     if (serviceType === 'grupal' || serviceType === 'treino_grupo' || serviceType === 'treino_online' || serviceType === 'online') {
                         // Remove user from bookedUsers
                         const users = currentSlots[slotId].bookedUsers || [];
-                        const newUsers = users.filter(u => u.uid !== user.uid);
+                        const newUsers = users.filter(u => u.uid !== targetUid);
                         
                         if (newUsers.length === 0) {
                             slotsToMerge[slotId] = {
@@ -1226,7 +1413,7 @@ window.cancelClientBooking = async function(bookingId, isoDate, startTime, servi
         }
 
         // 4. Update user's personal booking list in weekly_schedules/user_{uid}
-        const bookingDocRef = doc(db, "weekly_schedules", `user_${user.uid}`);
+        const bookingDocRef = doc(db, "weekly_schedules", `user_${targetUid}`);
         const bookingSnap = await getDoc(bookingDocRef);
         if (bookingSnap.exists()) {
             let userBookings = bookingSnap.data().bookings || [];
@@ -1247,6 +1434,23 @@ window.cancelClientBooking = async function(bookingId, isoDate, startTime, servi
         console.error("Cancel booking error:", e);
         alert("Erro ao desmarcar sessão: " + e.message);
     }
+}
+
+window.cancelClientBooking = async function(bookingId, isoDate, startTime, serviceType) {
+    if (!confirm("Tem a certeza que pretende desmarcar esta sessão?")) return;
+    const user = auth.currentUser;
+    if (!user) {
+        alert("Erro ao desmarcar sessão: Não autenticado");
+        return;
+    }
+    return cancelBookingFor(user.uid, bookingId, isoDate, startTime, serviceType);
+};
+
+// Usado pelo dashboard do admin para desmarcar reservas de clientes sem conta.
+window.cancelBookingAsAdmin = async function(targetUid, bookingId, isoDate, startTime, serviceType, clientName) {
+    const quem = clientName ? ` de ${clientName}` : '';
+    if (!confirm(`Tem a certeza que pretende desmarcar esta sessão${quem}?`)) return;
+    return cancelBookingFor(targetUid, bookingId, isoDate, startTime, serviceType);
 };
 
 async function loadDashboardPreview(isAdmin, user, data) {
@@ -1364,7 +1568,12 @@ async function loadDashboardPreview(isAdmin, user, data) {
                         name: b.bookedName || data.name || data.email || 'Cliente',
                         date: b.date,
                         time: b.time || '---',
-                        type: b.serviceType
+                        type: b.serviceType,
+                        // Clientes sem conta nunca fazem login, por isso só o admin
+                        // consegue desmarcar-lhes uma sessão.
+                        targetUid: docSnap.id.replace(/^user_/, ''),
+                        bookingId: b.id,
+                        isGuest: docSnap.id.startsWith('user_guest_')
                     });
                 });
             });
@@ -1399,14 +1608,30 @@ async function loadDashboardPreview(isAdmin, user, data) {
                     item.innerHTML = `
                         <div class="preview-item-info">
                             <div style="display:flex; flex-direction:column;">
-                                <strong style="color:var(--color-primary);">${b.name}</strong>
-                                <span style="font-size:0.8rem; color:var(--color-text-dim);">${dateDisplay} às ${b.time}</span>
+                                <strong style="color:var(--color-primary);"></strong>
+                                <span style="font-size:0.8rem; color:var(--color-text-dim);"></span>
                             </div>
                         </div>
-                        <div class="preview-badge ${sClass}">
-                            ${sName}
+                        <div class="preview-item-actions" style="display: flex; flex-direction: column; align-items: flex-end; gap: 5px;">
+                            <div class="preview-badge ${sClass}">
+                                ${sName}
+                            </div>
                         </div>
                     `;
+                    item.querySelector('strong').textContent = b.name;
+                    item.querySelector('.preview-item-info span').textContent = `${dateDisplay} às ${b.time}`;
+
+                    // Só os clientes sem conta precisam disto: nunca fazem login,
+                    // portanto só o admin lhes pode desmarcar uma sessão.
+                    if (b.isGuest && b.bookingId) {
+                        const cancelBtn = document.createElement('button');
+                        cancelBtn.className = 'btn btn-sm btn-outline';
+                        cancelBtn.style.cssText = 'padding: 2px 8px; font-size: 0.75rem;';
+                        cancelBtn.textContent = 'Cancelar';
+                        cancelBtn.onclick = () => window.cancelBookingAsAdmin(b.targetUid, b.bookingId, b.date, b.time, b.type, b.name);
+                        item.querySelector('.preview-item-actions').appendChild(cancelBtn);
+                    }
+
                     listEl.appendChild(item);
                 });
             }
@@ -1493,11 +1718,45 @@ window.openAdminReviews = function() {
 };
 
 window.backToLobby = function() {
+    window.manualBookingMode = false;
+    if (window.applyManualBookingCopy) window.applyManualBookingCopy();
     hideAllDashboardSections();
     const actions = document.getElementById('dashboard-main-actions');
     if (actions) actions.classList.remove('hidden');
     const preview = document.getElementById('dashboard-preview-section');
     if (preview) preview.classList.remove('hidden');
+};
+
+// ==========================================
+// ====== AGENDA MANUAL (ADMIN) =============
+// ==========================================
+// O admin marca sessões em nome de clientes sem conta, correndo o mesmo wizard
+// do cliente com um passo extra para escolher o destinatário da reserva.
+
+window.openAgendaManual = function() {
+    window.manualBookingMode = true;
+    if (window.resetBookingWizard) window.resetBookingWizard();
+    hideAllDashboardSections();
+    const section = document.getElementById('booking-wizard-section');
+    if (section) section.classList.remove('hidden');
+    if (window.applyManualBookingCopy) window.applyManualBookingCopy();
+    if (window.goToStep) window.goToStep(1);
+    if (section) {
+        setTimeout(() => section.scrollIntoView({ behavior: 'smooth', block: 'start' }), 100);
+    }
+};
+
+// Clientes sem conta: documentos de `users` marcados com hasAccount === false.
+// Documentos antigos não têm o campo, por isso ficam naturalmente de fora.
+window.loadAccountlessClients = async function() {
+    const snap = await getDocs(query(collection(db, "users"), where("hasAccount", "==", false)));
+    const clients = [];
+    snap.forEach(docSnap => {
+        const data = docSnap.data();
+        if (data.isDeactivated === true) return;
+        clients.push({ id: docSnap.id, name: data.name || "Sem Nome", phone: data.phone || "" });
+    });
+    return clients.sort((a, b) => a.name.localeCompare(b.name, 'pt'));
 };
 
 window.switchReviewTab = function(service) {
@@ -1975,6 +2234,7 @@ window.switchDashboardView = function(view) {
         document.getElementById('btn-show-forms')?.classList.remove('hidden');
         document.getElementById('btn-show-blog-admin')?.classList.remove('hidden');
         document.getElementById('btn-admin-reviews')?.classList.remove('hidden');
+        document.getElementById('btn-agenda-manual')?.classList.remove('hidden');
         document.getElementById('btn-show-reviews')?.classList.add('hidden');
     } else if (view === 'user') {
         if (previewSection) previewSection.classList.remove('hidden');
@@ -1985,6 +2245,7 @@ window.switchDashboardView = function(view) {
         document.getElementById('btn-show-forms')?.classList.add('hidden');
         document.getElementById('btn-show-blog-admin')?.classList.add('hidden');
         document.getElementById('btn-admin-reviews')?.classList.add('hidden');
+        document.getElementById('btn-agenda-manual')?.classList.add('hidden');
         document.getElementById('btn-show-reviews')?.classList.remove('hidden');
     }
 };

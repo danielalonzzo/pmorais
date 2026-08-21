@@ -304,10 +304,12 @@ exports.onWeeklyScheduleUpdated = functions
         if (isNewGroupJoin) {
           const beforeUsers = beforeSlot.bookedUsers || [];
           const afterUsers = afterSlot.bookedUsers || [];
-          const joiner = afterUsers.find(au => !beforeUsers.some(bu => bu.uid === au.uid));
-          if (joiner) {
-            name = joiner.name;
-            clientUid = joiner.uid;
+          // A Agenda Manual pode inscrever vários alunos de uma vez, por isso
+          // recolhemos todos os que entraram — não apenas o primeiro.
+          const joiners = afterUsers.filter(au => !beforeUsers.some(bu => bu.uid === au.uid));
+          if (joiners.length > 0) {
+            name = joiners.map(j => j.name).join(", ");
+            clientUid = joiners[0].uid;
           } else {
             name = "Novo Aluno";
           }

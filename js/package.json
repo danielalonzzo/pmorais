@@ -1,0 +1,5 @@
+{
+  "type": "module",
+  "private": true,
+  "_comment": "Não é um pacote. Marca js/ como ESM para o Node, para que scripts one-off (functions/seed-clientes-sem-conta.js) possam importar js/guest-clients.js em vez de duplicar a derivação do id. Os browsers ignoram este ficheiro; .htaccess e firebase.json impedem que seja servido."
+}

@@ -347,35 +347,56 @@ function goToStep(stepNumber) {
     
     if (stepNumber === 3) {
         renderCalendar();
+    } else if (stepNumber === 'clientes') {
+        renderManualClientPicker();
     } else if (stepNumber === 4) {
         renderCartSummary();
     }
 }
 
+// Na Agenda Manual o passo de escolha do cliente entra entre o calendário e o
+// resumo. O fluxo do cliente salta-o e mantém-se exactamente como estava.
+function continueFromCalendar() {
+    goToStep(window.manualBookingMode ? 'clientes' : 4);
+}
+
+function backFromSummary() {
+    goToStep(window.manualBookingMode ? 'clientes' : 3);
+}
+
 function updateBreadcrumbs(stepNumber) {
     const breadcrumbs = document.getElementById('booking-breadcrumbs');
     let html = '';
-    
-    if (stepNumber >= 2 && bookingData.category) {
+
+    // O passo dos clientes é nomeado, não numerado: fica a meio caminho entre 3 e 4.
+    const step = stepNumber === 'clientes' ? 3.5 : stepNumber;
+
+    if (step >= 2 && bookingData.category) {
         const catName = bookingData.category === 'osteopatia' ? 'Osteopatia' : 'Treino';
         html += `<span class="breadcrumb-item" onclick="goToStep(1)">${catName}</span>`;
     }
-    if (stepNumber >= 3 && bookingData.modality) {
+    if (step >= 3 && bookingData.modality) {
         html += `<span class="breadcrumb-separator">&gt;</span> <span class="breadcrumb-item" onclick="goToStep(2)">${bookingData.serviceName}</span>`;
     }
-    if (stepNumber >= 4 && bookingData.selections && bookingData.selections.length > 0) {
+    if (step >= 3.5 && bookingData.selections && bookingData.selections.length > 0) {
         const count = bookingData.selections.length;
         const text = count === 1 ? '1 Sessão' : `${count} Sessões`;
         html += `<span class="breadcrumb-separator">&gt;</span> <span class="breadcrumb-item" onclick="goToStep(3)">${text}</span>`;
     }
-    
+    if (step >= 4 && window.manualBookingMode && manualSelectedClients.length > 0) {
+        const count = manualSelectedClients.length;
+        const text = count === 1 ? manualSelectedClients[0].name : `${count} clientes`;
+        html += `<span class="breadcrumb-separator">&gt;</span> <span class="breadcrumb-item" onclick="goToStep('clientes')">${text}</span>`;
+    }
+
     breadcrumbs.innerHTML = html;
 }
 
 // Step 1: Category Selection
 function selectCategory(cat) {
     bookingData.category = cat;
-    
+    if (window.resetManualBookingSelection) window.resetManualBookingSelection();
+
     if (cat === 'osteopatia') {
         bookingData.modality = 'osteopatia';
         bookingData.serviceName = 'Osteopatia';
@@ -407,7 +428,204 @@ function selectCategory(cat) {
 function selectModality(id, name) {
     bookingData.modality = id;
     bookingData.serviceName = name;
+    // Presencial admite um cliente, online admite vários: trocar de modalidade
+    // invalida quem já estivesse escolhido.
+    if (window.resetManualBookingSelection) window.resetManualBookingSelection();
     goToStep(3);
+}
+
+// ===================================================================
+// AGENDA MANUAL (admin) — passo de escolha do cliente
+// ===================================================================
+// Só o admin chega aqui, via window.openAgendaManual() em js/auth.js, que liga
+// window.manualBookingMode. Todo o resto do wizard é o mesmo do cliente.
+
+const MAX_ONLINE_GROUP = 10;   // lotação de uma aula online (ver js/auth.js)
+
+let manualClientsCache = null;
+let manualSelectedClients = [];
+let manualSearchWired = false;
+
+// Limpa o wizard entre aberturas, para que uma sessão abandonada não deixe
+// datas escolhidas penduradas na seguinte.
+window.resetBookingWizard = function() {
+    bookingData.category = null;
+    bookingData.modality = null;
+    bookingData.date = null;
+    bookingData.isoDate = null;
+    bookingData.time = null;
+    bookingData.serviceName = null;
+    bookingData.selections = [];
+
+    const timeSlots = document.getElementById('time-slots-container');
+    if (timeSlots) timeSlots.style.display = 'none';
+    const btnContinue = document.getElementById('btn-continue-form');
+    if (btnContinue) btnContinue.disabled = true;
+
+    // Uma submissão anterior deixa o botão desactivado em "A agendar...".
+    // Reabrir o wizard sem recarregar a página tem de o repor.
+    const btnSubmit = document.getElementById('btn-submit-booking');
+    if (btnSubmit) btnSubmit.disabled = false;
+
+    window.resetManualBookingSelection();
+};
+
+window.resetManualBookingSelection = function() {
+    manualSelectedClients = [];
+    const search = document.getElementById('manual-client-search');
+    if (search) search.value = '';
+    const btn = document.getElementById('btn-continue-clientes');
+    if (btn) btn.disabled = true;
+};
+
+// Ajusta os textos do wizard ao modo em que está. Idempotente: chamada com o
+// modo desligado, repõe a versão do cliente.
+window.applyManualBookingCopy = function() {
+    const manual = window.manualBookingMode === true;
+
+    const title = document.querySelector('#step-1 .step-title span');
+    if (title) {
+        title.textContent = manual
+            ? 'Que serviço vai marcar?'
+            : 'Que tipo de serviço procura hoje?';
+    }
+
+    const submit = document.getElementById('btn-submit-booking');
+    if (submit && !submit.disabled) {
+        submit.innerText = manual ? 'Publicar Marcação' : 'Confirmar Marcação';
+    }
+
+    const notesLabel = document.querySelector('#booking-form label');
+    if (notesLabel) {
+        notesLabel.textContent = manual
+            ? 'Notas internas (Opcional)'
+            : 'Notas adicionais (Opcional)';
+    }
+};
+
+function isManualOnlineClass() {
+    return bookingData.modality === 'tr_online';
+}
+
+async function renderManualClientPicker() {
+    const listEl = document.getElementById('manual-clients-list');
+    const hintEl = document.getElementById('manual-clients-hint');
+    if (!listEl) return;
+
+    if (hintEl) {
+        hintEl.textContent = isManualOnlineClass()
+            ? `Aula online: pode selecionar vários clientes (até ${MAX_ONLINE_GROUP} por aula).`
+            : 'Selecione o cliente para quem está a marcar.';
+    }
+
+    if (!manualSearchWired) {
+        const search = document.getElementById('manual-client-search');
+        if (search) {
+            search.addEventListener('input', () => renderManualClientRows());
+            manualSearchWired = true;
+        }
+    }
+
+    if (manualClientsCache === null) {
+        listEl.innerHTML = '<p class="manual-clients-empty">A carregar clientes...</p>';
+        try {
+            manualClientsCache = await window.loadAccountlessClients();
+        } catch (e) {
+            console.error('Erro ao carregar clientes sem conta:', e);
+            manualClientsCache = null;
+            listEl.innerHTML = '<p class="manual-clients-empty">Erro ao carregar os clientes. Recarregue a página.</p>';
+            return;
+        }
+    }
+
+    renderManualClientRows();
+}
+
+function renderManualClientRows() {
+    const listEl = document.getElementById('manual-clients-list');
+    if (!listEl || manualClientsCache === null) return;
+
+    const term = (document.getElementById('manual-client-search')?.value || '')
+        .trim()
+        .toLowerCase()
+        .normalize('NFD')
+        .replace(/[\u0300-\u036f]/g, '');
+
+    const matches = manualClientsCache.filter(c => {
+        if (!term) return true;
+        const haystack = `${c.name} ${c.phone}`
+            .toLowerCase()
+            .normalize('NFD')
+            .replace(/[\u0300-\u036f]/g, '');
+        return haystack.includes(term);
+    });
+
+    if (matches.length === 0) {
+        listEl.innerHTML = manualClientsCache.length === 0
+            ? '<p class="manual-clients-empty">Ainda não há clientes sem conta. Pode criá-los em Perfis.</p>'
+            : '<p class="manual-clients-empty">Nenhum cliente corresponde à pesquisa.</p>';
+        return;
+    }
+
+    const multi = isManualOnlineClass();
+    listEl.innerHTML = '';
+
+    matches.forEach(client => {
+        const selected = manualSelectedClients.some(c => c.id === client.id);
+        const row = document.createElement('label');
+        row.className = `manual-client-row${selected ? ' selected' : ''}`;
+        row.dataset.clientId = client.id;
+
+        const input = document.createElement('input');
+        input.type = multi ? 'checkbox' : 'radio';
+        input.name = 'manual-client';
+        input.checked = selected;
+        input.onchange = () => toggleManualClient(client, input.checked);
+
+        const info = document.createElement('div');
+        info.innerHTML = `<span class="manual-client-name"></span><span class="manual-client-phone"></span>`;
+        info.querySelector('.manual-client-name').textContent = client.name;
+        info.querySelector('.manual-client-phone').textContent = client.phone || 'Sem contacto';
+
+        row.appendChild(input);
+        row.appendChild(info);
+        listEl.appendChild(row);
+    });
+}
+
+function toggleManualClient(client, checked) {
+    const multi = isManualOnlineClass();
+
+    if (!multi) {
+        manualSelectedClients = checked ? [client] : [];
+    } else if (checked) {
+        if (!manualSelectedClients.some(c => c.id === client.id)) {
+            if (manualSelectedClients.length >= MAX_ONLINE_GROUP) {
+                alert(`Uma aula online admite no máximo ${MAX_ONLINE_GROUP} alunos.`);
+                syncManualClientRows();
+                return;
+            }
+            manualSelectedClients.push(client);
+        }
+    } else {
+        manualSelectedClients = manualSelectedClients.filter(c => c.id !== client.id);
+    }
+
+    const btn = document.getElementById('btn-continue-clientes');
+    if (btn) btn.disabled = manualSelectedClients.length === 0;
+    syncManualClientRows();
+}
+
+// Reflecte a selecção nas linhas já desenhadas em vez de reconstruir a lista:
+// com 30 clientes numa caixa com scroll, redesenhar a cada clique fazia a lista
+// saltar para o topo.
+function syncManualClientRows() {
+    document.querySelectorAll('#manual-clients-list .manual-client-row').forEach(row => {
+        const selected = manualSelectedClients.some(c => c.id === row.dataset.clientId);
+        row.classList.toggle('selected', selected);
+        const input = row.querySelector('input');
+        if (input) input.checked = selected;
+    });
 }
 
 // Step 3: Calendar Logic
@@ -652,14 +870,29 @@ function renderCartSummary() {
     });
     
     const sessionsList = sortedSelections.map(s => `<li>${s.dateStr} às ${s.time}</li>`).join('');
-    
+
+    const clientsBlock = (window.manualBookingMode && manualSelectedClients.length > 0)
+        ? `<p><strong>${manualSelectedClients.length === 1 ? 'Cliente' : 'Clientes'}:</strong></p>
+           <ul style="margin-bottom: 15px; padding-left: 20px;">${
+               manualSelectedClients.map(c => `<li>${escapeHtml(c.name)}${c.phone ? ` — ${escapeHtml(c.phone)}` : ''}</li>`).join('')
+           }</ul>`
+        : '';
+
     summary.innerHTML = `
         <h4 style="margin-bottom:10px; font-weight:800; text-transform:uppercase;">Resumo da Reserva</h4>
         <p><strong>Serviço:</strong> ${bookingData.serviceName}</p>
+        ${clientsBlock}
         <p><strong>Sessões Selecionadas:</strong></p>
         <ul style="margin-bottom: 15px; padding-left: 20px;">${sessionsList}</ul>
-        <p><strong>Notas adicionais (Opcional)</strong></p>
+        <p><strong>${window.manualBookingMode ? 'Notas internas (Opcional)' : 'Notas adicionais (Opcional)'}</strong></p>
     `;
+}
+
+// Os nomes vêm do Firestore e são escritos pelo admin, mas o resumo é HTML.
+function escapeHtml(value) {
+    const div = document.createElement('div');
+    div.textContent = String(value == null ? '' : value);
+    return div.innerHTML;
 }
 
 // Submission
@@ -677,11 +910,22 @@ async function submitBooking(e) {
     const phone = document.getElementById('b_phone')?.value || '';
     const notes = document.getElementById('b_notes')?.value || '';
     
+    const manual = window.manualBookingMode === true;
+    if (manual && manualSelectedClients.length === 0) {
+        alert("Selecione o cliente para quem está a marcar.");
+        goToStep('clientes');
+        if (btnSubmit) {
+            btnSubmit.disabled = false;
+            btnSubmit.innerText = "Publicar Marcação";
+        }
+        return;
+    }
+
     const payload = {
         ...bookingData,
-        clientName: name,
+        clientName: manual ? manualSelectedClients[0].name : name,
         clientEmail: email,
-        clientPhone: phone,
+        clientPhone: manual ? (manualSelectedClients[0].phone || '') : phone,
         notes: notes
     };
     
@@ -693,9 +937,13 @@ async function submitBooking(e) {
     
     // weekId calculation removed since auth.js will handle multiple weeks
     
-    if (window.submitWizardBooking) {
+    const submitFn = manual
+        ? (window.submitManualBooking && (p => window.submitManualBooking(p, durationSlots, manualSelectedClients)))
+        : (window.submitWizardBooking && (p => window.submitWizardBooking(p, durationSlots)));
+
+    if (submitFn) {
         try {
-            const bookingsAdded = await window.submitWizardBooking(payload, durationSlots);
+            const bookingsAdded = await submitFn(payload);
             
             if (bookingsAdded && bookingsAdded.length > 0) {
                 generateCalendarSyncButtons(bookingsAdded);
@@ -704,18 +952,19 @@ async function submitBooking(e) {
             goToStep(5);
             // Clear selections after success
             bookingData.selections = [];
+            if (manual && window.resetManualBookingSelection) window.resetManualBookingSelection();
         } catch (err) {
             alert(err.message || "Erro ao efetuar reserva.");
             if (btnSubmit) {
                 btnSubmit.disabled = false;
-                btnSubmit.innerText = "Confirmar Marcação";
+                btnSubmit.innerText = manual ? "Publicar Marcação" : "Confirmar Marcação";
             }
         }
     } else {
         alert("Sistema de reservas temporariamente indisponível.");
         if (btnSubmit) {
             btnSubmit.disabled = false;
-            btnSubmit.innerText = "Confirmar Marcação";
+            btnSubmit.innerText = manual ? "Publicar Marcação" : "Confirmar Marcação";
         }
     }
 }

@@ -12,8 +12,9 @@ service cloud.firestore {
     // Comprueba si el usuario autenticado es admin (por rol en Firestore o por email fijo)
     function isAdmin() {
       return request.auth != null && (
-        get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin' ||
-        request.auth.token.email == 'pt@pmorais.pt'
+        request.auth.token.email == 'pt@pmorais.pt' ||
+        (exists(/databases/$(database)/documents/users/$(request.auth.uid)) &&
+         get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin')
       );
     }
 
@@ -42,12 +43,18 @@ service cloud.firestore {
       // Lectura: el propio usuario o el admin
       allow read: if isOwner(userId) || isAdmin();
 
-      // Creación: solo el usuario autenticado puede crear su propio documento
-      // y NO puede asignarse el rol 'admin' en el momento de la creación
-      allow create: if request.auth != null
-                    && request.auth.uid == userId
-                    && (!('role' in request.resource.data)
-                        || request.resource.data.role == 'client');
+      // Creación: el usuario autenticado puede crear su propio documento
+      // y NO puede asignarse el rol 'admin' en el momento de la creación.
+      // El admin además puede crear la ficha de un cliente sin cuenta
+      // (documentos guest_*, sin usuario de Firebase Auth asociado).
+      // O registo normal fica em primeiro lugar de propósito: durante o signup o
+      // documento users/{uid} ainda não existe, e avaliar isAdmin() primeiro faria
+      // um get() a um documento inexistente.
+      allow create: if (request.auth != null
+                        && request.auth.uid == userId
+                        && (!('role' in request.resource.data)
+                            || request.resource.data.role == 'client'))
+                    || isAdmin();
 
       // Actualización: el usuario puede editar sus datos, pero NO puede cambiar su 'role'
       //               El admin puede editar cualquier campo (incluido 'role')

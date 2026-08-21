@@ -30,6 +30,7 @@
       "tests/**",
       "scratch/**",
       "package.json",
+      "js/package.json",
       "package-lock.json",
       "playwright.config.js",
       "firestore.rules",
