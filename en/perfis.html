@@ -9,7 +9,7 @@
     <title>Student Profiles - Paulo Morais</title>
     <!-- Preloads -->
     <link rel="preload" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700;800&family=Poppins:wght@300;400;500;600;700&display=swap" as="style">
-    <link rel="preload" href="../css/style.css?v=2.0.0" as="style">
+    <link rel="preload" href="../css/style.css?v=2.5.0" as="style">
 
     <link rel="shortcut icon" type="image/png" href="../images/logo/logo_ios_android.png">
     <link rel="icon" type="image/png" href="../images/logo/logo_ios_android.png">
@@ -26,7 +26,7 @@
     <script nonce="pmorais-2026" src="https://unpkg.com/lucide@latest" defer></script>
 
     <!-- Custom Style -->
-    <link rel="stylesheet" href="../css/style.css?v=2.0.0">
+    <link rel="stylesheet" href="../css/style.css?v=2.5.0">
 
     <style nonce="pmorais-2026">
         .profiles-container {
@@ -157,6 +157,77 @@
             visibility: visible;
         }
 
+        .profiles-toolbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin-bottom: 30px;
+        }
+
+        .profiles-toolbar-hint {
+            margin: 0;
+            color: var(--color-text-dim);
+            font-size: 0.9rem;
+        }
+
+        /* Clients created by admin without Firebase Auth */
+        .badge-sem-conta {
+            display: inline-block;
+            margin-top: 8px;
+            font-size: 0.7rem;
+            background: var(--color-primary);
+            color: #000;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-weight: bold;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .guest-field {
+            margin-bottom: 18px;
+        }
+
+        .guest-field label {
+            display: block;
+            margin-bottom: 6px;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--color-text-dim);
+        }
+
+        .guest-field input,
+        .guest-field textarea {
+            width: 100%;
+            padding: 12px 14px;
+            border-radius: 10px;
+            border: 1px solid color-mix(in srgb, var(--color-text), transparent 85%);
+            background: color-mix(in srgb, var(--color-text), transparent 95%);
+            color: var(--color-text);
+            font: inherit;
+            resize: vertical;
+        }
+
+        .guest-field input:focus,
+        .guest-field textarea:focus {
+            outline: none;
+            border-color: var(--color-primary);
+        }
+
+        .guest-feedback {
+            margin: 0;
+            min-height: 1.2em;
+            font-size: 0.9rem;
+            color: var(--color-primary);
+        }
+
+        .guest-feedback.error {
+            color: #ff6b6b;
+        }
+
         .modal-content {
             background: var(--color-bg);
             width: 95%;
@@ -240,8 +311,8 @@
             letter-spacing: 2px;
         }
     </style>
-    <script nonce="pmorais-2026" src="js/lang.js?v=2.0.0" defer></script>
-    <script nonce="pmorais-2026" src="js/theme.js?v=2.0.0" defer></script>
+    <script nonce="pmorais-2026" src="js/lang.js?v=2.5.0" defer></script>
+    <script nonce="pmorais-2026" src="js/theme.js?v=2.5.0" defer></script>
 </head>
 
 <body class="bg-dark">
@@ -301,6 +372,13 @@
     </div>
 
     <main class="profiles-container" style="padding-top: 200px;">
+        <div class="profiles-toolbar">
+            <p class="profiles-toolbar-hint" id="profiles-count"></p>
+            <button type="button" id="btn-new-guest" class="btn btn-primary">
+                <i data-lucide="user-plus" aria-hidden="true"></i>
+                <span class="btn-text">New Client without Account</span>
+            </button>
+        </div>
         <div id="profiles-grid" class="profiles-grid">
             <!-- Cards will be dynamically loaded here -->
             <div class="text-center w-100" style="grid-column: 1/-1; padding: 100px 0; opacity: 0.5;">
@@ -309,6 +387,36 @@
             </div>
         </div>
     </main>
+
+    <!-- Create / edit a guest client without account -->
+    <div id="modal-guest" class="modal-overlay">
+        <div class="modal-content" style="max-width: 480px;">
+            <button id="btn-close-guest" class="close-modal" type="button"><i data-lucide="x" aria-hidden="true"></i></button>
+            <h2 id="modal-guest-title" class="premium-title" style="margin-bottom: 30px; border-bottom: 1px solid var(--color-primary); padding-bottom: 15px; font-size: 1.6rem;">New Client without Account</h2>
+
+            <form id="form-guest" novalidate>
+                <div class="guest-field">
+                    <label for="guest-name">Name</label>
+                    <input type="text" id="guest-name" required autocomplete="off" placeholder="Client name">
+                </div>
+                <div class="guest-field">
+                    <label for="guest-phone">Phone</label>
+                    <input type="tel" id="guest-phone" required autocomplete="off" placeholder="+351912345678">
+                </div>
+                <div class="guest-field">
+                    <label for="guest-notes">Notes (optional)</label>
+                    <textarea id="guest-notes" rows="3" placeholder="Internal notes about this client"></textarea>
+                </div>
+
+                <p id="guest-feedback" class="guest-feedback"></p>
+
+                <div style="display:flex; gap:12px; justify-content:flex-end; margin-top:20px;">
+                    <button type="button" class="btn btn-outline" id="btn-cancel-guest">Cancel</button>
+                    <button type="submit" class="btn btn-primary" id="btn-save-guest">Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
 
     <!-- Modal for Detailed Info -->
     <div id="modal-details" class="modal-overlay">
@@ -380,13 +488,13 @@
 
     <!-- Scripts -->
     <script nonce="pmorais-2026" type="module" src="js/admin-perfis.js"></script>
-    <script nonce="pmorais-2026" src="js/script.js?v=2.0.0" defer></script>
+    <script nonce="pmorais-2026" src="js/script.js?v=2.5.0" defer></script>
     <script nonce="pmorais-2026">
         document.addEventListener('DOMContentLoaded', () => {
             if (window.lucide) window.lucide.createIcons();
         });
     </script>
-    <script nonce="pmorais-2026" src="../js/cookie-consent.js?v=2.0.0" defer></script>
+    <script nonce="pmorais-2026" src="../js/cookie-consent.js?v=2.5.0" defer></script>
 </body>
 
 </html>

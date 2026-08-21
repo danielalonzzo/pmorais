@@ -9,7 +9,7 @@
     <title>Client Area · Login &amp; Booking | Paulo Morais</title>
     <!-- Preloads -->
     <link rel="preload" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700;800&family=Poppins:wght@300;400;500;600;700&display=swap" as="style">
-    <link rel="preload" href="../css/style.css?v=2.0.0" as="style">
+    <link rel="preload" href="../css/style.css?v=2.5.0" as="style">
 
     <link rel="shortcut icon" type="image/png" href="../images/logo/logo_ios_android.png">
     <link rel="icon" type="image/png" href="../images/logo/logo_ios_android.png">
@@ -25,7 +25,7 @@
     <script nonce="pmorais-2026" src="https://unpkg.com/lucide@latest" defer></script>
 
     <!-- Custom Style -->
-    <link rel="stylesheet" href="../css/style.css?v=2.0.0">
+    <link rel="stylesheet" href="../css/style.css?v=2.5.0">
 
     <!-- SEO Meta Tags -->
     <link rel="canonical" href="https://pmorais.pt/en/perfil">
@@ -52,8 +52,8 @@
     <meta name="theme-color" content="#E6AE17">
     <link rel="apple-touch-icon" href="/images/logo/logo_ios_android.png">
     
-    <script nonce="pmorais-2026" src="js/lang.js?v=2.0.0" defer></script>
-    <script nonce="pmorais-2026" src="js/theme.js?v=2.0.0" defer></script>
+    <script nonce="pmorais-2026" src="js/lang.js?v=2.5.0" defer></script>
+    <script nonce="pmorais-2026" src="js/theme.js?v=2.5.0" defer></script>
 </head>
 
 <body class="page-auth">
@@ -188,14 +188,16 @@
                 </div>
 
                 <div id="dashboard-main-actions" class="dashboard-actions" style="margin-top: 30px;">
-                    <button id="btn-show-wizard" class="btn btn-primary"><i data-lucide="user-cog"></i> <span class="btn-text">Edit Profile</span></button>
-                    <a href="/en/historico" class="btn btn-outline" style="text-decoration: none;"><i data-lucide="calendar"></i> <span class="btn-text">History</span></a>
-                    <button id="btn-start-booking" class="btn btn-primary btn-premium-metallic"><i data-lucide="calendar-plus"></i> <span class="btn-text">New Booking</span></button>
-                    <button id="btn-show-profiles" class="btn btn-primary hidden"><i data-lucide="users"></i> <span class="btn-text">Profiles</span></button>
-                    <button id="btn-show-forms" class="btn btn-primary hidden"><i data-lucide="file-text"></i> <span class="btn-text">Forms</span></button>
-                                        <button id="btn-show-reviews" class="btn btn-primary" onclick="window.openClientReviews()"><i data-lucide="star"></i> <span class="btn-text">Avaliações</span></button>
-                    <button id="btn-admin-reviews" class="btn btn-primary hidden" onclick="window.openAdminReviews()"><i data-lucide="star"></i> <span class="btn-text">Gerir Avaliações</span></button>
-                    <button id="btn-logout" class="btn btn-outline"><i data-lucide="log-out"></i> <span class="btn-text">Log Out</span></button>
+                    <button id="btn-show-wizard" class="btn btn-primary"><i data-lucide="user-cog" aria-hidden="true"></i> <span class="btn-text">Edit Profile</span></button>
+                    <a href="/en/historico" class="btn btn-outline" style="text-decoration: none;"><i data-lucide="calendar" aria-hidden="true"></i> <span class="btn-text">History</span></a>
+                    <button id="btn-start-booking" class="btn btn-primary btn-premium-metallic"><i data-lucide="calendar-plus" aria-hidden="true"></i> <span class="btn-text">New Booking</span></button>
+                    <button id="btn-show-profiles" class="btn btn-primary hidden"><i data-lucide="users" aria-hidden="true"></i> <span class="btn-text">Profiles</span></button>
+                    <button id="btn-show-forms" class="btn btn-primary hidden"><i data-lucide="file-text" aria-hidden="true"></i> <span class="btn-text">Forms</span></button>
+                    <button id="btn-show-blog-admin" class="btn btn-primary hidden" onclick="window.location.href='/admin-blog'"><i data-lucide="file-edit" aria-hidden="true"></i> <span class="btn-text">Blog Management</span></button>
+                    <button id="btn-show-reviews" class="btn btn-primary" onclick="window.openClientReviews()"><i data-lucide="star" aria-hidden="true"></i> <span class="btn-text">Reviews</span></button>
+                    <button id="btn-admin-reviews" class="btn btn-primary hidden" onclick="window.openAdminReviews()"><i data-lucide="star" aria-hidden="true"></i> <span class="btn-text">Manage Reviews</span></button>
+                    <button id="btn-agenda-manual" class="btn btn-primary hidden" onclick="window.openAgendaManual()"><i data-lucide="calendar-clock" aria-hidden="true"></i> <span class="btn-text">Manual Booking</span></button>
+                    <button id="btn-logout" class="btn btn-outline"><i data-lucide="log-out" aria-hidden="true"></i> <span class="btn-text">Log Out</span></button>
                 </div>
 
                                 <!-- Client Reviews Section -->
@@ -316,7 +318,27 @@
 
                             <div class="controls">
                                 <button class="btn btn-outline" onclick="goToStep(2)">Back</button>
-                                <button class="btn btn-primary" id="btn-continue-form" disabled onclick="goToStep(4)">Continue</button>
+                                <button class="btn btn-primary" id="btn-continue-form" disabled onclick="continueFromCalendar()">Continue</button>
+                            </div>
+                        </div>
+
+                        <!-- Step Clients: only for Manual Booking (admin). Appears between
+                             calendar and summary; never shown to regular clients. -->
+                        <div id="step-clientes" class="booking-step">
+                            <h2 class="step-title">Who is this booking for?</h2>
+                            <p class="color-text-dim text-center" id="manual-clients-hint"></p>
+
+                            <div class="form-group">
+                                <input type="search" class="form-control" id="manual-client-search" placeholder="Search by name or phone..." autocomplete="off">
+                            </div>
+
+                            <div class="manual-clients-list" id="manual-clients-list">
+                                <p class="manual-clients-empty">Loading clients...</p>
+                            </div>
+
+                            <div class="controls">
+                                <button class="btn btn-outline" onclick="goToStep(3)">Back</button>
+                                <button class="btn btn-primary" id="btn-continue-clientes" disabled onclick="goToStep(4)">Continue</button>
                             </div>
                         </div>
 
@@ -335,7 +357,7 @@
                                 </div>
                                 
                                 <div class="controls">
-                                    <button type="button" class="btn btn-outline" onclick="goToStep(3)">Back</button>
+                                    <button type="button" class="btn btn-outline" onclick="backFromSummary()">Back</button>
                                     <button type="submit" id="btn-submit-booking" class="btn btn-primary btn-premium-metallic">Confirm Booking</button>
                                 </div>
                             </form>
@@ -930,9 +952,9 @@
 
     <!-- Scripts -->
     <script nonce="pmorais-2026" src="js/agendamento.js" defer></script>
-    <script nonce="pmorais-2026" src="js/script.js?v=2.0.0" defer></script>
+    <script nonce="pmorais-2026" src="js/script.js?v=2.5.0" defer></script>
     <script nonce="pmorais-2026" type="module" src="js/auth.js?v=1.5.2"></script>
-    <script nonce="pmorais-2026" src="../js/cookie-consent.js?v=2.0.0" defer></script>
+    <script nonce="pmorais-2026" src="../js/cookie-consent.js?v=2.5.0" defer></script>
 </body>
 
 </html>

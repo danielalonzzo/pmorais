@@ -1,6 +1,6 @@
 # Paulo Morais — Expanded factual representation
 
-Last internally verified: 2026-07-19
+Last internally verified: 2026-08-21
 Canonical website: https://pmorais.pt/
 Primary language: European Portuguese (pt-PT)
 Secondary language: British English (en-GB)
