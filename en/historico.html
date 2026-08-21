@@ -17,6 +17,14 @@
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <!-- The Firebase SDK is a three-hop module chain (page -> firebase-config ->
+         gstatic). Opening the connection and preloading the modules up front stops
+         the sign-in check from waiting on that waterfall. -->
+    <link rel="preconnect" href="https://www.gstatic.com" crossorigin>
+    <link rel="modulepreload" href="https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js" crossorigin>
+    <link rel="modulepreload" href="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js" crossorigin>
+    <link rel="modulepreload" href="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js" crossorigin>
+    <link rel="preconnect" href="https://unpkg.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700;800&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
     <!-- Icons (Lucide) -->
@@ -135,7 +143,7 @@
     </footer>
 
     <!-- Scripts -->
-    <script nonce="pmorais-2026" type="module" src="js/admin-historico.js"></script>
+    <script nonce="pmorais-2026" type="module" src="js/admin-historico.js?v=2.5.0"></script>
     <script nonce="pmorais-2026" src="js/script.js?v=2.5.0" defer></script>
     <script nonce="pmorais-2026" src="../js/cookie-consent.js?v=2.5.0" defer></script>
 </body>

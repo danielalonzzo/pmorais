@@ -10,5 +10,12 @@ deployment:
     - /bin/cp assets/fonts/Patron-Light.woff2 assets/fonts/Patron-Regular.woff2 assets/fonts/Patron-Bold.woff2 "$DEPLOYPATH/assets/fonts/"
     - /bin/cp -R css en images js "$DEPLOYPATH/"
     - /usr/bin/find "$DEPLOYPATH/css" "$DEPLOYPATH/en" "$DEPLOYPATH/images" "$DEPLOYPATH/js" -type f -name .DS_Store -delete
+    # Source material nothing on the site links to: 62 MB of .mov logo animations,
+    # 6 MB of .eps artwork and 35 MB of .heic screenshots whose .webp versions are
+    # what the pages actually use. Deleting them here also clears the copies already
+    # sitting on the server from previous deploys.
+    - /usr/bin/find "$DEPLOYPATH/images" -type f -iname '*.mov' -delete
+    - /usr/bin/find "$DEPLOYPATH/images" -type f -iname '*.eps' -delete
+    - /usr/bin/find "$DEPLOYPATH/images" -type f -iname '*.heic' -delete
     - /bin/cp admin-blog.html artigo.html auth-action.html blog.html desinscrever.html formulario.html google0ef2004b37f69f6d.html historico.html index.html osteopatia.html perfil.html perfis.html politica-privacidade.html sobre-mim.html termos-e-condicoes.html "$DEPLOYPATH/"
     - /bin/cp manifest.json robots.txt sitemap.xml llms.txt llms-full.txt sw.js firebase-messaging-sw.js "$DEPLOYPATH/"

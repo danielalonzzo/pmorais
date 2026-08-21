@@ -1,7 +1,8 @@
-import { auth, db } from './firebase-config.js';
+import { auth, db } from './firebase-config.js?v=2.5.0';
 import { 
     collection, 
-    getDocs, 
+    getDocs,
+    getDocsFromCache,
     doc, 
     getDoc, 
     setDoc,
@@ -9,7 +10,7 @@ import {
     where 
 } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
-import { buildGuestClientId } from './guest-clients.js';
+import { buildGuestClientId } from './guest-clients.js?v=2.5.0';
 
 // [SEC-03] Conditional logger — silent in production
 const _isDev = location.hostname === 'localhost' || location.hostname === '127.0.0.1';
@@ -41,8 +42,16 @@ onAuthStateChanged(auth, async (user) => {
 
         logger.log("User authenticated:", user.email);
 
-        // Verify Admin Role in Firestore
-        const userDoc = await getDoc(doc(db, "users", user.uid));
+        // The admin check and the client list are independent round trips, so they
+        // start together instead of one after the other. A non-admin's list query is
+        // rejected by the Firestore rules and thrown away by the redirect below.
+        const [adminCheck, profiles] = await Promise.allSettled([
+            getDoc(doc(db, "users", user.uid)),
+            getDocs(collection(db, "users"))
+        ]);
+        if (adminCheck.status === 'rejected') throw adminCheck.reason;
+
+        const userDoc = adminCheck.value;
         const userData = userDoc.data();
 
         logger.log("User data from Firestore:", userData);
@@ -55,16 +64,31 @@ onAuthStateChanged(auth, async (user) => {
 
         // If Admin, load profiles
         currentAdminUid = user.uid;
-        loadProfiles();
+        loadProfilesCacheFirst(profiles.status === 'fulfilled' ? profiles.value : null);
     } catch (err) {
         console.error("Auth/Admin check error:", err);
         profilesGrid.innerHTML = `<p style="grid-column: 1/-1; text-align: center; color: red;">Erro de autenticação/permissão: ${err.message}</p>`;
     }
 });
 
-async function loadProfiles() {
+
+// loadProfiles rebuilds the grid from scratch, so painting the cached copy and then
+// the authoritative one is safe. On a repeat visit the cached paint lands before the
+// network answers; on a first visit there is nothing cached and nothing is drawn twice.
+async function loadProfilesCacheFirst(preloaded) {
+    if (!preloaded) {
+        try {
+            const cached = await getDocsFromCache(collection(db, "users"));
+            if (!cached.empty) await loadProfiles(cached);
+        } catch (cacheError) {
+            // Nothing cached yet — the server read below is the first paint.
+        }
+    }
+    return loadProfiles(preloaded || await getDocs(collection(db, "users")));
+}
+
+async function loadProfiles(querySnapshot) {
     try {
-        const querySnapshot = await getDocs(collection(db, "users"));
         profilesGrid.innerHTML = "";
         
         const users = [];
@@ -325,7 +349,7 @@ guestForm?.addEventListener('submit', async (e) => {
 
         setGuestFeedback('Guardado.');
         closeGuestModal();
-        loadProfiles();
+        loadProfilesCacheFirst();
     } catch (err) {
         console.error('Erro ao guardar cliente sem conta:', err);
         setGuestFeedback(

@@ -74,18 +74,44 @@ service cloud.firestore {
     }
 
     // === Calendario de reservas ===
+    // La colección mezcla dos formas de documento: las semanas (YYYY-MM-DD), que
+    // guardan la disponibilidad, y las fichas personales (user_{uid}), que guardan
+    // el histórico y el contacto de UN cliente.
     match /weekly_schedules/{weekId} {
-      // Cualquier usuario autenticado puede leer el calendario
-      allow read: if request.auth != null;
+      function isPersonalDoc() {
+        return weekId.matches('^user_.*');
+      }
+      function isPersonalOwner() {
+        return request.auth != null && weekId == ('user_' + request.auth.uid);
+      }
+
+      // La disponibilidad de la semana la ve cualquier cliente autenticado, pero el
+      // histórico personal solo su dueño o el admin. Antes bastaba con haber
+      // iniciado sesión para leer la colección entera — incluido el uid, el email y
+      // todas las reservas de los demás clientes.
+      allow read: if request.auth != null
+                  && (!isPersonalDoc() || isPersonalOwner() || isAdmin());
 
       // El historial personal de cada usuario (doc: user_{uid}) — solo el propio usuario puede escribirlo
-      allow create, update, delete: if request.auth != null
-                                    && weekId == ('user_' + request.auth.uid);
+      allow create, update, delete: if isPersonalOwner();
 
-      // Los documentos de semana (doc: YYYY-MM-DD) solo los crea/borra el admin,
-      // pero cualquier cliente autenticado puede actualizar (update) slots al reservar/cancelar
+      // Los documentos de semana (doc: YYYY-MM-DD) solo los crea/borra el admin.
       allow create, delete: if isAdmin();
-      allow update: if isAdmin() || (request.auth != null && !weekId.matches('^user_.*'));
+
+      // Un cliente reserva y cancela escribiendo dentro de `slots`, siempre con rutas
+      // `slots.<id>`, así que la única clave de primer nivel que toca es `slots`.
+      // Limitarlo a eso impide que sobrescriba publishedByAdmin, publishedDate o
+      // cualquier campo nuevo de la semana.
+      //
+      // PENDIENTE: esto todavía no impide que un cliente modifique el slot de otro.
+      // Validarlo por slot no es expresable aquí — una reserva de 60 min escribe dos
+      // slots y la selección múltiple escribe varios, y las reglas no tienen bucles.
+      // La solución real es mover la escritura de reservas a una Cloud Function.
+      allow update: if isAdmin() || (
+                      request.auth != null
+                      && !isPersonalDoc()
+                      && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['slots'])
+                    );
     }
 
     // === Sistema de Reseñas ===

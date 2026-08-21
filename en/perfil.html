@@ -18,6 +18,14 @@
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <!-- The Firebase SDK is a three-hop module chain (page -> firebase-config ->
+         gstatic). Opening the connection and preloading the modules up front stops
+         the sign-in check from waiting on that waterfall. -->
+    <link rel="preconnect" href="https://www.gstatic.com" crossorigin>
+    <link rel="modulepreload" href="https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js" crossorigin>
+    <link rel="modulepreload" href="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js" crossorigin>
+    <link rel="modulepreload" href="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js" crossorigin>
+    <link rel="preconnect" href="https://unpkg.com" crossorigin>
     <link
         href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700;800&family=Poppins:wght@300;400;500;600;700&display=swap"
         rel="stylesheet">
@@ -57,14 +65,6 @@
 </head>
 
 <body class="page-auth">
-    <!-- Preloader -->
-    <div id="preloader">
-        <div class="loader-content">
-            <img src="../images/logo/logo_bw_loading.png" width="3487" height="2867" alt="Paulo Morais" class="loader-logo">
-            <div class="shimmer-effect"></div>
-        </div>
-    </div>
-
     <!-- Sticky Social Bar -->
     <!-- Social FAB -->
     <div class="fab-container">
@@ -951,9 +951,9 @@
     </footer>
 
     <!-- Scripts -->
-    <script nonce="pmorais-2026" src="js/agendamento.js" defer></script>
+    <script nonce="pmorais-2026" src="js/agendamento.js?v=2.5.0" defer></script>
     <script nonce="pmorais-2026" src="js/script.js?v=2.5.0" defer></script>
-    <script nonce="pmorais-2026" type="module" src="js/auth.js?v=1.5.2"></script>
+    <script nonce="pmorais-2026" type="module" src="js/auth.js?v=2.5.0"></script>
     <script nonce="pmorais-2026" src="../js/cookie-consent.js?v=2.5.0" defer></script>
 </body>
 

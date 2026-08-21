@@ -106,6 +106,13 @@
     <meta name="description" content="Área segura para confirmação de email e recuperação da conta Paulo Morais.">
     <meta name="robots" content="noindex, nofollow, noarchive">
     <link rel="icon" type="image/png" href="/images/logo/logo_ios_android.png">
+    <!-- The Firebase SDK is a three-hop module chain (page -> firebase-config ->
+         gstatic). Opening the connection and preloading the modules up front stops
+         the sign-in check from waiting on that waterfall. -->
+    <link rel="preconnect" href="https://www.gstatic.com" crossorigin>
+    <link rel="modulepreload" href="https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js" crossorigin>
+    <link rel="modulepreload" href="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js" crossorigin>
+    <link rel="modulepreload" href="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js" crossorigin>
     <style nonce="pmorais-2026">
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
 

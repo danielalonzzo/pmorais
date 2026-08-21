@@ -3,7 +3,7 @@
  * A European company
  */
 // Import the functions you need from the SDKs you need
-import { auth, db } from './firebase-config.js';
+import { auth, db } from './firebase-config.js?v=2.5.0';
 import {
     signInWithEmailAndPassword,
     createUserWithEmailAndPassword,
@@ -22,9 +22,11 @@ import {
     addDoc,
     query,
     where,
+    documentId,
+    onSnapshot,
     deleteDoc
 } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
-import { initCalendarMode } from './calendar.js';
+import { initCalendarMode } from './calendar.js?v=2.5.0';
 
 // Um servidor estático de desenvolvimento não tem as reescritas de URL limpo que
 // existem em produção (.htaccess e firebase.json), por isso "perfis" dá 404 em
@@ -159,9 +161,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // Deactivation check and full profile load run AFTER the UI is already visible
             (async () => {
+                // This snapshot is handed to loadUserProfile below: the deactivation
+                // flag, the role and the profile fields all live in the same document,
+                // so reading it once replaces two sequential round trips.
+                let userSnap = null;
                 try {
-                    const checkSnap = await getDoc(doc(db, "users", user.uid));
-                    if (checkSnap.exists() && checkSnap.data().isDeactivated) {
+                    userSnap = await getDoc(doc(db, "users", user.uid));
+                    if (userSnap.exists() && userSnap.data().isDeactivated) {
                         await signOut(auth);
                         alert("A sua conta está desativada. Para reativá-la, por favor faça um novo registo com os mesmos dados.");
                         return;
@@ -170,7 +176,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     console.warn("Could not check deactivated status", e);
                 }
 
-                const userData = await loadUserProfile(user);
+                const userData = await loadUserProfile(user, userSnap);
 
                 // Check if user should be prompted to leave a review
                 if (typeof checkReviewPrompt === 'function' && !isAdminEmail) {
@@ -654,7 +660,55 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
 
-async function loadUserProfile(user) {
+// weekly_schedules/user_{uid} feeds both the dashboard list and the review prompt.
+// One subscription serves both: with the persistent cache its first emission comes
+// from IndexedDB, so the list paints before the network answers and then refreshes.
+// Being live also removes the need to invalidate anything after a booking or a
+// cancellation.
+let userBookingsUnsub = null;
+let userBookingsFirst = null;
+
+function watchUserBookings(uid, render) {
+    if (userBookingsUnsub) userBookingsUnsub();
+
+    let markFirst;
+    userBookingsFirst = new Promise((resolve) => { markFirst = resolve; });
+
+    userBookingsUnsub = onSnapshot(
+        doc(db, "weekly_schedules", `user_${uid}`),
+        (snap) => {
+            const bookings = snap.exists() ? snap.data().bookings || [] : [];
+            markFirst(bookings);
+            if (render) render(bookings);
+        },
+        (error) => {
+            console.warn("Could not load user bookings from weekly_schedules:", error);
+            markFirst([]);
+        }
+    );
+
+    return userBookingsFirst;
+}
+
+// Resolves with the first snapshot of this client's bookings, reusing the dashboard's
+// subscription when it already started one.
+function firstUserBookings(uid) {
+    return userBookingsFirst || watchUserBookings(uid, null);
+}
+
+// One live listener at a time behind the dashboard preview.
+let previewUnsubscribe = null;
+
+function stopDashboardPreview() {
+    if (!previewUnsubscribe) return;
+    previewUnsubscribe();
+    previewUnsubscribe = null;
+}
+
+
+// `preloadedSnap` is a users/{uid} snapshot the caller already holds. Callers that
+// need fresh data after a write simply omit it and pay for a read.
+async function loadUserProfile(user, preloadedSnap = null) {
     const userWelcome = document.getElementById('user-welcome');
     
     // Form fields - fetch them inside to ensure they are current
@@ -686,7 +740,7 @@ async function loadUserProfile(user) {
     if (userWelcome) {
         try {
             const docRef = doc(db, "users", user.uid);
-            const docSnap = await getDoc(docRef);
+            const docSnap = preloadedSnap || await getDoc(docRef);
 
             if (docSnap.exists()) {
                 const data = docSnap.data();
@@ -1417,8 +1471,13 @@ async function cancelBookingFor(targetUid, bookingId, isoDate, startTime, servic
         const bookingSnap = await getDoc(bookingDocRef);
         if (bookingSnap.exists()) {
             let userBookings = bookingSnap.data().bookings || [];
+            // The admin dashboard now reads from the week documents, which do not
+            // carry the bk_* id, so it passes null and we match the slot instead.
+            const matches = (b) => (bookingId
+                ? b.id === bookingId
+                : b.date === isoDate && b.time === startTime && b.status === 'booked');
             for (let b of userBookings) {
-                if (b.id === bookingId) {
+                if (matches(b)) {
                     b.status = 'cancelled';
                     b.updatedAt = new Date().toISOString();
                 }
@@ -1453,74 +1512,103 @@ window.cancelBookingAsAdmin = async function(targetUid, bookingId, isoDate, star
     return cancelBookingFor(targetUid, bookingId, isoDate, startTime, serviceType);
 };
 
-async function loadDashboardPreview(isAdmin, user, data) {
-    console.log("--- DASHBOARD PREVIEW START ---");
-    console.log("isAdmin parameter:", isAdmin);
-    console.log("User email:", user.email);
-    console.log("Firestore Data:", data);
-    const listEl = document.getElementById('preview-list');
-    const titleEl = document.getElementById('preview-title');
-    const previewSection = document.getElementById('dashboard-preview-section');
-    const userDashboard = document.getElementById('user-dashboard');
-    
-    if (!listEl || !previewSection) {
-        console.error("Critical dashboard elements missing");
-        return;
-    }
-    
-    // Ensure dashboard is visible
-    if (userDashboard) userDashboard.classList.remove('hidden');
-    previewSection.classList.remove('hidden');
-    listEl.innerHTML = '<p class="color-text-dim text-center" style="padding: 20px; margin: 0;">A carregar dados...</p>';
-    
-    if (!isAdmin) {
-        if (titleEl) {
-            titleEl.textContent = "As Suas Próximas Sessões";
-            titleEl.className = "preview-title";
-        }
-        
-        // Read bookings from weekly_schedules/user_{uid}
-        let userBookings = [];
-        try {
-            const bookingDocRef = doc(db, "weekly_schedules", `user_${user.uid}`);
-            const bookingSnap = await getDoc(bookingDocRef);
-            if (bookingSnap.exists()) {
-                userBookings = bookingSnap.data().bookings || [];
+// Sunday-aligned id of the week containing `date`, matching how calendar.js names
+// the documents in weekly_schedules.
+function weekIdFor(date) {
+    const d = new Date(date);
+    d.setHours(0, 0, 0, 0);
+    d.setDate(d.getDate() - d.getDay());
+    return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+}
+
+function todayId() {
+    const now = new Date();
+    return `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`;
+}
+
+function addMinutes(time, delta) {
+    const [h, m] = String(time || '').split(':').map(Number);
+    if (Number.isNaN(h) || Number.isNaN(m)) return null;
+    const total = h * 60 + m + delta;
+    if (total < 0) return null;
+    return `${String(Math.floor(total / 60)).padStart(2, '0')}:${String(total % 60).padStart(2, '0')}`;
+}
+
+// A 60-minute session occupies two consecutive 30-minute slots, so one booking shows
+// up twice in a week document. Keep the first half hour and drop the continuation —
+// matching on the preceding slot rather than on the day, so a client with two
+// separate sessions on the same day still sees both.
+function collectAdminBookings(snapshot, todayStr) {
+    const entries = [];
+
+    snapshot.forEach((docSnap) => {
+        const slots = docSnap.data().slots || {};
+        Object.entries(slots).forEach(([slotId, slot]) => {
+            const [date, slotTime] = String(slotId).split('T');
+            if (!date || date < todayStr) return;
+            const time = slotTime || slot.time || '';
+
+            const add = (uid, name, type) => {
+                if (!uid) return;
+                entries.push({
+                    name: name || 'Cliente',
+                    date,
+                    time,
+                    type: type || slot.serviceType,
+                    // Guests never sign in, so only the admin can cancel for them.
+                    targetUid: uid,
+                    isGuest: typeof uid === 'string' && uid.startsWith('guest_')
+                });
+            };
+
+            if (slot.status === 'booked' && slot.bookedBy) add(slot.bookedBy, slot.bookedName, slot.serviceType);
+            if (Array.isArray(slot.bookedUsers)) {
+                slot.bookedUsers.forEach((bu) => add(bu.uid, bu.name, slot.serviceType || 'grupal'));
             }
-        } catch (e) {
-            console.warn("Could not load user bookings from weekly_schedules:", e);
-        }
-        
-        const now = new Date();
-        const yyyy = now.getFullYear();
-        const mm = String(now.getMonth() + 1).padStart(2, '0');
-        const dd = String(now.getDate()).padStart(2, '0');
-        const todayStr = `${yyyy}-${mm}-${dd}`;
-        
-        const upcoming = userBookings.filter(h => {
-            if (!h.date) return false;
-            return h.date >= todayStr && h.status === 'booked';
-        }).sort((a,b) => (a.date + 'T' + a.time).localeCompare(b.date + 'T' + b.time));
-        
-        if (upcoming.length === 0) {
-            listEl.innerHTML = `
-                <p class="color-text-dim text-center" style="padding: 20px; margin: 0;">Sem sessões agendadas para breve.</p>
-            `;
+        });
+    });
+
+    entries.sort((a, b) => `${a.date}T${a.time}`.localeCompare(`${b.date}T${b.time}`));
+
+    const seen = new Set();
+    const deduped = [];
+    entries.forEach((entry) => {
+        const key = (time) => `${entry.targetUid}|${entry.date}|${entry.type}|${time}`;
+        const previous = addMinutes(entry.time, -30);
+        if (previous && seen.has(key(previous))) {
+            seen.add(key(entry.time));
             return;
         }
-        
-        listEl.innerHTML = '';
-        upcoming.forEach(b => {
-            const item = document.createElement('div');
-            item.className = 'preview-item';
-            
-            let sName = 'Treino';
-            let sClass = 'badge-treino';
-            if (b.serviceType === 'grupal' || b.serviceType === 'treino_grupo') { sName = 'Online'; sClass = 'badge-grupal'; }
-            if (b.serviceType === 'osteopatia') { sName = 'Osteopatia'; sClass = 'badge-osteo'; }
-            if (b.serviceType === 'treino_online' || b.serviceType === 'online') { sName = 'Online'; sClass = 'badge-online'; }
-            
-            item.innerHTML = `
+        seen.add(key(entry.time));
+        deduped.push(entry);
+    });
+
+    return deduped;
+}
+
+function renderClientPreview(listEl, bookings) {
+    const todayStr = todayId();
+    const upcoming = bookings
+        .filter((h) => h.date && h.date >= todayStr && h.status === 'booked')
+        .sort((a, b) => `${a.date}T${a.time}`.localeCompare(`${b.date}T${b.time}`));
+
+    if (upcoming.length === 0) {
+        listEl.innerHTML = '<p class="color-text-dim text-center" style="padding: 20px; margin: 0;">Sem sessões agendadas para breve.</p>';
+        return;
+    }
+
+    listEl.innerHTML = '';
+    upcoming.forEach(b => {
+        const item = document.createElement('div');
+        item.className = 'preview-item';
+
+        let sName = 'Treino';
+        let sClass = 'badge-treino';
+        if (b.serviceType === 'grupal' || b.serviceType === 'treino_grupo') { sName = 'Online'; sClass = 'badge-grupal'; }
+        if (b.serviceType === 'osteopatia') { sName = 'Osteopatia'; sClass = 'badge-osteo'; }
+        if (b.serviceType === 'treino_online' || b.serviceType === 'online') { sName = 'Online'; sClass = 'badge-online'; }
+
+        item.innerHTML = `
                 <div class="preview-item-info">
                     <strong>${b.date}</strong>
                     <span>às ${b.time}</span>
@@ -1532,80 +1620,37 @@ async function loadDashboardPreview(isAdmin, user, data) {
                     <button class="btn btn-sm btn-outline" style="padding: 2px 8px; font-size: 0.75rem;" onclick="window.cancelClientBooking('${b.id}', '${b.date}', '${b.time}', '${b.serviceType}')">Cancelar</button>
                 </div>
             `;
-            listEl.appendChild(item);
-        });
-        
-    } else {
-        // ------ ADMIN BRANCH — Read from all user booking docs ------
-        if (titleEl) {
-            titleEl.innerHTML = '<i data-lucide="calendar-days" style="width:18px;height:18px;"></i><span>Próximos Clientes</span>';
-            titleEl.style.display = 'flex';
-            titleEl.style.alignItems = 'center';
-            titleEl.style.gap = '8px';
+        listEl.appendChild(item);
+    });
+
+    if (window.lucide) window.lucide.createIcons();
+}
+
+function renderAdminPreview(listEl, upcomingAdmin) {
+    if (upcomingAdmin.length === 0) {
+        listEl.innerHTML = '<p class="color-text-dim text-center" style="padding: 20px; margin: 0;">Sem clientes agendados para breve.</p>';
+        if (window.lucide) window.lucide.createIcons();
+        return;
+    }
+
+    listEl.innerHTML = '';
+    upcomingAdmin.forEach(b => {
+        const item = document.createElement('div');
+        item.className = 'preview-item';
+
+        let sName = 'Treino';
+        let sClass = 'badge-treino';
+        if (b.type === 'grupal') { sName = 'Online'; sClass = 'badge-grupal'; }
+        if (b.type === 'osteopatia') { sName = 'Osteopatia'; sClass = 'badge-osteo'; }
+
+        // Format date for display (YYYY-MM-DD → DD/MM)
+        let dateDisplay = b.date;
+        if (b.date && b.date.includes('-')) {
+            const [, mm, dd] = b.date.split('-');
+            dateDisplay = `${dd}/${mm}`;
         }
 
-        const now = new Date();
-        now.setHours(0, 0, 0, 0);
-
-        try {
-            // Read ALL documents from weekly_schedules collection
-            const allDocs = await getDocs(collection(db, "weekly_schedules"));
-            const upcomingAdmin = [];
-
-            allDocs.forEach(docSnap => {
-                // Only process user booking documents (ID starts with "user_")
-                if (!docSnap.id.startsWith('user_')) return;
-                
-                const data = docSnap.data();
-                const bookings = data.bookings || [];
-                
-                bookings.forEach(b => {
-                    if (!b.date || b.status !== 'booked') return;
-                    const bDate = new Date(b.date);
-                    if (bDate < now) return; // Skip past bookings
-                    
-                    upcomingAdmin.push({
-                        name: b.bookedName || data.name || data.email || 'Cliente',
-                        date: b.date,
-                        time: b.time || '---',
-                        type: b.serviceType,
-                        // Clientes sem conta nunca fazem login, por isso só o admin
-                        // consegue desmarcar-lhes uma sessão.
-                        targetUid: docSnap.id.replace(/^user_/, ''),
-                        bookingId: b.id,
-                        isGuest: docSnap.id.startsWith('user_guest_')
-                    });
-                });
-            });
-
-            // Sort by date and time
-            upcomingAdmin.sort((a, b) => {
-                const dtA = new Date(`${a.date}T${a.time || '00:00'}`);
-                const dtB = new Date(`${b.date}T${b.time || '00:00'}`);
-                return dtA - dtB;
-            });
-
-            if (upcomingAdmin.length === 0) {
-                listEl.innerHTML = '<p class="color-text-dim text-center" style="padding: 20px; margin: 0;">Sem clientes agendados para breve.</p>';
-            } else {
-                listEl.innerHTML = '';
-                upcomingAdmin.forEach(b => {
-                    const item = document.createElement('div');
-                    item.className = 'preview-item';
-                    
-                    let sName = 'Treino';
-                    let sClass = 'badge-treino';
-                    if (b.type === 'grupal') { sName = 'Online'; sClass = 'badge-grupal'; }
-                    if (b.type === 'osteopatia') { sName = 'Osteopatia'; sClass = 'badge-osteo'; }
-
-                    // Format date for display (YYYY-MM-DD → DD/MM)
-                    let dateDisplay = b.date;
-                    if (b.date && b.date.includes('-')) {
-                        const [, mm, dd] = b.date.split('-');
-                        dateDisplay = `${dd}/${mm}`;
-                    }
-
-                    item.innerHTML = `
+        item.innerHTML = `
                         <div class="preview-item-info">
                             <div style="display:flex; flex-direction:column;">
                                 <strong style="color:var(--color-primary);"></strong>
@@ -1618,30 +1663,82 @@ async function loadDashboardPreview(isAdmin, user, data) {
                             </div>
                         </div>
                     `;
-                    item.querySelector('strong').textContent = b.name;
-                    item.querySelector('.preview-item-info span').textContent = `${dateDisplay} às ${b.time}`;
+        item.querySelector('strong').textContent = b.name;
+        item.querySelector('.preview-item-info span').textContent = `${dateDisplay} às ${b.time}`;
 
-                    // Só os clientes sem conta precisam disto: nunca fazem login,
-                    // portanto só o admin lhes pode desmarcar uma sessão.
-                    if (b.isGuest && b.bookingId) {
-                        const cancelBtn = document.createElement('button');
-                        cancelBtn.className = 'btn btn-sm btn-outline';
-                        cancelBtn.style.cssText = 'padding: 2px 8px; font-size: 0.75rem;';
-                        cancelBtn.textContent = 'Cancelar';
-                        cancelBtn.onclick = () => window.cancelBookingAsAdmin(b.targetUid, b.bookingId, b.date, b.time, b.type, b.name);
-                        item.querySelector('.preview-item-actions').appendChild(cancelBtn);
-                    }
-
-                    listEl.appendChild(item);
-                });
-            }
-        } catch (e) {
-            console.error("Error loading admin list:", e);
-            listEl.innerHTML = `<p style="color:#c00; text-align:center; padding:20px;">Erro ao carregar lista.</p>`;
+        // Só os clientes sem conta precisam disto: nunca fazem login, portanto só o
+        // admin lhes pode desmarcar uma sessão. O id bk_* vive no documento do
+        // cliente, não na semana, por isso cancelBookingFor casa por data e hora.
+        if (b.isGuest) {
+            const cancelBtn = document.createElement('button');
+            cancelBtn.className = 'btn btn-sm btn-outline';
+            cancelBtn.style.cssText = 'padding: 2px 8px; font-size: 0.75rem;';
+            cancelBtn.textContent = 'Cancelar';
+            cancelBtn.onclick = () => window.cancelBookingAsAdmin(b.targetUid, null, b.date, b.time, b.type, b.name);
+            item.querySelector('.preview-item-actions').appendChild(cancelBtn);
         }
-    }
-    
+
+        listEl.appendChild(item);
+    });
+
     if (window.lucide) window.lucide.createIcons();
+}
+
+function loadDashboardPreview(isAdmin, user, data) {
+    const listEl = document.getElementById('preview-list');
+    const titleEl = document.getElementById('preview-title');
+    const previewSection = document.getElementById('dashboard-preview-section');
+    const userDashboard = document.getElementById('user-dashboard');
+
+    if (!listEl || !previewSection) {
+        console.error("Critical dashboard elements missing");
+        return;
+    }
+
+    if (userDashboard) userDashboard.classList.remove('hidden');
+    previewSection.classList.remove('hidden');
+    listEl.innerHTML = '<p class="color-text-dim text-center" style="padding: 20px; margin: 0;">A carregar dados...</p>';
+
+    stopDashboardPreview();
+
+    const showError = (message) => {
+        listEl.innerHTML = `<p style="color:#c00; text-align:center; padding:20px;">${message}</p>`;
+    };
+
+    if (!isAdmin) {
+        if (titleEl) {
+            titleEl.textContent = "As Suas Próximas Sessões";
+            titleEl.className = "preview-title";
+        }
+        watchUserBookings(user.uid, (bookings) => renderClientPreview(listEl, bookings));
+        return;
+    }
+
+    if (titleEl) {
+        titleEl.innerHTML = '<i data-lucide="calendar-days" style="width:18px;height:18px;"></i><span>Próximos Clientes</span>';
+        titleEl.style.display = 'flex';
+        titleEl.style.alignItems = 'center';
+        titleEl.style.gap = '8px';
+    }
+
+    // Week documents are named YYYY-MM-DD, so a document-id range fetches only the
+    // current week onward. The upper bound keeps the per-client user_* documents
+    // out, since 'u' sorts after '9'. This previously downloaded the whole
+    // collection: every past week plus every client's full booking history.
+    const weeksQuery = query(
+        collection(db, "weekly_schedules"),
+        where(documentId(), '>=', weekIdFor(new Date())),
+        where(documentId(), '<=', '9999-99-99')
+    );
+
+    previewUnsubscribe = onSnapshot(
+        weeksQuery,
+        (snapshot) => renderAdminPreview(listEl, collectAdminBookings(snapshot, todayId())),
+        (error) => {
+            console.error("Error loading admin dashboard preview:", error);
+            showError('Erro ao carregar dados da agenda. Tente recarregar a página.');
+        }
+    );
 }
 
 // ==========================================
@@ -2019,10 +2116,8 @@ const loadMyReviews = window.loadMyReviews;
 
 async function checkReviewPrompt(user) {
     try {
-        const bookingDocRef  = doc(db, 'weekly_schedules', `user_${user.uid}`);
-        const bookingSnap    = await getDoc(bookingDocRef);
-        if (bookingSnap.exists()) {
-            const bookings     = bookingSnap.data().bookings || [];
+        const bookings = await firstUserBookings(user.uid);
+        if (bookings.length > 0) {
             const now          = new Date();
             const hasCompleted = bookings.some(b => {
                 if (b.status === 'cancelled') return false;

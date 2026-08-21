@@ -16,6 +16,8 @@
         appId: '1:431406968000:web:01e40cb3eb4044ddc69125'
     };
 
+    const REVIEW_CAROUSEL_LIMIT = 12;
+
     let firestorePromise;
 
     function loadFirestore() {
@@ -155,10 +157,16 @@
 
         try {
             const { db, firestore } = await loadFirestore();
+            // The carousel only ever shows a handful of cards, so ask for the most
+            // recent ones instead of every review ever written. timestamp is an ISO
+            // string, which sorts correctly. Needs the composite index declared in
+            // firestore.indexes.json.
             const snapshot = await firestore.getDocs(firestore.query(
                 firestore.collection(db, 'reviews'),
                 firestore.where('service', '==', 'treino'),
-                firestore.where('hidden', '==', false)
+                firestore.where('hidden', '==', false),
+                firestore.orderBy('timestamp', 'desc'),
+                firestore.limit(REVIEW_CAROUSEL_LIMIT)
             ));
             const reviews = snapshot.docs
                 .map((documentSnapshot) => documentSnapshot.data())

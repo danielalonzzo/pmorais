@@ -2,6 +2,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { ASSET_VERSION, LAST_MODIFIED, PRIVATE_ROUTES, PUBLIC_PAGES, SITE_ORIGIN } from './seo-config.mjs';
+import { eachLocalModuleSpecifier, localModules } from './asset-versioning.mjs';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const failures = [];
@@ -72,6 +73,16 @@ const htmlFiles = fs.readdirSync(root).filter((name) => name.endsWith('.html'))
   .concat(fs.readdirSync(path.join(root, 'en')).filter((name) => name.endsWith('.html')).map((name) => `en/${name}`))
   .filter((name) => !name.startsWith('google'));
 const publicFiles = new Set(PUBLIC_PAGES.map((page) => page.file));
+const modules = localModules(root);
+for (const directory of ['js', 'en/js']) {
+  for (const name of fs.readdirSync(path.join(root, directory)).filter((entry) => entry.endsWith('.js'))) {
+    const relative = `${directory}/${name}`;
+    eachLocalModuleSpecifier(read(relative), modules, (specifier, query) => {
+      if (query !== `?v=${ASSET_VERSION}`) fail(`${relative}: import lacks current cache version: ${specifier}${query}`);
+    });
+  }
+}
+
 for (const file of htmlFiles) {
   if (publicFiles.has(file)) continue;
   const html = read(file);
@@ -113,14 +124,11 @@ for (const file of htmlFiles) {
   const html = read(file);
   if (/<!-- Google Tag Manager -->\s*<script>(?=\(function\(w,d,s,l,i\))/i.test(html)) fail(`${file}: GTM bootstrap lacks CSP nonce`);
   if (/https:\/\/pmorais\.pt\/[^"'\s]+\.html/i.test(html)) fail(`${file}: contains an absolute legacy .html URL`);
-  for (const match of html.matchAll(/src=["']([^"']*(?:lang|cookie-consent|script|theme)\.js(?:\?v=[^"']*)?)["']/g)) {
-    if (!match[1].endsWith(`?v=${ASSET_VERSION}`)) fail(`${file}: shared script lacks current cache version: ${match[1]}`);
-  }
+  eachLocalModuleSpecifier(html, modules, (specifier, query) => {
+    if (query !== `?v=${ASSET_VERSION}`) fail(`${file}: local script lacks current cache version: ${specifier}${query}`);
+  });
   for (const match of html.matchAll(/href=["']([^"']*css\/style\.css(?:\?v=[^"']*)?)["']/g)) {
     if (!match[1].endsWith(`?v=${ASSET_VERSION}`)) fail(`${file}: shared stylesheet lacks current cache version: ${match[1]}`);
-  }
-  for (const match of html.matchAll(/from\s+["']([^"']*\/blog\.js(?:\?v=[^"']*)?)["']/g)) {
-    if (!match[1].endsWith(`?v=${ASSET_VERSION}`)) fail(`${file}: blog module lacks current cache version: ${match[1]}`);
   }
   if (file.startsWith('en/') && html.includes('aria-label="Abrir menu de navegação"')) fail(`${file}: English menu has a Portuguese accessible name`);
 }

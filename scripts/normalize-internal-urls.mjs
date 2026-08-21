@@ -1,9 +1,11 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { ASSET_VERSION } from './seo-config.mjs';
+import { localModules, versionLocalModules } from './asset-versioning.mjs';
 
 const root = process.cwd();
 const siteOrigin = 'https://pmorais.pt';
+const modules = localModules(root);
 
 const portugueseRoutes = {
   'index.html': '/',
@@ -65,21 +67,12 @@ function normalizeHtml(file, routes) {
     source = source.replaceAll(`${siteOrigin}/en/${from}`, new URL(to, siteOrigin).href);
   }
 
-  // Hosting caches JavaScript for seven days. Version every shared asset whose
-  // navigation/privacy behavior is maintained by this SEO normalization pass.
-  source = source
-    .replace(
-      /(src=["'][^"']*(?:lang|cookie-consent|script|theme)\.js)(?:\?v=[^"']*)?(["'])/g,
-      `$1?v=${ASSET_VERSION}$2`
-    )
-    .replace(
-      /(href=["'][^"']*css\/style\.css)(?:\?v=[^"']*)?(["'])/g,
-      `$1?v=${ASSET_VERSION}$2`
-    )
-    .replace(
-      /(from\s+["'][^"']*\/blog\.js)(?:\?v=[^"']*)?(["'])/g,
-      `$1?v=${ASSET_VERSION}$2`
-    );
+  // Hosting caches JavaScript and CSS for seven days, so every local asset needs a
+  // version in its URL or a deploy takes a week to reach returning visitors.
+  source = versionLocalModules(source, modules, ASSET_VERSION).replace(
+    /(href=["'][^"']*css\/style\.css)(?:\?v=[^"']*)?(["'])/g,
+    `$1?v=${ASSET_VERSION}$2`
+  );
   fs.writeFileSync(file, source);
 }
 
@@ -98,6 +91,7 @@ for (const directory of [path.join(root, 'js'), path.join(root, 'en/js')]) {
     source = source
       .replaceAll('../termos-e-condicoes.html', '/en/termos-e-condicoes')
       .replaceAll('../politica-privacidade.html', '/en/politica-privacidade');
+    source = versionLocalModules(source, modules, ASSET_VERSION);
     fs.writeFileSync(file, source);
   }
 }

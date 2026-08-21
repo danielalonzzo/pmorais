@@ -3,7 +3,7 @@
  * A European company
  */
 // Import the functions you need from the SDKs you need
-import { auth, db } from './firebase-config.js';
+import { auth, db } from './firebase-config.js?v=2.5.0';
 import {
     signInWithEmailAndPassword,
     createUserWithEmailAndPassword,
@@ -20,7 +20,7 @@ import {
     updateDoc,
     serverTimestamp
 } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
-import { initCalendarMode } from './calendar.js';
+import { initCalendarMode } from './calendar.js?v=2.5.0';
 
 window.forceFirebaseLogout = async () => { try { await signOut(auth); } catch(e) {} };
 window.addEventListener('force-firebase-logout', window.forceFirebaseLogout);
@@ -74,9 +74,13 @@ document.addEventListener('DOMContentLoaded', () => {
     onAuthStateChanged(auth, async (user) => {
         if (window.isReactivating) return;
         if (user) {
+            // This snapshot is handed to loadUserProfile below: the deactivation flag,
+            // the role and the profile fields all live in the same document, so reading
+            // it once replaces two sequential round trips.
+            let userSnap = null;
             try {
-                const checkSnap = await getDoc(doc(db, "users", user.uid));
-                if (checkSnap.exists() && checkSnap.data().isDeactivated) {
+                userSnap = await getDoc(doc(db, "users", user.uid));
+                if (userSnap.exists() && userSnap.data().isDeactivated) {
                     await signOut(auth);
                     alert("Your account is deactivated. To reactivate it, please register again using the same details.");
                     return;
@@ -141,7 +145,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
 
             // Load user data and wait for it to get the role
-            const userData = await loadUserProfile(user);
+            const userData = await loadUserProfile(user, userSnap);
             console.log("User data loaded for:", user.email, userData);
 
             const isCompleted = !!userData?.profileCompleted;
@@ -581,7 +585,9 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
 
-async function loadUserProfile(user) {
+// `preloadedSnap` is a users/{uid} snapshot the caller already holds. Callers that
+// need fresh data after a write simply omit it and pay for a read.
+async function loadUserProfile(user, preloadedSnap = null) {
     const userWelcome = document.getElementById('user-welcome');
     
     // Form fields - fetch them inside to ensure they are current
@@ -613,7 +619,7 @@ async function loadUserProfile(user) {
     if (userWelcome) {
         try {
             const docRef = doc(db, "users", user.uid);
-            const docSnap = await getDoc(docRef);
+            const docSnap = preloadedSnap || await getDoc(docRef);
 
             if (docSnap.exists()) {
                 const data = docSnap.data();

@@ -77,47 +77,71 @@ function renderClientGrid(db, user) {
     });
 }
 
+// Resolved once per uid and kept for the session. Also caches misses, so a booking
+// whose owner has no name does not re-query on every snapshot.
+const bookedNameCache = new Map();
+
+// Every write path stores the client name alongside the booking (bookedName on
+// personal slots, bookedUsers[].name on group ones), so the normal case costs zero
+// reads. Only bookings written before that field existed still need users/{uid}.
+async function resolveBookedNames(db, scheduleData) {
+    const names = {};
+    const missing = new Set();
+
+    const remember = (uid, name) => {
+        if (!uid) return;
+        if (name) {
+            bookedNameCache.set(uid, name);
+            names[uid] = name;
+        } else if (bookedNameCache.has(uid)) {
+            names[uid] = bookedNameCache.get(uid);
+        } else {
+            missing.add(uid);
+        }
+    };
+
+    Object.values(scheduleData?.slots || {}).forEach(slot => {
+        if (slot.status === 'booked' && slot.bookedBy) remember(slot.bookedBy, slot.bookedName);
+        if (Array.isArray(slot.bookedUsers)) slot.bookedUsers.forEach(bu => remember(bu.uid, bu.name));
+    });
+
+    await Promise.all([...missing].map(async (uid) => {
+        try {
+            const uDoc = await getDoc(doc(db, "users", uid));
+            const name = uDoc.exists() ? uDoc.data().name : null;
+            bookedNameCache.set(uid, name || null);
+            if (name) names[uid] = name;
+        } catch (e) {
+            console.warn(`Could not fetch name for user ${uid}`, e);
+        }
+    }));
+
+    return names;
+}
+
+// A single live listener at a time. Without this, every week navigation left the
+// previous week's listener attached, each one re-rendering on any write to its doc.
+let adminGridUnsubscribe = null;
+
+export function stopAdminGrid() {
+    if (!adminGridUnsubscribe) return;
+    adminGridUnsubscribe();
+    adminGridUnsubscribe = null;
+}
+
 function renderAdminGrid(db, user) {
     const gridEl = document.getElementById('admin-weekly-grid');
     const legendEl = document.getElementById('admin-user-legend');
     if (!gridEl) return;
 
+    stopAdminGrid();
+
     const weekId = getWeekId(currentWeekStart);
     const docRef = doc(db, "weekly_schedules", weekId);
 
-    onSnapshot(docRef, async (docSnap) => {
-        let scheduleData = { slots: {} };
-        if (docSnap.exists()) {
-            scheduleData = docSnap.data();
-        }
-        
-        const userNames = {};
-        if (scheduleData && scheduleData.slots) {
-            // Collect UIDs from both personal bookings and group bookings
-            const uidSet = new Set();
-            Object.values(scheduleData.slots).forEach(s => {
-                if (s.status === 'booked' && s.bookedBy) {
-                    uidSet.add(s.bookedBy);
-                }
-                // Group bookings
-                if (s.bookedUsers && Array.isArray(s.bookedUsers)) {
-                    s.bookedUsers.forEach(bu => uidSet.add(bu.uid));
-                }
-            });
-            const uids = [...uidSet];
-            
-            // Parallel fetch
-            await Promise.all(uids.map(async (uid) => {
-                try {
-                    const uDoc = await getDoc(doc(db, "users", uid));
-                    if (uDoc.exists() && uDoc.data().name) {
-                        userNames[uid] = uDoc.data().name;
-                    }
-                } catch (e) { 
-                    console.warn(`Could not fetch name for user ${uid}`, e); 
-                }
-            }));
-        }
+    adminGridUnsubscribe = onSnapshot(docRef, async (docSnap) => {
+        const scheduleData = docSnap.exists() ? docSnap.data() : { slots: {} };
+        const userNames = await resolveBookedNames(db, scheduleData);
 
         buildGrid(gridEl, scheduleData, true, db, user, weekId, userNames, true);
         renderAdminUserLegend(scheduleData, legendEl, userNames);
@@ -910,7 +934,7 @@ window.openGlobalAgenda = async function() {
     if (previewSection) previewSection.classList.add('hidden');
     if (globalAgenda) globalAgenda.classList.remove('hidden');
     
-    const { auth, db } = await import('./firebase-config.js');
+    const { auth, db } = await import('./firebase-config.js?v=2.5.0');
     renderAdminGrid(db, auth.currentUser);
 };
 
@@ -918,6 +942,9 @@ window.closeGlobalAgenda = function() {
     const dashboardActions = document.getElementById('dashboard-main-actions');
     const previewSection = document.getElementById('dashboard-preview-section');
     const globalAgenda = document.getElementById('global-agenda-section');
+
+    // Leaving the agenda drops the listener; reopening attaches a fresh one.
+    stopAdminGrid();
     
     if (dashboardActions) dashboardActions.classList.remove('hidden');
     if (previewSection) previewSection.classList.remove('hidden');
@@ -935,7 +962,7 @@ window.changeGlobalWeek = async function(offset) {
     const weekText = `${formatter.format(currentWeekStart)} - ${formatter.format(endDate)}`;
     weekHeaders.forEach(el => el.textContent = weekText);
     
-    const { auth, db } = await import('./firebase-config.js');
+    const { auth, db } = await import('./firebase-config.js?v=2.5.0');
     renderAdminGrid(db, auth.currentUser);
 };
 

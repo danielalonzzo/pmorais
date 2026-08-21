@@ -37,7 +37,15 @@
       "firestore.indexes.json",
       "FILE_NAME",
       "README.md",
-      "implementation_plan.md"
+      "implementation_plan.md",
+      "**/.*/**",
+      ".git/**",
+      ".icloud-duplicados/**",
+      "**/*.mov",
+      "**/*.eps",
+      "**/*.heic",
+      "logs.txt",
+      "convert_webp.js"
     ],
     "headers": [
       {

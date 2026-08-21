@@ -301,13 +301,15 @@ document.addEventListener('DOMContentLoaded', () => {
             }, 500);
         };
 
-        if (document.readyState === 'complete') {
-            dismissPreloader();
-        } else {
-            window.addEventListener('load', dismissPreloader);
-            // Fallback timeout so page never gets stuck if resources fail to load
-            setTimeout(dismissPreloader, 2000);
-        }
+        // This file is deferred, so by the time it runs the DOM is parsed and the
+        // render-blocking CSS is applied — the page is ready to look at. Waiting for
+        // `load` instead held the overlay until every image, font and third-party
+        // script had finished, or until the 2s fallback fired.
+        requestAnimationFrame(dismissPreloader);
+
+        // Backstops, in case this file is ever loaded without defer.
+        window.addEventListener('load', dismissPreloader);
+        setTimeout(dismissPreloader, 2000);
     }
 
     // --- Social FAB Toggle (Mobile & Tablets) ---

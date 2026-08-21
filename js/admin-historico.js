@@ -2,7 +2,7 @@
  * Developed by Elysium λ Development & Research
  * A European company
  */
-import { auth, db } from './firebase-config.js';
+import { auth, db } from './firebase-config.js?v=2.5.0';
 import {
     onAuthStateChanged
 } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
@@ -10,7 +10,10 @@ import {
     doc,
     getDoc,
     getDocs,
-    collection
+    collection,
+    query,
+    where,
+    documentId
 } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
 const historyContent = document.getElementById('history-content');
@@ -32,8 +35,14 @@ onAuthStateChanged(auth, async (user) => {
         let consolidatedHistory = [];
         
         if (isAdmin) {
-            // Read all user booking documents from weekly_schedules collection
-            const allDocs = await getDocs(collection(db, "weekly_schedules"));
+            // Only the per-client documents hold history. Bounding the query by the
+            // user_ prefix skips every week document (YYYY-MM-DD), which is roughly
+            // half the collection and carries nothing this page renders.
+            const allDocs = await getDocs(query(
+                collection(db, "weekly_schedules"),
+                where(documentId(), '>=', 'user_'),
+                where(documentId(), '<=', 'user_\uf8ff')
+            ));
             allDocs.forEach(docSnap => {
                 const data = docSnap.data();
                 // User booking docs have IDs starting with "user_"
