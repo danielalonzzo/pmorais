@@ -19,3 +19,10 @@ deployment:
     - /usr/bin/find "$DEPLOYPATH/images" -type f -iname '*.heic' -delete
     - /bin/cp admin-blog.html artigo.html auth-action.html blog.html desinscrever.html formulario.html google0ef2004b37f69f6d.html historico.html index.html osteopatia.html perfil.html perfis.html politica-privacidade.html sobre-mim.html termos-e-condicoes.html "$DEPLOYPATH/"
     - /bin/cp manifest.json robots.txt sitemap.xml llms.txt llms-full.txt sw.js firebase-messaging-sw.js "$DEPLOYPATH/"
+    - /bin/cp openapi.json auth.md "$DEPLOYPATH/"
+    # Agent discovery surface: .well-known documents, the static read-only JSON
+    # API and the markdown renditions. Removed first so a deleted page cannot
+    # leave a stale rendition behind on the server.
+    - /bin/rm -rf "$DEPLOYPATH/.well-known" "$DEPLOYPATH/api" "$DEPLOYPATH/agents"
+    - /bin/cp -R .well-known api agents "$DEPLOYPATH/"
+    - /usr/bin/find "$DEPLOYPATH/.well-known" "$DEPLOYPATH/api" "$DEPLOYPATH/agents" -type f -name .DS_Store -delete

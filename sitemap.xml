@@ -3,7 +3,7 @@
         xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://pmorais.pt/</loc>
-    <lastmod>2026-08-21</lastmod>
+    <lastmod>2026-08-24</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
     <xhtml:link rel="alternate" hreflang="pt-PT" href="https://pmorais.pt/"/>
@@ -12,7 +12,7 @@
   </url>
   <url>
     <loc>https://pmorais.pt/osteopatia</loc>
-    <lastmod>2026-08-21</lastmod>
+    <lastmod>2026-08-24</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
     <xhtml:link rel="alternate" hreflang="pt-PT" href="https://pmorais.pt/osteopatia"/>
@@ -21,7 +21,7 @@
   </url>
   <url>
     <loc>https://pmorais.pt/sobre-mim</loc>
-    <lastmod>2026-08-21</lastmod>
+    <lastmod>2026-08-24</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="pt-PT" href="https://pmorais.pt/sobre-mim"/>
@@ -30,7 +30,7 @@
   </url>
   <url>
     <loc>https://pmorais.pt/blog</loc>
-    <lastmod>2026-08-21</lastmod>
+    <lastmod>2026-08-24</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="pt-PT" href="https://pmorais.pt/blog"/>
@@ -39,7 +39,7 @@
   </url>
   <url>
     <loc>https://pmorais.pt/en/</loc>
-    <lastmod>2026-08-21</lastmod>
+    <lastmod>2026-08-24</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
     <xhtml:link rel="alternate" hreflang="pt-PT" href="https://pmorais.pt/"/>
@@ -48,7 +48,7 @@
   </url>
   <url>
     <loc>https://pmorais.pt/en/osteopatia</loc>
-    <lastmod>2026-08-21</lastmod>
+    <lastmod>2026-08-24</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
     <xhtml:link rel="alternate" hreflang="pt-PT" href="https://pmorais.pt/osteopatia"/>
@@ -57,7 +57,7 @@
   </url>
   <url>
     <loc>https://pmorais.pt/en/sobre-mim</loc>
-    <lastmod>2026-08-21</lastmod>
+    <lastmod>2026-08-24</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="pt-PT" href="https://pmorais.pt/sobre-mim"/>
@@ -66,7 +66,7 @@
   </url>
   <url>
     <loc>https://pmorais.pt/en/blog</loc>
-    <lastmod>2026-08-21</lastmod>
+    <lastmod>2026-08-24</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="pt-PT" href="https://pmorais.pt/blog"/>
@@ -75,13 +75,13 @@
   </url>
   <url>
     <loc>https://pmorais.pt/llms.txt</loc>
-    <lastmod>2026-08-21</lastmod>
+    <lastmod>2026-08-24</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.4</priority>
   </url>
   <url>
     <loc>https://pmorais.pt/llms-full.txt</loc>
-    <lastmod>2026-08-21</lastmod>
+    <lastmod>2026-08-24</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.4</priority>
   </url>

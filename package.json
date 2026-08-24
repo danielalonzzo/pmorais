@@ -13,10 +13,11 @@
     "@playwright/test": "^1.61.1"
   },
   "scripts": {
-    "seo:apply": "node scripts/apply-seo.mjs && node scripts/normalize-internal-urls.mjs && node scripts/generate-discovery.mjs",
+    "seo:apply": "node scripts/apply-seo.mjs && node scripts/normalize-internal-urls.mjs && node scripts/generate-discovery.mjs && node scripts/generate-agent-discovery.mjs",
     "seo:generate": "node scripts/generate-discovery.mjs",
     "check:seo": "node scripts/check-seo.mjs",
-    "test": "npm run check:seo"
+    "test": "npm run check:seo",
+    "agents:generate": "node scripts/generate-agent-discovery.mjs"
   },
   "repository": {
     "type": "git",

@@ -107,7 +107,7 @@
     <title>Perfis de Alunos - Paulo Morais</title>
     <!-- Preloads -->
     <link rel="preload" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700;800&family=Poppins:wght@300;400;500;600;700&display=swap" as="style">
-    <link rel="preload" href="css/style.css?v=2.5.0" as="style">
+    <link rel="preload" href="css/style.css?v=2.5.1" as="style">
 
     <link rel="shortcut icon" type="image/png" href="images/logo/logo_ios_android.png">
     <link rel="icon" type="image/png" href="images/logo/logo_ios_android.png">
@@ -132,7 +132,7 @@
     <script nonce="pmorais-2026" src="https://unpkg.com/lucide@0.460.0/dist/umd/lucide.min.js" integrity="sha384-ieG+IKD0d/ZPXyCBTMVAbqsQdns8QGJR/e26WMw7M4fkaI/rHcS/YIoi+ah9WGge" crossorigin="anonymous" defer></script>
 
     <!-- Custom Style -->
-    <link rel="stylesheet" href="css/style.css?v=2.5.0">
+    <link rel="stylesheet" href="css/style.css?v=2.5.1">
 
     <style nonce="pmorais-2026">
         .profiles-container {
@@ -232,6 +232,28 @@
 
         .guest-feedback.error {
             color: #ff6b6b;
+        }
+
+        .btn-outline-danger {
+            background: transparent;
+            border: 1px solid rgba(239, 68, 68, 0.4);
+            color: #ef4444;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 18px;
+            border-radius: 10px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-outline-danger:hover {
+            background: rgba(239, 68, 68, 0.15);
+            border-color: #ef4444;
+            color: #ff6b6b;
+            transform: translateY(-2px);
         }
 
         .profiles-grid {
@@ -417,8 +439,8 @@
             letter-spacing: 2px;
         }
     </style>
-    <script nonce="pmorais-2026" src="js/lang.js?v=2.5.0" defer></script>
-    <script nonce="pmorais-2026" src="js/theme.js?v=2.5.0" defer></script>
+    <script nonce="pmorais-2026" src="js/lang.js?v=2.5.1" defer></script>
+    <script nonce="pmorais-2026" src="js/theme.js?v=2.5.1" defer></script>
 </head>
 
 <body class="bg-dark">
@@ -519,11 +541,32 @@
 
                 <p id="guest-feedback" class="guest-feedback"></p>
 
-                <div style="display:flex; gap:12px; justify-content:flex-end; margin-top:20px;">
-                    <button type="button" class="btn btn-outline" id="btn-cancel-guest">Cancelar</button>
-                    <button type="submit" class="btn btn-primary" id="btn-save-guest">Guardar</button>
+                <div class="guest-actions" style="display:flex; justify-content:space-between; align-items:center; margin-top:20px; gap:12px; flex-wrap:wrap;">
+                    <button type="button" class="btn btn-outline-danger" id="btn-delete-guest" style="display:none;">
+                        <i data-lucide="trash-2" aria-hidden="true" style="width:16px;"></i>
+                        <span id="btn-delete-guest-text">Apagar perfil</span>
+                    </button>
+                    <div style="display:flex; gap:12px; margin-left:auto;">
+                        <button type="button" class="btn btn-outline" id="btn-cancel-guest">Cancelar</button>
+                        <button type="submit" class="btn btn-primary" id="btn-save-guest">Guardar</button>
+                    </div>
                 </div>
             </form>
+        </div>
+    </div>
+
+    <!-- Modal de Confirmação Personalizado -->
+    <div id="modal-confirm" class="modal-overlay" style="z-index: 2100;">
+        <div class="modal-content" style="max-width: 440px; text-align: center; padding: 40px 30px;">
+            <div id="modal-confirm-icon" style="width: 60px; height: 60px; border-radius: 50%; background: rgba(239, 68, 68, 0.12); color: #ef4444; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px auto;">
+                <i data-lucide="alert-triangle" style="width: 30px; height: 30px;"></i>
+            </div>
+            <h2 id="modal-confirm-title" class="premium-title" style="margin-bottom: 15px; font-size: 1.4rem; color: var(--color-text);">Confirmação</h2>
+            <p id="modal-confirm-message" style="color: var(--color-text-dim); font-size: 0.95rem; line-height: 1.6; margin-bottom: 25px; white-space: pre-line;"></p>
+            <div style="display: flex; gap: 12px; justify-content: center; flex-wrap: wrap;">
+                <button type="button" class="btn btn-outline" id="btn-modal-confirm-cancel" style="min-width: 110px;">Cancelar</button>
+                <button type="button" class="btn btn-primary" id="btn-modal-confirm-ok" style="min-width: 110px; background: #ef4444; border-color: #ef4444; color: #fff;">Eliminar</button>
+            </div>
         </div>
     </div>
 
@@ -590,19 +633,19 @@
         </div>
 
         <div class="footer-bar-elysium">
-            <div class="crafted-text"><a href="https://elysiumdr.eu" target="_blank" rel="noopener noreferrer">Desenvolvido por Elysium λ Development & Research.</a><br><span class="version-label">V2.5.0</span></div>
+            <div class="crafted-text"><a href="https://elysiumdr.eu" target="_blank" rel="noopener noreferrer">Desenvolvido por Elysium λ Development & Research.</a><br><span class="version-label">V2.5.1</span></div>
         </div>
     </footer>
 
     <!-- Scripts -->
-    <script nonce="pmorais-2026" type="module" src="js/admin-perfis.js?v=2.5.0"></script>
-    <script nonce="pmorais-2026" src="js/script.js?v=2.5.0" defer></script>
+    <script nonce="pmorais-2026" type="module" src="js/admin-perfis.js?v=2.5.1"></script>
+    <script nonce="pmorais-2026" src="js/script.js?v=2.5.1" defer></script>
     <script nonce="pmorais-2026">
         document.addEventListener('DOMContentLoaded', () => {
             if (window.lucide) window.lucide.createIcons();
         });
     </script>
-    <script nonce="pmorais-2026" src="js/cookie-consent.js?v=2.5.0" defer></script>
+    <script nonce="pmorais-2026" src="js/cookie-consent.js?v=2.5.1" defer></script>
 </body>
 
 </html>

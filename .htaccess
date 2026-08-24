@@ -28,6 +28,18 @@ RewriteCond %{HTTPS} !=on [OR]
 RewriteCond %{HTTP_HOST} !^pmorais\.pt$ [NC]
 RewriteRule ^ https://pmorais.pt%{REQUEST_URI} [R=301,L,NE]
 
+# Markdown for Agents: a request that asks for text/markdown is answered with
+# the markdown rendition of the same page, generated into agents/md/ by
+# scripts/generate-agent-discovery.mjs. Every other client still gets the HTML.
+RewriteCond %{HTTP:Accept} text/markdown [NC]
+RewriteCond %{DOCUMENT_ROOT}/agents/md/$1index.md -f
+RewriteRule ^(.*/)?$ agents/md/$1index.md [L]
+
+RewriteCond %{HTTP:Accept} text/markdown [NC]
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{DOCUMENT_ROOT}/agents/md/$1.md -f
+RewriteRule ^(.+?)/?$ agents/md/$1.md [L]
+
 # Resolve clean URLs to their HTML file without changing the browser URL.
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
@@ -39,6 +51,7 @@ RewriteRule ^(.+?)/?$ $1.html [L]
   AddOutputFilterByType DEFLATE text/html text/plain text/css text/javascript
   AddOutputFilterByType DEFLATE application/javascript application/json application/ld+json
   AddOutputFilterByType DEFLATE application/manifest+json application/xml image/svg+xml
+  AddOutputFilterByType DEFLATE text/markdown application/linkset+json application/vnd.oai.openapi+json
   AddOutputFilterByType DEFLATE font/ttf font/otf application/vnd.ms-fontobject
 </IfModule>
 
@@ -77,6 +90,42 @@ RewriteRule ^(.+?)/?$ $1.html [L]
     Header set Cache-Control "no-cache, must-revalidate"
     Header set Pragma "no-cache"
     Header set Expires "0"
+  </FilesMatch>
+
+  # RFC 8288 agent discovery. Mirrors LINK_HEADER_RELATIONS in
+  # scripts/agent-config.mjs; scripts/check-seo.mjs fails if the two drift.
+  # Vary: Accept is required because the same URL also answers text/markdown.
+  <FilesMatch "(?i)\.html$">
+    Header always append Vary "Accept"
+    Header always add Link "</.well-known/api-catalog>; rel=\"api-catalog\"; type=\"application/linkset+json\""
+    Header always add Link "</openapi.json>; rel=\"service-desc\"; type=\"application/vnd.oai.openapi+json;version=3.1\""
+    Header always add Link "</llms-full.txt>; rel=\"service-doc\"; type=\"text/plain\""
+    Header always add Link "</llms.txt>; rel=\"describedby\"; type=\"text/plain\""
+    Header always add Link "</.well-known/ai-catalog.json>; rel=\"service-meta\"; type=\"application/json\""
+    Header always add Link "</.well-known/ai-catalog.json>; rel=\"ai-catalog\"; type=\"application/json\""
+    Header always add Link "</.well-known/agent-skills/index.json>; rel=\"describedby\"; type=\"application/json\""
+    Header always add Link "</auth.md>; rel=\"describedby\"; type=\"text/markdown\""
+    Header always add Link "</sitemap.xml>; rel=\"sitemap\"; type=\"application/xml\""
+    Header always add Link "</politica-privacidade>; rel=\"privacy-policy\""
+    Header always add Link "</termos-e-condicoes>; rel=\"terms-of-service\""
+  </FilesMatch>
+
+  # Root-level agent documents. The .well-known, api and agents/md directories
+  # carry their own generated .htaccess.
+  <Files "openapi.json">
+    Header always set Content-Type "application/vnd.oai.openapi+json;version=3.1"
+    Header always set Access-Control-Allow-Origin "*"
+    Header always set Cache-Control "public, max-age=300, must-revalidate"
+  </Files>
+
+  <Files "auth.md">
+    Header always set Content-Type "text/markdown; charset=utf-8"
+    Header always set Access-Control-Allow-Origin "*"
+    Header always set Cache-Control "public, max-age=300, must-revalidate"
+  </Files>
+
+  <FilesMatch "(?i)^(?:robots\.txt|llms(?:-full)?\.txt|sitemap\.xml)$">
+    Header always set Access-Control-Allow-Origin "*"
   </FilesMatch>
 
   Header always set Strict-Transport-Security "max-age=86400"

@@ -1,0 +1,99 @@
+{
+  "api": "https://pmorais.pt/api/v1",
+  "version": "v1",
+  "generated": "2026-08-24",
+  "license": "https://pmorais.pt/termos-e-condicoes",
+  "documentation": "https://pmorais.pt/llms-full.txt",
+  "count": 8,
+  "pages": [
+    {
+      "path": "/",
+      "canonical": "https://pmorais.pt/",
+      "language": "pt-PT",
+      "alternate": "https://pmorais.pt/en/",
+      "title": "Treino Personalizado e Osteopatia | Paulo Morais · Lisboa",
+      "description": "Treino personalizado, treino online e osteopatia em Lisboa. Paulo Morais — personal trainer com mais de 20 anos de experiência. Treino adaptado a si, acessível e eficaz.",
+      "markdown": "https://pmorais.pt/agents/md/index.md",
+      "markdownTokens": 3124,
+      "updated": "2026-08-24"
+    },
+    {
+      "path": "/osteopatia",
+      "canonical": "https://pmorais.pt/osteopatia",
+      "language": "pt-PT",
+      "alternate": "https://pmorais.pt/en/osteopatia",
+      "title": "Osteopatia Lisboa · Alívio de Dores e Mobilidade | Paulo Morais",
+      "description": "Osteopatia em Lisboa com Paulo Morais: acompanhamento personalizado para alívio de dores, melhoria da mobilidade e bem-estar, com uma abordagem manual integrativa.",
+      "markdown": "https://pmorais.pt/agents/md/osteopatia.md",
+      "markdownTokens": 2706,
+      "updated": "2026-08-24"
+    },
+    {
+      "path": "/sobre-mim",
+      "canonical": "https://pmorais.pt/sobre-mim",
+      "language": "pt-PT",
+      "alternate": "https://pmorais.pt/en/sobre-mim",
+      "title": "Sobre Paulo Morais · Personal Trainer e Osteopata em Lisboa",
+      "description": "Conheça Paulo Morais, personal trainer e técnico de osteopatia em Lisboa com mais de 20 anos de experiência em treino personalizado, recuperação e exercício oncológico.",
+      "markdown": "https://pmorais.pt/agents/md/sobre-mim.md",
+      "markdownTokens": 754,
+      "updated": "2026-08-24"
+    },
+    {
+      "path": "/blog",
+      "canonical": "https://pmorais.pt/blog",
+      "language": "pt-PT",
+      "alternate": "https://pmorais.pt/en/blog",
+      "title": "Blog de Treino, Osteopatia e Bem-Estar | Paulo Morais",
+      "description": "Artigos de Paulo Morais sobre treino personalizado, osteopatia, exercício em oncologia, recuperação, saúde e bem-estar.",
+      "markdown": "https://pmorais.pt/agents/md/blog.md",
+      "markdownTokens": 274,
+      "updated": "2026-08-24"
+    },
+    {
+      "path": "/en/",
+      "canonical": "https://pmorais.pt/en/",
+      "language": "en-GB",
+      "alternate": "https://pmorais.pt/",
+      "title": "Personal Training and Osteopathy | Paulo Morais · Lisbon",
+      "description": "Personal training, online coaching and osteopathy in Lisbon. Paulo Morais brings more than 20 years of experience to accessible, effective and individual support.",
+      "markdown": "https://pmorais.pt/agents/md/en/index.md",
+      "markdownTokens": 2986,
+      "updated": "2026-08-24"
+    },
+    {
+      "path": "/en/osteopatia",
+      "canonical": "https://pmorais.pt/en/osteopatia",
+      "language": "en-GB",
+      "alternate": "https://pmorais.pt/osteopatia",
+      "title": "Osteopathy in Lisbon · Pain Relief and Mobility | Paulo Morais",
+      "description": "Osteopathy in Lisbon with Paulo Morais: personalised support for pain relief, improved mobility and wellbeing through an integrated manual approach.",
+      "markdown": "https://pmorais.pt/agents/md/en/osteopatia.md",
+      "markdownTokens": 2636,
+      "updated": "2026-08-24"
+    },
+    {
+      "path": "/en/sobre-mim",
+      "canonical": "https://pmorais.pt/en/sobre-mim",
+      "language": "en-GB",
+      "alternate": "https://pmorais.pt/sobre-mim",
+      "title": "About Paulo Morais · Personal Trainer and Osteopath in Lisbon",
+      "description": "Meet Paulo Morais, a personal trainer and osteopathy practitioner in Lisbon with more than 20 years of experience in personalised training, recovery and oncology exercise.",
+      "markdown": "https://pmorais.pt/agents/md/en/sobre-mim.md",
+      "markdownTokens": 744,
+      "updated": "2026-08-24"
+    },
+    {
+      "path": "/en/blog",
+      "canonical": "https://pmorais.pt/en/blog",
+      "language": "en-GB",
+      "alternate": "https://pmorais.pt/blog",
+      "title": "Training, Osteopathy and Wellbeing Blog | Paulo Morais",
+      "description": "Articles by Paulo Morais about personal training, osteopathy, oncology exercise, recovery, health and wellbeing.",
+      "markdown": "https://pmorais.pt/agents/md/en/blog.md",
+      "markdownTokens": 272,
+      "updated": "2026-08-24"
+    }
+  ],
+  "note": "Send Accept: text/markdown to any canonical URL above to receive the same markdown rendition inline."
+}

@@ -1,0 +1,145 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Paulo Morais public content API",
+    "version": "1.0.0+2026-08-24",
+    "summary": "Read-only, unauthenticated description of the public Paulo Morais website.",
+    "description": "A static, read-only API describing the public content of https://pmorais.pt: the services published on the site, the public contact channels and the canonical pages with their markdown renditions.\n\nThere is no booking, payment or client-data endpoint. The client area is authenticated and human-only; see https://pmorais.pt/auth.md.\n\nNo price, schedule or availability is published anywhere on the site and none may be inferred from this API.",
+    "contact": {
+      "name": "Paulo Morais — Your Own Workout",
+      "email": "pt@pmorais.pt",
+      "url": "https://pmorais.pt"
+    },
+    "license": {
+      "name": "Website terms and conditions",
+      "url": "https://pmorais.pt/termos-e-condicoes"
+    }
+  },
+  "servers": [
+    {
+      "url": "https://pmorais.pt/api/v1",
+      "description": "Production"
+    }
+  ],
+  "externalDocs": {
+    "description": "Expanded factual representation",
+    "url": "https://pmorais.pt/llms-full.txt"
+  },
+  "paths": {
+    "/site.json": {
+      "get": {
+        "operationId": "getSite",
+        "summary": "Site identity, languages, discovery resources and interpretation limits",
+        "tags": [
+          "site"
+        ],
+        "responses": {
+          "200": {
+            "description": "Site identity document",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/services.json": {
+      "get": {
+        "operationId": "listServices",
+        "summary": "The services published on the website, bilingual, with their delivery modes",
+        "tags": [
+          "content"
+        ],
+        "responses": {
+          "200": {
+            "description": "Service catalogue. `pricing` is always null.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/contact.json": {
+      "get": {
+        "operationId": "getContact",
+        "summary": "Public contact channels and the URLs of the contact forms",
+        "tags": [
+          "content"
+        ],
+        "responses": {
+          "200": {
+            "description": "Contact document. `bookingApi` is always null.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/pages.json": {
+      "get": {
+        "operationId": "listPages",
+        "summary": "Canonical public pages with language, alternate and markdown rendition URLs",
+        "tags": [
+          "content"
+        ],
+        "responses": {
+          "200": {
+            "description": "Page index",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/status.json": {
+      "get": {
+        "operationId": "getStatus",
+        "summary": "Build and availability status of this API",
+        "tags": [
+          "site"
+        ],
+        "responses": {
+          "200": {
+            "description": "Status document",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "tags": [
+    {
+      "name": "site",
+      "description": "Identity and operational metadata"
+    },
+    {
+      "name": "content",
+      "description": "Public editorial content"
+    }
+  ]
+}

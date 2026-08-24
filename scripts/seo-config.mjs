@@ -1,6 +1,6 @@
 export const SITE_ORIGIN = 'https://pmorais.pt';
-export const LAST_MODIFIED = '2026-08-21';
-export const ASSET_VERSION = '2.5.0';
+export const LAST_MODIFIED = '2026-08-24';
+export const ASSET_VERSION = '2.5.1';
 
 export const PUBLIC_PAGES = [
   {

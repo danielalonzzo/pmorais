@@ -3,7 +3,7 @@
  * A European company
  */
 // Import the functions you need from the SDKs you need
-import { auth, db } from './firebase-config.js?v=2.5.0';
+import { auth, db } from './firebase-config.js?v=2.5.1';
 import {
     signInWithEmailAndPassword,
     createUserWithEmailAndPassword,
@@ -26,7 +26,7 @@ import {
     onSnapshot,
     deleteDoc
 } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
-import { initCalendarMode } from './calendar.js?v=2.5.0';
+import { initCalendarMode } from './calendar.js?v=2.5.1';
 
 // Um servidor estático de desenvolvimento não tem as reescritas de URL limpo que
 // existem em produção (.htaccess e firebase.json), por isso "perfis" dá 404 em

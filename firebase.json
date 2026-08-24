@@ -21,7 +21,6 @@
     "cleanUrls": true,
     "ignore": [
       "firebase.json",
-      "**/.*",
       "**/node_modules/**",
       "**/*.py",
       "**/*.log",
@@ -38,14 +37,22 @@
       "FILE_NAME",
       "README.md",
       "implementation_plan.md",
-      "**/.*/**",
-      ".git/**",
-      ".icloud-duplicados/**",
       "**/*.mov",
       "**/*.eps",
       "**/*.heic",
       "logs.txt",
-      "convert_webp.js"
+      "convert_webp.js",
+      ".git/**",
+      ".github/**",
+      ".claude/**",
+      ".firebase/**",
+      ".icloud-duplicados/**",
+      ".firebaserc",
+      ".cpanel.yml",
+      ".gitignore",
+      ".htaccess",
+      "**/.htaccess",
+      "**/.DS_Store"
     ],
     "headers": [
       {
@@ -119,6 +126,14 @@
           {
             "key": "Cache-Control",
             "value": "no-cache, must-revalidate"
+          },
+          {
+            "key": "Link",
+            "value": "</.well-known/api-catalog>; rel=\"api-catalog\"; type=\"application/linkset+json\", </openapi.json>; rel=\"service-desc\"; type=\"application/vnd.oai.openapi+json;version=3.1\", </llms-full.txt>; rel=\"service-doc\"; type=\"text/plain\", </llms.txt>; rel=\"describedby\"; type=\"text/plain\", </.well-known/ai-catalog.json>; rel=\"service-meta\"; type=\"application/json\", </.well-known/ai-catalog.json>; rel=\"ai-catalog\"; type=\"application/json\", </.well-known/agent-skills/index.json>; rel=\"describedby\"; type=\"application/json\", </auth.md>; rel=\"describedby\"; type=\"text/markdown\", </sitemap.xml>; rel=\"sitemap\"; type=\"application/xml\", </politica-privacidade>; rel=\"privacy-policy\", </termos-e-condicoes>; rel=\"terms-of-service\""
+          },
+          {
+            "key": "Vary",
+            "value": "Accept"
           }
         ]
       },
@@ -141,6 +156,108 @@
           {
             "key": "Content-Type",
             "value": "application/xml; charset=utf-8"
+          },
+          {
+            "key": "Cache-Control",
+            "value": "no-cache, must-revalidate"
+          }
+        ]
+      },
+      {
+        "source": "/{,en}",
+        "headers": [
+          {
+            "key": "Link",
+            "value": "</.well-known/api-catalog>; rel=\"api-catalog\"; type=\"application/linkset+json\", </openapi.json>; rel=\"service-desc\"; type=\"application/vnd.oai.openapi+json;version=3.1\", </llms-full.txt>; rel=\"service-doc\"; type=\"text/plain\", </llms.txt>; rel=\"describedby\"; type=\"text/plain\", </.well-known/ai-catalog.json>; rel=\"service-meta\"; type=\"application/json\", </.well-known/ai-catalog.json>; rel=\"ai-catalog\"; type=\"application/json\", </.well-known/agent-skills/index.json>; rel=\"describedby\"; type=\"application/json\", </auth.md>; rel=\"describedby\"; type=\"text/markdown\", </sitemap.xml>; rel=\"sitemap\"; type=\"application/xml\", </politica-privacidade>; rel=\"privacy-policy\", </termos-e-condicoes>; rel=\"terms-of-service\""
+          },
+          {
+            "key": "Vary",
+            "value": "Accept"
+          }
+        ]
+      },
+      {
+        "source": "/.well-known/api-catalog",
+        "headers": [
+          {
+            "key": "Content-Type",
+            "value": "application/linkset+json; charset=utf-8"
+          },
+          {
+            "key": "Access-Control-Allow-Origin",
+            "value": "*"
+          },
+          {
+            "key": "Cache-Control",
+            "value": "public, max-age=300, must-revalidate"
+          }
+        ]
+      },
+      {
+        "source": "/openapi.json",
+        "headers": [
+          {
+            "key": "Content-Type",
+            "value": "application/vnd.oai.openapi+json;version=3.1"
+          },
+          {
+            "key": "Access-Control-Allow-Origin",
+            "value": "*"
+          },
+          {
+            "key": "Cache-Control",
+            "value": "public, max-age=300, must-revalidate"
+          }
+        ]
+      },
+      {
+        "source": "/.well-known/**/*.json",
+        "headers": [
+          {
+            "key": "Content-Type",
+            "value": "application/json; charset=utf-8"
+          },
+          {
+            "key": "Access-Control-Allow-Origin",
+            "value": "*"
+          },
+          {
+            "key": "Cache-Control",
+            "value": "public, max-age=300, must-revalidate"
+          }
+        ]
+      },
+      {
+        "source": "/api/**/*.json",
+        "headers": [
+          {
+            "key": "Content-Type",
+            "value": "application/json; charset=utf-8"
+          },
+          {
+            "key": "Access-Control-Allow-Origin",
+            "value": "*"
+          },
+          {
+            "key": "Cache-Control",
+            "value": "public, max-age=300, must-revalidate"
+          }
+        ]
+      },
+      {
+        "source": "**/*.md",
+        "headers": [
+          {
+            "key": "Content-Type",
+            "value": "text/markdown; charset=utf-8"
+          },
+          {
+            "key": "Access-Control-Allow-Origin",
+            "value": "*"
+          },
+          {
+            "key": "X-Robots-Tag",
+            "value": "noindex, follow"
           },
           {
             "key": "Cache-Control",

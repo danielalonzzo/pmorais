@@ -1,0 +1,84 @@
+{
+  "specVersion": "1.0",
+  "host": {
+    "identifier": "did:web:pmorais.pt",
+    "displayName": "Paulo Morais — Your Own Workout",
+    "url": "https://pmorais.pt",
+    "description": "Personal training, online training, adapted exercise in oncology and osteopathy in Lisbon, Portugal. Published in European Portuguese and British English."
+  },
+  "entries": [
+    {
+      "identifier": "urn:air:pmorais.pt:api:openapi",
+      "displayName": "Public content API (OpenAPI 3.1)",
+      "description": "Read-only description of the static JSON API covering services, contact channels and canonical pages.",
+      "type": "application/vnd.oai.openapi+json;version=3.1",
+      "url": "https://pmorais.pt/openapi.json",
+      "representativeQueries": [
+        "what API does pmorais.pt expose",
+        "machine readable description of Paulo Morais services",
+        "openapi schema for pmorais.pt"
+      ]
+    },
+    {
+      "identifier": "urn:air:pmorais.pt:api:services",
+      "displayName": "Services catalogue",
+      "description": "The four services published on the website, in Portuguese and English, with delivery modes and interpretation limits.",
+      "type": "application/json",
+      "url": "https://pmorais.pt/api/v1/services.json",
+      "representativeQueries": [
+        "what services does Paulo Morais offer",
+        "does Paulo Morais do online personal training",
+        "osteopathy in Lisbon with Paulo Morais",
+        "adapted exercise for cancer patients in Lisbon"
+      ]
+    },
+    {
+      "identifier": "urn:air:pmorais.pt:api:contact",
+      "displayName": "Public contact channels",
+      "description": "Email, telephone, WhatsApp, Instagram and the URLs of the published contact forms.",
+      "type": "application/json",
+      "url": "https://pmorais.pt/api/v1/contact.json",
+      "representativeQueries": [
+        "how do I contact Paulo Morais",
+        "email address for pmorais.pt",
+        "book a session with Paulo Morais"
+      ]
+    },
+    {
+      "identifier": "urn:air:pmorais.pt:api:pages",
+      "displayName": "Canonical page index",
+      "description": "The eight canonical public pages with language, reciprocal alternate and markdown rendition URL.",
+      "type": "application/json",
+      "url": "https://pmorais.pt/api/v1/pages.json",
+      "representativeQueries": [
+        "list the pages of pmorais.pt",
+        "markdown version of the Paulo Morais website",
+        "english pages on pmorais.pt"
+      ]
+    },
+    {
+      "identifier": "urn:air:pmorais.pt:content:llms-full",
+      "displayName": "Expanded factual representation",
+      "description": "Long-form prose description of the organisation, services, background and interpretation limits, in English and Portuguese.",
+      "type": "text/plain",
+      "url": "https://pmorais.pt/llms-full.txt",
+      "representativeQueries": [
+        "who is Paulo Morais",
+        "what experience does Paulo Morais have",
+        "what can and cannot be claimed about Paulo Morais"
+      ]
+    },
+    {
+      "identifier": "urn:air:pmorais.pt:skills:index",
+      "displayName": "Agent skills index",
+      "description": "Discovery index for the SKILL.md artifacts published by this site.",
+      "type": "application/json",
+      "url": "https://pmorais.pt/.well-known/agent-skills/index.json",
+      "representativeQueries": [
+        "agent skills published by pmorais.pt",
+        "how should an agent interact with Paulo Morais",
+        "skill for booking a session with Paulo Morais"
+      ]
+    }
+  ]
+}

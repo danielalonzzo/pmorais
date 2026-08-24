@@ -1,6 +1,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { NON_PUBLIC_DESCRIPTIONS, PUBLIC_PAGES, SITE_ORIGIN } from './seo-config.mjs';
+import { MARKDOWN_DIR } from './agent-config.mjs';
 
 const imageUrl = `${SITE_ORIGIN}/images/logo/paulo_morais-08.png`;
 
@@ -50,11 +51,17 @@ ${json}
     </script>`;
 }
 
+function markdownRelative(pagePath) {
+  const trimmed = pagePath.replace(/^\/+/, '');
+  return trimmed === '' || trimmed.endsWith('/') ? `${trimmed}index.md` : `${trimmed}.md`;
+}
+
 function seoBlock(page) {
   const canonical = new URL(page.path, SITE_ORIGIN).href;
   const { portuguesePath, englishPath } = pageAlternates(page);
   const alternateLocale = page.language === 'pt-PT' ? 'en_GB' : 'pt_PT';
   const locale = page.language.replace('-', '_');
+  const markdownUrl = `${SITE_ORIGIN}/${MARKDOWN_DIR}/${markdownRelative(page.path)}`;
   return `    <!-- SEO Architecture: generated from scripts/seo-config.mjs -->
     <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
     <meta name="googlebot" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
@@ -65,6 +72,9 @@ function seoBlock(page) {
     <link rel="alternate" hreflang="x-default" href="${new URL(portuguesePath, SITE_ORIGIN).href}">
     <link rel="alternate" type="text/plain" href="${SITE_ORIGIN}/llms.txt" title="LLM summary">
     <link rel="alternate" type="text/plain" href="${SITE_ORIGIN}/llms-full.txt" title="Expanded LLM content">
+    <link rel="alternate" type="text/markdown" href="${markdownUrl}" title="Markdown rendition">
+    <link rel="ai-catalog" href="/.well-known/ai-catalog.json">
+    <link rel="service-desc" type="application/vnd.oai.openapi+json;version=3.1" href="/openapi.json">
     <meta property="og:type" content="${page.ogType}">
     <meta property="og:site_name" content="Paulo Morais">
     <meta property="og:url" content="${canonical}">
@@ -117,6 +127,15 @@ for (const page of PUBLIC_PAGES) {
   // Some older biography templates placed their SEO block immediately before
   // JSON-LD, while other templates placed it before the PWA block.
   html = html.replace(/    <!-- SEO Meta Tags -->[\s\S]*?(?=    <!-- (?:PWA Meta Tags|Schema\.org JSON-LD))/g, '');
+
+  // Wire WebMCP tool registration alongside script.js
+  if (!html.includes('webmcp.js')) {
+    const anchor = /([ \t]*)<script nonce="pmorais-2026" src="((?:\.\.\/)?js\/)script\.js(?:\?v=[^"]*)?" defer><\/script>/;
+    const match = anchor.exec(html);
+    if (match) {
+      html = html.replace(anchor, `${match[0]}\n${match[1]}<script nonce="pmorais-2026" src="${match[2]}webmcp.js" defer></script>`);
+    }
+  }
 
   fs.writeFileSync(page.file, html);
 }

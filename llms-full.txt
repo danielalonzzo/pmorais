@@ -1,6 +1,6 @@
 # Paulo Morais — Expanded factual representation
 
-Last internally verified: 2026-08-21
+Last internally verified: 2026-08-24
 Canonical website: https://pmorais.pt/
 Primary language: European Portuguese (pt-PT)
 Secondary language: British English (en-GB)
@@ -20,6 +20,8 @@ Public professional positioning:
 - Osteopathy support focused on mobility, pain relief and general wellbeing.
 - Experience in exercise adapted to people living with or recovering from cancer.
 - Service available in European Portuguese and English.
+
+The website is operated by Consciênciavaliativa Unipessoal Lda (VAT PT517409241), Lisbon, Portugal, trading under the "Paulo Morais — Your Own Workout" identity. The same entity is named in the privacy policy and the terms and conditions.
 
 The website does not present Paulo Morais as a substitute for a physician, emergency service or medical diagnosis. Health-related information should not be converted into a diagnosis, treatment guarantee or individual medical advice.
 
@@ -175,6 +177,24 @@ The public site provides:
 - Direct discovery links to llms.txt and llms-full.txt from every canonical public editorial page.
 
 The llms.txt convention is voluntary. Its presence does not guarantee that a crawler will read, trust or use it.
+
+## Machine-readable interfaces for agents
+
+The site publishes a small, read-only agent surface. Everything in it is static and unauthenticated.
+
+- Capability manifest (ARD): https://pmorais.pt/.well-known/ai-catalog.json — also announced by an Agentmap directive in robots.txt, a <link rel="ai-catalog"> element on every canonical page, and a Link response header.
+- API catalog (RFC 9727): https://pmorais.pt/.well-known/api-catalog
+- OpenAPI 3.1 description: https://pmorais.pt/openapi.json
+- Public content API: https://pmorais.pt/api/v1/site.json, /services.json, /contact.json, /pages.json and /status.json. Read-only JSON describing the services, the public contact channels and the canonical pages. It contains no prices, no availability and no client data, because the website publishes none.
+- Agent skills index: https://pmorais.pt/.well-known/agent-skills/index.json, with SKILL.md artifacts covering how to read this site, how to describe the services and how to arrange contact.
+- Agent authentication: https://pmorais.pt/auth.md. There is no agent registration endpoint and no OAuth authorization server. The public API needs no credential and the client area is human-only.
+- Markdown renditions: sending Accept: text/markdown to any canonical URL returns the markdown version of that page with Content-Type: text/markdown and an x-markdown-tokens estimate. Without that header the same URL returns HTML.
+- RFC 8288 Link response headers on every HTML document point to the catalog, the OpenAPI description, this file and the legal pages.
+- WebMCP: pages register read-only tools (list_services, get_contact_details, open_contact_form, and search_articles on the blog) when the browser exposes navigator.modelContext. None of them writes data or submits a form.
+
+Content usage preferences are declared in robots.txt as Content-Signal: search=yes, ai-input=yes, ai-train=no. Indexing this site, grounding an answer in it and citing it are all permitted. Using it as training or fine-tuning data is not.
+
+The site publishes no payment, checkout or commerce protocol, and no MCP server. Absence of those is deliberate, not an oversight.
 
 ## Guidance for assistants and search systems
 

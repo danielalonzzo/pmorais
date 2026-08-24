@@ -1,4 +1,4 @@
-import { auth, db } from './firebase-config.js?v=2.5.0';
+import { auth, db } from './firebase-config.js?v=2.5.1';
 import { 
     collection, 
     getDocs,
@@ -6,11 +6,12 @@ import {
     doc, 
     getDoc, 
     setDoc,
+    deleteDoc,
     query, 
     where 
 } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
-import { buildGuestClientId } from './guest-clients.js?v=2.5.0';
+import { buildGuestClientId } from './guest-clients.js?v=2.5.1';
 
 // [SEC-03] Conditional logger — silent in production
 const _isDev = location.hostname === 'localhost' || location.hostname === '127.0.0.1';
@@ -279,6 +280,7 @@ function escapeHtml(value) {
 // telemóvel actualiza a ficha em vez de criar uma segunda.
 
 let editingGuestId = null;
+let editingGuestData = null;
 
 function setGuestFeedback(message, isError) {
     if (!guestFeedback) return;
@@ -286,11 +288,98 @@ function setGuestFeedback(message, isError) {
     guestFeedback.classList.toggle('error', isError === true);
 }
 
+function showConfirmDialog({ title, message, okText, cancelText, isDanger = true }) {
+    return new Promise((resolve) => {
+        const isPt = !document.documentElement.lang.toLowerCase().startsWith('en');
+        const confirmModal = document.getElementById('modal-confirm');
+        const titleEl = document.getElementById('modal-confirm-title');
+        const msgEl = document.getElementById('modal-confirm-message');
+        const okBtn = document.getElementById('btn-modal-confirm-ok');
+        const cancelBtn = document.getElementById('btn-modal-confirm-cancel');
+        const iconContainer = document.getElementById('modal-confirm-icon');
+
+        if (!confirmModal || !titleEl || !msgEl || !okBtn || !cancelBtn) {
+            const confirmed = window.confirm(`${title}\n\n${message}`);
+            resolve(confirmed);
+            return;
+        }
+
+        titleEl.textContent = title;
+        msgEl.textContent = message;
+        okBtn.textContent = okText || (isDanger ? (isPt ? 'Eliminar' : 'Delete') : 'OK');
+        cancelBtn.textContent = cancelText || (isPt ? 'Cancelar' : 'Cancel');
+
+        if (isDanger) {
+            okBtn.style.background = '#ef4444';
+            okBtn.style.borderColor = '#ef4444';
+            okBtn.style.color = '#ffffff';
+            if (iconContainer) {
+                iconContainer.style.background = 'rgba(239, 68, 68, 0.12)';
+                iconContainer.style.color = '#ef4444';
+                iconContainer.innerHTML = '<i data-lucide="alert-triangle" style="width: 30px; height: 30px;"></i>';
+            }
+        } else {
+            okBtn.style.background = 'var(--color-primary)';
+            okBtn.style.borderColor = 'var(--color-primary)';
+            okBtn.style.color = '#000000';
+            if (iconContainer) {
+                iconContainer.style.background = 'rgba(230, 174, 23, 0.12)';
+                iconContainer.style.color = 'var(--color-primary)';
+                iconContainer.innerHTML = '<i data-lucide="help-circle" style="width: 30px; height: 30px;"></i>';
+            }
+        }
+
+        if (window.lucide) window.lucide.createIcons();
+
+        const cleanup = () => {
+            confirmModal.classList.remove('active');
+            okBtn.removeEventListener('click', onOk);
+            cancelBtn.removeEventListener('click', onCancel);
+            confirmModal.removeEventListener('click', onBackdrop);
+        };
+
+        const onOk = () => {
+            cleanup();
+            resolve(true);
+        };
+
+        const onCancel = () => {
+            cleanup();
+            resolve(false);
+        };
+
+        const onBackdrop = (e) => {
+            if (e.target === confirmModal) {
+                cleanup();
+                resolve(false);
+            }
+        };
+
+        okBtn.addEventListener('click', onOk);
+        cancelBtn.addEventListener('click', onCancel);
+        confirmModal.addEventListener('click', onBackdrop);
+
+        confirmModal.classList.add('active');
+    });
+}
+
 function openGuestModal(existing) {
+    const isPt = !document.documentElement.lang.toLowerCase().startsWith('en');
     editingGuestId = existing ? existing.id : null;
+    editingGuestData = existing || null;
+
     if (guestTitle) {
-        guestTitle.textContent = existing ? 'Editar cliente sem conta' : 'Novo cliente sem conta';
+        guestTitle.textContent = existing
+            ? (isPt ? 'Editar cliente sem conta' : 'Edit client without account')
+            : (isPt ? 'Novo cliente sem conta' : 'New client without account');
     }
+
+    const btnDeleteGuest = document.getElementById('btn-delete-guest');
+    if (btnDeleteGuest) {
+        btnDeleteGuest.style.display = existing ? 'inline-flex' : 'none';
+        btnDeleteGuest.disabled = false;
+    }
+
     document.getElementById('guest-name').value = existing?.name || '';
     document.getElementById('guest-phone').value = existing?.phone || '';
     document.getElementById('guest-notes').value = existing?.observations || '';
@@ -303,11 +392,126 @@ function openGuestModal(existing) {
 function closeGuestModal() {
     guestModal.classList.remove('active');
     editingGuestId = null;
+    editingGuestData = null;
 }
 
 document.getElementById('btn-new-guest')?.addEventListener('click', () => openGuestModal(null));
 document.getElementById('btn-close-guest')?.addEventListener('click', closeGuestModal);
 document.getElementById('btn-cancel-guest')?.addEventListener('click', closeGuestModal);
+
+// Borrar perfil de cliente sem conta com verificação de histórico
+document.getElementById('btn-delete-guest')?.addEventListener('click', async () => {
+    if (!editingGuestId) return;
+
+    const isPt = !document.documentElement.lang.toLowerCase().startsWith('en');
+    const clientName = document.getElementById('guest-name').value.trim() || editingGuestData?.name || (isPt ? 'este perfil' : 'this profile');
+
+    // 1º Popup: Confirmar se deseja eliminar o perfil
+    const confirm1 = await showConfirmDialog({
+        title: isPt ? 'Eliminar Perfil' : 'Delete Profile',
+        message: isPt
+            ? `Tem a certeza de que deseja eliminar o perfil de «${clientName}»?`
+            : `Are you sure you want to delete the profile of "${clientName}"?`,
+        okText: isPt ? 'Continuar' : 'Continue',
+        cancelText: isPt ? 'Cancelar' : 'Cancel',
+        isDanger: true
+    });
+
+    if (!confirm1) return;
+
+    // Verificar se o perfil possui histórico ou dados armazenados no Firestore
+    setGuestFeedback(isPt ? 'A verificar dados do perfil...' : 'Checking profile data...');
+    let hasStoredData = false;
+    let bookingCount = 0;
+    try {
+        const [bookingSnap, userSnap] = await Promise.all([
+            getDoc(doc(db, 'weekly_schedules', `user_${editingGuestId}`)),
+            getDoc(doc(db, 'users', editingGuestId))
+        ]);
+
+        if (bookingSnap.exists()) {
+            const bookings = bookingSnap.data().bookings || [];
+            bookingCount = bookings.length;
+            if (bookingCount > 0) hasStoredData = true;
+        }
+
+        if (userSnap.exists()) {
+            const u = userSnap.data();
+            const hasObservations = Boolean(u.observations && u.observations.trim());
+            const hasPhysical = Boolean(u.weight || u.height || u.fatMass || u.muscleMass || u.healthIssues || u.physicalLimits || u.birthdate || u.age);
+            if (hasObservations || hasPhysical) {
+                hasStoredData = true;
+            }
+        }
+    } catch (checkErr) {
+        logger.warn('Error checking stored data for guest client:', checkErr);
+    }
+    setGuestFeedback('');
+
+    // 2º Popup: Apenas se possuir histórico ou dados associados
+    if (hasStoredData) {
+        const historyDetails = bookingCount > 0
+            ? (isPt ? `${bookingCount} marcação(ões) registada(s)` : `${bookingCount} recorded booking(s)`)
+            : (isPt ? 'informações e dados registados' : 'recorded data and information');
+
+        const warningMsg = isPt
+            ? `Atenção: Este perfil possui histórico (${historyDetails}) que será eliminado permanentemente.\n\nEsta ação é irreversível e não poderá ser anulada. Deseja mesmo avançar e apagar este perfil?`
+            : `Warning: This profile has history (${historyDetails}) that will be permanently deleted.\n\nThis action is irreversible. Are you sure you want to proceed and delete this profile?`;
+
+        const confirm2 = await showConfirmDialog({
+            title: isPt ? 'Atenção: Perda de Dados' : 'Warning: Data Loss',
+            message: warningMsg,
+            okText: isPt ? 'Sim, Apagar Tudo' : 'Yes, Delete Everything',
+            cancelText: isPt ? 'Cancelar' : 'Cancel',
+            isDanger: true
+        });
+
+        if (!confirm2) return;
+    }
+
+    // Executar a eliminação
+    const btnDelete = document.getElementById('btn-delete-guest');
+    const saveBtn = document.getElementById('btn-save-guest');
+    if (btnDelete) btnDelete.disabled = true;
+    if (saveBtn) saveBtn.disabled = true;
+    setGuestFeedback(isPt ? 'A eliminar perfil...' : 'Deleting profile...');
+
+    try {
+        const guestIdToDelete = editingGuestId;
+
+        // Eliminar documento do utilizador
+        await deleteDoc(doc(db, 'users', guestIdToDelete));
+
+        // Eliminar documento de histórico pessoal em weekly_schedules se existir
+        try {
+            await deleteDoc(doc(db, 'weekly_schedules', `user_${guestIdToDelete}`));
+        } catch (e) {
+            logger.log('No weekly_schedules personal doc to delete or deleted:', e);
+        }
+
+        // Eliminar perfil público se existir
+        try {
+            await deleteDoc(doc(db, 'publicProfiles', guestIdToDelete));
+        } catch (e) {}
+
+        closeGuestModal();
+        if (modal) modal.classList.remove('active');
+
+        // Recarregar lista de perfis
+        await loadProfilesCacheFirst();
+
+    } catch (deleteErr) {
+        console.error('Erro ao eliminar cliente sem conta:', deleteErr);
+        setGuestFeedback(
+            deleteErr.code === 'permission-denied'
+                ? (isPt ? 'Permissão negada para eliminar o perfil.' : 'Permission denied to delete profile.')
+                : (isPt ? `Erro ao eliminar: ${deleteErr.message}` : `Error deleting: ${deleteErr.message}`),
+            true
+        );
+        if (btnDelete) btnDelete.disabled = false;
+        if (saveBtn) saveBtn.disabled = false;
+    }
+});
 
 guestForm?.addEventListener('submit', async (e) => {
     e.preventDefault();

@@ -1,0 +1,28 @@
+{
+  "api": "https://pmorais.pt/api/v1",
+  "version": "v1",
+  "generated": "2026-08-24",
+  "license": "https://pmorais.pt/termos-e-condicoes",
+  "documentation": "https://pmorais.pt/llms-full.txt",
+  "email": "pt@pmorais.pt",
+  "telephone": "+351960471537",
+  "whatsapp": "+351960471537",
+  "instagram": "https://www.instagram.com/pt.paulomorais",
+  "locality": "Lisbon, Portugal",
+  "clientArea": {
+    "pt-PT": "https://pmorais.pt/perfil",
+    "en-GB": "https://pmorais.pt/en/perfil"
+  },
+  "contactForms": {
+    "pt-PT": [
+      "https://pmorais.pt/",
+      "https://pmorais.pt/osteopatia"
+    ],
+    "en-GB": [
+      "https://pmorais.pt/en/",
+      "https://pmorais.pt/en/osteopatia"
+    ]
+  },
+  "bookingApi": null,
+  "note": "Availability, session times, suitability and pricing are agreed directly. They are not published on the website and must not be inferred."
+}

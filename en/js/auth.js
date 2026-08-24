@@ -3,7 +3,7 @@
  * A European company
  */
 // Import the functions you need from the SDKs you need
-import { auth, db } from './firebase-config.js?v=2.5.0';
+import { auth, db } from './firebase-config.js?v=2.5.1';
 import {
     signInWithEmailAndPassword,
     createUserWithEmailAndPassword,
@@ -20,7 +20,7 @@ import {
     updateDoc,
     serverTimestamp
 } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
-import { initCalendarMode } from './calendar.js?v=2.5.0';
+import { initCalendarMode } from './calendar.js?v=2.5.1';
 
 window.forceFirebaseLogout = async () => { try { await signOut(auth); } catch(e) {} };
 window.addEventListener('force-firebase-logout', window.forceFirebaseLogout);

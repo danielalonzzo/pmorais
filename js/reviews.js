@@ -1,4 +1,4 @@
-import { db } from './firebase-config.js?v=2.5.0';
+import { db } from './firebase-config.js?v=2.5.1';
 import { collection, query, where, getDocs } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
 window.showBadgeInfo = function(role) {

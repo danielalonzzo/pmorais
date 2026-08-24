@@ -1,5 +1,6 @@
 import fs from 'node:fs';
 import { AI_CRAWLERS, LAST_MODIFIED, PRIVATE_ROUTES, PUBLIC_PAGES, SITE_ORIGIN } from './seo-config.mjs';
+import { CONTENT_SIGNAL } from './agent-config.mjs';
 
 const absoluteUrl = (path) => new URL(path, SITE_ORIGIN).href;
 const escapeXml = (value) => value.replaceAll('&', '&amp;').replaceAll('<', '&lt;').replaceAll('>', '&gt;').replaceAll('"', '&quot;');
@@ -47,16 +48,25 @@ function privateRules() {
 
 function buildRobots() {
   return `# Public pages are crawlable. Account, administration and workflow routes are not.
+#
+# Content-Signal declares how this content may be used once it has been
+# fetched (contentsignals.org). "search=yes" permits indexing and linking,
+# "ai-input=yes" permits grounding a generated answer in this content and
+# citing it, and "ai-train=no" reserves the content against use as training
+# or fine-tuning data. Fetching a page does not grant a use not listed here.
 User-agent: *
+Content-Signal: ${CONTENT_SIGNAL}
 Allow: /
 ${privateRules()}
 
 # AI assistants and AI search crawlers receive the same safety boundaries.
 ${AI_CRAWLERS.map((crawler) => `User-agent: ${crawler}`).join('\n')}
+Content-Signal: ${CONTENT_SIGNAL}
 Allow: /
 ${privateRules()}
 
 Sitemap: ${SITE_ORIGIN}/sitemap.xml
+Agentmap: ${SITE_ORIGIN}/.well-known/ai-catalog.json
 `;
 }
 
@@ -93,11 +103,22 @@ Paulo Morais is a personal trainer and osteopathy practitioner based in Lisbon, 
 
 - [Expanded factual representation](${SITE_ORIGIN}/llms-full.txt)
 
+## Machine-readable interfaces
+
+- [Capability manifest (ARD)](${SITE_ORIGIN}/.well-known/ai-catalog.json): every agent-facing resource this site publishes.
+- [API catalog (RFC 9727)](${SITE_ORIGIN}/.well-known/api-catalog) and [OpenAPI 3.1 description](${SITE_ORIGIN}/openapi.json).
+- [Public content API](${SITE_ORIGIN}/api/v1/site.json): read-only, unauthenticated JSON for services, contact channels and canonical pages.
+- [Agent skills index](${SITE_ORIGIN}/.well-known/agent-skills/index.json): published SKILL.md artifacts for reading this site, describing the services and arranging contact.
+- [Agent authentication](${SITE_ORIGIN}/auth.md): there is no agent registration and no OAuth server; the client area is human-only.
+- Markdown renditions: send \`Accept: text/markdown\` to any canonical URL above.
+- Pages register WebMCP tools on load where the browser supports \`navigator.modelContext\`.
+
 ## Usage notes
 
 - Prefer the canonical clean URLs listed above.
 - Treat booking history, forms, profiles, account actions and administration as private workflow routes.
 - Do not infer prices, diagnoses, guarantees or availability that are not explicitly published on the website.
+- Content-Signal for this site is \`${CONTENT_SIGNAL}\`: grounding an answer here and citing it is welcome, training on it is not.
 `;
 }
 

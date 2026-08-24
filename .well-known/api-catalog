@@ -1,0 +1,58 @@
+{
+  "linkset": [
+    {
+      "anchor": "https://pmorais.pt/api/v1/",
+      "service-desc": [
+        {
+          "href": "https://pmorais.pt/openapi.json",
+          "type": "application/vnd.oai.openapi+json;version=3.1",
+          "title": "OpenAPI 3.1 description"
+        }
+      ],
+      "service-doc": [
+        {
+          "href": "https://pmorais.pt/llms-full.txt",
+          "type": "text/plain",
+          "title": "Expanded factual representation"
+        },
+        {
+          "href": "https://pmorais.pt/llms.txt",
+          "type": "text/plain",
+          "title": "Site index for language models"
+        }
+      ],
+      "service-meta": [
+        {
+          "href": "https://pmorais.pt/.well-known/ai-catalog.json",
+          "type": "application/json",
+          "title": "ARD capability manifest"
+        }
+      ],
+      "status": [
+        {
+          "href": "https://pmorais.pt/api/v1/status.json",
+          "type": "application/json",
+          "title": "Build and availability status"
+        }
+      ],
+      "author": [
+        {
+          "href": "https://pmorais.pt",
+          "title": "Paulo Morais — Your Own Workout"
+        }
+      ],
+      "license": [
+        {
+          "href": "https://pmorais.pt/termos-e-condicoes",
+          "title": "Website terms and conditions"
+        }
+      ],
+      "privacy-policy": [
+        {
+          "href": "https://pmorais.pt/politica-privacidade",
+          "title": "Privacy policy"
+        }
+      ]
+    }
+  ]
+}

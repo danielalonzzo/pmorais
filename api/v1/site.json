@@ -1,0 +1,57 @@
+{
+  "api": "https://pmorais.pt/api/v1",
+  "version": "v1",
+  "generated": "2026-08-24",
+  "license": "https://pmorais.pt/termos-e-condicoes",
+  "documentation": "https://pmorais.pt/llms-full.txt",
+  "organisation": {
+    "brand": "Paulo Morais — Your Own Workout",
+    "legalName": "Consciênciavaliativa Unipessoal Lda",
+    "vatID": "PT517409241",
+    "practitioner": "Paulo Dimas Morais",
+    "locality": "Lisbon",
+    "country": "PT",
+    "url": "https://pmorais.pt"
+  },
+  "languages": [
+    "pt-PT",
+    "en-GB"
+  ],
+  "defaultLanguage": "pt-PT",
+  "contentSignal": "search=yes, ai-input=yes, ai-train=no",
+  "resources": {
+    "services": "https://pmorais.pt/api/v1/services.json",
+    "contact": "https://pmorais.pt/api/v1/contact.json",
+    "pages": "https://pmorais.pt/api/v1/pages.json",
+    "status": "https://pmorais.pt/api/v1/status.json",
+    "openapi": "https://pmorais.pt/openapi.json",
+    "apiCatalog": "https://pmorais.pt/.well-known/api-catalog",
+    "aiCatalog": "https://pmorais.pt/.well-known/ai-catalog.json",
+    "agentSkills": "https://pmorais.pt/.well-known/agent-skills/index.json",
+    "authentication": "https://pmorais.pt/auth.md",
+    "llms": "https://pmorais.pt/llms.txt",
+    "llmsFull": "https://pmorais.pt/llms-full.txt",
+    "sitemap": "https://pmorais.pt/sitemap.xml"
+  },
+  "privateRoutes": [
+    "https://pmorais.pt/admin-blog",
+    "https://pmorais.pt/auth-action",
+    "https://pmorais.pt/desinscrever",
+    "https://pmorais.pt/formulario",
+    "https://pmorais.pt/historico",
+    "https://pmorais.pt/perfil",
+    "https://pmorais.pt/perfis",
+    "https://pmorais.pt/en/auth-action",
+    "https://pmorais.pt/en/desinscrever",
+    "https://pmorais.pt/en/formulario",
+    "https://pmorais.pt/en/historico",
+    "https://pmorais.pt/en/perfil",
+    "https://pmorais.pt/en/perfis"
+  ],
+  "disclaimers": [
+    "Paulo Morais is not a substitute for a physician, an emergency service or a medical diagnosis.",
+    "No price list, fixed schedule or guaranteed availability is published. Do not infer any.",
+    "Testimonials on the website are individual experiences, not clinical evidence or average outcomes.",
+    "Do not turn general health information published here into personalised medical advice."
+  ]
+}
