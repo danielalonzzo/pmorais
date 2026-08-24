@@ -108,6 +108,7 @@ Paulo Morais is a personal trainer and osteopathy practitioner based in Lisbon, 
 - [Capability manifest (ARD)](${SITE_ORIGIN}/.well-known/ai-catalog.json): every agent-facing resource this site publishes.
 - [API catalog (RFC 9727)](${SITE_ORIGIN}/.well-known/api-catalog) and [OpenAPI 3.1 description](${SITE_ORIGIN}/openapi.json).
 - [Public content API](${SITE_ORIGIN}/api/v1/site.json): read-only, unauthenticated JSON for services, contact channels and canonical pages.
+- [MCP server](${SITE_ORIGIN}/mcp) with its [server card](${SITE_ORIGIN}/.well-known/mcp/server-card.json): read-only streamable-HTTP tools over the same published content. Anonymous.
 - [Agent skills index](${SITE_ORIGIN}/.well-known/agent-skills/index.json): published SKILL.md artifacts for reading this site, describing the services and arranging contact.
 - [Agent authentication](${SITE_ORIGIN}/auth.md): there is no agent registration and no OAuth server; the client area is human-only.
 - Markdown renditions: send \`Accept: text/markdown\` to any canonical URL above.

@@ -17,8 +17,8 @@ import crypto from 'node:crypto';
 import { fileURLToPath } from 'node:url';
 import { LAST_MODIFIED, PUBLIC_PAGES, PRIVATE_ROUTES, SITE_ORIGIN } from './seo-config.mjs';
 import {
-  AGENT_SKILLS, API_BASE, API_VERSION, CONTACT, CONTENT_SIGNAL,
-  DISCLAIMERS, LINK_HEADER_RELATIONS, MARKDOWN_DIR, ORGANISATION, SERVICES
+  AGENT_SKILLS, API_BASE, API_VERSION, CONTACT, CONTENT_SIGNAL, DNS_AID,
+  DISCLAIMERS, LINK_HEADER_RELATIONS, MARKDOWN_DIR, MCP_SERVER, ORGANISATION, SERVICES
 } from './agent-config.mjs';
 import { estimateTokens, extractMain, htmlToMarkdown } from './html-to-markdown.mjs';
 
@@ -339,8 +339,43 @@ write('.well-known/api-catalog', json({
       'privacy-policy': [
         { href: `${SITE_ORIGIN}/politica-privacidade`, title: 'Privacy policy' }
       ]
+    },
+    {
+      anchor: MCP_SERVER.endpoint,
+      'service-desc': [
+        { href: `${SITE_ORIGIN}/.well-known/mcp/server-card.json`, type: 'application/json', title: 'MCP server card (SEP-1649)' }
+      ],
+      'service-doc': [
+        { href: `${SITE_ORIGIN}/llms-full.txt`, type: 'text/plain', title: 'Expanded factual representation' }
+      ],
+      status: [
+        { href: `${API_BASE}/status.json`, type: 'application/json', title: 'Build and availability status' }
+      ]
     }
   ]
+}));
+
+// ------------------------------------------------------- MCP server card ---
+
+write('.well-known/mcp/server-card.json', json({
+  $schema: 'https://modelcontextprotocol.io/schemas/draft/server-card.schema.json',
+  serverInfo: {
+    name: MCP_SERVER.name,
+    title: MCP_SERVER.title,
+    version: MCP_SERVER.version,
+    description: 'Read-only access to the public content of pmorais.pt: the published services, the public contact channels, the canonical pages and their markdown renditions.',
+    websiteUrl: SITE_ORIGIN
+  },
+  endpoint: MCP_SERVER.endpoint,
+  transport: { type: MCP_SERVER.transport, endpoint: MCP_SERVER.endpoint },
+  transports: [{ type: MCP_SERVER.transport, endpoint: MCP_SERVER.endpoint }],
+  protocolVersions: MCP_SERVER.protocolVersions,
+  capabilities: MCP_SERVER.capabilities,
+  tools: MCP_SERVER.tools,
+  authentication: { type: 'none', description: `Anonymous. No credential is issued or accepted; see ${SITE_ORIGIN}/auth.md.` },
+  documentation: `${SITE_ORIGIN}/llms-full.txt`,
+  privacyPolicy: `${SITE_ORIGIN}/politica-privacidade`,
+  termsOfService: `${SITE_ORIGIN}/termos-e-condicoes`
 }));
 
 // --------------------------------------------------------- ARD ai-catalog ---
@@ -406,6 +441,19 @@ write('.well-known/ai-catalog.json', json({
       ]
     },
     {
+      identifier: urn('server', 'mcp'),
+      displayName: 'Public content MCP server',
+      description: 'Streamable HTTP MCP server exposing read-only tools over the published services, contact channels, canonical pages and site search. Anonymous.',
+      type: 'application/mcp-server-card+json',
+      url: `${SITE_ORIGIN}/.well-known/mcp/server-card.json`,
+      representativeQueries: [
+        'MCP server for Paulo Morais',
+        'connect an agent to pmorais.pt',
+        'read the Paulo Morais site through MCP',
+        'what tools does pmorais.pt expose to agents'
+      ]
+    },
+    {
       identifier: urn('content', 'llms-full'),
       displayName: 'Expanded factual representation',
       description: 'Long-form prose description of the organisation, services, background and interpretation limits, in English and Portuguese.',
@@ -467,31 +515,87 @@ write('.well-known/agent-skills/index.json', json({
 
 write('auth.md', `# auth.md
 
-Agent authentication posture for ${SITE_ORIGIN}.
+Agent registration and authentication for ${SITE_ORIGIN}, operated by
+${ORGANISATION.legalName} (VAT ${ORGANISATION.vatID}), Lisbon, Portugal.
+
+This document follows the auth.md procedural shape — discover, register, claim,
+exchange, use, revoke — and answers each step for this service. Several of the
+answers are "not offered". They are stated explicitly so an agent can stop
+early instead of probing for endpoints that do not exist.
 
 ## Audience
 
-Autonomous agents and assistants reading or acting on behalf of a person who is
-interested in the services of ${ORGANISATION.brand} (${ORGANISATION.legalName},
-VAT ${ORGANISATION.vatID}), Lisbon, Portugal.
+Autonomous agents and assistants acting for a person who wants information
+about, or contact with, ${ORGANISATION.brand}: personal training, online
+training, adapted exercise in oncology, and osteopathy.
 
-## Summary
+## Declared posture
 
-This site publishes **no agent registration endpoint and no OAuth
-authorization server**. Nothing here needs a credential, and no credential can
-be issued to an agent.
+\`\`\`json
+{
+  "agent_auth": {
+    "skill": "${SITE_ORIGIN}/auth.md",
+    "registration": "none",
+    "register_uri": null,
+    "identity_endpoint": null,
+    "claim_uri": null,
+    "revocation_uri": null,
+    "identity_types_supported": [],
+    "credential_types_supported": [],
+    "events_supported": [],
+    "public_api": "${API_BASE}/",
+    "public_api_authentication": "none",
+    "mcp_endpoint": "${MCP_SERVER.endpoint}",
+    "mcp_authentication": "none",
+    "human_provisioning": "mailto:${CONTACT.email}"
+  }
+}
+\`\`\`
 
-| Question | Answer |
+That block is a declaration of posture, not authorization server metadata. It is
+embedded here rather than at \`/.well-known/oauth-authorization-server\`
+precisely because this service is not an authorization server.
+
+## Step 1 — Discover
+
+| Document | Status |
 | --- | --- |
-| Is there a public API? | Yes — \`${API_BASE}/\`, read-only. |
-| Does it require authentication? | No. It is anonymous and unauthenticated. |
-| Is there an agent registration endpoint? | No. |
-| Is there OAuth Protected Resource Metadata? | No, because no resource here is OAuth-protected. |
-| Is there a booking or payment API? | No. |
+| \`/.well-known/oauth-protected-resource\` | **Not published.** No resource on this origin is protected by a bearer token, so there is no protected resource to describe. RFC 9728 has no way to say "nothing here is OAuth-protected"; this document says it instead. |
+| \`/.well-known/oauth-authorization-server\` | **Not published.** This origin issues no tokens. |
+| \`/.well-known/openid-configuration\` | **Not published.** This origin is not an OpenID provider. |
+| \`/.well-known/api-catalog\` | Published. RFC 9727 linkset for the public API and the MCP endpoint. |
+| \`/.well-known/mcp/server-card.json\` | Published. The MCP server is anonymous — \`authentication.type\` is \`none\`. |
+| \`/openapi.json\` | Published. Every operation is anonymous. |
+| \`/.well-known/ai-catalog.json\` | Published. ARD capability manifest. |
 
-## Public, unauthenticated surface
+No endpoint on ${SITE_ORIGIN} returns \`401\` with a
+\`WWW-Authenticate: Bearer resource_metadata=…\` challenge, because no endpoint
+here accepts a bearer token.
 
-Fetch any of these with a plain \`GET\`. No token, no header, no rate-limit
+## Step 2 — Register
+
+**Agent registration is not offered. There is no registration endpoint.**
+
+- \`register_uri\`: none
+- Identity assertion (ID-JAG, \`urn:ietf:params:oauth:token-type:id-jag\`): not accepted
+- Verified email: not accepted
+- Anonymous agent credentials: not issued
+- Dynamic client registration (RFC 7591): not supported
+
+There is nothing to register *for*. The public API below is open, and the only
+other surface is a personal client area that is deliberately closed to agents.
+
+The one provisioning path that exists is out of band and human-mediated: a
+person emails ${CONTACT.email} and arranges matters directly with Paulo Morais.
+An agent may surface that address to the person it is helping. It may not
+complete the exchange on their behalf.
+
+## Steps 3–5 — Claim, exchange, use
+
+Not applicable. No claim ceremony (RFC 8628 style or otherwise), no token
+exchange (RFC 7523 or otherwise), and no credential to use.
+
+Use the public surface directly instead. Plain \`GET\`, no token, no header
 negotiation. Please send a descriptive \`User-Agent\`.
 
 - \`${API_BASE}/site.json\`
@@ -502,13 +606,24 @@ negotiation. Please send a descriptive \`User-Agent\`.
 - \`${SITE_ORIGIN}/openapi.json\`
 - Any canonical page with \`Accept: text/markdown\`
 
-## Authenticated surface
+The MCP server at \`${MCP_SERVER.endpoint}\` is part of that same anonymous
+surface. It speaks streamable HTTP, accepts \`POST\` with a JSON-RPC 2.0 body,
+and never asks for a credential. It returns \`401\` to nobody, because it
+authenticates nobody. Its tools are read-only and cover the same published
+content: ${MCP_SERVER.tools.map((tool) => `\`${tool}\``).join(', ')}.
 
-The client area (bookings, history, forms, profiles, administration) is
+## Step 6 — Revoke
+
+Not applicable; nothing is issued. No \`revocation_uri\`, no revocation events.
+
+## The closed surface
+
+The client area — bookings, history, forms, profiles, administration — is
 protected by Firebase Authentication and is **human-only**. Sessions are
 established interactively by the account holder in a browser. There is no
-client-credentials flow, no service account, no API key and no delegated agent
-identity.
+client-credentials flow, no service account, no API key, and no delegated agent
+identity. It holds personal health information, which is why no agent-delegated
+access path is published rather than merely undocumented.
 
 An agent must not attempt to sign in, register an account, reset a password, or
 probe these routes:
@@ -574,6 +689,188 @@ write('api/.htaccess', `# Generated by scripts/generate-agent-discovery.mjs — 
     Header always set X-Robots-Tag "noindex, follow"
   </FilesMatch>
 </IfModule>
+`);
+
+// -------------------------------------------------------------- DNS-AID ----
+//
+// DNS records cannot be published from this repository — pmorais.pt is served
+// by ns1/ns2/ns3.dnscpanel.com. These files are the exact zone data to hand to
+// the DNS provider, plus the procedure. scripts/check-dns-aid.mjs verifies the
+// result once it is live.
+
+// RFC 3597 generic encoding of the SVCB RDATA, for authoritative servers that
+// accept unknown RR types but have no SVCB parser. Verified byte-for-byte
+// against dnspython in scripts/check-dns-aid.mjs's fixture.
+const SVC_PARAM_KEYS = { mandatory: 0, alpn: 1, 'no-default-alpn': 2, port: 3 };
+
+function encodeName(name) {
+  const bytes = [];
+  for (const label of name.replace(/\.$/, '').split('.')) {
+    const encoded = Buffer.from(label, 'utf8');
+    bytes.push(encoded.length, ...encoded);
+  }
+  bytes.push(0);
+  return Buffer.from(bytes);
+}
+
+function encodeSvcParam(key, value) {
+  const number = SVC_PARAM_KEYS[key] ?? Number(/^key(\d+)$/.exec(key)?.[1]);
+  if (!Number.isInteger(number)) throw new Error(`unknown SvcParamKey ${key}`);
+
+  let payload;
+  if (number === 0) {
+    // mandatory: a list of uint16 keys, in ascending numeric order.
+    const keys = value.split(',').map((name) => SVC_PARAM_KEYS[name] ?? Number(/^key(\d+)$/.exec(name)?.[1]));
+    payload = Buffer.alloc(keys.length * 2);
+    keys.sort((a, b) => a - b).forEach((entry, index) => payload.writeUInt16BE(entry, index * 2));
+  } else if (number === 1) {
+    // alpn: a sequence of length-prefixed protocol identifiers.
+    payload = Buffer.concat(value.split(',').map((protocol) => {
+      const encoded = Buffer.from(protocol, 'utf8');
+      return Buffer.concat([Buffer.from([encoded.length]), encoded]);
+    }));
+  } else if (number === 3) {
+    payload = Buffer.alloc(2);
+    payload.writeUInt16BE(Number(value));
+  } else {
+    payload = Buffer.from(value, 'utf8');
+  }
+
+  const header = Buffer.alloc(4);
+  header.writeUInt16BE(number, 0);
+  header.writeUInt16BE(payload.length, 2);
+  return { number, bytes: Buffer.concat([header, payload]) };
+}
+
+function svcbRdataHex(entry) {
+  const priority = Buffer.alloc(2);
+  priority.writeUInt16BE(entry.priority);
+  const params = [
+    encodeSvcParam('mandatory', entry.mandatory),
+    encodeSvcParam('alpn', entry.alpn),
+    encodeSvcParam('port', String(entry.port)),
+    ...entry.params.map((param) => encodeSvcParam(param.key, param.value))
+  ].sort((a, b) => a.number - b.number).map((param) => param.bytes);
+
+  return Buffer.concat([priority, encodeName(entry.target), ...params]).toString('hex');
+}
+
+function assertSvcParamSafe(entry) {
+  for (const param of entry.params) {
+    // A comma or backslash inside a quoted SvcParam value needs escaping that
+    // no two DNS providers agree on. Keep the values free of both.
+    if (/[,\\]/.test(param.value)) {
+      throw new Error(`${entry.owner}: ${param.key} value must not contain a comma or backslash`);
+    }
+  }
+}
+
+function svcbRecord(entry, rrType) {
+  assertSvcParamSafe(entry);
+  const params = [
+    `alpn="${entry.alpn}"`,
+    `port=${entry.port}`,
+    `mandatory=${entry.mandatory}`,
+    ...entry.params.map((param) => `${param.key}="${param.value}"`)
+  ];
+  return `${entry.owner} ${DNS_AID.ttl} IN ${rrType} ${entry.priority} ${entry.target} ${params.join(' ')}`;
+}
+
+const zoneLines = [];
+for (const entry of DNS_AID.entrypoints) {
+  zoneLines.push(`; ${entry.comment}`);
+  zoneLines.push('; Preferred form — ServiceMode SVCB (RR type 64).');
+  zoneLines.push(svcbRecord(entry, 'SVCB'));
+  zoneLines.push('');
+  zoneLines.push('; Equivalent HTTPS RR (type 65). Publish this INSTEAD of the SVCB record');
+  zoneLines.push('; only if the provider supports type 65 but not type 64. Never both.');
+  zoneLines.push(`;${svcbRecord(entry, 'HTTPS')}`);
+  zoneLines.push('');
+  const hex = svcbRdataHex(entry);
+  zoneLines.push('; Same record in RFC 3597 generic form, for an authoritative server that');
+  zoneLines.push('; accepts unknown RR types but cannot parse SVCB presentation syntax.');
+  zoneLines.push(`;${entry.owner} ${DNS_AID.ttl} IN TYPE64 \\# ${hex.length / 2} ${hex}`);
+  zoneLines.push('');
+}
+for (const record of DNS_AID.textRecords) {
+  zoneLines.push(`; ${record.comment}`);
+  zoneLines.push(`${record.owner} ${DNS_AID.ttl} IN TXT "${record.value}"`);
+  zoneLines.push('');
+}
+
+write('dns/dns-aid.zone', `; DNS for AI Discovery records for ${DNS_AID.zone}
+; Generated by scripts/generate-agent-discovery.mjs — do not edit by hand.
+; Spec: draft-mozleywilliams-dnsop-dnsaid-01, RFC 9460.
+; Verify after publishing: npm run check:dns
+
+${zoneLines.join('\n')}`);
+
+write('dns/README.md', `# Publishing the DNS-AID records for ${DNS_AID.zone}
+
+The records themselves are in [dns-aid.zone](dns-aid.zone), generated from
+\`scripts/agent-config.mjs\`. They cannot be applied from this repository —
+${DNS_AID.zone} is served by ns1/ns2/ns3.dnscpanel.com, so publishing is a
+change in the hosting provider's DNS, and DNSSEC signing needs both the DNS
+host and the registrar.
+
+## What is being published, and why only this
+
+One entrypoint: \`_index._agents.${DNS_AID.zone}\`, the well-known entry point
+from §3 of the draft. It resolves to the origin that serves the ARD manifest,
+the RFC 9727 API catalog and the OpenAPI description.
+
+No \`_a2a._agents\` and no \`_mcp._agents\` record is published, because there
+is no A2A agent and no MCP server behind this domain. Advertising an endpoint
+in DNS that does not answer wastes every resolver that trusts it. Add those
+records in the same file the day the endpoints exist.
+
+## Step 1 — the TXT record (publishable today, anywhere)
+
+\`_catalog._agents.${DNS_AID.zone}\` is a plain TXT record. Every DNS provider
+supports TXT, including cPanel's Zone Editor, and it satisfies the ARD spec's
+DNS discovery mechanism on its own.
+
+In cPanel: **Zone Editor → Manage → Add Record → TXT**, with the name and value
+from \`dns-aid.zone\`.
+
+## Step 2 — the SVCB record
+
+\`_index._agents\` needs an SVCB record, DNS RR type 64. cPanel's Zone Editor
+does not offer type 64 in its record-type list in most builds, and type 65
+(HTTPS) only in recent ones. Two ways forward:
+
+1. **Ask the provider.** Send flesk.com the SVCB line from \`dns-aid.zone\`
+   verbatim and ask for it to be added to the zone. If they can only do type
+   65, ask for the commented HTTPS line instead — publish one or the other,
+   never both.
+2. **Move DNS to a provider that supports it.** Cloudflare's free tier accepts
+   SVCB and HTTPS records directly and turns on DNSSEC with one click, which
+   also settles step 3. Nameserver delegation changes at the registrar; the
+   hosting itself does not move.
+
+## Step 3 — DNSSEC
+
+The draft asks for the discovery zone to be signed so validating resolvers
+return authenticated data. \`${DNS_AID.zone}\` is currently unsigned — there is
+no DS record at the \`.pt\` parent and no DNSKEY in the zone.
+
+With cPanel as the DNS host: **Zone Editor → DNSSEC → Create Key**, then copy
+the generated DS record to the domain registrar. Propagation to the parent zone
+takes up to a day. With Cloudflare: **DNS → Settings → Enable DNSSEC**, then the
+same DS submission at the registrar.
+
+DNSSEC is a zone-wide change. If mail or any other service depends on this zone,
+enable it during a window where a mistake can be rolled back.
+
+## Step 4 — verify
+
+\`\`\`
+npm run check:dns
+\`\`\`
+
+Resolves each record over DNS-over-HTTPS through the same resolvers the scanner
+uses (cloudflare-dns.com, falling back to dns.google) and reports the DNSSEC
+authenticated-data flag.
 `);
 
 // ------------------------------------------------------------------ report --

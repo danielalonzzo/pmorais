@@ -17,7 +17,9 @@
     "seo:generate": "node scripts/generate-discovery.mjs",
     "check:seo": "node scripts/check-seo.mjs",
     "test": "npm run check:seo",
-    "agents:generate": "node scripts/generate-agent-discovery.mjs"
+    "agents:generate": "node scripts/generate-agent-discovery.mjs",
+    "check:dns": "node scripts/check-dns-aid.mjs",
+    "check:mcp": "node scripts/check-mcp.mjs"
   },
   "repository": {
     "type": "git",

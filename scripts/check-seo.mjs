@@ -3,7 +3,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { ASSET_VERSION, LAST_MODIFIED, PRIVATE_ROUTES, PUBLIC_PAGES, SITE_ORIGIN } from './seo-config.mjs';
 import { eachLocalModuleSpecifier, localModules } from './asset-versioning.mjs';
-import { AGENT_SKILLS, API_BASE, CONTENT_SIGNAL, LINK_HEADER_RELATIONS, MARKDOWN_DIR } from './agent-config.mjs';
+import { AGENT_SKILLS, API_BASE, CONTENT_SIGNAL, DNS_AID, LINK_HEADER_RELATIONS, MARKDOWN_DIR, MCP_SERVER } from './agent-config.mjs';
 import crypto from 'node:crypto';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
@@ -325,6 +325,87 @@ for (const route of PRIVATE_ROUTES) {
   if (!authMd.includes(absoluteUrl(route))) fail(`auth.md: does not list ${route} as off limits`);
 }
 
+// MCP server card must describe the server that is actually deployed, and the
+// PHP implementation must expose exactly the tools the card advertises.
+const serverCard = readJsonFile('.well-known/mcp/server-card.json');
+if (serverCard) {
+  if (!serverCard.serverInfo?.name || !serverCard.serverInfo?.version) fail('.well-known/mcp/server-card.json: serverInfo needs name and version');
+  if (serverCard.endpoint !== MCP_SERVER.endpoint) fail(`.well-known/mcp/server-card.json: endpoint should be ${MCP_SERVER.endpoint}`);
+  if (serverCard.transport?.endpoint !== MCP_SERVER.endpoint) fail('.well-known/mcp/server-card.json: transport.endpoint does not match');
+  if (!serverCard.capabilities || !Object.keys(serverCard.capabilities).length) fail('.well-known/mcp/server-card.json: capabilities must not be empty');
+  if (serverCard.authentication?.type !== 'none') fail('.well-known/mcp/server-card.json: authentication.type must match what the server actually does');
+}
+
+const mcpSource = read('mcp.php');
+const declaredTools = [...mcpSource.matchAll(/'name' => '([a-z_]+)'/g)].map((match) => match[1]);
+const implemented = declaredTools.filter((name) => MCP_SERVER.tools.includes(name));
+for (const tool of MCP_SERVER.tools) {
+  if (!declaredTools.includes(tool)) fail(`mcp.php: does not define the tool "${tool}" that the server card advertises`);
+  if (!new RegExp(`case '${tool}':`).test(mcpSource)) fail(`mcp.php: tool "${tool}" has no handler`);
+}
+for (const tool of new Set(declaredTools)) {
+  if (!MCP_SERVER.tools.includes(tool)) fail(`mcp.php: defines "${tool}", which the server card does not advertise`);
+}
+if (implemented.length !== MCP_SERVER.tools.length) fail('mcp.php: tool list is out of step with scripts/agent-config.mjs');
+for (const version of MCP_SERVER.protocolVersions) {
+  if (!mcpSource.includes(`'${version}'`)) fail(`mcp.php: does not declare protocol version ${version}`);
+}
+if (!mcpSource.includes("SERVER_VERSION    = '" + MCP_SERVER.version + "'")) fail('mcp.php: SERVER_VERSION differs from the server card');
+if (!/RewriteRule \^mcp\/\?\$ mcp\.php \[L\]/.test(htaccess)) fail('.htaccess: missing the /mcp rewrite');
+// mcp.php must stay a file. A directory named "mcp" would make mod_dir answer
+// POST /mcp with a 301 to /mcp/, silently dropping the JSON-RPC body.
+if (fs.existsSync(path.join(root, 'mcp'))) fail('a path named "mcp" exists; /mcp must resolve to mcp.php, not a directory');
+if (!/<FilesMatch "\\\.php\$">\s*\n\s*Require all denied/.test(htaccess)) fail('.htaccess: must deny .php when no PHP handler is loaded');
+// A test harness must never ship.
+if (fs.existsSync(path.join(root, 'mcp-router.php'))) fail('mcp-router.php is a local test harness and must not be committed');
+
+// auth.md must answer the registration question, and must not describe an
+// OAuth document as absent once that document exists (or vice versa).
+const agentAuthBlock = /```json\n([\s\S]*?)\n```/.exec(authMd);
+if (!agentAuthBlock) fail('auth.md: missing the machine-readable agent_auth block');
+else {
+  try {
+    const declared = JSON.parse(agentAuthBlock[1]).agent_auth;
+    if (!declared) fail('auth.md: JSON block has no agent_auth key');
+    else if (declared.registration !== 'none' && !declared.register_uri) {
+      fail('auth.md: declares registration other than "none" but gives no register_uri');
+    }
+  } catch (error) {
+    fail(`auth.md: agent_auth block is not valid JSON (${error.message})`);
+  }
+}
+if (!/##\s*Step 2\s*[—-]\s*Register/.test(authMd)) fail('auth.md: no agent registration section');
+for (const document of ['oauth-protected-resource', 'oauth-authorization-server', 'openid-configuration']) {
+  const servedHere = fs.existsSync(path.join(root, '.well-known', document));
+  const declaredAbsent = authMd.includes(`\`/.well-known/${document}\` | **Not published.**`);
+  if (servedHere && declaredAbsent) fail(`auth.md: says /.well-known/${document} is not published, but the file exists`);
+  if (!servedHere && !declaredAbsent) fail(`auth.md: must account for /.well-known/${document}`);
+}
+
+// DNS-AID zone data is published by hand at the DNS provider, so the file in
+// the repository is the reference. It must not drift from the config.
+const zone = read('dns/dns-aid.zone');
+for (const entry of DNS_AID.entrypoints) {
+  if (!zone.includes(`${entry.owner} ${DNS_AID.ttl} IN SVCB ${entry.priority} ${entry.target}`)) {
+    fail(`dns/dns-aid.zone: stale SVCB record for ${entry.owner} — run npm run agents:generate`);
+  }
+  for (const param of entry.params) {
+    if (!zone.includes(`${param.key}="${param.value}"`)) fail(`dns/dns-aid.zone: missing ${param.key} for ${entry.owner}`);
+  }
+  const generic = new RegExp(`TYPE64 \\\\# (\\d+) ([0-9a-f]+)`).exec(zone);
+  if (!generic) fail('dns/dns-aid.zone: missing the RFC 3597 generic form');
+  else if (Number(generic[1]) * 2 !== generic[2].length) fail('dns/dns-aid.zone: generic-form length does not match its hex payload');
+}
+for (const record of DNS_AID.textRecords) {
+  if (!zone.includes(`${record.owner} ${DNS_AID.ttl} IN TXT "${record.value}"`)) {
+    fail(`dns/dns-aid.zone: stale TXT record for ${record.owner} — run npm run agents:generate`);
+  }
+}
+// Operational DNS notes must never reach the public server.
+if (!/RewriteRule \^\(\?:functions\|scripts\|tests\|scratch\|node_modules\|dns\)/.test(htaccess)) {
+  fail('.htaccess: dns/ must be blocked alongside the other non-public directories');
+}
+
 // Content signals and the ARD robots.txt pointer.
 if (occurrences(robots, new RegExp(`^Content-Signal: ${CONTENT_SIGNAL.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}$`, 'gm')) !== 2) {
   fail('robots.txt: Content-Signal must be declared for general and named AI crawlers');
@@ -348,6 +429,8 @@ if (read('js/webmcp.js') !== read('en/js/webmcp.js')) fail('en/js/webmcp.js has 
 notes.push(`${PUBLIC_PAGES.length} markdown renditions checked`);
 notes.push(`${LINK_HEADER_RELATIONS.length} Link relations checked against .htaccess`);
 notes.push(`${AGENT_SKILLS.length} agent skills checked against their digests`);
+notes.push(`${DNS_AID.entrypoints.length + DNS_AID.textRecords.length} DNS-AID records checked against scripts/agent-config.mjs`);
+notes.push(`${MCP_SERVER.tools.length} MCP tools checked against the server card`);
 
 notes.push(`${PUBLIC_PAGES.length} canonical pages checked`);
 notes.push(`${htmlFiles.length - PUBLIC_PAGES.length} non-public/support pages checked for noindex`);

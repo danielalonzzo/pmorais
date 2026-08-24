@@ -186,6 +186,7 @@ The site publishes a small, read-only agent surface. Everything in it is static 
 - API catalog (RFC 9727): https://pmorais.pt/.well-known/api-catalog
 - OpenAPI 3.1 description: https://pmorais.pt/openapi.json
 - Public content API: https://pmorais.pt/api/v1/site.json, /services.json, /contact.json, /pages.json and /status.json. Read-only JSON describing the services, the public contact channels and the canonical pages. It contains no prices, no availability and no client data, because the website publishes none.
+- MCP server: https://pmorais.pt/mcp, described by https://pmorais.pt/.well-known/mcp/server-card.json. Streamable HTTP, anonymous, read-only. Tools: list_services, get_contact_details, list_pages, read_page, search_site. Resources: llms.txt, llms-full.txt and every markdown rendition.
 - Agent skills index: https://pmorais.pt/.well-known/agent-skills/index.json, with SKILL.md artifacts covering how to read this site, how to describe the services and how to arrange contact.
 - Agent authentication: https://pmorais.pt/auth.md. There is no agent registration endpoint and no OAuth authorization server. The public API needs no credential and the client area is human-only.
 - Markdown renditions: sending Accept: text/markdown to any canonical URL returns the markdown version of that page with Content-Type: text/markdown and an x-markdown-tokens estimate. Without that header the same URL returns HTML.
@@ -194,7 +195,7 @@ The site publishes a small, read-only agent surface. Everything in it is static 
 
 Content usage preferences are declared in robots.txt as Content-Signal: search=yes, ai-input=yes, ai-train=no. Indexing this site, grounding an answer in it and citing it are all permitted. Using it as training or fine-tuning data is not.
 
-The site publishes no payment, checkout or commerce protocol, and no MCP server. Absence of those is deliberate, not an oversight.
+The site publishes no payment, checkout or commerce protocol. Absence of those is deliberate, not an oversight, as is the absence of OAuth metadata: nothing here is protected by a bearer token, and no credential is issued to an agent.
 
 ## Guidance for assistants and search systems
 

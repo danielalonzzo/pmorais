@@ -4,7 +4,7 @@ RewriteEngine On
 RewriteBase /
 
 # Never expose development, deployment, test, dependency, or secret material.
-RewriteRule ^(?:functions|scripts|tests|scratch|node_modules)(?:/|$) - [R=404,L,NC]
+RewriteRule ^(?:functions|scripts|tests|scratch|node_modules|dns)(?:/|$) - [R=404,L,NC]
 RewriteRule (?:^|/)(?:firebase[^/]*\.(?:json|log)|firestore[^/]*|package[^/]*|playwright[^/]*|README[^/]*|\.env(?:\.[^/]*)?|service-account[^/]*|[^/]+\.(?:py|log))$ - [R=404,L,NC]
 RewriteRule ^(?:logs\.txt|FILE_NAME|convert_webp\.js)(?:/)?$ - [R=404,L,NC]
 
@@ -28,6 +28,11 @@ RewriteCond %{HTTPS} !=on [OR]
 RewriteCond %{HTTP_HOST} !^pmorais\.pt$ [NC]
 RewriteRule ^ https://pmorais.pt%{REQUEST_URI} [R=301,L,NE]
 
+# MCP endpoint. mcp.php is a plain file, not a directory: a directory named
+# "mcp" makes mod_dir answer POST /mcp with a 301 to /mcp/, which drops the
+# JSON-RPC body no matter where this rule sits.
+RewriteRule ^mcp/?$ mcp.php [L]
+
 # Markdown for Agents: a request that asks for text/markdown is answered with
 # the markdown rendition of the same page, generated into agents/md/ by
 # scripts/generate-agent-discovery.mjs. Every other client still gets the HTML.
@@ -45,6 +50,16 @@ RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_FILENAME}.html -f
 RewriteRule ^(.+?)/?$ $1.html [L]
+
+<IfModule !proxy_fcgi_module>
+  <IfModule !php_module>
+    <IfModule !mod_php.c>
+      <FilesMatch "\.php$">
+        Require all denied
+      </FilesMatch>
+    </IfModule>
+  </IfModule>
+</IfModule>
 
 # Compress text responses.
 <IfModule mod_deflate.c>
@@ -104,6 +119,7 @@ RewriteRule ^(.+?)/?$ $1.html [L]
     Header always add Link "</.well-known/ai-catalog.json>; rel=\"service-meta\"; type=\"application/json\""
     Header always add Link "</.well-known/ai-catalog.json>; rel=\"ai-catalog\"; type=\"application/json\""
     Header always add Link "</.well-known/agent-skills/index.json>; rel=\"describedby\"; type=\"application/json\""
+    Header always add Link "</.well-known/mcp/server-card.json>; rel=\"describedby\"; type=\"application/json\""
     Header always add Link "</auth.md>; rel=\"describedby\"; type=\"text/markdown\""
     Header always add Link "</sitemap.xml>; rel=\"sitemap\"; type=\"application/xml\""
     Header always add Link "</politica-privacidade>; rel=\"privacy-policy\""
@@ -116,6 +132,13 @@ RewriteRule ^(.+?)/?$ $1.html [L]
     Header always set Content-Type "application/vnd.oai.openapi+json;version=3.1"
     Header always set Access-Control-Allow-Origin "*"
     Header always set Cache-Control "public, max-age=300, must-revalidate"
+  </Files>
+
+  # If no PHP handler is loaded, Apache would hand out mcp.php as a plain file.
+  # Deny it instead. (Nothing secret lives in it, but serving source because a
+  # handler is missing is a bug, not a feature.)
+  <Files "mcp.php">
+    Header always set X-Robots-Tag "noindex, nofollow"
   </Files>
 
   <Files "auth.md">

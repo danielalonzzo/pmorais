@@ -53,6 +53,30 @@
           "title": "Privacy policy"
         }
       ]
+    },
+    {
+      "anchor": "https://pmorais.pt/mcp",
+      "service-desc": [
+        {
+          "href": "https://pmorais.pt/.well-known/mcp/server-card.json",
+          "type": "application/json",
+          "title": "MCP server card (SEP-1649)"
+        }
+      ],
+      "service-doc": [
+        {
+          "href": "https://pmorais.pt/llms-full.txt",
+          "type": "text/plain",
+          "title": "Expanded factual representation"
+        }
+      ],
+      "status": [
+        {
+          "href": "https://pmorais.pt/api/v1/status.json",
+          "type": "application/json",
+          "title": "Build and availability status"
+        }
+      ]
     }
   ]
 }

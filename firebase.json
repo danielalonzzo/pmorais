@@ -52,7 +52,9 @@
       ".gitignore",
       ".htaccess",
       "**/.htaccess",
-      "**/.DS_Store"
+      "**/.DS_Store",
+      "dns/**",
+      "**/*.php"
     ],
     "headers": [
       {

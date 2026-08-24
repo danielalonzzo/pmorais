@@ -57,6 +57,19 @@
       ]
     },
     {
+      "identifier": "urn:air:pmorais.pt:server:mcp",
+      "displayName": "Public content MCP server",
+      "description": "Streamable HTTP MCP server exposing read-only tools over the published services, contact channels, canonical pages and site search. Anonymous.",
+      "type": "application/mcp-server-card+json",
+      "url": "https://pmorais.pt/.well-known/mcp/server-card.json",
+      "representativeQueries": [
+        "MCP server for Paulo Morais",
+        "connect an agent to pmorais.pt",
+        "read the Paulo Morais site through MCP",
+        "what tools does pmorais.pt expose to agents"
+      ]
+    },
+    {
       "identifier": "urn:air:pmorais.pt:content:llms-full",
       "displayName": "Expanded factual representation",
       "description": "Long-form prose description of the organisation, services, background and interpretation limits, in English and Portuguese.",

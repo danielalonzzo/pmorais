@@ -248,10 +248,88 @@ export const LINK_HEADER_RELATIONS = [
   { href: '/.well-known/ai-catalog.json', rel: 'service-meta', type: 'application/json' },
   { href: '/.well-known/ai-catalog.json', rel: 'ai-catalog', type: 'application/json' },
   { href: '/.well-known/agent-skills/index.json', rel: 'describedby', type: 'application/json' },
+  { href: '/.well-known/mcp/server-card.json', rel: 'describedby', type: 'application/json' },
   { href: '/auth.md', rel: 'describedby', type: 'text/markdown' },
   { href: '/sitemap.xml', rel: 'sitemap', type: 'application/xml' },
   { href: '/politica-privacidade', rel: 'privacy-policy' },
   { href: '/termos-e-condicoes', rel: 'terms-of-service' }
 ];
+
+// The read-only MCP server implemented in mcp/index.php. Same origin, same
+// deploy, no credentials: every tool reads a static file this site already
+// publishes. Kept in sync with the tool list in that file by check-seo.
+export const MCP_SERVER = {
+  name: 'pmorais-public-content',
+  title: 'Paulo Morais public content',
+  version: '1.0.0',
+  endpoint: `${SITE_ORIGIN}/mcp`,
+  transport: 'streamable-http',
+  protocolVersions: ['2026-07-28', '2025-11-25', '2025-06-18', '2025-03-26'],
+  tools: ['list_services', 'get_contact_details', 'list_pages', 'read_page', 'search_site'],
+  capabilities: {
+    tools: { listChanged: false },
+    resources: { listChanged: false, subscribe: false },
+    prompts: { listChanged: false }
+  }
+};
+
+// DNS for AI Discovery (draft-mozleywilliams-dnsop-dnsaid-01).
+//
+// Only entrypoints that actually exist are published. Today that is the
+// discovery index: pmorais.pt itself, whose agent-facing surface is described
+// by the ARD manifest. There is no A2A agent, so no _a2a._agents
+// record is generated — a DNS record pointing at an endpoint that does not
+// answer is worse than no record at all. _mcp._agents is published because
+// mcp/index.php answers on this origin.
+//
+// No ipv4hint/ipv6hint: the origin address belongs to the hosting provider and
+// would silently rot on migration. No cap-sha256 either — the digest of
+// ai-catalog.json changes on every content build, and a SvcParam that has to be
+// re-published by hand each time is a guaranteed source of stale DNS.
+export const DNS_AID = {
+  zone: 'pmorais.pt',
+  ttl: 3600,
+  entrypoints: [
+    {
+      owner: '_index._agents.pmorais.pt.',
+      priority: 1,
+      target: 'pmorais.pt.',
+      alpn: 'h2,http/1.1',
+      port: 443,
+      // Experimental keys stay out of `mandatory`: RFC 9460 requires a client
+      // to ignore the whole record when it does not understand a mandatory
+      // key, so listing key65001 there would hide the record from every
+      // resolver that has not implemented the draft.
+      mandatory: 'alpn,port',
+      params: [
+        { key: 'key65001', value: 'cap=https://pmorais.pt/.well-known/ai-catalog.json' },
+        { key: 'key65010', value: 'bap=https/1' }
+      ],
+      comment: 'Well-known entrypoint. Resolves to the origin that serves the ARD manifest, the RFC 9727 API catalog and the OpenAPI description.'
+    },
+    {
+      owner: '_mcp._agents.pmorais.pt.',
+      priority: 1,
+      target: 'pmorais.pt.',
+      alpn: 'h2,http/1.1',
+      port: 443,
+      mandatory: 'alpn,port',
+      params: [
+        { key: 'key65001', value: 'cap=https://pmorais.pt/.well-known/mcp/server-card.json' },
+        { key: 'key65010', value: 'bap=mcp/1' }
+      ],
+      comment: 'Read-only MCP server (streamable HTTP at https://pmorais.pt/mcp). Anonymous; no credential is issued or accepted.'
+    }
+  ],
+  // ARD §6.1 also allows a TXT pointer. Every DNS provider supports TXT, so
+  // this half can be published today even where SVCB cannot.
+  textRecords: [
+    {
+      owner: '_catalog._agents.pmorais.pt.',
+      value: 'url=https://pmorais.pt/.well-known/ai-catalog.json',
+      comment: 'ARD capability manifest pointer (agenticresourcediscovery.org §6.1).'
+    }
+  ]
+};
 
 export const MARKDOWN_DIR = 'agents/md';

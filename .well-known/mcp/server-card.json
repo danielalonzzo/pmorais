@@ -1,0 +1,53 @@
+{
+  "$schema": "https://modelcontextprotocol.io/schemas/draft/server-card.schema.json",
+  "serverInfo": {
+    "name": "pmorais-public-content",
+    "title": "Paulo Morais public content",
+    "version": "1.0.0",
+    "description": "Read-only access to the public content of pmorais.pt: the published services, the public contact channels, the canonical pages and their markdown renditions.",
+    "websiteUrl": "https://pmorais.pt"
+  },
+  "endpoint": "https://pmorais.pt/mcp",
+  "transport": {
+    "type": "streamable-http",
+    "endpoint": "https://pmorais.pt/mcp"
+  },
+  "transports": [
+    {
+      "type": "streamable-http",
+      "endpoint": "https://pmorais.pt/mcp"
+    }
+  ],
+  "protocolVersions": [
+    "2026-07-28",
+    "2025-11-25",
+    "2025-06-18",
+    "2025-03-26"
+  ],
+  "capabilities": {
+    "tools": {
+      "listChanged": false
+    },
+    "resources": {
+      "listChanged": false,
+      "subscribe": false
+    },
+    "prompts": {
+      "listChanged": false
+    }
+  },
+  "tools": [
+    "list_services",
+    "get_contact_details",
+    "list_pages",
+    "read_page",
+    "search_site"
+  ],
+  "authentication": {
+    "type": "none",
+    "description": "Anonymous. No credential is issued or accepted; see https://pmorais.pt/auth.md."
+  },
+  "documentation": "https://pmorais.pt/llms-full.txt",
+  "privacyPolicy": "https://pmorais.pt/politica-privacidade",
+  "termsOfService": "https://pmorais.pt/termos-e-condicoes"
+}
