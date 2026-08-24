@@ -1,0 +1,52 @@
+{
+  "resource": "https://pmorais.pt",
+  "authorization_servers": [
+    "https://securetoken.google.com/paulo-morais"
+  ],
+  "scopes_supported": [],
+  "bearer_methods_supported": [
+    "header"
+  ],
+  "resource_name": "Paulo Morais — Your Own Workout",
+  "resource_documentation": "https://pmorais.pt/auth.md",
+  "resource_policy_uri": "https://pmorais.pt/politica-privacidade",
+  "resource_tos_uri": "https://pmorais.pt/termos-e-condicoes",
+  "authorization_server_metadata": "https://securetoken.google.com/paulo-morais/.well-known/openid-configuration",
+  "protected_paths": [
+    "/admin-blog",
+    "/auth-action",
+    "/desinscrever",
+    "/formulario",
+    "/historico",
+    "/perfil",
+    "/perfis",
+    "/en/auth-action",
+    "/en/desinscrever",
+    "/en/formulario",
+    "/en/historico",
+    "/en/perfil",
+    "/en/perfis"
+  ],
+  "public_paths_require_no_token": [
+    "/api/v1/",
+    "/mcp",
+    "/openapi.json"
+  ],
+  "agent_delegated_access": "not-offered",
+  "agent_auth": {
+    "skill": "https://pmorais.pt/auth.md",
+    "registration": "none",
+    "register_uri": null,
+    "identity_endpoint": null,
+    "claim_uri": null,
+    "revocation_uri": null,
+    "identity_types_supported": [],
+    "credential_types_supported": [],
+    "events_supported": [],
+    "public_api": "https://pmorais.pt/api/v1/",
+    "public_api_authentication": "none",
+    "mcp_endpoint": "https://pmorais.pt/mcp",
+    "mcp_authentication": "none",
+    "human_provisioning": "mailto:pt@pmorais.pt"
+  }
+}

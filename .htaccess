@@ -121,6 +121,7 @@ RewriteRule ^(.+?)/?$ $1.html [L]
     Header always add Link "</.well-known/agent-skills/index.json>; rel=\"describedby\"; type=\"application/json\""
     Header always add Link "</.well-known/mcp/server-card.json>; rel=\"describedby\"; type=\"application/json\""
     Header always add Link "</auth.md>; rel=\"describedby\"; type=\"text/markdown\""
+    Header always add Link "</.well-known/oauth-protected-resource>; rel=\"describedby\"; type=\"application/json\""
     Header always add Link "</sitemap.xml>; rel=\"sitemap\"; type=\"application/xml\""
     Header always add Link "</politica-privacidade>; rel=\"privacy-policy\""
     Header always add Link "</termos-e-condicoes>; rel=\"terms-of-service\""

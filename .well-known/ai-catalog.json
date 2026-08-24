@@ -92,6 +92,18 @@
         "how should an agent interact with Paulo Morais",
         "skill for booking a session with Paulo Morais"
       ]
+    },
+    {
+      "identifier": "urn:air:pmorais.pt:auth:protected-resource",
+      "displayName": "Protected resource metadata",
+      "description": "RFC 9728 metadata for this origin. Names the authorization server behind the client area and states that no scope on it is delegable to an agent.",
+      "type": "application/json",
+      "url": "https://pmorais.pt/.well-known/oauth-protected-resource",
+      "representativeQueries": [
+        "how does an agent authenticate with pmorais.pt",
+        "does pmorais.pt issue API keys or OAuth tokens",
+        "can an agent log in to the Paulo Morais client area"
+      ]
     }
   ]
 }

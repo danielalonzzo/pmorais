@@ -37,25 +37,47 @@ training, adapted exercise in oncology, and osteopathy.
 }
 ```
 
-That block is a declaration of posture, not authorization server metadata. It is
-embedded here rather than at `/.well-known/oauth-authorization-server`
-precisely because this service is not an authorization server.
+The same block is served as the `agent_auth` member of
+https://pmorais.pt/.well-known/oauth-protected-resource, so an agent that reads
+only machine-readable documents still gets it. The auth.md specification puts
+`agent_auth` in authorization server metadata; this origin publishes none,
+for the reason in the table below, and the metadata of the authorization server
+it does rely on belongs to Google and cannot carry members of ours.
 
 ## Step 1 — Discover
 
 | Document | Status |
 | --- | --- |
-| `/.well-known/oauth-protected-resource` | **Not published.** No resource on this origin is protected by a bearer token, so there is no protected resource to describe. RFC 9728 has no way to say "nothing here is OAuth-protected"; this document says it instead. |
-| `/.well-known/oauth-authorization-server` | **Not published.** This origin issues no tokens. |
-| `/.well-known/openid-configuration` | **Not published.** This origin is not an OpenID provider. |
+| `/.well-known/oauth-protected-resource` | Published. RFC 9728 metadata for the resource `https://pmorais.pt`. Read `scopes_supported` first: it is empty, and that is the answer to most questions below. |
+| `/.well-known/oauth-authorization-server` | **Not published.** This origin issues no tokens, so it has no issuer identifier of its own. Publishing RFC 8414 metadata here whose `issuer` named somebody else would fail the issuer check in §3.3 of that RFC, and correctly so. The authorization server is named in the protected resource metadata instead. |
+| `/.well-known/openid-configuration` | **Not published.** This origin is not an OpenID provider. The provider it relies on publishes its own, at https://securetoken.google.com/paulo-morais/.well-known/openid-configuration. |
 | `/.well-known/api-catalog` | Published. RFC 9727 linkset for the public API and the MCP endpoint. |
 | `/.well-known/mcp/server-card.json` | Published. The MCP server is anonymous — `authentication.type` is `none`. |
 | `/openapi.json` | Published. Every operation is anonymous. |
 | `/.well-known/ai-catalog.json` | Published. ARD capability manifest. |
 
-No endpoint on https://pmorais.pt returns `401` with a
-`WWW-Authenticate: Bearer resource_metadata=…` challenge, because no endpoint
-here accepts a bearer token.
+### What the protected resource metadata does and does not claim
+
+It claims that the resource `https://pmorais.pt` has a protected surface — the
+client area listed under "The closed surface" below — and that the authorization
+server governing it is `https://securetoken.google.com/paulo-morais`, the Firebase Authentication
+issuer whose `iss` claim appears in every ID token that area accepts. That
+issuer publishes conforming metadata at its own well-known location, so the
+chain resolves end to end.
+
+It does not claim that an agent can walk that chain. `scopes_supported` is
+empty because no scope here is delegable to a third party, and
+`agent_delegated_access` is `not-offered`.
+
+One caveat worth stating plainly rather than leaving to be discovered: no HTTP
+request to https://pmorais.pt itself carries or parses a bearer token. The client
+area is a browser application that signs the person in and then reads their data
+directly from Google's APIs, which is where the
+`Authorization: Bearer` header goes. So no endpoint on this origin returns
+`401` with a `WWW-Authenticate: Bearer resource_metadata=…` challenge —
+not because the resource is unprotected, but because the token never travels
+here. `bearer_methods_supported` describes how the protected surface is
+reached, not a header this origin will honour.
 
 ## Step 2 — Register
 

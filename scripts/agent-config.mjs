@@ -250,12 +250,13 @@ export const LINK_HEADER_RELATIONS = [
   { href: '/.well-known/agent-skills/index.json', rel: 'describedby', type: 'application/json' },
   { href: '/.well-known/mcp/server-card.json', rel: 'describedby', type: 'application/json' },
   { href: '/auth.md', rel: 'describedby', type: 'text/markdown' },
+  { href: '/.well-known/oauth-protected-resource', rel: 'describedby', type: 'application/json' },
   { href: '/sitemap.xml', rel: 'sitemap', type: 'application/xml' },
   { href: '/politica-privacidade', rel: 'privacy-policy' },
   { href: '/termos-e-condicoes', rel: 'terms-of-service' }
 ];
 
-// The read-only MCP server implemented in mcp/index.php. Same origin, same
+// The read-only MCP server implemented in mcp.php. Same origin, same
 // deploy, no credentials: every tool reads a static file this site already
 // publishes. Kept in sync with the tool list in that file by check-seo.
 export const MCP_SERVER = {
@@ -273,6 +274,67 @@ export const MCP_SERVER = {
   }
 };
 
+// The Firebase project behind the client area. Its Secure Token Service is the
+// only issuer whose tokens mean anything to this site.
+export const FIREBASE_PROJECT_ID = 'paulo-morais';
+
+export const AUTHORIZATION_SERVER = `https://securetoken.google.com/${FIREBASE_PROJECT_ID}`;
+
+// The auth.md posture block. Declared once here because it is served twice:
+// as prose in /auth.md and as an `agent_auth` extension member of the RFC 9728
+// document below, which is the closest thing to the placement the auth.md
+// specification asks for. That specification puts `agent_auth` in authorization
+// server metadata; this origin publishes none, because it is not one, and
+// Google's metadata is not ours to add members to.
+export const AGENT_AUTH = {
+  skill: `${SITE_ORIGIN}/auth.md`,
+  registration: 'none',
+  register_uri: null,
+  identity_endpoint: null,
+  claim_uri: null,
+  revocation_uri: null,
+  identity_types_supported: [],
+  credential_types_supported: [],
+  events_supported: [],
+  public_api: `${API_BASE}/`,
+  public_api_authentication: 'none',
+  mcp_endpoint: MCP_SERVER.endpoint,
+  mcp_authentication: 'none',
+  human_provisioning: `mailto:${CONTACT.email}`
+};
+
+// RFC 9728 protected resource metadata, served at
+// /.well-known/oauth-protected-resource.
+//
+// The honest answer to "how does an agent authenticate here?" has two halves.
+// The public surface — the static JSON API, the markdown renditions, the MCP
+// server — takes no credential at all. The client area is genuinely protected,
+// but by Firebase Authentication: the browser signs the person in and reads
+// their data directly from Google's APIs with an
+// `Authorization: Bearer <Firebase ID token>` header. No request to
+// pmorais.pt itself ever carries or parses that token.
+//
+// So this document names the authorization server that actually governs the
+// protected surface instead of inventing a local one. AUTHORIZATION_SERVER is
+// the `iss` claim of every ID token the client area accepts, and it publishes
+// conforming metadata at its own well-known location, so the RFC 9728 →
+// OpenID Connect Discovery chain resolves end to end without this origin
+// pretending to issue tokens it cannot issue.
+//
+// `scopes_supported` is empty deliberately, and it is the load-bearing field:
+// no scope on this resource is delegable to a third party, agent or otherwise.
+// It is the machine-readable half of the posture auth.md states in prose.
+export const PROTECTED_RESOURCE = {
+  resource: SITE_ORIGIN,
+  authorizationServers: [AUTHORIZATION_SERVER],
+  // Advertised so a validating client can find the issuer metadata in one hop
+  // rather than deriving it from the issuer URL.
+  authorizationServerMetadata: `${AUTHORIZATION_SERVER}/.well-known/openid-configuration`,
+  scopesSupported: [],
+  bearerMethodsSupported: ['header'],
+  documentation: `${SITE_ORIGIN}/auth.md`
+};
+
 // DNS for AI Discovery (draft-mozleywilliams-dnsop-dnsaid-01).
 //
 // Only entrypoints that actually exist are published. Today that is the
@@ -280,7 +342,7 @@ export const MCP_SERVER = {
 // by the ARD manifest. There is no A2A agent, so no _a2a._agents
 // record is generated — a DNS record pointing at an endpoint that does not
 // answer is worse than no record at all. _mcp._agents is published because
-// mcp/index.php answers on this origin.
+// mcp.php answers on this origin.
 //
 // No ipv4hint/ipv6hint: the origin address belongs to the hosting provider and
 // would silently rot on migration. No cap-sha256 either — the digest of

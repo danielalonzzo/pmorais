@@ -3,7 +3,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { ASSET_VERSION, LAST_MODIFIED, PRIVATE_ROUTES, PUBLIC_PAGES, SITE_ORIGIN } from './seo-config.mjs';
 import { eachLocalModuleSpecifier, localModules } from './asset-versioning.mjs';
-import { AGENT_SKILLS, API_BASE, CONTENT_SIGNAL, DNS_AID, LINK_HEADER_RELATIONS, MARKDOWN_DIR, MCP_SERVER } from './agent-config.mjs';
+import { AGENT_AUTH, AGENT_SKILLS, API_BASE, CONTENT_SIGNAL, DNS_AID, LINK_HEADER_RELATIONS, MARKDOWN_DIR, MCP_SERVER, PROTECTED_RESOURCE } from './agent-config.mjs';
 import crypto from 'node:crypto';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
@@ -382,6 +382,52 @@ for (const document of ['oauth-protected-resource', 'oauth-authorization-server'
   if (!servedHere && !declaredAbsent) fail(`auth.md: must account for /.well-known/${document}`);
 }
 
+// RFC 9728 protected resource metadata. The registered members must stay
+// truthful about a resource whose whole posture is "protected, but not by
+// anything an agent can obtain", so each one is pinned to the config rather
+// than left to drift.
+const prm = readJsonFile('.well-known/oauth-protected-resource');
+if (prm) {
+  if (prm.resource !== PROTECTED_RESOURCE.resource) {
+    fail(`.well-known/oauth-protected-resource: resource should be ${PROTECTED_RESOURCE.resource}`);
+  }
+  if (prm.authorization_servers?.join() !== PROTECTED_RESOURCE.authorizationServers.join()) {
+    fail('.well-known/oauth-protected-resource: authorization_servers does not match agent-config.mjs');
+  }
+  // RFC 9728 §3.3 sends a client from the issuer to its metadata. Google serves
+  // the OIDC form, not the RFC 8414 one, so the hint has to be the OIDC URL.
+  const expectedMetadata = `${PROTECTED_RESOURCE.authorizationServers[0]}/.well-known/openid-configuration`;
+  if (prm.authorization_server_metadata !== expectedMetadata) {
+    fail(`.well-known/oauth-protected-resource: authorization_server_metadata should be ${expectedMetadata}`);
+  }
+  if (!prm.bearer_methods_supported?.includes('header')) {
+    fail('.well-known/oauth-protected-resource: bearer_methods_supported must include "header"');
+  }
+  // Empty is the honest value and the one auth.md explains. A non-empty list
+  // would claim this site delegates scopes to third parties, which it does not.
+  if (!Array.isArray(prm.scopes_supported) || prm.scopes_supported.length) {
+    fail('.well-known/oauth-protected-resource: scopes_supported must be an empty array while no scope is delegable');
+  }
+  if (prm.agent_delegated_access !== 'not-offered') {
+    fail('.well-known/oauth-protected-resource: agent_delegated_access must stay "not-offered" until an agent path exists');
+  }
+  if (prm.protected_paths?.join() !== PRIVATE_ROUTES.join()) {
+    fail('.well-known/oauth-protected-resource: protected_paths does not match PRIVATE_ROUTES');
+  }
+  // The same block is served twice, here and as prose in auth.md. They must
+  // not disagree about whether registration is offered.
+  if (JSON.stringify(prm.agent_auth) !== JSON.stringify(AGENT_AUTH)) {
+    fail('.well-known/oauth-protected-resource: agent_auth does not match agent-config.mjs');
+  }
+  const declaredInAuthMd = /```json\n([\s\S]*?)\n```/.exec(authMd);
+  if (declaredInAuthMd && declaredInAuthMd[1] !== JSON.stringify({ agent_auth: prm.agent_auth }, null, 2)) {
+    fail('auth.md: its agent_auth block differs from the one in .well-known/oauth-protected-resource');
+  }
+  checkOriginUrls('.well-known/oauth-protected-resource', [
+    prm.resource_documentation, prm.resource_policy_uri, prm.resource_tos_uri
+  ].filter(Boolean));
+}
+
 // DNS-AID zone data is published by hand at the DNS provider, so the file in
 // the repository is the reference. It must not drift from the config.
 const zone = read('dns/dns-aid.zone');
@@ -431,6 +477,7 @@ notes.push(`${LINK_HEADER_RELATIONS.length} Link relations checked against .htac
 notes.push(`${AGENT_SKILLS.length} agent skills checked against their digests`);
 notes.push(`${DNS_AID.entrypoints.length + DNS_AID.textRecords.length} DNS-AID records checked against scripts/agent-config.mjs`);
 notes.push(`${MCP_SERVER.tools.length} MCP tools checked against the server card`);
+notes.push('RFC 9728 protected resource metadata checked against auth.md and scripts/agent-config.mjs');
 
 notes.push(`${PUBLIC_PAGES.length} canonical pages checked`);
 notes.push(`${htmlFiles.length - PUBLIC_PAGES.length} non-public/support pages checked for noindex`);

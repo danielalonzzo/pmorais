@@ -7,6 +7,7 @@
 //   .well-known/api-catalog    RFC 9727 linkset
 //   .well-known/ai-catalog.json           ARD capability manifest
 //   .well-known/agent-skills/  skills discovery index + SKILL.md artifacts
+//   .well-known/oauth-protected-resource  RFC 9728 protected resource metadata
 //   auth.md                    agent authentication posture
 //
 // Run with: npm run agents:generate
@@ -17,8 +18,9 @@ import crypto from 'node:crypto';
 import { fileURLToPath } from 'node:url';
 import { LAST_MODIFIED, PUBLIC_PAGES, PRIVATE_ROUTES, SITE_ORIGIN } from './seo-config.mjs';
 import {
-  AGENT_SKILLS, API_BASE, API_VERSION, CONTACT, CONTENT_SIGNAL, DNS_AID,
-  DISCLAIMERS, LINK_HEADER_RELATIONS, MARKDOWN_DIR, MCP_SERVER, ORGANISATION, SERVICES
+  AGENT_AUTH, AGENT_SKILLS, API_BASE, API_VERSION, AUTHORIZATION_SERVER, CONTACT,
+  CONTENT_SIGNAL, DNS_AID, DISCLAIMERS, LINK_HEADER_RELATIONS, MARKDOWN_DIR,
+  MCP_SERVER, ORGANISATION, PROTECTED_RESOURCE, SERVICES
 } from './agent-config.mjs';
 import { estimateTokens, extractMain, htmlToMarkdown } from './html-to-markdown.mjs';
 
@@ -476,6 +478,18 @@ write('.well-known/ai-catalog.json', json({
         'how should an agent interact with Paulo Morais',
         'skill for booking a session with Paulo Morais'
       ]
+    },
+    {
+      identifier: urn('auth', 'protected-resource'),
+      displayName: 'Protected resource metadata',
+      description: 'RFC 9728 metadata for this origin. Names the authorization server behind the client area and states that no scope on it is delegable to an agent.',
+      type: 'application/json',
+      url: `${SITE_ORIGIN}/.well-known/oauth-protected-resource`,
+      representativeQueries: [
+        'how does an agent authenticate with pmorais.pt',
+        'does pmorais.pt issue API keys or OAuth tokens',
+        'can an agent log in to the Paulo Morais client area'
+      ]
     }
   ]
 }));
@@ -511,6 +525,31 @@ write('.well-known/agent-skills/index.json', json({
   skills: skillIndex
 }));
 
+// ------------------------------------------- RFC 9728 protected resource --
+//
+// Extensionless by specification, so .well-known/.htaccess sets its
+// Content-Type by filename rather than by extension.
+
+write('.well-known/oauth-protected-resource', json({
+  resource: PROTECTED_RESOURCE.resource,
+  authorization_servers: PROTECTED_RESOURCE.authorizationServers,
+  scopes_supported: PROTECTED_RESOURCE.scopesSupported,
+  bearer_methods_supported: PROTECTED_RESOURCE.bearerMethodsSupported,
+  resource_name: ORGANISATION.brand,
+  resource_documentation: PROTECTED_RESOURCE.documentation,
+  resource_policy_uri: absolute('/politica-privacidade'),
+  resource_tos_uri: absolute('/termos-e-condicoes'),
+  authorization_server_metadata: PROTECTED_RESOURCE.authorizationServerMetadata,
+  // Extension members. RFC 9728 §2 permits them, and they carry the part of
+  // this resource's posture the registered members cannot express: which
+  // paths are protected, that none of them is reachable with a token an agent
+  // could obtain, and where the prose version lives.
+  protected_paths: [...PRIVATE_ROUTES],
+  public_paths_require_no_token: [`/api/${API_VERSION}/`, '/mcp', '/openapi.json'],
+  agent_delegated_access: 'not-offered',
+  agent_auth: AGENT_AUTH
+}));
+
 // ----------------------------------------------------------------- auth.md --
 
 write('auth.md', `# auth.md
@@ -532,45 +571,50 @@ training, adapted exercise in oncology, and osteopathy.
 ## Declared posture
 
 \`\`\`json
-{
-  "agent_auth": {
-    "skill": "${SITE_ORIGIN}/auth.md",
-    "registration": "none",
-    "register_uri": null,
-    "identity_endpoint": null,
-    "claim_uri": null,
-    "revocation_uri": null,
-    "identity_types_supported": [],
-    "credential_types_supported": [],
-    "events_supported": [],
-    "public_api": "${API_BASE}/",
-    "public_api_authentication": "none",
-    "mcp_endpoint": "${MCP_SERVER.endpoint}",
-    "mcp_authentication": "none",
-    "human_provisioning": "mailto:${CONTACT.email}"
-  }
-}
+${JSON.stringify({ agent_auth: AGENT_AUTH }, null, 2)}
 \`\`\`
 
-That block is a declaration of posture, not authorization server metadata. It is
-embedded here rather than at \`/.well-known/oauth-authorization-server\`
-precisely because this service is not an authorization server.
+The same block is served as the \`agent_auth\` member of
+${SITE_ORIGIN}/.well-known/oauth-protected-resource, so an agent that reads
+only machine-readable documents still gets it. The auth.md specification puts
+\`agent_auth\` in authorization server metadata; this origin publishes none,
+for the reason in the table below, and the metadata of the authorization server
+it does rely on belongs to Google and cannot carry members of ours.
 
 ## Step 1 — Discover
 
 | Document | Status |
 | --- | --- |
-| \`/.well-known/oauth-protected-resource\` | **Not published.** No resource on this origin is protected by a bearer token, so there is no protected resource to describe. RFC 9728 has no way to say "nothing here is OAuth-protected"; this document says it instead. |
-| \`/.well-known/oauth-authorization-server\` | **Not published.** This origin issues no tokens. |
-| \`/.well-known/openid-configuration\` | **Not published.** This origin is not an OpenID provider. |
+| \`/.well-known/oauth-protected-resource\` | Published. RFC 9728 metadata for the resource \`${SITE_ORIGIN}\`. Read \`scopes_supported\` first: it is empty, and that is the answer to most questions below. |
+| \`/.well-known/oauth-authorization-server\` | **Not published.** This origin issues no tokens, so it has no issuer identifier of its own. Publishing RFC 8414 metadata here whose \`issuer\` named somebody else would fail the issuer check in §3.3 of that RFC, and correctly so. The authorization server is named in the protected resource metadata instead. |
+| \`/.well-known/openid-configuration\` | **Not published.** This origin is not an OpenID provider. The provider it relies on publishes its own, at ${PROTECTED_RESOURCE.authorizationServerMetadata}. |
 | \`/.well-known/api-catalog\` | Published. RFC 9727 linkset for the public API and the MCP endpoint. |
 | \`/.well-known/mcp/server-card.json\` | Published. The MCP server is anonymous — \`authentication.type\` is \`none\`. |
 | \`/openapi.json\` | Published. Every operation is anonymous. |
 | \`/.well-known/ai-catalog.json\` | Published. ARD capability manifest. |
 
-No endpoint on ${SITE_ORIGIN} returns \`401\` with a
-\`WWW-Authenticate: Bearer resource_metadata=…\` challenge, because no endpoint
-here accepts a bearer token.
+### What the protected resource metadata does and does not claim
+
+It claims that the resource \`${SITE_ORIGIN}\` has a protected surface — the
+client area listed under "The closed surface" below — and that the authorization
+server governing it is \`${AUTHORIZATION_SERVER}\`, the Firebase Authentication
+issuer whose \`iss\` claim appears in every ID token that area accepts. That
+issuer publishes conforming metadata at its own well-known location, so the
+chain resolves end to end.
+
+It does not claim that an agent can walk that chain. \`scopes_supported\` is
+empty because no scope here is delegable to a third party, and
+\`agent_delegated_access\` is \`not-offered\`.
+
+One caveat worth stating plainly rather than leaving to be discovered: no HTTP
+request to ${SITE_ORIGIN} itself carries or parses a bearer token. The client
+area is a browser application that signs the person in and then reads their data
+directly from Google's APIs, which is where the
+\`Authorization: Bearer\` header goes. So no endpoint on this origin returns
+\`401\` with a \`WWW-Authenticate: Bearer resource_metadata=…\` challenge —
+not because the resource is unprotected, but because the token never travels
+here. \`bearer_methods_supported\` describes how the protected surface is
+reached, not a header this origin will honour.
 
 ## Step 2 — Register
 
@@ -665,6 +709,10 @@ write('.well-known/.htaccess', `# Generated by scripts/generate-agent-discovery.
 
   <Files "api-catalog">
     Header always set Content-Type "application/linkset+json; charset=utf-8"
+  </Files>
+
+  <Files "oauth-protected-resource">
+    Header always set Content-Type "application/json; charset=utf-8"
   </Files>
 
   <FilesMatch "\\.json$">
@@ -815,14 +863,13 @@ host and the registrar.
 
 ## What is being published, and why only this
 
-One entrypoint: \`_index._agents.${DNS_AID.zone}\`, the well-known entry point
-from §3 of the draft. It resolves to the origin that serves the ARD manifest,
-the RFC 9727 API catalog and the OpenAPI description.
+${DNS_AID.entrypoints.map((entry) => `- \`${entry.owner.replace(/\.$/, '')}\` — ${entry.comment}`).join('\n')}
+- \`${DNS_AID.textRecords[0].owner.replace(/\.$/, '')}\` — ${DNS_AID.textRecords[0].comment}
 
-No \`_a2a._agents\` and no \`_mcp._agents\` record is published, because there
-is no A2A agent and no MCP server behind this domain. Advertising an endpoint
-in DNS that does not answer wastes every resolver that trusts it. Add those
-records in the same file the day the endpoints exist.
+Nothing else. In particular there is no \`_a2a._agents\` record, because there
+is no A2A agent behind this domain. Advertising an endpoint in DNS that does not
+answer wastes every resolver that trusts it. Add the record to
+\`scripts/agent-config.mjs\` and regenerate the day the endpoint exists.
 
 ## Step 1 — the TXT record (publishable today, anywhere)
 
@@ -833,16 +880,17 @@ DNS discovery mechanism on its own.
 In cPanel: **Zone Editor → Manage → Add Record → TXT**, with the name and value
 from \`dns-aid.zone\`.
 
-## Step 2 — the SVCB record
+## Step 2 — the SVCB records
 
-\`_index._agents\` needs an SVCB record, DNS RR type 64. cPanel's Zone Editor
-does not offer type 64 in its record-type list in most builds, and type 65
-(HTTPS) only in recent ones. Two ways forward:
+${DNS_AID.entrypoints.map((entry) => `\`${entry.owner.replace(/\.$/, '')}\``).join(' and ')} need SVCB
+records, DNS RR type 64. cPanel's Zone Editor does not offer type 64 in its
+record-type list in most builds, and type 65 (HTTPS) only in recent ones. Two
+ways forward:
 
-1. **Ask the provider.** Send flesk.com the SVCB line from \`dns-aid.zone\`
-   verbatim and ask for it to be added to the zone. If they can only do type
-   65, ask for the commented HTTPS line instead — publish one or the other,
-   never both.
+1. **Ask the provider.** Send flesk.com the SVCB lines from \`dns-aid.zone\`
+   verbatim and ask for them to be added to the zone. If they can only do type
+   65, ask for the commented HTTPS lines instead — publish one form or the
+   other, never both.
 2. **Move DNS to a provider that supports it.** Cloudflare's free tier accepts
    SVCB and HTTPS records directly and turns on DNSSEC with one click, which
    also settles step 3. Nameserver delegation changes at the registrar; the

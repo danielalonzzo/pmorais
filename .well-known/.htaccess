@@ -11,6 +11,10 @@
     Header always set Content-Type "application/linkset+json; charset=utf-8"
   </Files>
 
+  <Files "oauth-protected-resource">
+    Header always set Content-Type "application/json; charset=utf-8"
+  </Files>
+
   <FilesMatch "\.json$">
     Header always set Content-Type "application/json; charset=utf-8"
   </FilesMatch>
