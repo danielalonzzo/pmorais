@@ -4,7 +4,7 @@ description: Conheça Paulo Morais, personal trainer e técnico de osteopatia em
 canonical: "https://pmorais.pt/sobre-mim"
 language: pt-PT
 alternate: "https://pmorais.pt/en/sobre-mim"
-updated: 2026-08-24
+updated: 2026-09-29
 source: Rendered from the canonical HTML page. The HTML remains authoritative if the two differ.
 ---
 

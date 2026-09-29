@@ -4,7 +4,7 @@ description: Artigos de Paulo Morais sobre treino personalizado, osteopatia, exe
 canonical: "https://pmorais.pt/blog"
 language: pt-PT
 alternate: "https://pmorais.pt/en/blog"
-updated: 2026-08-24
+updated: 2026-09-29
 source: Rendered from the canonical HTML page. The HTML remains authoritative if the two differ.
 ---
 

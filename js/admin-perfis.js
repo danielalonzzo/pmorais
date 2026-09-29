@@ -1,4 +1,4 @@
-import { auth, db } from './firebase-config.js?v=2.5.1';
+import { auth, db } from './firebase-config.js?v=1.6.1';
 import { 
     collection, 
     getDocs,
@@ -11,7 +11,7 @@ import {
     where 
 } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
-import { buildGuestClientId } from './guest-clients.js?v=2.5.1';
+import { buildGuestClientId } from './guest-clients.js?v=1.6.1';
 
 // [SEC-03] Conditional logger — silent in production
 const _isDev = location.hostname === 'localhost' || location.hostname === '127.0.0.1';

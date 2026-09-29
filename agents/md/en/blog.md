@@ -4,7 +4,7 @@ description: Articles by Paulo Morais about personal training, osteopathy, oncol
 canonical: "https://pmorais.pt/en/blog"
 language: en-GB
 alternate: "https://pmorais.pt/blog"
-updated: 2026-08-24
+updated: 2026-09-29
 source: Rendered from the canonical HTML page. The HTML remains authoritative if the two differ.
 ---
 

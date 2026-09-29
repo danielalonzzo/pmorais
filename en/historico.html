@@ -10,7 +10,7 @@
     <title>Booking History | Paulo Morais</title>
     <!-- Preloads -->
     <link rel="preload" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700;800&family=Poppins:wght@300;400;500;600;700&display=swap" as="style">
-    <link rel="preload" href="../css/style.css?v=2.5.1" as="style">
+    <link rel="preload" href="../css/style.css?v=1.6.1" as="style">
 
     <link rel="shortcut icon" type="image/png" href="../images/logo/logo_amarelo_alpha.png">
     
@@ -31,7 +31,7 @@
     <script nonce="pmorais-2026" src="https://unpkg.com/lucide@latest" defer></script>
 
     <!-- Custom Style -->
-    <link rel="stylesheet" href="../css/style.css?v=2.5.1">
+    <link rel="stylesheet" href="../css/style.css?v=1.6.1">
     
     <style nonce="pmorais-2026">
         .history-page-container {
@@ -72,6 +72,77 @@
             gap: 20px;
         }
 
+        /* Client filter (admin only) */
+        .history-filter {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: flex-end;
+            justify-content: space-between;
+            gap: 12px 20px;
+            margin-bottom: 30px;
+        }
+
+        .history-filter[hidden] {
+            display: none;
+        }
+
+        .history-filter-field {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            flex: 1 1 320px;
+            max-width: 420px;
+        }
+
+        .history-filter-field label {
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: var(--color-text-dim);
+        }
+
+        .history-filter select {
+            width: 100%;
+            padding: 14px 48px 14px 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            background-color: rgba(255, 255, 255, 0.03);
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23E6AE17' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 18px center;
+            background-size: 18px;
+            color: var(--color-text);
+            font-family: inherit;
+            font-size: 1rem;
+            appearance: none;
+            -webkit-appearance: none;
+            cursor: pointer;
+            transition: border-color 0.3s ease, background-color 0.3s ease;
+        }
+
+        .history-filter select:focus {
+            border-color: var(--color-primary);
+            outline: none;
+            background-color: rgba(255, 255, 255, 0.05);
+        }
+
+        .history-filter select option {
+            background: var(--color-surface);
+            color: var(--color-text);
+        }
+
+        .light-mode .history-filter select {
+            border-color: rgba(0, 0, 0, 0.1);
+            background-color: rgba(0, 0, 0, 0.02);
+        }
+
+        .history-filter-count {
+            font-size: 0.85rem;
+            color: var(--color-text-dim);
+            padding-bottom: 14px;
+        }
+
         /* Empty state styling */
         .empty-history {
             text-align: center;
@@ -95,8 +166,8 @@
             }
         }
     </style>
-    <script nonce="pmorais-2026" src="js/lang.js?v=2.5.1" defer></script>
-    <script nonce="pmorais-2026" src="js/theme.js?v=2.5.1" defer></script>
+    <script nonce="pmorais-2026" src="js/lang.js?v=1.6.1" defer></script>
+    <script nonce="pmorais-2026" src="js/theme.js?v=1.6.1" defer></script>
 </head>
 
 <body class="bg-dark">
@@ -128,6 +199,16 @@
             <p id="page-subtitle" style="opacity: 0.5; margin-top: 10px;">View your session history.</p>
         </div>
 
+        <div id="history-filter" class="history-filter" hidden>
+            <div class="history-filter-field">
+                <label for="history-client-filter">Filter by client</label>
+                <select id="history-client-filter">
+                    <option value="">All clients</option>
+                </select>
+            </div>
+            <span id="history-filter-count" class="history-filter-count" aria-live="polite"></span>
+        </div>
+
         <div id="history-content" class="history-grid-modern">
             <div class="text-center" style="padding: 100px; opacity: 0.5;">
                 <div class="loader-history">Loading history...</div>
@@ -143,9 +224,9 @@
     </footer>
 
     <!-- Scripts -->
-    <script nonce="pmorais-2026" type="module" src="js/admin-historico.js?v=2.5.1"></script>
-    <script nonce="pmorais-2026" src="js/script.js?v=2.5.1" defer></script>
-    <script nonce="pmorais-2026" src="../js/cookie-consent.js?v=2.5.1" defer></script>
+    <script nonce="pmorais-2026" type="module" src="js/admin-historico.js?v=1.6.1"></script>
+    <script nonce="pmorais-2026" src="js/script.js?v=1.6.1" defer></script>
+    <script nonce="pmorais-2026" src="../js/cookie-consent.js?v=1.6.1" defer></script>
 </body>
 
 </html>

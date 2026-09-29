@@ -4,7 +4,7 @@ description: Personal training, online coaching and osteopathy in Lisbon. Paulo 
 canonical: "https://pmorais.pt/en/"
 language: en-GB
 alternate: "https://pmorais.pt/"
-updated: 2026-08-24
+updated: 2026-09-29
 source: Rendered from the canonical HTML page. The HTML remains authoritative if the two differ.
 ---
 
