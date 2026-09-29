@@ -19,7 +19,9 @@
     "test": "npm run check:seo",
     "agents:generate": "node scripts/generate-agent-discovery.mjs",
     "check:dns": "node scripts/check-dns-aid.mjs",
-    "check:mcp": "node scripts/check-mcp.mjs"
+    "check:mcp": "node scripts/check-mcp.mjs",
+    "build:cloudflare": "node scripts/build-cloudflare-dist.mjs",
+    "deploy:cloudflare": "node scripts/build-cloudflare-dist.mjs && (cd tmp/dist && npx wrangler pages deploy . --project-name=paulo-morais --branch=main) && rm -rf tmp/dist"
   },
   "repository": {
     "type": "git",
