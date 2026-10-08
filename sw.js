@@ -1,4 +1,4 @@
-const CACHE_NAME = 'paulo-morais-pwa-v161';
+const CACHE_NAME = 'paulo-morais-pwa-v162';
 const STATIC_DESTINATIONS = new Set([
   'style',
   'script',

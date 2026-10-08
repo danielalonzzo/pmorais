@@ -36,5 +36,30 @@ Para completar o site com o seu conteúdo visual, siga estes passos:
 - [x] Sistema de animações de entrada ("Fade In" e "Reveal").
 - [x] Cartões de testemunhos e perfil profissional.
 
+## SEO e respostas de IA
+
+Tudo o que motores de busca e assistentes leem é gerado a partir de duas fontes:
+
+- `scripts/seo-config.mjs`: páginas públicas, títulos, descrições, idiomas e `ASSET_VERSION`.
+- `scripts/agent-config.mjs`: identidade de Paulo Morais, serviços, nomes alternativos, termos de pesquisa (PT, EN, ES) e línguas das sessões.
+
+Depois de editar HTML ou estas fontes:
+
+1. `npm run seo:apply` regenera metadados, JSON-LD, sitemap, robots, llms.txt, API e renditions em markdown.
+2. `npm test` valida tudo (o CI falha se o resultado não estiver gerado).
+3. Ao mudar CSS ou JS, sobe `ASSET_VERSION` para que os visitantes não fiquem com a versão em cache.
+4. Depois do deploy, `npm run seo:indexnow` avisa o Bing e outros motores (IndexNow) de que as páginas mudaram.
+
+As perguntas frequentes visíveis (`.pm-faq` e `.service-faq`, uma `<article>` por pergunta) geram automaticamente o `FAQPage` do JSON-LD; basta editar o texto no HTML.
+
+### Lançar a versão em espanhol
+
+Os endereços estão reservados em `PLANNED_SPANISH_PATHS` (`scripts/seo-config.mjs`) e os textos em espanhol do JSON-LD e da API já existem em `scripts/agent-config.mjs`.
+
+1. Criar as páginas em `es/` com `<html lang="es">`, uma por cada caminho reservado (por exemplo `es/entrenamiento-personal.html`), com caminhos `../js/` e `../css/` para os ficheiros partilhados.
+2. Acrescentar cada página a `PUBLIC_PAGES` com `"language": "es"` e o mesmo `translationKey` da versão PT/EN.
+3. Mudar `LOCALES.es.published` para `true`.
+4. `npm run seo:apply && npm test`: hreflang, sitemap, llms.txt, API, rotas privadas em robots.txt e o seletor de idioma passam a incluir o espanhol.
+
 ---
 Desenvolvido com carinho para Paulo Morais.

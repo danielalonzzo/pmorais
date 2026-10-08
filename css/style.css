@@ -8343,3 +8343,2338 @@ a.about-hero-photo.ig-photo-link:hover .ig-feed-overlay {
         flex: 1;
     }
 }
+
+/* ==========================================================================
+   Cuidados pós-tratamento oncológico, peças interativas (.sv-*)
+   Mantido fora de qualquer @layer (ganha às regras `legacy`). Todas as cores
+   vêm de var(--color-*), por isso acompanham o tema claro/escuro (theme.js).
+   Os estados "escondido até ao clique" só existem com html.sv-js, aplicada por
+   js/sobrevivencia.js; sem JavaScript todo o conteúdo fica visível.
+   ========================================================================== */
+.sv-section,
+.sv-ring-wrap,
+.sv-hero {
+    --sv-accent: var(--color-primary);
+    --sv-accent-text: var(--color-primary-text);
+    --sv-ink: var(--color-text);
+    --sv-dim: var(--color-text-dim);
+    --sv-line: color-mix(in srgb, var(--color-text) 22%, transparent);
+    --sv-soft: color-mix(in srgb, var(--color-text) 6%, transparent);
+    --sv-card: color-mix(in srgb, var(--color-text) 5%, var(--color-bg));
+    --sv-glow: color-mix(in srgb, var(--color-primary) 38%, transparent);
+    --sv-on-accent: #111111;
+}
+
+.sv-section {
+    position: relative;
+    padding: clamp(70px, 10vw, 120px) 20px;
+    background-color: var(--color-bg);
+    overflow: hidden;
+    border-top: 1px solid color-mix(in srgb, var(--color-text) 8%, transparent);
+    scroll-margin-top: 80px;
+}
+
+.sv-section > .container-wide {
+    position: relative;
+    z-index: 1;
+}
+
+.sv-ring-wrap[id],
+.sv-section[id] {
+    scroll-margin-top: 90px;
+}
+
+:where(.sv-section, .sv-ring-wrap, .sv-hero) button {
+    font: inherit;
+    color: inherit;
+    background: none;
+    border: 0;
+    padding: 0;
+    cursor: pointer;
+    text-align: inherit;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.sv-section :is(button, a, [role="tab"], input):focus-visible,
+.sv-ring-wrap button:focus-visible,
+.sv-hero a:focus-visible {
+    outline: 3px solid var(--sv-accent);
+    outline-offset: 3px;
+}
+
+.sv-ico {
+    width: 1.3em;
+    height: 1.3em;
+    flex: none;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.sv-head.oncologia-header {
+    margin-bottom: clamp(2.2rem, 5vw, 3.5rem);
+}
+
+.sv-note {
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+    max-width: 720px;
+    margin: 2rem auto 0;
+    font-size: 0.82rem;
+    line-height: 1.55;
+    color: var(--sv-dim);
+}
+
+.sv-note .sv-ico {
+    width: 18px;
+    height: 18px;
+    margin-top: 2px;
+    color: var(--sv-accent-text);
+}
+
+.sv-note--center {
+    justify-content: center;
+    text-align: left;
+}
+
+/* ── Contador de descobertas ("Descobriste 2 de 5") ───────────────────── */
+.sv-progress {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 7px 16px;
+    border: 1px solid var(--sv-line);
+    border-radius: 50px;
+    background: var(--sv-soft);
+    color: var(--sv-dim);
+    font-size: 0.74rem;
+    font-weight: 600;
+    letter-spacing: 1.4px;
+    text-transform: uppercase;
+}
+
+.sv-pdots {
+    display: inline-flex;
+    gap: 5px;
+}
+
+.sv-pdots i {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--sv-line);
+    transition: background 0.4s ease, transform 0.4s ease, box-shadow 0.4s ease;
+}
+
+.sv-pdots i.is-on {
+    background: var(--sv-accent);
+    transform: scale(1.2);
+    box-shadow: 0 0 8px var(--sv-glow);
+}
+
+.sv-progress.is-complete {
+    border-color: var(--sv-accent);
+    color: var(--sv-accent-text);
+    animation: sv-glow 2.4s ease-in-out infinite alternate;
+}
+
+/* ── Painéis empilhados (conteúdo que aparece ao tocar) ───────────────── */
+.sv-panels {
+    display: grid;
+    align-content: start;
+}
+
+.sv-panel {
+    padding: clamp(20px, 3vw, 30px);
+    border: 1px solid var(--sv-line);
+    border-radius: 24px;
+    background: var(--sv-card);
+}
+
+.sv-panel + .sv-panel {
+    margin-top: 14px;
+}
+
+.sv-js .sv-panel {
+    grid-area: 1 / 1;
+    visibility: hidden;
+    opacity: 0;
+    transform: translateY(12px);
+    pointer-events: none;
+    transition: opacity 0.35s ease, transform 0.35s ease, visibility 0s linear 0.35s;
+}
+
+.sv-js .sv-panel + .sv-panel {
+    margin-top: 0;
+}
+
+.sv-js .sv-panel.is-active {
+    visibility: visible;
+    opacity: 1;
+    transform: none;
+    pointer-events: auto;
+    transition-delay: 0s;
+}
+
+.sv-panel-head {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 12px;
+}
+
+.sv-panel-ico {
+    width: 48px;
+    height: 48px;
+    flex: none;
+    display: grid;
+    place-items: center;
+    border-radius: 50%;
+    background: color-mix(in srgb, var(--sv-accent) 16%, transparent);
+    color: var(--sv-accent-text);
+}
+
+.sv-panel-ico .sv-ico {
+    width: 24px;
+    height: 24px;
+}
+
+.sv-panel h3 {
+    margin: 0;
+    font-size: 1.2rem;
+    letter-spacing: 0;
+    line-height: 1.2;
+}
+
+.sv-panel p {
+    margin: 0 0 12px;
+    color: var(--sv-dim);
+    line-height: 1.65;
+    font-size: 0.98rem;
+}
+
+.sv-ask {
+    margin: 16px 0 0;
+    padding: 4px 0 4px 14px;
+    border-left: 3px solid var(--sv-accent);
+    font-style: italic;
+    color: var(--sv-ink);
+    line-height: 1.55;
+}
+
+.sv-ask small {
+    display: block;
+    margin-bottom: 4px;
+    font-size: 0.7rem;
+    font-style: normal;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--sv-accent-text);
+}
+
+.sv-alert {
+    display: flex;
+    gap: 8px;
+    margin-top: 14px;
+    font-size: 0.82rem;
+    line-height: 1.5;
+    color: var(--sv-accent-text);
+}
+
+.sv-alert .sv-ico {
+    width: 18px;
+    height: 18px;
+    margin-top: 1px;
+}
+
+.sv-panel--idle {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    text-align: center;
+    border-style: dashed;
+}
+
+.sv-panel--idle .sv-ico {
+    width: 34px;
+    height: 34px;
+    color: var(--sv-accent-text);
+}
+
+.sv-panel--idle p {
+    margin: 0;
+    max-width: 360px;
+}
+
+.sv-panel--idle strong {
+    display: block;
+    color: var(--sv-ink);
+    font-size: 1.1rem;
+    margin-bottom: 4px;
+}
+
+.sv-watch.is-inview .sv-panel--idle .sv-ico {
+    animation: sv-bob 1.8s ease-in-out infinite;
+}
+
+/* ══ 0 · Jornada → constelação dos 5 cuidados (index) ═══════════════════ */
+.sv-timeline {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    max-width: 920px;
+    margin: 0 auto clamp(2rem, 5vw, 3.5rem);
+    padding: 0;
+    list-style: none;
+}
+
+.sv-step {
+    position: relative;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    padding-top: 42px;
+    text-align: center;
+}
+
+.sv-step--core {
+    flex: 0 0 150px;
+    padding-top: 0;
+}
+
+.sv-dot {
+    position: relative;
+    z-index: 1;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    border: 2px solid var(--sv-line);
+    background: var(--color-bg);
+    transition: border-color 0.5s ease, background 0.5s ease, box-shadow 0.5s ease;
+    transition-delay: calc(var(--i, 0) * 0.55s);
+}
+
+.sv-journey.is-drawn .sv-dot {
+    border-color: var(--sv-accent);
+    background: var(--sv-accent);
+    box-shadow: 0 0 14px var(--sv-glow);
+}
+
+.sv-step-label {
+    font-size: 0.82rem;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--sv-dim);
+}
+
+.sv-step:not(.sv-step--core)::before,
+.sv-step:not(.sv-step--core)::after {
+    content: '';
+    position: absolute;
+    top: 55px;
+    left: calc(50% + 18px);
+    width: calc(100% - 36px);
+    height: 2px;
+}
+
+.sv-step:nth-last-child(2)::before,
+.sv-step:nth-last-child(2)::after {
+    width: calc(50% + 1px);
+}
+
+.sv-step:not(.sv-step--core)::before {
+    background: var(--sv-line);
+}
+
+.sv-step:not(.sv-step--core)::after {
+    background: var(--sv-accent);
+    transform: scaleX(0);
+    transform-origin: left center;
+    transition: transform 0.9s ease;
+    transition-delay: calc(var(--i, 0) * 0.55s + 0.25s);
+}
+
+.sv-journey.is-drawn .sv-step:not(.sv-step--core)::after {
+    transform: scaleX(1);
+}
+
+.sv-core {
+    position: relative;
+    width: 112px;
+    height: 112px;
+    display: grid;
+    place-items: center;
+    border-radius: 50%;
+    background: var(--sv-accent);
+    color: var(--sv-on-accent);
+    font-size: 0.98rem;
+    font-weight: 800;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    text-align: center;
+    line-height: 1.1;
+    box-shadow: 0 10px 40px var(--sv-glow);
+    transition: transform 0.35s cubic-bezier(0.2, 0.9, 0.3, 1.3), box-shadow 0.35s ease;
+}
+
+.sv-core:hover {
+    transform: scale(1.07);
+    box-shadow: 0 14px 54px var(--sv-glow);
+}
+
+.sv-core::before,
+.sv-core::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    border: 2px solid var(--sv-accent);
+    opacity: 0;
+    pointer-events: none;
+}
+
+.sv-journey.is-inview .sv-core:not([aria-expanded="true"])::before {
+    animation: sv-ping 2.4s ease-out infinite;
+}
+
+.sv-journey.is-inview .sv-core:not([aria-expanded="true"])::after {
+    animation: sv-ping 2.4s ease-out 1.2s infinite;
+}
+
+.sv-core[aria-expanded="true"] {
+    background: transparent;
+    color: var(--sv-accent-text);
+    border: 2px solid var(--sv-accent);
+    box-shadow: none;
+}
+
+.sv-core-hint {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 12px;
+    font-size: 0.74rem;
+    font-weight: 600;
+    letter-spacing: 1.6px;
+    text-transform: uppercase;
+    color: var(--sv-accent-text);
+}
+
+.sv-core-hint .sv-ico {
+    width: 16px;
+    height: 16px;
+}
+
+.sv-journey.is-inview:not(.is-open) .sv-core-hint .sv-ico {
+    animation: sv-bob 1.6s ease-in-out infinite;
+}
+
+.sv-journey.is-open .sv-core-hint {
+    display: none;
+}
+
+.sv-constellation {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+    max-width: 1120px;
+    margin: 0 auto;
+    padding: 0;
+    list-style: none;
+}
+
+.sv-js .sv-constellation:not(.is-open) {
+    max-height: 0;
+    overflow: hidden;
+}
+
+.sv-js .sv-constellation {
+    transition: max-height 0.9s ease;
+}
+
+.sv-js .sv-constellation.is-open {
+    max-height: 2600px;
+}
+
+.sv-star {
+    position: relative;
+    flex: 1 1 190px;
+    max-width: 215px;
+}
+
+.sv-star > a {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    height: 100%;
+    padding: 22px 18px 20px;
+    border: 1px solid var(--sv-line);
+    border-radius: 22px;
+    background: var(--sv-card);
+    color: var(--sv-ink);
+    text-decoration: none;
+    transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.sv-star > a:hover,
+.sv-star > a:focus-visible {
+    transform: translateY(-6px);
+    border-color: var(--sv-accent);
+    box-shadow: 0 18px 40px rgba(0, 0, 0, 0.35), 0 0 30px var(--sv-glow);
+}
+
+.sv-star-n {
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 3px;
+    color: var(--sv-accent-text);
+}
+
+.sv-star-ico {
+    width: 46px;
+    height: 46px;
+    display: grid;
+    place-items: center;
+    border-radius: 50%;
+    background: color-mix(in srgb, var(--sv-accent) 15%, transparent);
+    color: var(--sv-accent-text);
+}
+
+.sv-star-ico .sv-ico {
+    width: 24px;
+    height: 24px;
+}
+
+.sv-constellation.is-open .sv-star-ico {
+    animation: sv-twinkle 3.2s ease-in-out infinite;
+    animation-delay: calc(var(--i, 0) * 0.5s);
+}
+
+.sv-star h3 {
+    margin: 0;
+    font-size: 1.05rem;
+    line-height: 1.2;
+    letter-spacing: 0;
+}
+
+.sv-star p {
+    flex: 1;
+    margin: 0;
+    font-size: 0.88rem;
+    line-height: 1.55;
+    color: var(--sv-dim);
+}
+
+.sv-star-go {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.74rem;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--sv-accent-text);
+}
+
+.sv-star-go .sv-ico {
+    width: 15px;
+    height: 15px;
+    transition: transform 0.3s ease;
+}
+
+.sv-star > a:hover .sv-star-go .sv-ico {
+    transform: translateX(4px);
+}
+
+.sv-star.is-found::after {
+    content: '';
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: var(--sv-accent) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23111' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20 6 9 17l-5-5'/%3E%3C/svg%3E") center / 13px no-repeat;
+    pointer-events: none;
+}
+
+.sv-js .sv-constellation .sv-star {
+    transition: opacity 0.5s ease, transform 0.65s cubic-bezier(0.2, 0.9, 0.3, 1.2), visibility 0s linear 0s;
+    transition-delay: calc(var(--i, 0) * 110ms);
+}
+
+.sv-js .sv-constellation:not(.is-open) .sv-star {
+    visibility: hidden;
+    opacity: 0;
+    transform: translateY(26px) scale(0.85);
+    transition-delay: 0s, 0s, 0.4s;
+}
+
+.sv-journey-cta {
+    margin-top: clamp(2rem, 4vw, 3rem);
+    text-align: center;
+}
+
+/* ══ 4 · Anel dos 150 minutos (index, dentro de #oncologia) ═════════════ */
+.sv-ring-wrap {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    grid-template-columns: minmax(0, 320px) minmax(0, 1fr);
+    gap: clamp(1.8rem, 4vw, 3.2rem);
+    align-items: center;
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: clamp(24px, 4vw, 44px);
+    border: 1px solid var(--sv-line);
+    border-radius: 36px;
+    background: linear-gradient(150deg, var(--sv-card), transparent 70%);
+}
+
+.sv-ring-visual {
+    position: relative;
+    width: 100%;
+    max-width: 320px;
+    margin: 0 auto;
+    aspect-ratio: 1;
+}
+
+.sv-ring-svg {
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+}
+
+.sv-ring-track,
+.sv-ring-bar,
+.sv-ring-burst,
+.sv-ring-comet {
+    fill: none;
+    stroke-width: 12;
+    stroke-linecap: round;
+}
+
+.sv-ring-track {
+    stroke: var(--sv-line);
+    opacity: 0.6;
+}
+
+.sv-ring-bar {
+    stroke: var(--sv-accent);
+    stroke-dasharray: 100;
+    stroke-dashoffset: calc(100 - var(--sv-p, 0) * 100);
+    transition: stroke-dashoffset 0.9s cubic-bezier(0.2, 0.8, 0.2, 1);
+    filter: drop-shadow(0 0 6px var(--sv-glow));
+}
+
+.sv-ring-comet {
+    stroke: var(--sv-accent);
+    stroke-dasharray: 5 95;
+    opacity: 0.85;
+}
+
+.sv-comet-spin {
+    transform-box: view-box;
+    transform-origin: 50% 50%;
+}
+
+.sv-ring-wrap.is-inview:not(.is-touched) .sv-comet-spin {
+    animation: sv-spin 4.5s linear infinite;
+}
+
+.sv-ring-wrap:not(.is-inview) .sv-comet-spin,
+.sv-ring-wrap.is-touched .sv-comet-spin {
+    display: none;
+}
+
+.sv-ring-burst {
+    stroke: var(--sv-accent);
+    opacity: 0;
+    transform-box: fill-box;
+    transform-origin: center;
+}
+
+.sv-ring-wrap.is-complete .sv-ring-burst {
+    animation: sv-burst 1.2s ease-out 1;
+}
+
+.sv-ring-center {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-content: center;
+    text-align: center;
+    pointer-events: none;
+}
+
+.sv-ring-num {
+    font-size: clamp(3rem, 8vw, 4.2rem);
+    font-weight: 800;
+    line-height: 1;
+    color: var(--sv-ink);
+    font-variant-numeric: tabular-nums;
+}
+
+.sv-ring-unit {
+    margin-top: 6px;
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--sv-dim);
+}
+
+.sv-ring-badge {
+    margin: 8px auto 0;
+    padding: 3px 12px;
+    border-radius: 50px;
+    background: var(--sv-accent);
+    color: var(--sv-on-accent);
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    opacity: 0;
+    transform: scale(0.7);
+    transition: opacity 0.35s ease, transform 0.35s cubic-bezier(0.2, 0.9, 0.3, 1.4);
+}
+
+.sv-ring-wrap.has-strength .sv-ring-badge {
+    opacity: 1;
+    transform: none;
+}
+
+.sv-ring-eyebrow {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 0.74rem;
+    font-weight: 600;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--sv-accent-text);
+}
+
+.sv-ring-ui h3 {
+    margin: 0 0 10px;
+    font-size: clamp(1.5rem, 3vw, 2rem);
+    line-height: 1.15;
+    letter-spacing: 0;
+}
+
+.sv-ring-ui > p {
+    margin: 0 0 20px;
+    color: var(--sv-dim);
+    line-height: 1.65;
+}
+
+.sv-acts {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(118px, 1fr));
+    gap: 10px;
+    margin-bottom: 14px;
+}
+
+.sv-act {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    min-height: 96px;
+    padding: 14px 8px;
+    border: 1px solid var(--sv-line);
+    border-radius: 18px;
+    background: var(--sv-soft);
+    color: var(--sv-ink);
+    text-align: center;
+    transition: transform 0.3s ease, border-color 0.3s ease, background 0.3s ease;
+}
+
+.sv-act:hover {
+    border-color: var(--sv-accent);
+}
+
+.sv-act .sv-ico {
+    width: 26px;
+    height: 26px;
+    color: var(--sv-accent-text);
+}
+
+.sv-act-name {
+    font-size: 0.86rem;
+    font-weight: 600;
+}
+
+.sv-act-min {
+    font-size: 0.74rem;
+    color: var(--sv-dim);
+}
+
+.sv-act-check {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    width: 18px;
+    height: 18px;
+    display: grid;
+    place-items: center;
+    border-radius: 50%;
+    background: var(--sv-accent);
+    color: var(--sv-on-accent);
+    transform: scale(0);
+    transition: transform 0.3s cubic-bezier(0.2, 0.9, 0.3, 1.5);
+}
+
+.sv-act-check .sv-ico {
+    width: 11px;
+    height: 11px;
+    color: inherit;
+}
+
+.sv-act[aria-pressed="true"] {
+    transform: translateY(-3px);
+    border-color: var(--sv-accent);
+    background: color-mix(in srgb, var(--sv-accent) 15%, transparent);
+}
+
+.sv-act[aria-pressed="true"] .sv-act-check {
+    transform: scale(1);
+}
+
+.sv-act--strength {
+    grid-column: 1 / -1;
+    flex-direction: row;
+    min-height: 56px;
+    gap: 12px;
+    border-style: dashed;
+}
+
+.sv-ring-wrap.is-inview:not(.is-touched) .sv-act:first-child {
+    animation: sv-nudge 2.4s ease-in-out infinite;
+}
+
+.sv-ring-done {
+    margin: 8px 0 0;
+    font-size: 0.92rem;
+    line-height: 1.55;
+    color: var(--sv-dim);
+}
+
+.sv-js .sv-ring-done strong {
+    display: block;
+    max-height: 0;
+    overflow: hidden;
+    opacity: 0;
+    transition: max-height 0.5s ease, opacity 0.5s ease;
+}
+
+.sv-ring-wrap.is-complete .sv-ring-done strong {
+    max-height: 80px;
+    opacity: 1;
+    margin-bottom: 4px;
+    color: var(--sv-accent-text);
+}
+
+.sv-stats {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px 30px;
+    margin: 22px 0 0;
+    padding-top: 18px;
+    border-top: 1px solid var(--sv-line);
+}
+
+.sv-stat strong {
+    display: block;
+    font-size: 1.9rem;
+    font-weight: 800;
+    line-height: 1.1;
+    color: var(--sv-accent-text);
+    font-variant-numeric: tabular-nums;
+}
+
+.sv-stat > span {
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 1.4px;
+    text-transform: uppercase;
+    color: var(--sv-dim);
+}
+
+.sv-ring-wrap .sv-note {
+    margin: 16px 0 0;
+    max-width: none;
+}
+
+/* ══ 1 · Mapa do corpo, efeitos tardios (osteopatia) ════════════════════ */
+.sv-body-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 360px) minmax(0, 1fr);
+    gap: clamp(2rem, 5vw, 4rem);
+    align-items: center;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.sv-body {
+    position: relative;
+    width: 100%;
+    max-width: 320px;
+    margin: 0 auto;
+    aspect-ratio: 1 / 2;
+}
+
+.sv-body::before {
+    content: '';
+    position: absolute;
+    inset: -6% -14%;
+    background: radial-gradient(closest-side, var(--sv-glow), transparent);
+    opacity: 0.4;
+    filter: blur(18px);
+    pointer-events: none;
+}
+
+.sv-body-svg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+}
+
+.sv-sil {
+    fill: var(--color-bg);
+    stroke: var(--sv-line);
+    stroke-width: 2;
+    stroke-linejoin: round;
+}
+
+.sv-scan {
+    fill: url(#sv-scan-grad);
+}
+
+.sv-body-layout.is-inview .sv-scan {
+    animation: sv-scan 5.5s ease-in-out infinite;
+}
+
+.sv-spark {
+    fill: var(--sv-accent);
+    opacity: 0;
+}
+
+.sv-body-layout.is-inview .sv-spark {
+    animation: sv-spark 2.4s ease-in-out infinite;
+    animation-delay: calc(var(--d, 0) * 0.45s);
+}
+
+.sv-hotspot {
+    position: absolute;
+    left: var(--x);
+    top: var(--y);
+    z-index: 2;
+    width: 46px;
+    height: 46px;
+    margin: -23px 0 0 -23px;
+    display: grid;
+    place-items: center;
+    border-radius: 50%;
+}
+
+.sv-hs-core {
+    position: relative;
+    width: 34px;
+    height: 34px;
+    display: grid;
+    place-items: center;
+    border-radius: 50%;
+    background: var(--sv-accent);
+    color: var(--sv-on-accent);
+    box-shadow: 0 0 0 4px color-mix(in srgb, var(--color-bg) 75%, transparent);
+    transition: transform 0.3s cubic-bezier(0.2, 0.9, 0.3, 1.4), background 0.3s ease, color 0.3s ease;
+}
+
+.sv-hs-core .sv-ico {
+    width: 18px;
+    height: 18px;
+}
+
+.sv-hotspot::before {
+    content: '';
+    position: absolute;
+    inset: 6px;
+    border-radius: 50%;
+    border: 2px solid var(--sv-accent);
+    opacity: 0;
+    pointer-events: none;
+}
+
+.sv-body-layout.is-inview .sv-hotspot:not(.is-active)::before {
+    animation: sv-ping 2.6s ease-out infinite;
+    animation-delay: calc(var(--d, 0) * 0.4s);
+}
+
+.sv-hotspot:hover .sv-hs-core {
+    transform: scale(1.12);
+}
+
+.sv-hotspot.is-active .sv-hs-core {
+    transform: scale(1.18);
+    background: var(--sv-ink);
+    color: var(--color-bg);
+}
+
+.sv-hs-label {
+    position: absolute;
+    top: 50%;
+    left: calc(100% - 4px);
+    padding: 5px 12px;
+    border: 1px solid var(--sv-accent);
+    border-radius: 50px;
+    background: var(--color-bg);
+    color: var(--sv-ink);
+    font-size: 0.74rem;
+    font-weight: 600;
+    letter-spacing: 0.4px;
+    white-space: nowrap;
+    opacity: 0;
+    transform: translate(-6px, -50%);
+    pointer-events: none;
+    transition: opacity 0.25s ease, transform 0.25s ease;
+}
+
+.sv-hotspot.is-left .sv-hs-label {
+    left: auto;
+    right: calc(100% - 4px);
+    transform: translate(6px, -50%);
+}
+
+.sv-hotspot:hover .sv-hs-label,
+.sv-hotspot:focus-visible .sv-hs-label,
+.sv-hotspot.is-active .sv-hs-label {
+    opacity: 1;
+    transform: translate(0, -50%);
+}
+
+.sv-hint-chip {
+    position: absolute;
+    left: 50%;
+    bottom: -4px;
+    z-index: 3;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 14px;
+    border-radius: 50px;
+    background: var(--sv-accent);
+    color: var(--sv-on-accent);
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    white-space: nowrap;
+    transform: translateX(-50%);
+    transition: opacity 0.4s ease;
+    pointer-events: none;
+}
+
+.sv-hint-chip .sv-ico {
+    width: 15px;
+    height: 15px;
+}
+
+.is-touched .sv-hint-chip {
+    opacity: 0;
+}
+
+.sv-body-layout.is-inview:not(.is-touched) .sv-hint-chip .sv-ico {
+    animation: sv-nudge 1.8s ease-in-out infinite;
+}
+
+.sv-body-aside .sv-note {
+    margin: 18px 0 0;
+    max-width: none;
+}
+
+.sv-body-cta {
+    margin-top: 22px;
+}
+
+/* ══ 2 · Pedras que giram, sofrimento psicossocial (sobre-mim) ══════════ */
+.sv-orb {
+    position: relative;
+    width: 150px;
+    height: 150px;
+    margin: 0 auto 2.2rem;
+    display: grid;
+    place-items: center;
+}
+
+.sv-orb-ring {
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    border: 1px solid var(--sv-accent);
+    opacity: 0.5;
+}
+
+.sv-orb-ring + .sv-orb-ring {
+    opacity: 0.28;
+}
+
+.sv-orb-core {
+    position: relative;
+    width: 96px;
+    height: 96px;
+    display: grid;
+    place-items: center;
+    border-radius: 50%;
+    background: radial-gradient(circle at 35% 30%, color-mix(in srgb, var(--sv-accent) 70%, #ffffff), var(--sv-accent));
+    color: var(--sv-on-accent);
+    font-size: 0.74rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    box-shadow: 0 0 44px var(--sv-glow);
+}
+
+.sv-orb-in,
+.sv-orb-out {
+    position: absolute;
+}
+
+.sv-watch.is-inview .sv-orb-ring {
+    animation: sv-breathe 8s ease-in-out infinite;
+}
+
+.sv-watch.is-inview .sv-orb-ring + .sv-orb-ring {
+    animation-delay: 1.2s;
+}
+
+.sv-watch.is-inview .sv-orb-core {
+    animation: sv-breathe-core 8s ease-in-out infinite;
+}
+
+.sv-watch.is-inview .sv-orb-in {
+    animation: sv-fade-a 8s ease-in-out infinite;
+}
+
+.sv-watch.is-inview .sv-orb-out {
+    animation: sv-fade-b 8s ease-in-out infinite;
+}
+
+.sv-stones {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 16px;
+    max-width: 1120px;
+    margin: 0 auto;
+    padding: 0;
+    list-style: none;
+}
+
+.sv-stone-cell {
+    display: block;
+}
+
+.sv-watch.is-inview .sv-stone-cell:not(.is-seen) {
+    animation: sv-sway 5s ease-in-out infinite;
+    animation-delay: calc(var(--i, 0) * 0.45s);
+}
+
+.sv-stone {
+    display: block;
+    width: 100%;
+    height: clamp(300px, 30vw, 340px);
+    perspective: 900px;
+}
+
+.sv-stone-inner {
+    position: absolute;
+    inset: 0;
+    display: block;
+    transform-style: preserve-3d;
+    transition: transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.sv-stone {
+    position: relative;
+}
+
+.sv-stone.is-flipped .sv-stone-inner {
+    transform: rotateY(180deg);
+}
+
+.sv-face {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 20px 16px;
+    border: 1px solid var(--sv-line);
+    border-radius: 26px;
+    background: var(--sv-card);
+    text-align: center;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+}
+
+.sv-face--front {
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.sv-stone:hover .sv-face--front {
+    border-color: var(--sv-accent);
+    box-shadow: 0 0 28px var(--sv-glow);
+}
+
+.sv-face--back {
+    transform: rotateY(180deg);
+    border-color: var(--sv-accent);
+    background: linear-gradient(160deg, color-mix(in srgb, var(--sv-accent) 20%, var(--sv-card)), var(--sv-card));
+}
+
+.sv-stone-ico {
+    width: 58px;
+    height: 58px;
+    display: grid;
+    place-items: center;
+    border-radius: 50%;
+    background: color-mix(in srgb, var(--sv-accent) 15%, transparent);
+    color: var(--sv-accent-text);
+}
+
+.sv-stone-ico .sv-ico {
+    width: 28px;
+    height: 28px;
+}
+
+.sv-stone-name {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--sv-ink);
+}
+
+.sv-stone-q {
+    font-size: 0.86rem;
+    line-height: 1.45;
+    color: var(--sv-dim);
+}
+
+.sv-stone-tap {
+    margin-top: 4px;
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 1.6px;
+    text-transform: uppercase;
+    color: var(--sv-accent-text);
+}
+
+.sv-stone-msg {
+    font-size: 0.9rem;
+    line-height: 1.55;
+    color: var(--sv-ink);
+}
+
+.sv-stone-msg strong {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 0.7rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--sv-accent-text);
+}
+
+.sv-quote {
+    max-width: 720px;
+    margin: clamp(2rem, 4vw, 3rem) auto 0;
+    padding: 22px 26px;
+    border: 1px solid var(--sv-line);
+    border-left: 4px solid var(--sv-accent);
+    border-radius: 0 20px 20px 0;
+    background: var(--sv-soft);
+    font-size: 1.05rem;
+    line-height: 1.65;
+    color: var(--sv-ink);
+}
+
+.sv-quote strong {
+    color: var(--sv-accent-text);
+}
+
+/* ══ 3 · Escudo das 4 vacinas, proteção (blog) ══════════════════════════ */
+.sv-shield-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 300px) minmax(0, 1fr);
+    gap: clamp(2rem, 5vw, 3.5rem);
+    align-items: center;
+    max-width: 980px;
+    margin: 0 auto;
+}
+
+.sv-shield-svg {
+    display: block;
+    width: 100%;
+    max-width: 270px;
+    margin: 0 auto;
+    overflow: visible;
+}
+
+.sv-shield-body {
+    fill: color-mix(in srgb, var(--sv-accent) 4%, var(--color-bg));
+}
+
+.sv-shield-outline {
+    fill: none;
+    stroke: var(--sv-accent);
+    stroke-width: 3.5;
+    stroke-linejoin: round;
+    stroke-dasharray: 7 9;
+    transition: stroke-dasharray 0.6s ease, filter 0.6s ease;
+}
+
+.sv-shield-cross {
+    stroke: var(--sv-line);
+    stroke-width: 1.5;
+}
+
+.sv-q {
+    fill: var(--sv-accent);
+    opacity: 0;
+    transition: opacity 0.6s ease;
+}
+
+.sv-q.is-lit {
+    opacity: 0.9;
+}
+
+.sv-q-hit {
+    fill: transparent;
+    cursor: pointer;
+}
+
+.sv-q-ico {
+    color: var(--sv-dim);
+    transition: color 0.4s ease;
+}
+
+.sv-q-ico.is-lit {
+    color: var(--sv-on-accent);
+}
+
+.sv-shield-check {
+    color: var(--sv-on-accent);
+    opacity: 0;
+    transform: scale(0.3);
+    transform-box: fill-box;
+    transform-origin: center;
+    transition: opacity 0.4s ease, transform 0.6s cubic-bezier(0.2, 0.9, 0.3, 1.5);
+}
+
+.sv-shield-check-bg {
+    fill: var(--sv-accent);
+    stroke: var(--color-bg);
+    stroke-width: 4;
+}
+
+.sv-shield-layout.is-complete .sv-shield-svg {
+    animation: sv-glow-drop 2.4s ease-in-out infinite alternate;
+}
+
+.sv-shield-layout.is-complete .sv-shield-outline {
+    stroke-dasharray: none;
+}
+
+.sv-shield-layout.is-complete .sv-shield-check {
+    opacity: 1;
+    transform: none;
+}
+
+.sv-shield-layout:not(.is-complete).is-inview:not(.is-touched) .sv-shield-outline {
+    animation: sv-march 1.4s linear infinite;
+}
+
+.sv-vac-legend {
+    margin: 0 0 12px;
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 1.6px;
+    text-transform: uppercase;
+    color: var(--sv-accent-text);
+}
+
+.sv-vacs {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+    margin-bottom: 14px;
+}
+
+.sv-vac {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    min-height: 66px;
+    padding: 12px 14px;
+    border: 1px solid var(--sv-line);
+    border-radius: 18px;
+    background: var(--sv-soft);
+    color: var(--sv-ink);
+    transition: border-color 0.3s ease, background 0.3s ease, transform 0.3s ease;
+}
+
+.sv-vac:hover {
+    border-color: var(--sv-accent);
+}
+
+.sv-vac-ico {
+    width: 38px;
+    height: 38px;
+    flex: none;
+    display: grid;
+    place-items: center;
+    border-radius: 50%;
+    background: color-mix(in srgb, var(--sv-accent) 15%, transparent);
+    color: var(--sv-accent-text);
+    transition: background 0.3s ease, color 0.3s ease;
+}
+
+.sv-vac-ico .sv-ico {
+    width: 20px;
+    height: 20px;
+}
+
+.sv-vac-txt {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+}
+
+.sv-vac-name {
+    font-size: 0.92rem;
+    font-weight: 700;
+}
+
+.sv-vac-state {
+    font-size: 0.7rem;
+    color: var(--sv-dim);
+}
+
+.sv-vac[aria-pressed="true"] {
+    border-color: var(--sv-accent);
+    background: color-mix(in srgb, var(--sv-accent) 15%, transparent);
+}
+
+.sv-vac[aria-pressed="true"] .sv-vac-ico {
+    background: var(--sv-accent);
+    color: var(--sv-on-accent);
+}
+
+.sv-vac[aria-pressed="true"] .sv-vac-state {
+    color: var(--sv-accent-text);
+    font-weight: 600;
+}
+
+.sv-checklist {
+    display: grid;
+    gap: 8px;
+    margin: 18px 0 0;
+    padding: 0;
+    list-style: none;
+}
+
+.sv-check {
+    position: relative;
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    cursor: pointer;
+    font-size: 0.92rem;
+    line-height: 1.45;
+    color: var(--sv-ink);
+}
+
+.sv-check input {
+    position: absolute;
+    opacity: 0;
+    width: 22px;
+    height: 22px;
+    margin: 0;
+    cursor: pointer;
+}
+
+.sv-box {
+    width: 22px;
+    height: 22px;
+    flex: none;
+    display: grid;
+    place-items: center;
+    margin-top: 1px;
+    border: 1.5px solid var(--sv-line);
+    border-radius: 7px;
+    color: var(--sv-on-accent);
+    transition: background 0.25s ease, border-color 0.25s ease;
+}
+
+.sv-box .sv-ico {
+    width: 14px;
+    height: 14px;
+    opacity: 0;
+    transform: scale(0.4);
+    transition: opacity 0.25s ease, transform 0.3s cubic-bezier(0.2, 0.9, 0.3, 1.5);
+}
+
+.sv-check input:checked + .sv-box {
+    background: var(--sv-accent);
+    border-color: var(--sv-accent);
+}
+
+.sv-check input:checked + .sv-box .sv-ico {
+    opacity: 1;
+    transform: none;
+}
+
+.sv-check input:focus-visible + .sv-box {
+    outline: 3px solid var(--sv-accent);
+    outline-offset: 3px;
+}
+
+.sv-band-wrap {
+    margin: 0 auto 50px;
+}
+
+.sv-band-wrap .sv-section {
+    border: 1px solid var(--sv-line);
+    border-radius: 36px;
+    padding: clamp(36px, 6vw, 64px) clamp(20px, 4vw, 48px);
+}
+
+/* ══ 5 · Pasta do plano de sobrevivência (hub) ══════════════════════════ */
+.sv-folder {
+    max-width: 980px;
+    margin: 0 auto;
+}
+
+.sv-tablist {
+    display: flex;
+    gap: 6px;
+    padding: 0 12px;
+    overflow-x: auto;
+    scrollbar-width: thin;
+}
+
+.sv-tab {
+    flex: 0 0 auto;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 16px;
+    border: 1px solid var(--sv-line);
+    border-bottom: 0;
+    border-radius: 14px 14px 0 0;
+    background: var(--sv-soft);
+    color: var(--sv-dim);
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    white-space: nowrap;
+    transform: translateY(8px);
+    transition: transform 0.3s ease, background 0.3s ease, color 0.3s ease, opacity 0.5s ease;
+}
+
+.sv-tab .sv-ico {
+    width: 18px;
+    height: 18px;
+}
+
+.sv-tab:hover {
+    color: var(--sv-ink);
+}
+
+.sv-tab[aria-selected="true"] {
+    position: relative;
+    z-index: 2;
+    transform: none;
+    border-color: var(--sv-accent);
+    background: var(--sv-card);
+    color: var(--sv-accent-text);
+}
+
+.sv-js .sv-folder:not(.is-inview) .sv-tab {
+    opacity: 0;
+    transform: translateY(24px);
+}
+
+.sv-js .sv-folder.is-inview .sv-tab {
+    transition-delay: calc(var(--i, 0) * 90ms);
+}
+
+.sv-tabpanels {
+    position: relative;
+    margin-top: -1px;
+    display: grid;
+    border: 1px solid var(--sv-accent);
+    border-radius: 0 24px 24px 24px;
+    background: var(--sv-card);
+}
+
+.sv-tabpanels .sv-panel {
+    border: 0;
+    border-radius: inherit;
+    background: transparent;
+}
+
+.sv-plan-cols {
+    display: grid;
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+    gap: clamp(1.2rem, 3vw, 2.4rem);
+}
+
+.sv-plan-list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: grid;
+    gap: 10px;
+}
+
+.sv-plan-list li {
+    position: relative;
+    padding-left: 28px;
+    color: var(--sv-ink);
+    line-height: 1.5;
+    font-size: 0.95rem;
+}
+
+.sv-plan-list li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 3px;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: var(--sv-accent) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23111' stroke-width='3.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20 6 9 17l-5-5'/%3E%3C/svg%3E") center / 11px no-repeat;
+}
+
+.sv-folder-actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+    margin-top: 28px;
+}
+
+.sv-folder-actions .btn .sv-ico {
+    width: 18px;
+    height: 18px;
+    margin-right: 6px;
+}
+
+.sv-print-sheet {
+    display: none;
+}
+
+/* ══ Hub · herói com sol nascente ═══════════════════════════════════════ */
+.sv-hero {
+    position: relative;
+    padding: clamp(130px, 17vw, 180px) 20px clamp(40px, 6vw, 70px);
+    text-align: center;
+    overflow: hidden;
+    background: radial-gradient(ellipse 70% 55% at 50% 100%, var(--sv-glow), transparent 70%), var(--color-bg);
+}
+
+.sv-hero .container-wide {
+    position: relative;
+    z-index: 1;
+}
+
+.sv-hero h1 {
+    max-width: 900px;
+    margin: 0 auto 1.2rem;
+    font-size: clamp(2.2rem, 5vw + 1rem, 4rem);
+    line-height: 1.08;
+    letter-spacing: -1px;
+}
+
+.sv-hero-lead {
+    max-width: 640px;
+    margin: 0 auto 1.6rem;
+    font-size: 1.1rem;
+    line-height: 1.7;
+    color: var(--sv-dim);
+}
+
+.sv-sun {
+    display: block;
+    width: min(620px, 92%);
+    margin: clamp(1.8rem, 4vw, 3rem) auto 0;
+    overflow: visible;
+}
+
+.sv-horizon {
+    stroke: var(--sv-line);
+    stroke-width: 2;
+}
+
+.sv-sun-disc {
+    fill: var(--sv-accent);
+    transform: translateY(96px);
+    transition: transform 2.2s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.sv-hero.is-drawn .sv-sun-disc {
+    transform: none;
+}
+
+.sv-ray {
+    stroke: var(--sv-accent);
+    stroke-width: 4;
+    stroke-linecap: round;
+    stroke-dasharray: 40;
+    stroke-dashoffset: 40;
+    transition: stroke-dashoffset 0.8s ease;
+    transition-delay: calc(var(--i, 0) * 0.09s + 1s);
+}
+
+.sv-hero.is-drawn .sv-ray {
+    stroke-dashoffset: 0;
+}
+
+.sv-hero.is-inview .sv-ray {
+    animation: sv-ray 3.6s ease-in-out infinite alternate;
+    animation-delay: calc(var(--i, 0) * 0.15s + 2.2s);
+}
+
+.sv-cards .sv-star {
+    max-width: 205px;
+}
+
+.sv-sources {
+    max-width: 820px;
+    margin: 0 auto;
+    border: 1px solid var(--sv-line);
+    border-radius: 20px;
+    background: var(--sv-soft);
+}
+
+.sv-sources summary {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 16px 22px;
+    cursor: pointer;
+    font-weight: 700;
+    letter-spacing: 1.4px;
+    text-transform: uppercase;
+    font-size: 0.82rem;
+    color: var(--sv-accent-text);
+    list-style: none;
+}
+
+.sv-sources summary::-webkit-details-marker {
+    display: none;
+}
+
+.sv-sources summary::after {
+    content: '+';
+    margin-left: auto;
+    font-size: 1.4rem;
+    line-height: 1;
+    transition: transform 0.3s ease;
+}
+
+.sv-sources[open] summary::after {
+    transform: rotate(45deg);
+}
+
+.sv-sources summary:focus-visible {
+    outline: 3px solid var(--sv-accent);
+    outline-offset: 2px;
+    border-radius: 20px;
+}
+
+.sv-sources-body {
+    padding: 0 22px 22px;
+    color: var(--sv-dim);
+    font-size: 0.92rem;
+    line-height: 1.65;
+}
+
+.sv-sources-body ul {
+    margin: 0 0 14px;
+    padding-left: 20px;
+}
+
+.sv-sources-body li {
+    margin-bottom: 6px;
+}
+
+/* ── Chegada por âncora de outra página ───────────────────────────────── */
+.sv-section.is-target,
+.sv-ring-wrap.is-target {
+    animation: sv-target 2.2s ease-out 1;
+}
+
+/* ── Animações ────────────────────────────────────────────────────────── */
+@keyframes sv-ping {
+    0% { transform: scale(1); opacity: 0.7; }
+    100% { transform: scale(1.9); opacity: 0; }
+}
+
+@keyframes sv-bob {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(5px); }
+}
+
+@keyframes sv-nudge {
+    0%, 100% { transform: translateX(0); }
+    50% { transform: translateX(5px); }
+}
+
+@keyframes sv-twinkle {
+    0%, 100% { transform: scale(1) rotate(0); box-shadow: 0 0 0 transparent; }
+    50% { transform: scale(1.12) rotate(8deg); box-shadow: 0 0 22px var(--sv-glow); }
+}
+
+@keyframes sv-spin {
+    to { transform: rotate(360deg); }
+}
+
+@keyframes sv-burst {
+    0% { transform: scale(1); opacity: 0.9; }
+    100% { transform: scale(1.35); opacity: 0; }
+}
+
+@keyframes sv-scan {
+    0% { transform: translateY(-80px); }
+    100% { transform: translateY(490px); }
+}
+
+@keyframes sv-spark {
+    0%, 100% { opacity: 0; transform: scale(0.4); }
+    50% { opacity: 0.95; transform: scale(1.1); }
+}
+
+@keyframes sv-breathe {
+    0%, 100% { transform: scale(0.72); }
+    50% { transform: scale(1.12); }
+}
+
+@keyframes sv-breathe-core {
+    0%, 100% { transform: scale(0.88); }
+    50% { transform: scale(1.1); }
+}
+
+@keyframes sv-fade-a {
+    0%, 5% { opacity: 0; }
+    15%, 45% { opacity: 1; }
+    55%, 100% { opacity: 0; }
+}
+
+@keyframes sv-fade-b {
+    0%, 50% { opacity: 0; }
+    60%, 90% { opacity: 1; }
+    100% { opacity: 0; }
+}
+
+@keyframes sv-sway {
+    0%, 100% { transform: translateY(0) rotate(0); }
+    50% { transform: translateY(-5px) rotate(0.6deg); }
+}
+
+@keyframes sv-march {
+    to { stroke-dashoffset: -16; }
+}
+
+@keyframes sv-glow {
+    from { box-shadow: 0 0 0 transparent; }
+    to { box-shadow: 0 0 22px var(--sv-glow); }
+}
+
+@keyframes sv-glow-drop {
+    from { filter: drop-shadow(0 0 4px var(--sv-glow)); }
+    to { filter: drop-shadow(0 0 20px var(--sv-glow)); }
+}
+
+@keyframes sv-ray {
+    from { opacity: 0.55; }
+    to { opacity: 1; }
+}
+
+@keyframes sv-target {
+    0% { box-shadow: inset 0 0 0 0 transparent; }
+    30% { box-shadow: inset 0 0 0 4px var(--sv-accent), inset 0 0 90px var(--sv-glow); }
+    100% { box-shadow: inset 0 0 0 0 transparent; }
+}
+
+/* ── Tema claro ───────────────────────────────────────────────────────── */
+.light-mode .sv-section,
+.light-mode .sv-band-wrap .sv-section {
+    border-top-color: rgba(0, 0, 0, 0.08);
+}
+
+.light-mode .sv-star > a:hover,
+.light-mode .sv-star > a:focus-visible {
+    box-shadow: 0 14px 32px rgba(0, 0, 0, 0.12), 0 0 24px var(--sv-glow);
+}
+
+.light-mode .sv-hs-core {
+    box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.85);
+}
+
+.light-mode .sv-core {
+    box-shadow: 0 10px 30px var(--sv-glow);
+}
+
+/* ── Responsivo ───────────────────────────────────────────────────────── */
+@media (max-width: 1000px) {
+    .sv-stones {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 860px) {
+    .sv-ring-wrap,
+    .sv-body-layout,
+    .sv-shield-layout {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .sv-body {
+        max-width: 280px;
+    }
+
+    .sv-plan-cols {
+        grid-template-columns: minmax(0, 1fr);
+    }
+}
+
+@media (max-width: 640px) {
+    .sv-timeline {
+        flex-direction: column;
+        align-items: stretch;
+        max-width: 300px;
+    }
+
+    .sv-step {
+        flex: none;
+        flex-direction: row;
+        justify-content: flex-start;
+        gap: 16px;
+        padding: 0 0 30px;
+        text-align: left;
+    }
+
+    .sv-step--core {
+        flex-direction: column;
+        align-items: center;
+        padding: 8px 0 0;
+    }
+
+    .sv-step:not(.sv-step--core)::before,
+    .sv-step:not(.sv-step--core)::after,
+    .sv-step:nth-last-child(2)::before,
+    .sv-step:nth-last-child(2)::after {
+        top: 28px;
+        left: 13px;
+        width: 2px;
+        height: calc(100% - 28px);
+    }
+
+    .sv-step:not(.sv-step--core)::after {
+        transform: scaleY(0);
+        transform-origin: center top;
+    }
+
+    .sv-journey.is-drawn .sv-step:not(.sv-step--core)::after {
+        transform: scaleY(1);
+    }
+
+    .sv-star {
+        flex: 1 1 100%;
+        max-width: 420px;
+    }
+
+    .sv-stones {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 12px;
+    }
+
+    .sv-stone-cell:last-child:nth-child(odd) {
+        grid-column: 1 / -1;
+        justify-self: center;
+        width: calc(50% - 6px);
+    }
+
+    .sv-vacs {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .sv-acts {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .sv-ring-wrap {
+        border-radius: 28px;
+    }
+
+    .sv-tabpanels {
+        border-radius: 0 20px 20px 20px;
+    }
+}
+
+/* ── Movimento reduzido: o bloco global já encurta animações; aqui fica o resto ── */
+@media (prefers-reduced-motion: reduce) {
+    .sv-orb-out,
+    .sv-comet-spin,
+    .sv-scan {
+        display: none;
+    }
+
+    .sv-star,
+    .sv-ray,
+    .sv-dot,
+    .sv-step::after {
+        transition-delay: 0s !important;
+    }
+
+    .sv-js .sv-constellation {
+        transition: none;
+    }
+}
+
+/* ── Impressão da folha do plano (a folha vive fora de <main>) ────────── */
+@media print {
+    body.sv-printing > *:not(.sv-print-sheet) {
+        display: none !important;
+    }
+
+    body.sv-printing .sv-print-sheet {
+        display: block !important;
+        padding: 0;
+        background: #ffffff;
+        color: #000000;
+        font-family: 'Patron', Arial, sans-serif;
+    }
+
+    .sv-print-sheet h2 {
+        margin: 0 0 4px;
+        font-size: 22pt;
+        color: #000000;
+        -webkit-text-stroke: 0;
+    }
+
+    .sv-print-sheet p {
+        margin: 0 0 14pt;
+        font-size: 10pt;
+        color: #333333;
+    }
+
+    .sv-print-field {
+        margin-bottom: 14pt;
+        break-inside: avoid;
+    }
+
+    .sv-print-field h3 {
+        margin: 0;
+        font-size: 11pt;
+        letter-spacing: 1px;
+        color: #000000;
+    }
+
+    .sv-print-field span {
+        display: block;
+        height: 26pt;
+        border-bottom: 1px solid #000000;
+    }
+}
+
+/* Rodapé de cada peça: contador de descobertas + ligação ao guia */
+.sv-piece-foot {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 14px 22px;
+    margin-top: clamp(1.6rem, 3vw, 2.4rem);
+}
+
+.sv-ring-ui .sv-piece-foot {
+    justify-content: flex-start;
+    margin-top: 18px;
+}
+
+.sv-piece-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding-bottom: 2px;
+    border-bottom: 1px solid currentColor;
+    color: var(--color-primary-text);
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-decoration: none;
+    text-transform: uppercase;
+}
+
+.sv-piece-link .sv-ico {
+    width: 15px;
+    height: 15px;
+    transition: transform 0.3s ease;
+}
+
+.sv-piece-link:hover .sv-ico {
+    transform: translateX(4px);
+}
+
+/* Escudo: mensagem final e ícones dos quadrantes */
+.sv-shield-done {
+    margin: 14px 0 0;
+    font-size: 0.92rem;
+    line-height: 1.55;
+    color: var(--sv-dim);
+}
+
+.sv-shield-done strong {
+    color: var(--sv-accent-text);
+}
+
+.sv-js .sv-shield-done {
+    max-height: 0;
+    overflow: hidden;
+    opacity: 0;
+    margin-top: 0;
+    transition: max-height 0.5s ease, opacity 0.5s ease, margin 0.5s ease;
+}
+
+.sv-js .sv-shield-layout.is-complete .sv-shield-done {
+    max-height: 120px;
+    opacity: 1;
+    margin-top: 14px;
+}
+
+.sv-checklist-title {
+    margin: 22px 0 0;
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 1.6px;
+    text-transform: uppercase;
+    color: var(--sv-accent-text);
+}
+
+.sv-checklist-title + .sv-checklist {
+    margin-top: 10px;
+}
+
+/* Treino oncológico: passo 0 como ligação e navegador dos passos 0 a 5 */
+a.sv-core,
+a.sv-core:hover {
+    color: var(--sv-on-accent);
+    text-decoration: none;
+}
+
+.sv-progress {
+    flex-wrap: wrap;
+    justify-content: center;
+    max-width: 100%;
+}
+
+.sv-stepper {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px 0;
+    margin: 0 0 1.6rem;
+    padding: 0;
+    list-style: none;
+}
+
+.sv-stepper li {
+    display: flex;
+    align-items: center;
+}
+
+.sv-stepper li:not(:last-child)::after {
+    content: '';
+    width: 16px;
+    height: 2px;
+    margin: 0 6px;
+    background: var(--sv-line);
+}
+
+.sv-stepper a {
+    width: 46px;
+    height: 46px;
+    display: grid;
+    place-items: center;
+    border: 1px solid var(--sv-line);
+    border-radius: 50%;
+    background: var(--sv-soft);
+    color: var(--sv-ink);
+    font-size: 1rem;
+    font-weight: 800;
+    text-decoration: none;
+    transition: transform 0.3s ease, border-color 0.3s ease, background 0.3s ease;
+}
+
+.sv-stepper a:hover,
+.sv-stepper a:focus-visible {
+    transform: translateY(-3px);
+    border-color: var(--sv-accent);
+    background: color-mix(in srgb, var(--sv-accent) 18%, transparent);
+}
+
+.sv-stepper a.is-start {
+    border-color: var(--sv-accent);
+    background: var(--sv-accent);
+    color: var(--sv-on-accent);
+}
+
+.sv-js .sv-hero:not(.is-drawn) .sv-stepper li {
+    opacity: 0;
+    transform: translateY(12px);
+}
+
+.sv-js .sv-stepper li {
+    transition: opacity 0.5s ease, transform 0.5s ease;
+    transition-delay: calc(var(--i, 0) * 90ms);
+}
+
+@media (max-width: 520px) {
+    .sv-stepper li:not(:last-child)::after {
+        width: 6px;
+        margin: 0 3px;
+    }
+
+    .sv-stepper a {
+        width: 42px;
+        height: 42px;
+    }
+}
+
+/* Menu principal com oito entradas: evita quebras de linha entre 901px e 1180px */
+@media (min-width: 901px) {
+    .nav-menu a {
+        white-space: nowrap;
+    }
+}
+
+@media (min-width: 901px) and (max-width: 1180px) {
+    .nav-menu ul {
+        gap: 14px;
+    }
+
+    .nav-menu a {
+        font-size: 0.8rem;
+        letter-spacing: 0.5px;
+    }
+}
+
+/* ==========================================================================
+   SEO visível: subtítulos dentro do H1 e perguntas frequentes
+   O H1 de cada página nomeia o serviço e o local; os blocos .pm-faq geram o
+   FAQPage do JSON-LD em scripts/apply-seo.mjs (uma <article> por pergunta,
+   com <h3> e parágrafos, sem <div> aninhadas).
+   ========================================================================== */
+.hero-split-left h1 .hero-kicker {
+    display: block;
+    max-width: 580px;
+    margin-bottom: 18px;
+    font-family: var(--font-heading);
+    font-size: 0.8rem;
+    font-weight: 600;
+    line-height: 1.5;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--color-primary-text);
+}
+
+.osteopatia-title .osteopatia-title-place {
+    display: block;
+    margin-top: 14px;
+    font-size: 0.32em;
+    font-weight: 600;
+    line-height: 1.2;
+    letter-spacing: 6px;
+    text-transform: uppercase;
+    color: var(--color-primary-text);
+}
+
+.sv-hero h1 .oncologia-eyebrow {
+    display: table;
+    margin: 0 auto 1.25rem;
+    line-height: 1.4;
+}
+
+.pm-faq {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 18px;
+    max-width: 1100px;
+    margin: 0 auto;
+    text-align: left;
+}
+
+.pm-faq article {
+    padding: 26px 28px;
+    background: var(--sv-card);
+    border: 1px solid var(--sv-line);
+    border-radius: 18px;
+}
+
+.pm-faq h3 {
+    margin: 0 0 12px;
+    font-size: 1.08rem;
+    line-height: 1.35;
+    text-transform: none;
+    color: var(--sv-ink);
+}
+
+.pm-faq p {
+    margin: 0;
+    font-size: 0.98rem;
+    line-height: 1.7;
+    color: var(--sv-dim);
+}
+
+.pm-faq a {
+    color: var(--sv-accent-text);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+}
+
+@media (max-width: 800px) {
+    .pm-faq {
+        grid-template-columns: 1fr;
+    }
+
+    .pm-faq article {
+        padding: 22px;
+    }
+
+    .hero-split-left h1 .hero-kicker {
+        font-size: 0.72rem;
+        letter-spacing: 2px;
+    }
+
+    .osteopatia-title .osteopatia-title-place {
+        letter-spacing: 3px;
+    }
+}

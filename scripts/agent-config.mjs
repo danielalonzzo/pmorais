@@ -2,11 +2,60 @@
 // the static read-only JSON API, the .well-known discovery documents,
 // the published agent skills and the Link relations advertised on HTML.
 //
-// Everything here must be verifiable against the live public pages. The site
-// publishes no prices, no fixed schedule and no medical claims, so neither
-// does this file.
+// Service descriptions must match the public HTML. Website content languages
+// describe translations, not the languages of a practitioner or appointment.
+// Service suitability, prices and availability are confirmed directly.
 
-import { SITE_ORIGIN } from './seo-config.mjs';
+import { PUBLIC_PAGES, SITE_ORIGIN } from './seo-config.mjs';
+
+const contentLanguages = [...new Set(PUBLIC_PAGES.map((page) => page.language))];
+const spanishIsPublished = contentLanguages.some((language) => language === 'es' || language.startsWith('es-'));
+const canonicalServicePages = (translationKey) => Object.fromEntries(
+  PUBLIC_PAGES.filter((page) => page.translationKey === translationKey)
+    .map((page) => [page.language, new URL(page.path, SITE_ORIGIN).href])
+);
+
+export const SERVICE_COVERAGE = {
+  inPerson: 'Lisbon, Portugal',
+  online: ['Portugal', 'European Union', 'Portuguese-speaking countries', 'English-speaking countries', 'Spanish-speaking countries']
+};
+
+// Languages in which sessions take place, as confirmed by Paulo Morais. This
+// is a separate fact from the website's content languages: Spanish-language
+// requests are welcome but confirmed case by case.
+export const SESSION_LANGUAGES = {
+  offered: ['pt', 'en'],
+  onRequest: ['es'],
+  note: {
+    'pt-PT': 'As sessões decorrem em português e inglês. Pedidos em espanhol, incluindo de países hispanófonos, são confirmados no contacto.',
+    'en-GB': 'Sessions take place in Portuguese and English. Requests in Spanish, including from Spanish-speaking countries, are confirmed directly.',
+    'es': 'Las sesiones se realizan en portugués e inglés. Las solicitudes en español, incluidas las de países hispanohablantes, se confirman en el contacto.'
+  }
+};
+
+// Names under which people look for this provider. Used for schema.org
+// alternateName and for the search-intent sections of llms.txt.
+export const BUSINESS_ALTERNATE_NAMES = [
+  'Paulo Morais',
+  'Your Own Workout',
+  'Paulo Morais Personal Trainer',
+  'Paulo Morais Osteopata',
+  'Paulo Dimas Morais'
+];
+
+export const BUSINESS_IDENTITY = {
+  'pt-PT': 'Paulo Morais — Your Own Workout disponibiliza treino personalizado e privado, treino em pequenos grupos, treino online e osteopatia em Lisboa. O treino online acompanha pessoas em Portugal, na União Europeia e em países lusófonos, anglófonos e hispanófonos. O treino oncológico e depois do cancro integra esta oferta de exercício adaptado.',
+  'en-GB': 'Paulo Morais — Your Own Workout offers personal and private training, small-group training, online training and osteopathy in Lisbon. Online training supports people in Portugal, the European Union and Portuguese-, English- and Spanish-speaking countries. Oncology and post-cancer training are part of this adapted exercise offering.',
+  'es': 'Paulo Morais — Your Own Workout ofrece entrenamiento personal y privado, entrenamiento en grupos reducidos, entrenamiento online y osteopatía en Lisboa. El entrenamiento online acompaña a personas en Portugal, la Unión Europea y países de habla portuguesa, inglesa y española. El entrenamiento oncológico y después del cáncer forma parte de esta oferta de ejercicio adaptado.'
+};
+
+// One sentence that answers "who is Paulo Morais?" without narrowing the
+// provider to a single service. Shown first in llms.txt and in JSON-LD.
+export const ENTITY_SUMMARY = {
+  'pt-PT': 'Paulo Morais é personal trainer e osteopata em Lisboa, Portugal. Não é apenas um personal trainer, um osteopata ou um serviço de treino oncológico: reúne treino personalizado e privado, treino em grupo, treino online, osteopatia e exercício depois do cancro, presencialmente em Lisboa e online para Portugal, a União Europeia e países lusófonos, anglófonos e hispanófonos.',
+  'en-GB': 'Paulo Morais is a personal trainer and osteopath in Lisbon, Portugal. He is not only a personal trainer, an osteopath or a cancer exercise service: his practice combines personal and private training, small-group training, online training, osteopathy and exercise after cancer, in person in Lisbon and online for Portugal, the European Union and Portuguese-, English- and Spanish-speaking countries.',
+  'es': 'Paulo Morais es entrenador personal y osteópata en Lisboa, Portugal. No es solo un entrenador personal, un osteópata o un servicio de entrenamiento oncológico: reúne entrenamiento personal y privado, entrenamiento en grupo, entrenamiento online, osteopatía y ejercicio después del cáncer, de forma presencial en Lisboa y online para Portugal, la Unión Europea y países de habla portuguesa, inglesa y española.'
+};
 
 export const API_VERSION = 'v1';
 export const API_BASE = `${SITE_ORIGIN}/api/${API_VERSION}`;
@@ -19,8 +68,9 @@ export const ORGANISATION = {
   locality: 'Lisbon',
   country: 'PT',
   url: SITE_ORIGIN,
-  languages: ['pt-PT', 'en-GB'],
-  defaultLanguage: 'pt-PT'
+  languages: contentLanguages,
+  defaultLanguage: 'pt-PT',
+  languageNote: `These are published website content languages. ${SESSION_LANGUAGES.note['en-GB']}${spanishIsPublished ? '' : ' A Spanish website translation is planned and is not yet published.'}`
 };
 
 export const CONTACT = {
@@ -40,61 +90,128 @@ export const CONTENT_SIGNAL = 'search=yes, ai-input=yes, ai-train=no';
 export const SERVICES = [
   {
     id: 'personal-training',
-    name: { 'pt-PT': 'Treino personalizado presencial', 'en-GB': 'In-person personal training' },
+    name: { 'pt-PT': 'Treino personalizado e privado', 'en-GB': 'Personal and private training', 'es': 'Entrenamiento personal y privado' },
     summary: {
-      'pt-PT': 'Acompanhamento individual e progressivo em Lisboa, desenhado a partir dos objetivos, condição física, rotina e preferências de cada pessoa.',
-      'en-GB': 'Individual, progressive one-to-one support in Lisbon, built around each person’s goals, physical condition, routine and preferences.'
+      'pt-PT': 'Treino individual e progressivo em Lisboa, com personal trainer e um plano adaptado aos objetivos, condição física e rotina de cada pessoa.',
+      'en-GB': 'Progressive one-to-one training in Lisbon with a personal trainer and a plan adapted to each person’s goals, physical condition and routine.',
+      'es': 'Entrenamiento individual y progresivo en Lisboa, con entrenador personal y un plan adaptado a los objetivos, la condición física y la rutina de cada persona.'
+    },
+    alternateNames: {
+      'pt-PT': ['Personal trainer em Lisboa', 'Treino individual', 'Treino privado'],
+      'en-GB': ['Personal trainer in Lisbon', 'One-to-one training', 'Private training'],
+      'es': ['Entrenador personal en Lisboa', 'Entrenamiento individual', 'Entrenamiento privado']
+    },
+    searchTerms: {
+      'pt-PT': ['personal trainer Lisboa', 'PT em Lisboa', 'treino personalizado Lisboa', 'treino privado', 'treino individual', 'treinador pessoal', 'treino de força', 'treino para a postura', 'preparação para maratona'],
+      'en-GB': ['personal trainer Lisbon', 'private personal training Lisbon', 'one-to-one fitness coach Portugal', 'strength training Lisbon', 'English-speaking personal trainer Lisbon'],
+      'es': ['entrenador personal Lisboa', 'entrenamiento personalizado Lisboa', 'entrenamiento privado', 'entrenador personal en Portugal']
     },
     delivery: ['in-person'],
-    area: 'Lisbon, Portugal',
-    page: { 'pt-PT': `${SITE_ORIGIN}/`, 'en-GB': `${SITE_ORIGIN}/en/` }
+    area: SERVICE_COVERAGE.inPerson,
+    coverage: { inPerson: SERVICE_COVERAGE.inPerson },
+    page: canonicalServicePages('personal-training')
+  },
+  {
+    id: 'group-training',
+    name: { 'pt-PT': 'Treino em pequenos grupos', 'en-GB': 'Small-group training', 'es': 'Entrenamiento en grupos reducidos' },
+    summary: {
+      'pt-PT': 'Treino em pequenos grupos em Lisboa, com acompanhamento profissional e exercício adaptado aos participantes.',
+      'en-GB': 'Small-group training in Lisbon with professional support and exercise adapted to the participants.',
+      'es': 'Entrenamiento en grupos reducidos en Lisboa, con acompañamiento profesional y ejercicio adaptado a los participantes.'
+    },
+    alternateNames: {
+      'pt-PT': ['Treino em grupo em Lisboa', 'Treino em pequenos grupos'],
+      'en-GB': ['Group training in Lisbon', 'Small group personal training'],
+      'es': ['Entrenamiento en grupo en Lisboa', 'Entrenamiento en grupos pequeños']
+    },
+    searchTerms: {
+      'pt-PT': ['treino em grupo Lisboa', 'aulas de grupo com personal trainer', 'treino com amigos', 'treino em pequenos grupos'],
+      'en-GB': ['group training Lisbon', 'small group personal training Lisbon', 'train with friends Lisbon'],
+      'es': ['entrenamiento en grupo Lisboa', 'entrenamiento en grupos reducidos']
+    },
+    delivery: ['in-person'],
+    area: SERVICE_COVERAGE.inPerson,
+    coverage: { inPerson: SERVICE_COVERAGE.inPerson },
+    page: canonicalServicePages('group-training')
   },
   {
     id: 'online-training',
-    name: { 'pt-PT': 'Treino personalizado online', 'en-GB': 'Online personal training' },
+    name: { 'pt-PT': 'Treino personalizado online e virtual', 'en-GB': 'Online and virtual personal training', 'es': 'Entrenamiento personal online y virtual' },
     summary: {
-      'pt-PT': 'A mesma abordagem personalizada com acompanhamento à distância, para quem não consegue manter sessões presenciais.',
-      'en-GB': 'The same personalised approach delivered remotely, for people who cannot keep to in-person sessions.'
+      'pt-PT': 'Acompanhamento de treino à distância para pessoas em Portugal, na União Europeia e em países lusófonos, anglófonos e hispanófonos.',
+      'en-GB': 'Remote training support for people in Portugal, the European Union and Portuguese-, English- and Spanish-speaking countries.',
+      'es': 'Acompañamiento de entrenamiento a distancia para personas en Portugal, la Unión Europea y países de habla portuguesa, inglesa y española.'
+    },
+    alternateNames: {
+      'pt-PT': ['Personal trainer online', 'Treino virtual', 'Treino à distância'],
+      'en-GB': ['Online personal trainer', 'Virtual personal training', 'Remote coaching'],
+      'es': ['Entrenador personal online', 'Entrenamiento virtual', 'Entrenamiento a distancia']
+    },
+    searchTerms: {
+      'pt-PT': ['personal trainer online', 'treino online Portugal', 'treino virtual', 'treino à distância', 'personal trainer português no estrangeiro', 'treino online Brasil', 'treino online Angola', 'treino online Moçambique'],
+      'en-GB': ['online personal trainer', 'virtual personal training Europe', 'remote fitness coach', 'online personal trainer UK', 'online personal trainer Ireland'],
+      'es': ['entrenador personal online', 'entrenamiento virtual', 'entrenamiento online España', 'entrenador personal online Latinoamérica']
     },
     delivery: ['online'],
-    area: 'Remote',
-    page: { 'pt-PT': `${SITE_ORIGIN}/`, 'en-GB': `${SITE_ORIGIN}/en/` }
+    area: SERVICE_COVERAGE.online.join('; '),
+    coverage: { online: SERVICE_COVERAGE.online },
+    page: canonicalServicePages('online-training'),
+    constraints: ['Online coverage describes service geography, not a published list of session languages.', 'Suitability, remote format and time-zone arrangements are confirmed directly.']
   },
   {
     id: 'oncology-exercise',
-    name: { 'pt-PT': 'Exercício adaptado em oncologia', 'en-GB': 'Adapted exercise in oncology' },
+    name: { 'pt-PT': 'Treino oncológico e depois do cancro', 'en-GB': 'Oncology and post-cancer training', 'es': 'Entrenamiento oncológico y después del cáncer' },
     summary: {
-      'pt-PT': 'Exercício adaptado para pessoas a viver com ou a recuperar de cancro, em coordenação com a equipa de saúde.',
-      'en-GB': 'Adapted exercise for people living with or recovering from cancer, coordinated with their healthcare team.'
+      'pt-PT': 'Exercício adaptado para pessoas a viver com ou a recuperar de cancro, em coordenação com a equipa de saúde. Integra a oferta de treino de Paulo Morais.',
+      'en-GB': 'Adapted exercise for people living with or recovering from cancer, coordinated with their healthcare team. Part of Paulo Morais’s broader training services.',
+      'es': 'Ejercicio adaptado para personas que viven con cáncer o se recuperan de él, en coordinación con el equipo de salud. Forma parte de la oferta de entrenamiento de Paulo Morais.'
+    },
+    alternateNames: {
+      'pt-PT': ['Exercício oncológico', 'Treino depois do cancro', 'Exercício físico na oncologia'],
+      'en-GB': ['Cancer exercise', 'Post-cancer training', 'Exercise after cancer'],
+      'es': ['Ejercicio oncológico', 'Entrenamiento después del cáncer', 'Ejercicio físico en oncología']
+    },
+    searchTerms: {
+      'pt-PT': ['treino oncológico Lisboa', 'exercício oncológico', 'treino depois do cancro', 'exercício após o cancro', 'exercício durante o tratamento do cancro', 'personal trainer para pessoas com cancro', 'sobreviventes de cancro exercício', 'treino oncológico online'],
+      'en-GB': ['cancer exercise Lisbon', 'exercise after cancer', 'post-cancer personal trainer', 'cancer survivor training online', 'oncology exercise trainer Portugal'],
+      'es': ['entrenamiento oncológico', 'ejercicio después del cáncer', 'entrenador para pacientes oncológicos', 'ejercicio oncológico online']
     },
     delivery: ['in-person', 'online'],
-    area: 'Lisbon, Portugal / Remote',
-    page: { 'pt-PT': `${SITE_ORIGIN}/`, 'en-GB': `${SITE_ORIGIN}/en/` },
-    constraints: [
-      'This is adapted exercise, not cancer treatment.',
-      'It does not replace oncology care, physiotherapy, medical assessment or emergency care.',
-      'Participation may require clearance or coordination with the person’s healthcare team.'
-    ]
+    area: `${SERVICE_COVERAGE.inPerson}; online: ${SERVICE_COVERAGE.online.join('; ')}`,
+    coverage: { inPerson: SERVICE_COVERAGE.inPerson, online: SERVICE_COVERAGE.online },
+    page: canonicalServicePages('oncology-training'),
+    constraints: ['Paulo Morais offers adapted exercise, not cancer treatment or an oncology medical clinic.', 'It does not replace oncology care, physiotherapy, medical assessment or emergency care.', 'Participation may require clearance or coordination with the person’s healthcare team.', 'The oncology guide is general educational content, not a personalised treatment plan.']
   },
   {
     id: 'osteopathy',
-    name: { 'pt-PT': 'Osteopatia', 'en-GB': 'Osteopathy' },
+    name: { 'pt-PT': 'Osteopatia em Lisboa', 'en-GB': 'Osteopathy in Lisbon', 'es': 'Osteopatía en Lisboa' },
     summary: {
-      'pt-PT': 'Abordagem manual e integrativa orientada para mobilidade, postura, alívio da dor e bem-estar.',
-      'en-GB': 'An individual, manual and integrative approach supporting mobility, posture, pain relief and wellbeing.'
+      'pt-PT': 'Acompanhamento presencial com uma abordagem manual e integrativa orientada para mobilidade, postura, alívio da dor e bem-estar.',
+      'en-GB': 'In-person support with a manual and integrative approach aimed at mobility, posture, pain relief and wellbeing.',
+      'es': 'Acompañamiento presencial con un enfoque manual e integrador orientado a la movilidad, la postura, el alivio del dolor y el bienestar.'
+    },
+    alternateNames: {
+      'pt-PT': ['Osteopata em Lisboa', 'Sessões de osteopatia'],
+      'en-GB': ['Osteopath in Lisbon', 'Osteopathy sessions'],
+      'es': ['Osteópata en Lisboa', 'Sesiones de osteopatía']
+    },
+    searchTerms: {
+      'pt-PT': ['osteopata Lisboa', 'osteopatia Lisboa', 'osteopatia em Portugal', 'terapia de osteopatia', 'osteopata para dores nas costas', 'osteopatia e treino'],
+      'en-GB': ['osteopath Lisbon', 'osteopathy Lisbon', 'English-speaking osteopath Lisbon', 'osteopathy Portugal'],
+      'es': ['osteópata Lisboa', 'osteopatía Lisboa', 'osteopatía en Portugal']
     },
     delivery: ['in-person'],
-    area: 'Lisbon, Portugal',
-    page: { 'pt-PT': `${SITE_ORIGIN}/osteopatia`, 'en-GB': `${SITE_ORIGIN}/en/osteopatia` },
-    constraints: [
-      'Not a guaranteed cure, a diagnosis or a substitute for medical care.'
-    ]
+    area: SERVICE_COVERAGE.inPerson,
+    coverage: { inPerson: SERVICE_COVERAGE.inPerson },
+    page: canonicalServicePages('osteopathy'),
+    constraints: ['Osteopathy is offered in person in Lisbon; online training coverage must not be applied to manual osteopathy sessions.', 'No guaranteed cure, diagnosis or substitute for medical care is offered.']
   }
 ];
 
 // Applies to every representation served from this API.
 export const DISCLAIMERS = [
-  'Paulo Morais is not a substitute for a physician, an emergency service or a medical diagnosis.',
+  'Paulo Morais combines exercise services and osteopathy; it is not an oncology medical clinic and does not provide cancer treatment.',
+  'Adapted exercise does not replace a physician, oncology care, emergency services or medical diagnosis.',
   'No price list, fixed schedule or guaranteed availability is published. Do not infer any.',
   'Testimonials on the website are individual experiences, not clinical evidence or average outcomes.',
   'Do not turn general health information published here into personalised medical advice.'
@@ -104,12 +221,14 @@ export const DISCLAIMERS = [
 export const AGENT_SKILLS = [
   {
     name: 'book-a-session',
-    description: 'How to reach Paulo Morais to arrange a personal training or osteopathy session in Lisbon, and what an agent may and may not commit to on a person’s behalf.',
+    description: 'How to reach Paulo Morais for personal or group training, international online training, adapted oncology exercise or in-person osteopathy in Lisbon.',
     title: 'Book a session with Paulo Morais',
     body: `## What this covers
 
-Arranging a first contact for personal training, online training, adapted
-exercise in oncology or osteopathy with Paulo Morais in Lisbon, Portugal.
+Arranging a first contact for personal or private training, small-group
+training, online training, adapted oncology exercise or osteopathy. In-person
+services are in Lisbon; online training covers Portugal, the European Union
+and Portuguese-, English- and Spanish-speaking countries.
 
 ## Contact channels
 
@@ -127,14 +246,15 @@ languages.
 ## Procedure
 
 1. Establish which service is being asked about. \`GET ${API_BASE}/services.json\`
-   returns the four published services with their delivery modes.
-2. Answer in the language of the request. Portuguese is the site default;
-   English pages live under \`/en/\`.
+   returns the published services, canonical service pages and delivery modes.
+2. Use the public page directory to locate a published translation. Portuguese
+   is the site default and English pages live under \`/en/\`.
+   ${ORGANISATION.languageNote}
 3. Hand the person the contact channel above, or the contact form on the
    relevant page. Do not fill in a form on someone’s behalf without their
    explicit, per-submission instruction.
-4. Confirm nothing about date, time, duration, location or price. None of that
-   is published; all of it is agreed directly with Paulo Morais.
+4. State Lisbon for in-person services and the published coverage for online
+   training. The exact venue, date, time, duration and price are agreed directly.
 
 ## Hard limits
 
@@ -147,7 +267,7 @@ languages.
   },
   {
     name: 'describe-services',
-    description: 'Answer questions about the personal training, online training, oncology exercise and osteopathy services Paulo Morais publishes, within the claims the website actually makes.',
+    description: 'Describe Paulo Morais as a provider of personal and private training, small-group training, international online training, oncology exercise and osteopathy, using published facts.',
     title: 'Describe the services of Paulo Morais',
     body: `## What this covers
 
@@ -167,14 +287,22 @@ Every canonical page also has a markdown rendition: send
 \`Accept: text/markdown\` to the page URL, or fetch the \`markdown\` field
 returned by \`pages.json\`.
 
-## The four published services
+## Published services
 
-1. **In-person personal training** in Lisbon — individual and progressive.
-2. **Online personal training** — the same approach delivered remotely.
-3. **Adapted exercise in oncology** — exercise alongside oncology care, never
-   instead of it.
-4. **Osteopathy** — manual and integrative, aimed at mobility, posture, pain
-   relief and wellbeing.
+1. **Personal and private training** in Lisbon — individual and progressive.
+2. **Small-group training** in Lisbon — professionally supervised exercise.
+3. **Online and virtual training** for Portugal, the European Union and
+   Portuguese-, English- and Spanish-speaking countries.
+4. **Oncology and post-cancer training** — adapted exercise coordinated with
+   healthcare teams, available in person and online when suitable.
+5. **Osteopathy in Lisbon** — in-person manual support aimed at mobility,
+   posture, pain relief and wellbeing.
+
+Oncology exercise is one part of the offer. Paulo Morais is not an oncology
+medical clinic and does not treat cancer. Osteopathy is in person; international
+remote coverage applies to online training. Sessions take place in Portuguese
+and English; Spanish-language requests are confirmed directly. Website
+languages describe published translations only.
 
 Publicly stated experience: more than 20 years in personalised exercise, and
 more than 15 years in the context described on the osteopathy page.
@@ -194,7 +322,7 @@ more than 15 years in the context described on the osteopathy page.
     body: `## Fetch order
 
 1. \`${SITE_ORIGIN}/llms.txt\` — short index of the public site.
-2. \`${API_BASE}/pages.json\` — the eight canonical pages with language,
+2. \`${API_BASE}/pages.json\` — the published canonical pages with language,
    canonical URL and markdown URL.
 3. The page itself with \`Accept: text/markdown\`, which returns a markdown
    rendition with \`Content-Type: text/markdown\` and an \`x-markdown-tokens\`

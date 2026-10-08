@@ -1,21 +1,21 @@
 ---
-title: Osteopatia Lisboa · Alívio de Dores e Mobilidade | Paulo Morais
-description: "Osteopatia em Lisboa com Paulo Morais: acompanhamento personalizado para alívio de dores, melhoria da mobilidade e bem-estar, com uma abordagem manual integrativa."
+title: "Osteopata em Lisboa | Osteopatia com Paulo Morais"
+description: "Sessões de osteopatia em Lisboa com Paulo Morais. Avaliação individual e abordagem manual orientada para mobilidade, postura, conforto e bem-estar."
 canonical: "https://pmorais.pt/osteopatia"
-language: pt-PT
+language: "pt-PT"
 alternate: "https://pmorais.pt/en/osteopatia"
-updated: 2026-09-29
-source: Rendered from the canonical HTML page. The HTML remains authoritative if the two differ.
+alternates: [{"language":"pt-PT","canonical":"https://pmorais.pt/osteopatia"},{"language":"en-GB","canonical":"https://pmorais.pt/en/osteopatia"}]
+updated: "2026-10-08"
+source: "Rendered from the canonical HTML page. The HTML remains authoritative if the two differ."
 ---
 
 1. [Início](https://pmorais.pt/)
 
 2. Osteopatia
 
-# Osteopatia
+# Osteopatia em Lisboa
 
-A osteopatia ajuda a aliviar tensões, melhorar a mobilidade e dar
-leveza ao corpo.
+Sessões presenciais de osteopatia em Lisboa com Paulo Morais. A avaliação individual orienta o acompanhamento das queixas e da mobilidade.
 
 ![iPad Frame](https://pmorais.pt/images/osteopatia/ipad-model.png)
 
@@ -268,6 +268,116 @@ libertado das dores de uma escoliose péssima. Os treinos são diferentes,
 desafiantes e engraçados. Frias faz parte da família e continuas com o nível de
 sempre!
 
+Passo 1 · Ouvir o corpo depois do cancro
+
+## O corpo lembra-se do cancro. Fala sobre isso.
+
+Fadiga, formigueiros, dor, sono, memória… Muitos efeitos do tratamento do cancro só aparecem, ou só se notam, meses ou anos depois. E muitos sobreviventes não os referem na consulta: acham que é normal, ou não querem voltar a sentir-se «doentes». Falar é o primeiro passo.
+
+Memória
+
+Sono
+
+Dor
+
+Falta de ar e coração
+
+Fadiga
+
+Mãos e pés
+
+Toca nos pontos
+
+**Escolhe um ponto no corpo**Cada ponto é um efeito tardio do tratamento do cancro que muitos sobreviventes sentem e que raramente chega à consulta. Toca para ver o que podes sentir e a pergunta a levar à tua equipa.
+
+### Memória e concentração
+
+O «nevoeiro mental»: esquecer palavras, perder o fio ao que estavas a dizer, ter dificuldade em concentrar-te.
+
+> Pergunta à tua equipa«Estas falhas de memória podem estar relacionadas com o tratamento?»
+
+### Sono
+
+Adormecer com dificuldade, acordar a meio da noite ou levantar-te sem ter descansado é muito frequente depois do tratamento.
+
+> Pergunta à tua equipa«Posso fazer alguma coisa para dormir melhor? Pode estar ligado ao tratamento ou à ansiedade?»
+
+### Dor que não passa
+
+Dor que continua depois da cirurgia ou do tratamento, no ombro, na cicatriz, nas articulações ou nos músculos. A dor crónica também merece avaliação.
+
+> Pergunta à tua equipa«De onde vem esta dor e que opções tenho para a aliviar?»
+
+### Falta de ar e coração
+
+Cansaço a subir escadas, falta de ar ou palpitações que antes não tinhas devem ser sempre mencionados à equipa de saúde.
+
+> Pergunta à tua equipa«Devo fazer algum exame ao coração ou aos pulmões?»
+
+Se for súbito ou intenso (dor no peito, falta de ar forte), liga 112.
+
+### Fadiga e resistência física
+
+Um cansaço que o descanso não resolve, ou perder a resistência que tinhas, pode durar anos depois do tratamento. Não é «preguiça» nem «exagero».
+
+> Pergunta à tua equipa«Esta fadiga é esperada no meu caso? O que posso fazer para a reduzir?»
+
+### Mãos e pés: sensibilidade
+
+Formigueiro, dormência ou ardor nas mãos e nos pés (polineuropatia), dificuldade em abotoar a roupa ou em sentir bem o chão.
+
+> Pergunta à tua equipa«Isto pode ser efeito do tratamento? Preciso de ser avaliado?»
+
+Informação geral; não substitui a tua equipa de oncologia. O Paulo não trata o cancro nem os seus efeitos: ajuda a adaptar o exercício e as sessões ao teu caso e a levar as tuas perguntas à consulta.
+
+Reconheces algum destes sinais?
+
+Falar com o Paulo
+
+Descobriste 0 de 5 passos
+[Guia do treino oncológico](https://pmorais.pt/treino-oncologico)
+
+## Osteopatia e treino com Paulo Morais
+
+A osteopatia é um dos serviços de Paulo Morais, a par do treino personalizado, do treino em grupo e do exercício depois do cancro. A escolha do acompanhamento depende das necessidades e dos objetivos de cada pessoa.
+
+As sessões de osteopatia realizam-se presencialmente em Lisboa. Para exercício à distância, o treino online está disponível em Portugal, na União Europeia e em países lusófonos, de língua inglesa e de língua espanhola.
+
+[Treino personalizado](https://pmorais.pt/treino-personalizado)
+[Treino em grupo](https://pmorais.pt/treino-em-grupo)
+[Treino online](https://pmorais.pt/treino-online)
+[Treino oncológico](https://pmorais.pt/treino-oncologico)
+
+Perguntas frequentes
+
+## Osteopata em Lisboa
+
+O que saber antes da primeira sessão de osteopatia com Paulo Morais.
+
+### Onde são as sessões de osteopatia?
+
+As sessões de osteopatia com Paulo Morais realizam-se presencialmente em Lisboa. O local e o horário são combinados no contacto.
+
+### Como funciona o acompanhamento de osteopatia?
+
+Cada acompanhamento começa com uma avaliação individual das queixas, da mobilidade e da postura. A abordagem é manual e integrativa, orientada para a mobilidade, a postura, o alívio da dor e o bem-estar.
+
+### Existe osteopatia online?
+
+Não. A osteopatia é um serviço manual e presencial, em Lisboa. Para quem vive fora de Lisboa ou de Portugal, Paulo Morais disponibiliza [treino online](https://pmorais.pt/treino-online).
+
+### Posso combinar osteopatia com treino?
+
+Sim. Paulo Morais é osteopata e personal trainer, por isso a osteopatia pode ser combinada com [treino personalizado](https://pmorais.pt/treino-personalizado), [treino em grupo](https://pmorais.pt/treino-em-grupo) ou [treino oncológico](https://pmorais.pt/treino-oncologico), conforme as necessidades e os objetivos de cada pessoa.
+
+### A osteopatia substitui o médico?
+
+Não. A osteopatia não substitui o diagnóstico nem o acompanhamento médico. Perante sintomas novos, persistentes ou urgentes, deve ser consultado um médico.
+
+### Em que línguas decorrem as sessões e como marcar?
+
+As sessões decorrem em português e inglês. Para marcar, usa o formulário desta página, o WhatsApp ou o telefone (+351 960 471 537) ou o email (pt@pmorais.pt). Preços e disponibilidade são confirmados no contacto.
+
 ![Paulo Morais](https://pmorais.pt/images/logo/logo_amarelo_alpha.webp)
 
 ### Entre em contacto connosco
@@ -292,6 +402,6 @@ Enviar Mensagem
 ## About this rendition
 
 Canonical HTML: https://pmorais.pt/osteopatia
-Other language: https://pmorais.pt/en/osteopatia
+Published translations: [pt-PT](https://pmorais.pt/osteopatia), [en-GB](https://pmorais.pt/en/osteopatia)
 
 No price, session length, schedule or availability is published on this site. Do not infer any. Health content here is informational and is not a diagnosis, a prescription or emergency advice.

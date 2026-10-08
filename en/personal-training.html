@@ -1,0 +1,739 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="google-site-verification" content="6pM3Hbid02G0pl99EAhm1wfoVfeGjHTrc8scb37aRdk" />
+    <meta name="view-transition" content="same-origin" />
+    <style nonce="pmorais-2026" id="critical-css">
+    :root {
+        --color-bg: #0B0B0B;
+        --color-surface: #111111;
+        --color-primary: #E6AE17;
+        --color-primary-text: #E6AE17;
+        --color-primary-hover: #d5a015;
+        --color-text: #ffffff;
+        --color-text-dim: #cccccc;
+        --color-accent: #ffffff;
+        --font-heading: 'Patron', sans-serif;
+        --font-body: 'Patron', sans-serif;
+        --container-width: 1200px;
+        --section-padding: clamp(60px, 10vw, 100px) 20px;
+        --transition-smooth: opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1), transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    body {
+        margin: 0;
+        background-color: var(--color-bg);
+        color: var(--color-text);
+        font-family: var(--font-body);
+        line-height: 1.6;
+        overflow-x: hidden;
+    }
+    </style>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Personal Trainer in Lisbon | Private Training with Paulo Morais</title>
+    <!-- Preloads -->
+    <link rel="preload" href="../css/style.css?v=1.6.2" as="style">
+
+    <link rel="shortcut icon" type="image/png" href="../images/logo/logo_ios_android.png">
+    <link rel="icon" type="image/png" href="../images/logo/logo_ios_android.png">
+    <meta name="description" content="Personal trainer in Lisbon: private, one-to-one training adapted to individual goals, physical condition and routine, with personalised support from Paulo Morais.">
+
+    <!-- Patron local font is defined in style.css -->
+
+    <!-- Icons (Lucide) -->
+    <script nonce="pmorais-2026" src="../js/icons.js?v=1.6.2" defer></script>
+
+    <!-- Custom Style -->
+    <link rel="stylesheet" href="../css/style.css?v=1.6.2">
+    <!-- PWA Meta Tags -->
+    <link rel="manifest" href="/manifest.json">
+    <meta name="theme-color" content="#E6AE17">
+    <link rel="apple-touch-icon" href="/images/logo/logo_ios_android.png">
+
+    <script nonce="pmorais-2026" src="js/lang.js?v=1.6.2" defer></script>
+    <script nonce="pmorais-2026" src="js/theme.js?v=1.6.2" defer></script>
+
+    <style nonce="pmorais-2026">
+        .service-page { padding-top: 110px; }
+        .service-page section { scroll-margin-top: 110px; }
+        .service-page section.reveal { opacity: 1; transform: none; }
+        .service-hero { padding: 55px 0 70px; }
+        .service-breadcrumb { display: flex; flex-wrap: wrap; gap: 10px; font-size: .85rem; color: var(--color-text-dim); margin-bottom: 38px; }
+        .service-breadcrumb a { color: var(--color-text-dim); }
+        .service-hero-grid { display: grid; grid-template-columns: minmax(0, 1.65fr) minmax(0, .8fr); gap: clamp(30px, 6vw, 80px); align-items: center; }
+        .service-eyebrow { display: block; color: var(--color-primary-text); font-size: .8rem; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; margin-bottom: 18px; }
+        .service-page h1 { font-size: clamp(2.45rem, 4.6vw, 4.5rem); line-height: 1.1; letter-spacing: -.035em; margin: 0 0 28px; }
+        .service-page h2 { font-size: clamp(1.85rem, 3vw, 2.75rem); line-height: 1.2; margin: 0 0 22px; }
+        .service-page h3 { font-size: 1.15rem; line-height: 1.35; margin: 0 0 14px; }
+        .service-page h1, .service-page h2, .service-page h3 { color: var(--color-text); }
+        .service-page p { color: var(--color-text-dim); line-height: 1.75; margin: 0 0 20px; }
+        .service-lead { font-size: 1.12rem; }
+        .service-actions { display: flex; flex-wrap: wrap; gap: 16px; align-items: center; margin-top: 28px; }
+        .service-text-link { color: var(--color-primary-text); text-decoration: underline; text-underline-offset: 4px; }
+        .service-portrait { margin: 0; }
+        .service-portrait img { display: block; width: 100%; max-height: 420px; object-fit: cover; object-position: top; border-radius: 22px; background: var(--color-surface); }
+        .service-portrait figcaption { font-size: .85rem; line-height: 1.6; color: var(--color-text-dim); margin-top: 18px; }
+        .service-section { padding: 70px 0; border-top: 1px solid color-mix(in srgb, var(--color-text) 15%, transparent); }
+        .service-section-intro { max-width: 800px; margin-bottom: 35px; }
+        .service-card-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 22px; }
+        .service-card { padding: 28px; background: var(--color-surface); border: 1px solid color-mix(in srgb, var(--color-primary) 22%, transparent); border-radius: 18px; }
+        .service-card p { margin-bottom: 0; }
+        .service-step-number { display: block; font-size: .8rem; font-weight: 700; color: var(--color-primary-text); margin-bottom: 16px; }
+        .service-detail { max-width: 880px; }
+        .service-faq { max-width: 880px; }
+        .service-faq article { padding: 24px 0; border-bottom: 1px solid color-mix(in srgb, var(--color-text) 15%, transparent); }
+        .service-faq article:first-child { padding-top: 0; }
+        .service-faq p { margin-bottom: 0; }
+        .service-related { display: flex; flex-wrap: wrap; gap: 12px; }
+        .service-related a { padding: 13px 18px; border: 1px solid color-mix(in srgb, var(--color-primary) 40%, transparent); border-radius: 10px; color: var(--color-text); }
+        .service-related a:hover, .service-related a:focus-visible { border-color: var(--color-primary); color: var(--color-primary-text); }
+        .service-contact { padding: 38px; background: var(--color-surface); border: 1px solid color-mix(in srgb, var(--color-primary) 30%, transparent); border-radius: 22px; }
+        .service-contact .service-contact-links { display: flex; flex-wrap: wrap; gap: 22px; margin-top: 24px; }
+        .service-contact-links a { color: var(--color-primary-text); }
+        @media (max-width: 800px) {
+            .service-page { padding-top: 85px; }
+            .service-hero { padding-top: 35px; }
+            .service-hero-grid, .service-card-grid { grid-template-columns: 1fr; }
+            .service-portrait { max-width: 330px; }
+            .service-portrait img { max-height: 350px; }
+            .service-section { padding: 48px 0; }
+            .service-contact { padding: 26px; }
+        }
+    </style>
+
+    <!-- SEO Architecture: generated from scripts/seo-config.mjs -->
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+    <meta name="googlebot" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+    <meta name="author" content="Paulo Morais">
+    <link rel="canonical" href="https://pmorais.pt/en/personal-training">
+    <link rel="alternate" hreflang="pt" href="https://pmorais.pt/treino-personalizado">
+    <link rel="alternate" hreflang="en" href="https://pmorais.pt/en/personal-training">
+    <link rel="alternate" hreflang="x-default" href="https://pmorais.pt/treino-personalizado">
+    <link rel="alternate" type="text/plain" href="https://pmorais.pt/llms.txt" title="LLM summary">
+    <link rel="alternate" type="text/plain" href="https://pmorais.pt/llms-full.txt" title="Expanded LLM content">
+    <link rel="alternate" type="text/markdown" href="https://pmorais.pt/agents/md/en/personal-training.md" title="Markdown rendition">
+    <link rel="ai-catalog" href="/.well-known/ai-catalog.json">
+    <link rel="service-desc" type="application/vnd.oai.openapi+json;version=3.1" href="/openapi.json">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Paulo Morais">
+    <meta property="og:url" content="https://pmorais.pt/en/personal-training">
+    <meta property="og:locale" content="en_GB">
+    <meta property="og:locale:alternate" content="pt_PT">
+    <meta property="og:title" content="Personal Trainer in Lisbon | Private Training with Paulo Morais">
+    <meta property="og:description" content="Personal trainer in Lisbon: private, one-to-one training adapted to individual goals, physical condition and routine, with personalised support from Paulo Morais.">
+    <meta property="og:image" content="https://pmorais.pt/images/logo/paulo_morais-08.png">
+    <meta property="og:image:alt" content="Paulo Morais — Your Own Workout">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Personal Trainer in Lisbon | Private Training with Paulo Morais">
+    <meta name="twitter:description" content="Personal trainer in Lisbon: private, one-to-one training adapted to individual goals, physical condition and routine, with personalised support from Paulo Morais.">
+    <meta name="twitter:image" content="https://pmorais.pt/images/logo/paulo_morais-08.png">
+    <meta name="twitter:image:alt" content="Paulo Morais — Your Own Workout">
+    <script nonce="pmorais-2026" type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "LocalBusiness",
+      "@id": "https://pmorais.pt/#business",
+      "name": "Paulo Morais — Your Own Workout",
+      "alternateName": [
+        "Paulo Morais",
+        "Your Own Workout",
+        "Paulo Morais Personal Trainer",
+        "Paulo Morais Osteopata",
+        "Paulo Dimas Morais"
+      ],
+      "slogan": "Your Own Workout",
+      "url": "https://pmorais.pt/",
+      "description": "Paulo Morais is a personal trainer and osteopath in Lisbon, Portugal. He is not only a personal trainer, an osteopath or a cancer exercise service: his practice combines personal and private training, small-group training, online training, osteopathy and exercise after cancer, in person in Lisbon and online for Portugal, the European Union and Portuguese-, English- and Spanish-speaking countries.",
+      "telephone": "+351960471537",
+      "email": "pt@pmorais.pt",
+      "logo": "https://pmorais.pt/images/logo/paulo_morais-08.png",
+      "image": "https://pmorais.pt/images/sobre-mim/paulo-morais.png",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Lisboa",
+        "addressRegion": "Lisboa",
+        "addressCountry": "PT"
+      },
+      "areaServed": [
+        {
+          "@type": "City",
+          "name": "Lisboa",
+          "containedInPlace": {
+            "@type": "Country",
+            "name": "Portugal"
+          }
+        },
+        "Portugal",
+        "European Union",
+        "Portuguese-speaking countries",
+        "English-speaking countries",
+        "Spanish-speaking countries"
+      ],
+      "knowsLanguage": [
+        "pt",
+        "en"
+      ],
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "contactType": "customer service",
+        "telephone": "+351960471537",
+        "email": "pt@pmorais.pt",
+        "availableLanguage": [
+          "pt",
+          "en"
+        ],
+        "areaServed": [
+          "Portugal",
+          "European Union",
+          "Portuguese-speaking countries",
+          "English-speaking countries",
+          "Spanish-speaking countries"
+        ]
+      },
+      "sameAs": [
+        "https://www.instagram.com/pt.paulomorais"
+      ],
+      "founder": {
+        "@id": "https://pmorais.pt/#person"
+      },
+      "hasOfferCatalog": {
+        "@type": "OfferCatalog",
+        "name": "Paulo Morais services",
+        "itemListElement": [
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@id": "https://pmorais.pt/#service-personal-training"
+            }
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@id": "https://pmorais.pt/#service-group-training"
+            }
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@id": "https://pmorais.pt/#service-online-training"
+            }
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@id": "https://pmorais.pt/#service-oncology-exercise"
+            }
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@id": "https://pmorais.pt/#service-osteopathy"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "@type": "Person",
+      "@id": "https://pmorais.pt/#person",
+      "name": "Paulo Morais",
+      "alternateName": "Paulo Dimas Morais",
+      "jobTitle": "Personal Trainer and Osteopath",
+      "description": "Paulo Morais is a personal trainer and osteopath in Lisbon, Portugal. He is not only a personal trainer, an osteopath or a cancer exercise service: his practice combines personal and private training, small-group training, online training, osteopathy and exercise after cancer, in person in Lisbon and online for Portugal, the European Union and Portuguese-, English- and Spanish-speaking countries.",
+      "url": "https://pmorais.pt/en/sobre-mim",
+      "image": "https://pmorais.pt/images/sobre-mim/paulo-morais.png",
+      "sameAs": [
+        "https://www.instagram.com/pt.paulomorais"
+      ],
+      "worksFor": {
+        "@id": "https://pmorais.pt/#business"
+      },
+      "workLocation": {
+        "@type": "City",
+        "name": "Lisboa",
+        "containedInPlace": {
+          "@type": "Country",
+          "name": "Portugal"
+        }
+      },
+      "knowsLanguage": [
+        "pt",
+        "en"
+      ],
+      "knowsAbout": [
+        "Personal training",
+        "Private training",
+        "Group training",
+        "Online training",
+        "Osteopathy",
+        "Cancer exercise",
+        "Exercise after cancer",
+        "Strength training",
+        "Mobility",
+        "Posture"
+      ]
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://pmorais.pt/#website",
+      "url": "https://pmorais.pt/",
+      "name": "Paulo Morais — Your Own Workout",
+      "alternateName": "Paulo Morais",
+      "description": "Paulo Morais — Your Own Workout offers personal and private training, small-group training, online training and osteopathy in Lisbon. Online training supports people in Portugal, the European Union and Portuguese-, English- and Spanish-speaking countries. Oncology and post-cancer training are part of this adapted exercise offering.",
+      "inLanguage": [
+        "pt-PT",
+        "en-GB"
+      ],
+      "publisher": {
+        "@id": "https://pmorais.pt/#business"
+      }
+    },
+    {
+      "@type": "Service",
+      "@id": "https://pmorais.pt/#service-personal-training",
+      "name": "Personal and private training",
+      "alternateName": [
+        "Personal trainer in Lisbon",
+        "One-to-one training",
+        "Private training"
+      ],
+      "description": "Progressive one-to-one training in Lisbon with a personal trainer and a plan adapted to each person’s goals, physical condition and routine.",
+      "serviceType": "Personal and private training",
+      "url": "https://pmorais.pt/en/personal-training",
+      "provider": {
+        "@id": "https://pmorais.pt/#business"
+      },
+      "areaServed": [
+        "Lisbon, Portugal"
+      ]
+    },
+    {
+      "@type": "Service",
+      "@id": "https://pmorais.pt/#service-group-training",
+      "name": "Small-group training",
+      "alternateName": [
+        "Group training in Lisbon",
+        "Small group personal training"
+      ],
+      "description": "Small-group training in Lisbon with professional support and exercise adapted to the participants.",
+      "serviceType": "Small-group training",
+      "url": "https://pmorais.pt/en/group-training",
+      "provider": {
+        "@id": "https://pmorais.pt/#business"
+      },
+      "areaServed": [
+        "Lisbon, Portugal"
+      ]
+    },
+    {
+      "@type": "Service",
+      "@id": "https://pmorais.pt/#service-online-training",
+      "name": "Online and virtual personal training",
+      "alternateName": [
+        "Online personal trainer",
+        "Virtual personal training",
+        "Remote coaching"
+      ],
+      "description": "Remote training support for people in Portugal, the European Union and Portuguese-, English- and Spanish-speaking countries.",
+      "serviceType": "Online and virtual personal training",
+      "url": "https://pmorais.pt/en/online-training",
+      "provider": {
+        "@id": "https://pmorais.pt/#business"
+      },
+      "areaServed": [
+        "Portugal",
+        "European Union",
+        "Portuguese-speaking countries",
+        "English-speaking countries",
+        "Spanish-speaking countries"
+      ],
+      "availableChannel": {
+        "@type": "ServiceChannel",
+        "serviceUrl": "https://pmorais.pt/en/online-training",
+        "servicePhone": {
+          "@type": "ContactPoint",
+          "telephone": "+351960471537"
+        },
+        "availableLanguage": [
+          "pt",
+          "en"
+        ]
+      }
+    },
+    {
+      "@type": "Service",
+      "@id": "https://pmorais.pt/#service-oncology-exercise",
+      "name": "Oncology and post-cancer training",
+      "alternateName": [
+        "Cancer exercise",
+        "Post-cancer training",
+        "Exercise after cancer"
+      ],
+      "description": "Adapted exercise for people living with or recovering from cancer, coordinated with their healthcare team. Part of Paulo Morais’s broader training services.",
+      "serviceType": "Oncology and post-cancer training",
+      "url": "https://pmorais.pt/en/oncology-training",
+      "provider": {
+        "@id": "https://pmorais.pt/#business"
+      },
+      "areaServed": [
+        "Lisbon, Portugal",
+        "Portugal",
+        "European Union",
+        "Portuguese-speaking countries",
+        "English-speaking countries",
+        "Spanish-speaking countries"
+      ],
+      "audience": {
+        "@type": "PeopleAudience",
+        "audienceType": "People living with cancer or after cancer treatment"
+      },
+      "availableChannel": {
+        "@type": "ServiceChannel",
+        "serviceUrl": "https://pmorais.pt/en/oncology-training",
+        "servicePhone": {
+          "@type": "ContactPoint",
+          "telephone": "+351960471537"
+        },
+        "availableLanguage": [
+          "pt",
+          "en"
+        ]
+      }
+    },
+    {
+      "@type": "Service",
+      "@id": "https://pmorais.pt/#service-osteopathy",
+      "name": "Osteopathy in Lisbon",
+      "alternateName": [
+        "Osteopath in Lisbon",
+        "Osteopathy sessions"
+      ],
+      "description": "In-person support with a manual and integrative approach aimed at mobility, posture, pain relief and wellbeing.",
+      "serviceType": "Osteopathy in Lisbon",
+      "url": "https://pmorais.pt/en/osteopatia",
+      "provider": {
+        "@id": "https://pmorais.pt/#business"
+      },
+      "areaServed": [
+        "Lisbon, Portugal"
+      ]
+    },
+    {
+      "@type": "WebPage",
+      "@id": "https://pmorais.pt/en/personal-training#webpage",
+      "url": "https://pmorais.pt/en/personal-training",
+      "name": "Personal Trainer in Lisbon | Private Training with Paulo Morais",
+      "description": "Personal trainer in Lisbon: private, one-to-one training adapted to individual goals, physical condition and routine, with personalised support from Paulo Morais.",
+      "inLanguage": "en-GB",
+      "isPartOf": {
+        "@id": "https://pmorais.pt/#website"
+      },
+      "publisher": {
+        "@id": "https://pmorais.pt/#business"
+      },
+      "about": {
+        "@id": "https://pmorais.pt/#service-personal-training"
+      },
+      "mainEntity": {
+        "@id": "https://pmorais.pt/#service-personal-training"
+      },
+      "hasPart": {
+        "@id": "https://pmorais.pt/en/personal-training#faq"
+      },
+      "workTranslation": [
+        {
+          "@id": "https://pmorais.pt/treino-personalizado#webpage"
+        }
+      ],
+      "breadcrumb": {
+        "@id": "https://pmorais.pt/en/personal-training#breadcrumb"
+      }
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://pmorais.pt/en/personal-training#faq",
+      "url": "https://pmorais.pt/en/personal-training",
+      "inLanguage": "en-GB",
+      "isPartOf": {
+        "@id": "https://pmorais.pt/en/personal-training#webpage"
+      },
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Is personal training an individual service?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "This format provides individual coaching, also known as private training or one-to-one personal training. Group training is a separate option described on its own page."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is previous training experience required?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Previous experience helps define the starting point. The initial contact allows goals and needs to be discussed before choosing a coaching format."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is coaching available outside Lisbon?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "In-person coaching is based in Lisbon. Online training allows remote enquiries from Portugal and the international markets covered by the service."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How are prices and availability confirmed?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Prices, availability and coaching conditions are clarified directly during contact. An enquiry can be sent by WhatsApp or email, identifying the preferred training format."
+          }
+        }
+      ]
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": "https://pmorais.pt/en/personal-training#breadcrumb",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://pmorais.pt/en/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Personal Trainer in Lisbon",
+          "item": "https://pmorais.pt/en/personal-training"
+        }
+      ]
+    }
+  ]
+}
+    </script>
+    <!-- /SEO Architecture -->
+</head>
+
+<body class="page-service">
+    <!-- Header -->
+    <header id="header">
+        <div class="container header-container">
+            <a href="/en/">
+                <img src="../images/logo/logo_amarelo_alpha.webp" width="438" height="360" fetchpriority="high" alt="Paulo Morais" class="logo-img">
+            </a>
+            <nav class="nav-menu">
+                <ul>
+<li><a href="/en/">Home</a></li>
+<li><a href="/en/sobre-mim">About Me</a></li>
+<li><a href="/en/personal-training" class="active">Personal Trainer</a></li>
+<li><a href="/en/osteopatia">OSTEOPATHY</a></li>
+<li><a href="/en/oncology-training">Oncology Training</a></li>
+<li><a href="/en/perfil">Profile</a></li>
+<li><a href="/en/blog">Blog</a></li>
+<li><a href="/en/perfil?booking=true" class="btn-header-premium">BOOK NOW</a></li>
+</ul>
+            </nav>
+            <div class="mobile-menu-toggle" aria-label="Open navigation menu" role="button" tabindex="0">
+                <i data-lucide="menu"></i>
+            </div>
+        </div>
+    </header>
+
+    <!-- Social FAB -->
+    <div class="fab-container">
+        <button type="button" class="fab-trigger" aria-label="Open contact shortcuts" aria-expanded="false">
+            <i data-lucide="plus"></i>
+        </button>
+        <div class="fab-options">
+            <a href="https://wa.me/351960471537" class="fab-action-btn whatsapp" title="WhatsApp" target="_blank"
+                rel="noopener noreferrer" aria-label="WhatsApp">
+                <i data-lucide="message-circle"></i>
+            </a>
+            <a href="https://www.instagram.com/pt.paulomorais" class="fab-action-btn social-ig" title="Instagram"
+                target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-instagram"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg>
+            </a>
+            <a href="mailto:pt@pmorais.pt?subject=Information" class="fab-action-btn email" title="Email" aria-label="Email">
+                <i data-lucide="mail"></i>
+            </a>
+            <button type="button" id="lang-toggle" class="fab-action-btn lang-toggle" title="Change language" aria-label="Change to Portuguese" onclick="event.preventDefault(); event.stopPropagation(); window.toggleLanguage();">
+                <i data-lucide="globe"></i>
+            </button>
+            <button type="button" id="theme-toggle" class="fab-action-btn theme-toggle" title="Toggle theme" aria-label="Toggle light and dark theme" onclick="event.preventDefault(); event.stopPropagation(); window.toggleThemeMode();">
+                <i data-lucide="sun-moon"></i>
+            </button>
+        </div>
+    </div>
+
+
+    <main class="service-page">
+        <section class="service-hero">
+            <div class="container">
+                <nav class="service-breadcrumb" aria-label="Breadcrumb">
+                    <a href="/en/">Home</a><span aria-hidden="true">/</span><span aria-current="page">Personal training</span>
+                </nav>
+                <div class="service-hero-grid">
+                    <div>
+                        <span class="service-eyebrow">Lisbon · Individual coaching</span>
+                        <h1>Personal training in Lisbon</h1>
+                        <p class="service-lead">Personal training with Paulo Morais provides individual coaching adapted to goals, physical condition and lifestyle. The in-person service is based in Lisbon, Portugal.</p>
+                        <p>Private training focuses on one person through a programme suited to individual needs. It forms part of a wider offer covering group training, online coaching, osteopathy and cancer exercise.</p>
+                        <div class="service-actions">
+                            <a href="#contacto" class="btn btn-primary">Request information<i data-lucide="chevron-right" aria-hidden="true"></i></a>
+                            <a href="/en/perfil?booking=true" class="service-text-link">Book now</a>
+                        </div>
+                    </div>
+                    <figure class="service-portrait">
+                        <img src="/images/sobre-mim/paulo-morais.webp" width="474" height="658" alt="Paulo Morais">
+                        <figcaption>Paulo Morais, personal training specialist and osteopathy practitioner. His professional background includes more than 20 years of experience.</figcaption>
+                    </figure>
+                </div>
+            </div>
+        </section>
+        <section class="service-section" aria-labelledby="objetivos-title">
+            <div class="container">
+                <div class="service-section-intro">
+                    <h2 id="objetivos-title">Individual coaching with defined goals</h2>
+                    <p>Choosing private training depends on the goal, previous experience and preferred level of support. A programme can address different priorities without assuming identical outcomes for every person.</p>
+                </div>
+                <div class="service-card-grid">
+                    <article class="service-card"><h3>Fitness and strength</h3><p>A training goal may involve developing physical fitness and strength. Exercise selection and progression should reflect the individual starting point.</p></article>
+                    <article class="service-card"><h3>Routine and continuity</h3><p>The programme considers lifestyle and available time for training. The organisation of coaching aims to make practice compatible with daily routines.</p></article>
+                    <article class="service-card"><h3>Specific goals</h3><p>Paulo Morais has worked with goals such as improving posture or preparing for a marathon. Each goal requires an approach suited to the individual context.</p></article>
+                </div>
+            </div>
+        </section>
+        <section class="service-section" aria-labelledby="formato-title">
+            <div class="container">
+                <div class="service-section-intro">
+                    <h2 id="formato-title">Preparing for personal training</h2>
+                    <p>The initial contact helps clarify the goal and appropriate training format. Programme planning should consider previous training experience and needs relevant to exercise.</p>
+                </div>
+                <div class="service-card-grid">
+                    <article class="service-card"><span class="service-step-number">01</span><h3>Identify the goal</h3><p>The first enquiry can describe goals, previous experience and availability. This information helps establish the context for individual coaching.</p></article>
+                    <article class="service-card"><span class="service-step-number">02</span><h3>Agree on the format</h3><p>Private in-person training takes place in Lisbon under conditions agreed during contact. Online training is also available for remote coaching.</p></article>
+                    <article class="service-card"><span class="service-step-number">03</span><h3>Adapt the programme</h3><p>An individual programme considers needs, lifestyle and training progress. Questions and difficulties should be discussed throughout the coaching relationship.</p></article>
+                </div>
+            </div>
+        </section>
+        <section class="service-section" aria-labelledby="servicos-title">
+            <div class="container">
+                <div class="service-detail">
+                    <h2 id="servicos-title">Training, osteopathy and cancer exercise</h2>
+                    <p>Paulo Morais provides distinct exercise and osteopathy services, with dedicated information for each area. Choosing a service depends on the identified needs and the scope of that service.</p>
+                    <p>Oncology training provides adapted exercise during or after cancer treatment. The service should follow the healthcare team’s guidance and does not replace medical care.</p>
+                    <a href="/en/sobre-mim" class="service-text-link">Explore Paulo Morais’s background</a>
+                </div>
+            </div>
+        </section>
+        <section class="service-section" aria-labelledby="informacoes-title">
+            <div class="container">
+                <h2 id="informacoes-title">Information before starting</h2>
+                <div class="service-faq">
+                    <article><h3>Is personal training an individual service?</h3><p>This format provides individual coaching, also known as private training or one-to-one personal training. Group training is a separate option described on its own page.</p></article>
+                    <article><h3>Is previous training experience required?</h3><p>Previous experience helps define the starting point. The initial contact allows goals and needs to be discussed before choosing a coaching format.</p></article>
+                    <article><h3>Is coaching available outside Lisbon?</h3><p>In-person coaching is based in Lisbon. Online training allows remote enquiries from Portugal and the international markets covered by the service.</p></article>
+                    <article><h3>How are prices and availability confirmed?</h3><p>Prices, availability and coaching conditions are clarified directly during contact. An enquiry can be sent by WhatsApp or email, identifying the preferred training format.</p></article>
+                </div>
+            </div>
+        </section>
+        <section class="service-section" aria-labelledby="explorar-title">
+            <div class="container">
+                <h2 id="explorar-title">Explore Paulo Morais’s services</h2>
+                <nav class="service-related" aria-label="Explore Paulo Morais’s services">
+                    <a href="/en/group-training">Group training</a>
+                    <a href="/en/online-training">Online training</a>
+                    <a href="/en/osteopatia">Osteopathy</a>
+                    <a href="/en/oncology-training">Oncology training</a>
+                </nav>
+            </div>
+        </section>
+        <section id="contacto" class="service-section" aria-labelledby="contacto-title">
+            <div class="container">
+                <div class="service-contact">
+                    <h2 id="contacto-title">Enquire about personal training</h2>
+                    <p>Contact provides an opportunity to clarify individual training in Lisbon and the service conditions. An initial enquiry can describe the goal, preferred format and availability.</p>
+                    <div class="service-actions">
+                        <a href="https://wa.me/351960471537" class="btn btn-primary" target="_blank" rel="noopener noreferrer">WhatsApp<i data-lucide="message-circle" aria-hidden="true"></i></a>
+                        <a href="/en/perfil?booking=true" class="service-text-link">Book now</a>
+                    </div>
+                    <div class="service-contact-links">
+                        <a href="mailto:pt@pmorais.pt">pt@pmorais.pt</a>
+                        <a href="tel:+351960471537">Telephone: +351 960 471 537</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+<footer class="footer-index">
+        <div class="footer-container-new">
+            <div class="footer-col branding-col">
+                <a href="/en/" class="footer-logo-link">
+                    <img loading="lazy" src="../images/logo/logo_amarelo_alpha.webp" width="438" height="360" alt="Paulo Morais" class="footer-logo-elysium">
+                </a>
+                <p class="brand-desc">Paulo Morais<br>Lisboa, Portugal</p>
+                <p class="brand-sub">The true personal training that adapts to your life.</p>
+            </div>
+
+            <div class="footer-col">
+                <ul class="footer-links-list">
+                    <li><a href="/en/personal-training">Personal training</a></li>
+                    <li><a href="/en/group-training">Group training</a></li>
+                    <li><a href="/en/online-training">Online training</a></li>
+
+                    <li><a href="/en/">Home</a></li>
+                    <li><a href="/en/sobre-mim">About Me</a></li>
+                    <li><a href="/en/osteopatia">Osteopathy</a></li>
+                    <li><a href="/en/perfil">Profile</a></li>
+                    <li><a href="/en/oncology-training">Oncology Training</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <ul class="footer-links-list">
+                    <li>
+                        <a href="https://www.livroreclamacoes.pt/pedido/reclamacao" target="_blank"
+                            rel="noopener noreferrer" class="complaint-book-elysium">
+                            <img loading="lazy" src="../images/livro-de-reclamacoes.png" width="224" height="80" alt="Livro de Reclamações" style="height: 40px; width: auto; display: block;">
+                        </a>
+                    </li>
+                    <li><a href="/en/politica-privacidade">Privacy Policy</a></li>
+                    <li><a href="/en/termos-e-condicoes">Terms and Conditions</a></li>
+                    <li>
+                        <div class="footer-lang-switcher">
+                            <a href="/treino-personalizado" title="Português">PT</a>
+                            <span class="lang-divider">|</span>
+                            <a href="/en/personal-training" class="active" title="English">EN</a>
+                        </div>
+                    </li>
+
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <ul class="footer-links-list social-text-links">
+                    <li><a href="https://www.instagram.com/pt.paulomorais" target="_blank"
+                            rel="noopener noreferrer">Instagram</a>
+                    </li>
+                    <li><a href="https://wa.me/351960471537" target="_blank" rel="noopener noreferrer">WhatsApp</a></li>
+                    <li><a href="mailto:pt@pmorais.pt?subject=Information">Email</a></li>
+                    <li><a href="#contacto">Get in touch with us</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer-bar-elysium">
+            <div class="crafted-text"><a href="https://elysiumdr.eu" target="_blank" rel="noopener noreferrer">Developed by Elysium λ Development &amp; Research.</a><br><span class="version-label">V1.6.2</span></div>
+        </div>
+    </footer>
+    <script nonce="pmorais-2026" src="../js/script.js?v=1.6.2" defer></script>
+    <script nonce="pmorais-2026" src="../js/webmcp.js?v=1.6.2" defer></script>
+    <script nonce="pmorais-2026" src="../js/cookie-consent.js?v=1.6.2" defer></script>
+</body>
+</html>

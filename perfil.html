@@ -21,17 +21,17 @@
         --color-brand-primary: #ffffff;
         --color-brand-secondary: var(--color-primary);
         --color-brand-tertiary: #0A6FE8;
-    
+
         /* Typography */
         --font-heading: 'Patron', sans-serif;
         --font-body: 'Patron', sans-serif;
         /* Clean, modern sans-serif */
-    
+
         /* Spacing */
         --container-width: 1200px;
         --section-padding: clamp(60px, 10vw, 100px) 20px;
         /* Fluid section padding */
-    
+
         /* Transitions */
         --transition-smooth: opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1), transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     }
@@ -81,7 +81,7 @@
         height: 100%;
         z-index: 2;
         pointer-events: none;
-    
+
         /* Mask the shimmer to the logo shape */
         -webkit-mask-image: url('images/logo/logo_bw_loading.png');
         mask-image: url('images/logo/logo_bw_loading.png');
@@ -91,7 +91,7 @@
         mask-repeat: no-repeat;
         -webkit-mask-position: center;
         mask-position: center;
-    
+
         /* The Moving Light Gradient */
         background: linear-gradient(135deg,
                 rgba(255, 255, 255, 0) 30%,
@@ -107,7 +107,7 @@
     <title>Área de Cliente · Login e Agendamento | Paulo Morais</title>
     <!-- Preloads -->
     <link rel="preload" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700;800&family=Poppins:wght@300;400;500;600;700&display=swap" as="style">
-    <link rel="preload" href="css/style.css?v=1.6.1" as="style">
+    <link rel="preload" href="css/style.css?v=1.6.2" as="style">
 
     <link rel="shortcut icon" type="image/png" href="images/logo/logo_ios_android.png">
     <link rel="icon" type="image/png" href="images/logo/logo_ios_android.png">
@@ -131,7 +131,7 @@
     <script nonce="pmorais-2026" src="https://unpkg.com/lucide@0.460.0/dist/umd/lucide.min.js" integrity="sha384-ieG+IKD0d/ZPXyCBTMVAbqsQdns8QGJR/e26WMw7M4fkaI/rHcS/YIoi+ah9WGge" crossorigin="anonymous" defer></script>
 
     <!-- Custom Style -->
-    <link rel="stylesheet" href="css/style.css?v=1.6.1">
+    <link rel="stylesheet" href="css/style.css?v=1.6.2">
 
     <!-- SEO Meta Tags -->
     <link rel="canonical" href="https://pmorais.pt/perfil">
@@ -152,14 +152,14 @@
     <meta name="twitter:title" content="Área de Cliente | Paulo Morais">
     <meta name="twitter:description" content="Login e agendamento de treino personalizado e osteopatia em Lisboa.">
     <meta name="twitter:image" content="https://pmorais.pt/images/logo/paulo_morais-08.png">
-    
+
     <!-- PWA Meta Tags -->
     <link rel="manifest" href="/manifest.json">
     <meta name="theme-color" content="#E6AE17">
     <link rel="apple-touch-icon" href="/images/logo/logo_ios_android.png">
-    
-    <script nonce="pmorais-2026" src="js/lang.js?v=1.6.1" defer></script>
-    <script nonce="pmorais-2026" src="js/theme.js?v=1.6.1" defer></script>
+
+    <script nonce="pmorais-2026" src="js/lang.js?v=1.6.2" defer></script>
+    <script nonce="pmorais-2026" src="js/theme.js?v=1.6.2" defer></script>
 </head>
 
 <body class="page-auth">
@@ -211,7 +211,9 @@
                 <ul>
 <li><a href="/" data-i18n="nav.home">Início</a></li>
 <li><a href="/sobre-mim" data-i18n="nav.about">Sobre Mim</a></li>
+<li><a href="/treino-personalizado">Personal Trainer</a></li>
 <li><a href="/osteopatia" data-i18n="nav.osteo">OSTEOPATIA</a></li>
+<li><a href="/treino-oncologico" data-i18n="nav.onco">Treino Oncológico</a></li>
 <li><a href="/perfil" class="active" data-i18n="nav.profile">Perfil</a></li>
 <li><a href="/blog" data-i18n="nav.blog">Blog</a></li>
 </ul>
@@ -300,7 +302,7 @@
                     <i data-lucide="help-circle" aria-hidden="true"></i>
                 </div>
                 <h2 id="user-welcome">Olá!</h2>
-                
+
                 <div id="root-dashboard-control" class="segmented-control hidden" style="margin-bottom: 20px;">
                     <button id="tab-dash-root" class="segmented-btn active" onclick="window.switchDashboardView('root')">Root</button>
                     <button id="tab-dash-admin" class="segmented-btn" onclick="window.switchDashboardView('admin')">Admin</button>
@@ -316,7 +318,7 @@
                         </div>
                     </div>
                 </div>
-                
+
                 <!-- Dashboard Preview (Upcoming Bookings / Agenda) -->
                 <div id="dashboard-preview-section" class="dashboard-preview fade-in hidden" style="margin-top: 25px; border-radius: 20px; padding: 25px;">
                     <h3 id="preview-title" style="margin-top: 0; margin-bottom: 20px; font-size: 1.1rem; font-weight: 800; color: var(--color-primary); text-transform: uppercase; letter-spacing: 0.1em; display: flex; align-items: center; gap: 10px;">
@@ -436,7 +438,7 @@
                         <!-- Step 3: Calendar -->
                         <div id="step-3" class="booking-step">
                             <h2 class="step-title">Selecione a Data e Hora</h2>
-                            
+
                             <div class="calendar-wrapper">
                                 <div class="calendar-header">
                                     <button class="btn btn-outline" style="padding:5px 15px;" onclick="changeMonth(-1)">&lt;</button>
@@ -448,7 +450,7 @@
                                     <div class="day-name">Qua</div><div class="day-name">Qui</div><div class="day-name">Sex</div><div class="day-name">Sáb</div>
                                     <!-- Days injected via JS -->
                                 </div>
-                                
+
                                 <div id="time-slots-container" style="display:none;">
                                     <h4 style="margin-top:20px; text-align:center;">Horários Disponíveis</h4>
                                     <div class="time-slots" id="time-slots">
@@ -486,7 +488,7 @@
                         <!-- Step 4: Checkout / User Data -->
                         <div id="step-4" class="booking-step">
                             <h2 class="step-title">Confirme a Reserva</h2>
-                            
+
                             <div class="cart-summary" id="cart-summary">
                                 <!-- Details injected via JS -->
                             </div>
@@ -496,14 +498,14 @@
                                     <label>Notas adicionais (Opcional)</label>
                                     <textarea class="form-control" id="b_notes" rows="3" placeholder="Alguma observação para esta sessão?"></textarea>
                                 </div>
-                                
+
                                 <div class="controls">
                                     <button type="button" class="btn btn-outline" onclick="backFromSummary()">Voltar</button>
                                     <button type="submit" id="btn-submit-booking" class="btn btn-primary btn-premium-metallic">Confirmar Marcação</button>
                                 </div>
                             </form>
                         </div>
-                        
+
                         <!-- Step 5: Success -->
                         <div id="step-5" class="booking-step text-center">
                             <div style="color: var(--color-primary); margin-bottom: 20px;">
@@ -513,7 +515,7 @@
                                   <div id="calendar-sync-container" style="margin-top: 30px; display: flex; flex-direction: column; gap: 15px; align-items: center;">
                                 <!-- Calendar buttons injected by JS -->
                             </div>
-                            
+
                             <div style="margin-top: 15px; display: flex; flex-direction: column; align-items: center;">
                                 <button onclick="window.location.reload()" class="btn btn-primary btn-premium-metallic" style="width: 100%; justify-content: center;">
                                     <i data-lucide="calendar-plus"></i>
@@ -587,7 +589,7 @@
                                 <div class="calendar-grid" id="admin-calendar-days">
                                     <!-- Injected via JS -->
                                 </div>
-                                
+
                                 <div id="admin-time-slots-container" style="display:none;">
                                     <h4 style="margin-top:20px; text-align:center;">Selecione as Horas para Bloquear em <span id="admin-selected-day-label"></span></h4>
                                     <div class="time-slots" id="admin-time-slots">
@@ -1068,7 +1070,7 @@
                             <a href="/en/" title="English">EN</a>
                         </div>
                     </li>
-                    
+
                 </ul>
             </div>
 
@@ -1085,15 +1087,15 @@
         </div>
 
         <div class="footer-bar-elysium">
-            <div class="crafted-text"><a href="https://elysiumdr.eu" target="_blank" rel="noopener noreferrer">Desenvolvido por Elysium λ Development & Research.</a><br><span class="version-label">V1.6.1</span></div>
+            <div class="crafted-text"><a href="https://elysiumdr.eu" target="_blank" rel="noopener noreferrer">Desenvolvido por Elysium λ Development & Research.</a><br><span class="version-label">V1.6.2</span></div>
         </div>
     </footer>
 
     <!-- Scripts -->
-    <script nonce="pmorais-2026" src="js/agendamento.js?v=1.6.1" defer></script>
-    <script nonce="pmorais-2026" src="js/script.js?v=1.6.1" defer></script>
-    <script nonce="pmorais-2026" type="module" src="js/auth.js?v=1.6.1"></script>
-    <script nonce="pmorais-2026" src="js/cookie-consent.js?v=1.6.1" defer></script>
+    <script nonce="pmorais-2026" src="js/agendamento.js?v=1.6.2" defer></script>
+    <script nonce="pmorais-2026" src="js/script.js?v=1.6.2" defer></script>
+    <script nonce="pmorais-2026" type="module" src="js/auth.js?v=1.6.2"></script>
+    <script nonce="pmorais-2026" src="js/cookie-consent.js?v=1.6.2" defer></script>
 </body>
 
 </html>

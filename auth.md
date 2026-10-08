@@ -11,8 +11,9 @@ early instead of probing for endpoints that do not exist.
 ## Audience
 
 Autonomous agents and assistants acting for a person who wants information
-about, or contact with, Paulo Morais — Your Own Workout: personal training, online
-training, adapted exercise in oncology, and osteopathy.
+about, or contact with, Paulo Morais — Your Own Workout: personal and private training,
+small-group training, international online training, adapted oncology exercise
+and in-person osteopathy in Lisbon.
 
 ## Declared posture
 
@@ -168,4 +169,4 @@ training data is not.
 
 ## Changes
 
-This document is regenerated with the site. Last build: 2026-09-29.
+This document is regenerated with the site. Last build: 2026-10-08.

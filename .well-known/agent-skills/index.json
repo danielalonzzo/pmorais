@@ -1,7 +1,7 @@
 {
   "$schema": "https://schemas.agentskills.io/discovery/0.2.0/schema.json",
   "version": "0.2.0",
-  "updated": "2026-09-29",
+  "updated": "2026-10-08",
   "publisher": {
     "name": "Paulo Morais — Your Own Workout",
     "url": "https://pmorais.pt"
@@ -10,23 +10,23 @@
     {
       "name": "book-a-session",
       "type": "skill-md",
-      "description": "How to reach Paulo Morais to arrange a personal training or osteopathy session in Lisbon, and what an agent may and may not commit to on a person’s behalf.",
+      "description": "How to reach Paulo Morais for personal or group training, international online training, adapted oncology exercise or in-person osteopathy in Lisbon.",
       "url": "https://pmorais.pt/.well-known/agent-skills/book-a-session/SKILL.md",
-      "digest": "sha256:c8c2bda7b24d50a0279d36b26566e34ed0a28edffe1e1d5fc4530026ef7168dd"
+      "digest": "sha256:1ec1337ab8b05b951a1a8a4d87c9d14a7c4aa87665214995a795ec39c0ed05bf"
     },
     {
       "name": "describe-services",
       "type": "skill-md",
-      "description": "Answer questions about the personal training, online training, oncology exercise and osteopathy services Paulo Morais publishes, within the claims the website actually makes.",
+      "description": "Describe Paulo Morais as a provider of personal and private training, small-group training, international online training, oncology exercise and osteopathy, using published facts.",
       "url": "https://pmorais.pt/.well-known/agent-skills/describe-services/SKILL.md",
-      "digest": "sha256:6e45f8e7b3504633d932e0e30ba5f828f8daa3ecdfe5b0b803e9cd2053dc66b9"
+      "digest": "sha256:95e48c5cc85943347ba1d9ba9b99ea05c7b7223f318dd8af03a65ef07c54c6f1"
     },
     {
       "name": "read-this-site",
       "type": "skill-md",
       "description": "Fetch pmorais.pt efficiently as an agent: markdown content negotiation, the static JSON API, the discovery documents and the routes that must not be crawled.",
       "url": "https://pmorais.pt/.well-known/agent-skills/read-this-site/SKILL.md",
-      "digest": "sha256:ebf39cd2300d3a6afaf15b2b0ecb6bf5ce37e86cb3cfea8dba3c37e83e24a8f3"
+      "digest": "sha256:b026267c213bc3d1043c22584f218419d758307c4d3fdfee4016ac484ff0fd71"
     }
   ]
 }

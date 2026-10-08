@@ -1,16 +1,17 @@
 ---
-title: Personal Training and Osteopathy | Paulo Morais · Lisbon
-description: Personal training, online coaching and osteopathy in Lisbon. Paulo Morais brings more than 20 years of experience to accessible, effective and individual support.
+title: "Paulo Morais | Personal Trainer & Osteopath in Lisbon"
+description: "Personal, private and group training, osteopathy and cancer exercise in Lisbon. Online coaching for Portugal, the EU and Portuguese-, English- and Spanish-speaking countries."
 canonical: "https://pmorais.pt/en/"
-language: en-GB
+language: "en-GB"
 alternate: "https://pmorais.pt/"
-updated: 2026-09-29
-source: Rendered from the canonical HTML page. The HTML remains authoritative if the two differ.
+alternates: [{"language":"pt-PT","canonical":"https://pmorais.pt/"},{"language":"en-GB","canonical":"https://pmorais.pt/en/"}]
+updated: "2026-10-08"
+source: "Rendered from the canonical HTML page. The HTML remains authoritative if the two differ."
 ---
 
-# YOUR OWN **WORKOUT**
+# Paulo Morais · Personal trainer and osteopath in LisbonYOUR OWN **WORKOUT**
 
-The true personal training that truly adapts to your life!
+Personal training, group training, online training, osteopathy and exercise after cancer. In Lisbon and online.
 
 Certifying Entities and Institutional Partners
 
@@ -69,6 +70,24 @@ About Me
 Speciality
 
 Paulo works with people of all ages and goals: improving posture, losing weight, recovering from surgery, preparing for a marathon, or simply living with more energy. He is one of the first in Portugal to develop training for oncology patients.
+
+Paulo Morais services
+
+## Training and osteopathy in Lisbon
+
+Paulo Morais brings together personal training, group training, online training, osteopathy and exercise after cancer. Choose the service that matches your goals and learn how it works.
+
+The centre is based in Lisbon, Portugal. Online training is available across Portugal, the European Union and Portuguese-speaking, English-speaking and Spanish-speaking countries.
+
+- [One to one Personal training Individual, private training adapted to each person’s goals, physical condition and routine. Explore personal training](https://pmorais.pt/en/personal-training)
+
+- [In a group Group training Exercise in a group with professional guidance. Learn about the format and check session availability. Explore group training](https://pmorais.pt/en/group-training)
+
+- [At a distance Online training Virtual training and remote support, helping you continue exercising wherever you are. Explore online training](https://pmorais.pt/en/online-training)
+
+- [In Lisbon Osteopathy In-person osteopathy sessions addressing individual concerns, mobility and personal needs. Explore osteopathy](https://pmorais.pt/en/osteopatia)
+
+- [After cancer Exercise after cancer Adapted physical exercise after cancer treatment, taking your healthcare team’s recommendations into account. Explore oncology training](https://pmorais.pt/en/oncology-training)
 
 ### Clients speak for Paulo
 
@@ -204,6 +223,68 @@ Scroll to explore
 
 ![Physical activity and cancer](https://pmorais.pt/images/oncologia-scroll.jpg)
 
+0
+/ 150 min
++ Strength
+
+Step 4 · Move after cancer
+
+### Your weekly dose of exercise after cancer
+
+After cancer treatment, exercise is one of the most studied tools for getting your energy back. The minimum target is **150 minutes a week** of moderate activity. Tap the activities and watch the ring close.
+
+Walk30 min
+
+Cycle45 min
+
+Oncology group45 min
+
+Dance30 min
+
+Strength exercisescomplement the 150 min
+
+**Ring closed!** 150 minutes a week is the recommended minimum. Walking, cycling or training in a group, every minute counts, and the right plan depends on the type of tumour, the treatments you had, other conditions and how much you can tolerate. That is why it is always individual.
+
+**28**clinical trials
+
+**1,573**participants
+
+**150**min / week
+
+2023 meta-analysis (28 randomised clinical trials): exercise reduced cancer-related fatigue and improved quality of life. General information; it does not replace your oncology team.
+
+You've found 0 of 5 steps
+[Oncology training guide](https://pmorais.pt/en/oncology-training)
+
+Step 0 · After cancer treatment
+
+## The last cancer treatment session is not the end
+
+For many people, this is where another stage begins after cancer: effects that linger, emotions that weigh, questions about what to do next. There are **5 steps** that make a difference, and they are scattered across this site.
+
+1. Cancer diagnosis
+
+2. Cancer treatment
+
+3. Last session
+
+4. And now? Tap to discover
+
+- [Step 1 Listen to your body after cancer Fatigue, tingling, pain… can last for years after cancer treatment. Learn how to talk about them. Discover](https://pmorais.pt/en/osteopatia#efeitos-tardios)
+
+- [Step 2 Look after your mind after cancer The fear that the cancer will come back needs room too. You are not alone. Discover](https://pmorais.pt/en/sobre-mim#emocoes)
+
+- [Step 3 Protect yourself after cancer After cancer treatment, your defences take time to recover. See the 4 vaccines to confirm with your doctor. Discover](https://pmorais.pt/en/blog#protecao)
+
+- Step 4 Move after cancer 150 minutes of exercise a week, at your own pace. Close the ring of your weekly dose. Discover
+
+- [Step 5 Have a plan after cancer Take your cancer survivorship care plan to your appointment and leave knowing what comes next. Discover](https://pmorais.pt/en/oncology-training#plano)
+
+You've found 0 of 5 steps
+[See the oncology training guide](https://pmorais.pt/en/oncology-training)
+
+General information about care after cancer treatment; it does not replace your oncology team. Paulo adapts exercise to each person; he does not treat cancer.
+
 [Strength Training](https://www.youtube.com/watch?v=qv3cppvowhQ)
 
 ![](https://i.ytimg.com/vi/qv3cppvowhQ/hqdefault.jpg)
@@ -213,6 +294,36 @@ Scroll to explore
 ![](https://i.ytimg.com/vi/LVbyFwdJEQg/hqdefault.jpg)
 
 [Train with us](https://youtube.com/playlist?list=PLAVjxmF9QISo&si=BpSZXGwG75UhmK7g)
+
+Frequently asked questions
+
+## Who is Paulo Morais
+
+Personal trainer, osteopath and exercise after cancer, in one place. Short answers to the most common questions.
+
+### Who is Paulo Morais?
+
+Paulo Morais is a personal trainer and osteopath in Lisbon, with more than 20 years of experience in personalised and adapted exercise. He offers [personal and private training](https://pmorais.pt/en/personal-training), [group training](https://pmorais.pt/en/group-training), [online training](https://pmorais.pt/en/online-training), [osteopathy](https://pmorais.pt/en/osteopatia) and [cancer exercise](https://pmorais.pt/en/oncology-training).
+
+### Where do sessions take place?
+
+Personal training, group training and osteopathy take place in person in Lisbon. Online training supports people in Portugal, the European Union and Portuguese-, English- and Spanish-speaking countries.
+
+### Can I train with Paulo Morais outside Portugal?
+
+Yes, through [online training](https://pmorais.pt/en/online-training), with a plan that takes into account your country, time zone, space and available equipment. Osteopathy is in person only, in Lisbon.
+
+### Which languages are sessions in?
+
+Sessions take place in Portuguese and English. Requests in Spanish, including from Spanish-speaking countries, are confirmed directly.
+
+### Is Paulo Morais an oncology centre?
+
+No. [Cancer exercise](https://pmorais.pt/en/oncology-training) is adapted exercise for people living with cancer or after treatment, coordinated with their healthcare team. It does not replace medical care and is one part of an offer that includes training and osteopathy.
+
+### How do I find out prices and availability?
+
+Prices, times and availability are confirmed directly, by WhatsApp or phone (+351 960 471 537) or by email (pt@pmorais.pt).
 
 Book With Us
 
@@ -233,6 +344,6 @@ Tension relief and improved mobility for a life without limits.
 ## About this rendition
 
 Canonical HTML: https://pmorais.pt/en/
-Other language: https://pmorais.pt/
+Published translations: [pt-PT](https://pmorais.pt/), [en-GB](https://pmorais.pt/en/)
 
 No price, session length, schedule or availability is published on this site. Do not infer any. Health content here is informational and is not a diagnosis, a prescription or emergency advice.

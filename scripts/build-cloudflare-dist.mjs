@@ -8,9 +8,10 @@ fs.rmSync(dist, { recursive: true, force: true });
 fs.mkdirSync(dist, { recursive: true });
 
 const copyList = [
-  'css', 'en', 'images', 'js', 'assets', 'agents', 'api', '.well-known',
+  'css', 'en', 'es', 'images', 'js', 'assets', 'agents', 'api', '.well-known',
   'manifest.json', 'robots.txt', 'sitemap.xml', 'llms.txt', 'llms-full.txt',
-  'sw.js', 'firebase-messaging-sw.js', 'openapi.json', 'auth.md', 'google0ef2004b37f69f6d.html'
+  'sw.js', 'firebase-messaging-sw.js', 'openapi.json', 'auth.md', 'google0ef2004b37f69f6d.html',
+  '29c5fae97ae9363315db62e3db72671c.txt'
 ];
 
 for (const item of copyList) {

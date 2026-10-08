@@ -1,0 +1,1031 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="view-transition" content="same-origin" />
+    <style nonce="pmorais-2026" id="critical-css">
+    :root {
+        /* Colors */
+        --color-bg: #0B0B0B;
+        --color-surface: #111111;
+        --color-primary: #E6AE17;
+        --color-primary-text: #E6AE17;
+        /* Updated to match target */
+        --color-primary-hover: #d5a015;
+        --color-light-gray: #F2F2F2;
+        /* New split section color */
+        --color-text: #ffffff;
+        --color-text-dim: #cccccc;
+        --color-accent: #ffffff;
+        --color-brand-primary: #ffffff;
+        --color-brand-secondary: var(--color-primary);
+        --color-brand-tertiary: #0A6FE8;
+
+        /* Typography */
+        --font-heading: 'Patron', sans-serif;
+        --font-body: 'Patron', sans-serif;
+        /* Clean, modern sans-serif */
+
+        /* Spacing */
+        --container-width: 1200px;
+        --section-padding: clamp(60px, 10vw, 100px) 20px;
+        /* Fluid section padding */
+
+        /* Transitions */
+        --transition-smooth: opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1), transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    body {
+        margin: 0;
+        background-color: var(--color-bg);
+        color: var(--color-text);
+        font-family: var(--font-body);
+        line-height: 1.6;
+        overflow-x: hidden;
+        /* Scrollbar natural del sistema, sin personalización */
+    }
+    #preloader {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: #F4B618;
+        z-index: 9999;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        transition: opacity 0.5s ease, visibility 0.5s ease;
+    }
+    .loader-content {
+        position: relative;
+        width: 250px;
+        /* Ajustado para el logo */
+        height: auto;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .loader-logo {
+        width: 100%;
+        height: auto;
+        display: block;
+        position: relative;
+        z-index: 1;
+    }
+    .shimmer-effect {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 2;
+        pointer-events: none;
+
+        /* Mask the shimmer to the logo shape */
+        -webkit-mask-image: url('images/logo/logo_bw_loading.png');
+        mask-image: url('images/logo/logo_bw_loading.png');
+        -webkit-mask-size: contain;
+        mask-size: contain;
+        -webkit-mask-repeat: no-repeat;
+        mask-repeat: no-repeat;
+        -webkit-mask-position: center;
+        mask-position: center;
+
+        /* The Moving Light Gradient */
+        background: linear-gradient(135deg,
+                rgba(255, 255, 255, 0) 30%,
+                rgba(255, 255, 255, 0.7) 50%,
+                rgba(255, 255, 255, 0) 70%);
+        background-size: 200% 100%;
+        background-position: 150% 0;
+        animation: lightSweep 2s infinite ease-in-out;
+    }
+    </style>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Treino Oncológico em Lisboa e Online | Paulo Morais</title>
+    <!-- Preloads -->
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700;800&family=Poppins:wght@300;400;500;600;700&display=swap" as="style">
+    <link rel="preload" href="css/style.css?v=1.6.2" as="style">
+
+    <link rel="shortcut icon" type="image/png" href="images/logo/logo_ios_android.png">
+    <link rel="icon" type="image/png" href="images/logo/logo_ios_android.png">
+    <meta name="description" content="Exercício adaptado e treino depois do cancro em Lisboa e online, com Paulo Morais e coordenação com a equipa de saúde. Inclui guia de sobrevivência.">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700;800&family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+
+    <!-- Icons (Lucide) -->
+    <script nonce="pmorais-2026" src="https://unpkg.com/lucide@0.460.0/dist/umd/lucide.min.js" integrity="sha384-ieG+IKD0d/ZPXyCBTMVAbqsQdns8QGJR/e26WMw7M4fkaI/rHcS/YIoi+ah9WGge" crossorigin="anonymous" defer></script>
+
+    <!-- Custom Style -->
+    <link rel="stylesheet" href="css/style.css?v=1.6.2">
+
+    <!-- Schema.org JSON-LD: WebPage + BreadcrumbList -->
+
+    <script nonce="pmorais-2026" src="js/lang.js?v=1.6.2" defer></script>
+    <script nonce="pmorais-2026" src="js/theme.js?v=1.6.2" defer></script>
+    <!-- SEO Architecture: generated from scripts/seo-config.mjs -->
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+    <meta name="googlebot" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+    <meta name="author" content="Paulo Morais">
+    <link rel="canonical" href="https://pmorais.pt/treino-oncologico">
+    <link rel="alternate" hreflang="pt" href="https://pmorais.pt/treino-oncologico">
+    <link rel="alternate" hreflang="en" href="https://pmorais.pt/en/oncology-training">
+    <link rel="alternate" hreflang="x-default" href="https://pmorais.pt/treino-oncologico">
+    <link rel="alternate" type="text/plain" href="https://pmorais.pt/llms.txt" title="LLM summary">
+    <link rel="alternate" type="text/plain" href="https://pmorais.pt/llms-full.txt" title="Expanded LLM content">
+    <link rel="alternate" type="text/markdown" href="https://pmorais.pt/agents/md/treino-oncologico.md" title="Markdown rendition">
+    <link rel="ai-catalog" href="/.well-known/ai-catalog.json">
+    <link rel="service-desc" type="application/vnd.oai.openapi+json;version=3.1" href="/openapi.json">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Paulo Morais">
+    <meta property="og:url" content="https://pmorais.pt/treino-oncologico">
+    <meta property="og:locale" content="pt_PT">
+    <meta property="og:locale:alternate" content="en_GB">
+    <meta property="og:title" content="Treino Oncológico em Lisboa e Online | Paulo Morais">
+    <meta property="og:description" content="Exercício adaptado e treino depois do cancro em Lisboa e online, com Paulo Morais e coordenação com a equipa de saúde. Inclui guia de sobrevivência.">
+    <meta property="og:image" content="https://pmorais.pt/images/logo/paulo_morais-08.png">
+    <meta property="og:image:alt" content="Paulo Morais — Your Own Workout">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Treino Oncológico em Lisboa e Online | Paulo Morais">
+    <meta name="twitter:description" content="Exercício adaptado e treino depois do cancro em Lisboa e online, com Paulo Morais e coordenação com a equipa de saúde. Inclui guia de sobrevivência.">
+    <meta name="twitter:image" content="https://pmorais.pt/images/logo/paulo_morais-08.png">
+    <meta name="twitter:image:alt" content="Paulo Morais — Your Own Workout">
+    <script nonce="pmorais-2026" type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "LocalBusiness",
+      "@id": "https://pmorais.pt/#business",
+      "name": "Paulo Morais — Your Own Workout",
+      "alternateName": [
+        "Paulo Morais",
+        "Your Own Workout",
+        "Paulo Morais Personal Trainer",
+        "Paulo Morais Osteopata",
+        "Paulo Dimas Morais"
+      ],
+      "slogan": "Your Own Workout",
+      "url": "https://pmorais.pt/",
+      "description": "Paulo Morais é personal trainer e osteopata em Lisboa, Portugal. Não é apenas um personal trainer, um osteopata ou um serviço de treino oncológico: reúne treino personalizado e privado, treino em grupo, treino online, osteopatia e exercício depois do cancro, presencialmente em Lisboa e online para Portugal, a União Europeia e países lusófonos, anglófonos e hispanófonos.",
+      "telephone": "+351960471537",
+      "email": "pt@pmorais.pt",
+      "logo": "https://pmorais.pt/images/logo/paulo_morais-08.png",
+      "image": "https://pmorais.pt/images/sobre-mim/paulo-morais.png",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Lisboa",
+        "addressRegion": "Lisboa",
+        "addressCountry": "PT"
+      },
+      "areaServed": [
+        {
+          "@type": "City",
+          "name": "Lisboa",
+          "containedInPlace": {
+            "@type": "Country",
+            "name": "Portugal"
+          }
+        },
+        "Portugal",
+        "European Union",
+        "Portuguese-speaking countries",
+        "English-speaking countries",
+        "Spanish-speaking countries"
+      ],
+      "knowsLanguage": [
+        "pt",
+        "en"
+      ],
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "contactType": "customer service",
+        "telephone": "+351960471537",
+        "email": "pt@pmorais.pt",
+        "availableLanguage": [
+          "pt",
+          "en"
+        ],
+        "areaServed": [
+          "Portugal",
+          "European Union",
+          "Portuguese-speaking countries",
+          "English-speaking countries",
+          "Spanish-speaking countries"
+        ]
+      },
+      "sameAs": [
+        "https://www.instagram.com/pt.paulomorais"
+      ],
+      "founder": {
+        "@id": "https://pmorais.pt/#person"
+      },
+      "hasOfferCatalog": {
+        "@type": "OfferCatalog",
+        "name": "Serviços de Paulo Morais",
+        "itemListElement": [
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@id": "https://pmorais.pt/#service-personal-training"
+            }
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@id": "https://pmorais.pt/#service-group-training"
+            }
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@id": "https://pmorais.pt/#service-online-training"
+            }
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@id": "https://pmorais.pt/#service-oncology-exercise"
+            }
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@id": "https://pmorais.pt/#service-osteopathy"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "@type": "Person",
+      "@id": "https://pmorais.pt/#person",
+      "name": "Paulo Morais",
+      "alternateName": "Paulo Dimas Morais",
+      "jobTitle": "Personal Trainer e Osteopata",
+      "description": "Paulo Morais é personal trainer e osteopata em Lisboa, Portugal. Não é apenas um personal trainer, um osteopata ou um serviço de treino oncológico: reúne treino personalizado e privado, treino em grupo, treino online, osteopatia e exercício depois do cancro, presencialmente em Lisboa e online para Portugal, a União Europeia e países lusófonos, anglófonos e hispanófonos.",
+      "url": "https://pmorais.pt/sobre-mim",
+      "image": "https://pmorais.pt/images/sobre-mim/paulo-morais.png",
+      "sameAs": [
+        "https://www.instagram.com/pt.paulomorais"
+      ],
+      "worksFor": {
+        "@id": "https://pmorais.pt/#business"
+      },
+      "workLocation": {
+        "@type": "City",
+        "name": "Lisboa",
+        "containedInPlace": {
+          "@type": "Country",
+          "name": "Portugal"
+        }
+      },
+      "knowsLanguage": [
+        "pt",
+        "en"
+      ],
+      "knowsAbout": [
+        "Treino personalizado",
+        "Treino privado",
+        "Treino em grupo",
+        "Treino online",
+        "Osteopatia",
+        "Exercício oncológico",
+        "Exercício depois do cancro",
+        "Treino de força",
+        "Mobilidade",
+        "Postura"
+      ]
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://pmorais.pt/#website",
+      "url": "https://pmorais.pt/",
+      "name": "Paulo Morais — Your Own Workout",
+      "alternateName": "Paulo Morais",
+      "description": "Paulo Morais — Your Own Workout disponibiliza treino personalizado e privado, treino em pequenos grupos, treino online e osteopatia em Lisboa. O treino online acompanha pessoas em Portugal, na União Europeia e em países lusófonos, anglófonos e hispanófonos. O treino oncológico e depois do cancro integra esta oferta de exercício adaptado.",
+      "inLanguage": [
+        "pt-PT",
+        "en-GB"
+      ],
+      "publisher": {
+        "@id": "https://pmorais.pt/#business"
+      }
+    },
+    {
+      "@type": "Service",
+      "@id": "https://pmorais.pt/#service-personal-training",
+      "name": "Treino personalizado e privado",
+      "alternateName": [
+        "Personal trainer em Lisboa",
+        "Treino individual",
+        "Treino privado"
+      ],
+      "description": "Treino individual e progressivo em Lisboa, com personal trainer e um plano adaptado aos objetivos, condição física e rotina de cada pessoa.",
+      "serviceType": "Treino personalizado e privado",
+      "url": "https://pmorais.pt/treino-personalizado",
+      "provider": {
+        "@id": "https://pmorais.pt/#business"
+      },
+      "areaServed": [
+        "Lisbon, Portugal"
+      ]
+    },
+    {
+      "@type": "Service",
+      "@id": "https://pmorais.pt/#service-group-training",
+      "name": "Treino em pequenos grupos",
+      "alternateName": [
+        "Treino em grupo em Lisboa",
+        "Treino em pequenos grupos"
+      ],
+      "description": "Treino em pequenos grupos em Lisboa, com acompanhamento profissional e exercício adaptado aos participantes.",
+      "serviceType": "Treino em pequenos grupos",
+      "url": "https://pmorais.pt/treino-em-grupo",
+      "provider": {
+        "@id": "https://pmorais.pt/#business"
+      },
+      "areaServed": [
+        "Lisbon, Portugal"
+      ]
+    },
+    {
+      "@type": "Service",
+      "@id": "https://pmorais.pt/#service-online-training",
+      "name": "Treino personalizado online e virtual",
+      "alternateName": [
+        "Personal trainer online",
+        "Treino virtual",
+        "Treino à distância"
+      ],
+      "description": "Acompanhamento de treino à distância para pessoas em Portugal, na União Europeia e em países lusófonos, anglófonos e hispanófonos.",
+      "serviceType": "Treino personalizado online e virtual",
+      "url": "https://pmorais.pt/treino-online",
+      "provider": {
+        "@id": "https://pmorais.pt/#business"
+      },
+      "areaServed": [
+        "Portugal",
+        "European Union",
+        "Portuguese-speaking countries",
+        "English-speaking countries",
+        "Spanish-speaking countries"
+      ],
+      "availableChannel": {
+        "@type": "ServiceChannel",
+        "serviceUrl": "https://pmorais.pt/treino-online",
+        "servicePhone": {
+          "@type": "ContactPoint",
+          "telephone": "+351960471537"
+        },
+        "availableLanguage": [
+          "pt",
+          "en"
+        ]
+      }
+    },
+    {
+      "@type": "Service",
+      "@id": "https://pmorais.pt/#service-oncology-exercise",
+      "name": "Treino oncológico e depois do cancro",
+      "alternateName": [
+        "Exercício oncológico",
+        "Treino depois do cancro",
+        "Exercício físico na oncologia"
+      ],
+      "description": "Exercício adaptado para pessoas a viver com ou a recuperar de cancro, em coordenação com a equipa de saúde. Integra a oferta de treino de Paulo Morais.",
+      "serviceType": "Treino oncológico e depois do cancro",
+      "url": "https://pmorais.pt/treino-oncologico",
+      "provider": {
+        "@id": "https://pmorais.pt/#business"
+      },
+      "areaServed": [
+        "Lisbon, Portugal",
+        "Portugal",
+        "European Union",
+        "Portuguese-speaking countries",
+        "English-speaking countries",
+        "Spanish-speaking countries"
+      ],
+      "audience": {
+        "@type": "PeopleAudience",
+        "audienceType": "Pessoas a viver com cancro ou depois do tratamento do cancro"
+      },
+      "availableChannel": {
+        "@type": "ServiceChannel",
+        "serviceUrl": "https://pmorais.pt/treino-oncologico",
+        "servicePhone": {
+          "@type": "ContactPoint",
+          "telephone": "+351960471537"
+        },
+        "availableLanguage": [
+          "pt",
+          "en"
+        ]
+      }
+    },
+    {
+      "@type": "Service",
+      "@id": "https://pmorais.pt/#service-osteopathy",
+      "name": "Osteopatia em Lisboa",
+      "alternateName": [
+        "Osteopata em Lisboa",
+        "Sessões de osteopatia"
+      ],
+      "description": "Acompanhamento presencial com uma abordagem manual e integrativa orientada para mobilidade, postura, alívio da dor e bem-estar.",
+      "serviceType": "Osteopatia em Lisboa",
+      "url": "https://pmorais.pt/osteopatia",
+      "provider": {
+        "@id": "https://pmorais.pt/#business"
+      },
+      "areaServed": [
+        "Lisbon, Portugal"
+      ]
+    },
+    {
+      "@type": "WebPage",
+      "@id": "https://pmorais.pt/treino-oncologico#webpage",
+      "url": "https://pmorais.pt/treino-oncologico",
+      "name": "Treino Oncológico em Lisboa e Online | Paulo Morais",
+      "description": "Exercício adaptado e treino depois do cancro em Lisboa e online, com Paulo Morais e coordenação com a equipa de saúde. Inclui guia de sobrevivência.",
+      "inLanguage": "pt-PT",
+      "isPartOf": {
+        "@id": "https://pmorais.pt/#website"
+      },
+      "publisher": {
+        "@id": "https://pmorais.pt/#business"
+      },
+      "about": {
+        "@id": "https://pmorais.pt/#service-oncology-exercise"
+      },
+      "mainEntity": {
+        "@id": "https://pmorais.pt/#service-oncology-exercise"
+      },
+      "hasPart": {
+        "@id": "https://pmorais.pt/treino-oncologico#faq"
+      },
+      "workTranslation": [
+        {
+          "@id": "https://pmorais.pt/en/oncology-training#webpage"
+        }
+      ],
+      "breadcrumb": {
+        "@id": "https://pmorais.pt/treino-oncologico#breadcrumb"
+      }
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://pmorais.pt/treino-oncologico#faq",
+      "url": "https://pmorais.pt/treino-oncologico",
+      "inLanguage": "pt-PT",
+      "isPartOf": {
+        "@id": "https://pmorais.pt/treino-oncologico#webpage"
+      },
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "O que é o treino oncológico?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "É exercício físico adaptado para pessoas a viver com cancro ou depois do tratamento do cancro. O plano considera a condição física, os objetivos e as recomendações da equipa de saúde."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Onde posso fazer treino oncológico com Paulo Morais?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Presencialmente em Lisboa ou através de treino online, em Portugal, na União Europeia e em países lusófonos, de língua inglesa e de língua espanhola."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Paulo Morais é uma clínica de oncologia?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Não. É um serviço de exercício físico, não uma consulta de oncologia nem um tratamento do cancro. O treino oncológico é uma das áreas de Paulo Morais, a par do treino personalizado, do treino em grupo, do treino online e da osteopatia."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Preciso de autorização médica para começar?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "A participação pode exigir autorização ou coordenação com a tua equipa de saúde. A avaliação de exercício considera a orientação clínica e as limitações relevantes antes de definir a progressão do treino."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Posso treinar durante o tratamento do cancro?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "O exercício adaptado pode acompanhar diferentes fases, durante ou depois do tratamento, sempre de acordo com as orientações da equipa de saúde."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "O guia dos passos 0 a 5 substitui o plano da equipa de saúde?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Não. O guia é informação geral para organizar os cuidados depois do cancro e preparar a conversa com a equipa de saúde. Não é um plano de tratamento personalizado."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Em que línguas decorrem as sessões?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "As sessões decorrem em português e inglês. Pedidos em espanhol, incluindo de países hispanófonos, são confirmados no contacto."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Como marcar uma avaliação?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Podes agendar uma avaliação de exercício após o cancro na área de cliente, ou falar com o Paulo por WhatsApp ou telefone (+351 960 471 537) ou por email (pt@pmorais.pt)."
+          }
+        }
+      ]
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": "https://pmorais.pt/treino-oncologico#breadcrumb",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Início",
+          "item": "https://pmorais.pt/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Treino Oncológico em Lisboa e Online",
+          "item": "https://pmorais.pt/treino-oncologico"
+        }
+      ]
+    }
+  ]
+}
+    </script>
+    <!-- /SEO Architecture -->
+</head>
+
+<body class="page-treino-oncologico">
+    <!-- Preloader -->
+    <div id="preloader">
+        <div class="loader-content">
+            <picture>
+    <source srcset="images/logo/logo_bw_loading.webp" type="image/webp">
+    <img src="images/logo/logo_bw_loading.png" width="500" height="411" fetchpriority="high" alt="Paulo Morais" class="loader-logo">
+</picture>
+            <div class="shimmer-effect"></div>
+        </div>
+    </div>
+
+    <!-- Sticky Social Bar -->
+    <!-- Social FAB -->
+    <div class="fab-container">
+        <div class="fab-trigger">
+            <i data-lucide="plus" aria-hidden="true"></i>
+        </div>
+        <div class="fab-options">
+            <a href="https://wa.me/351960471537" class="fab-action-btn whatsapp" title="WhatsApp" target="_blank"
+                rel="noopener noreferrer" aria-label="WhatsApp">
+                <i data-lucide="message-circle" aria-hidden="true"></i>
+            </a>
+            <a href="https://www.instagram.com/pt.paulomorais" class="fab-action-btn social-ig" title="Instagram"
+                target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-instagram"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg>
+            </a>
+            <a href="mailto:pt@pmorais.pt?subject=Informação" class="fab-action-btn email" title="Email" aria-label="Email">
+                <i data-lucide="mail" aria-hidden="true"></i>
+            </a>
+            <button type="button" id="lang-toggle" class="fab-action-btn lang-toggle" title="Mudar Idioma" onclick="event.preventDefault(); event.stopPropagation(); window.toggleLanguage();">
+                <i data-lucide="globe" aria-hidden="true"></i>
+            </button>
+            <button type="button" id="theme-toggle" class="fab-action-btn theme-toggle" title="Mudar Tema" onclick="event.preventDefault(); event.stopPropagation(); window.toggleThemeMode();">
+                <i data-lucide="sun-moon" aria-hidden="true"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header id="header">
+        <div class="container header-container">
+            <a href="/">
+                <img src="images/logo/logo_amarelo_alpha.webp" width="438" height="360" alt="Paulo Morais" class="logo-img">
+            </a>
+            <nav class="nav-menu">
+                <ul>
+<li><a href="/" data-i18n="nav.home">Início</a></li>
+<li><a href="/sobre-mim" data-i18n="nav.about">Sobre Mim</a></li>
+<li><a href="/treino-personalizado">Personal Trainer</a></li>
+<li><a href="/osteopatia" data-i18n="nav.osteo">OSTEOPATIA</a></li>
+<li><a href="/treino-oncologico" class="active" data-i18n="nav.onco">Treino Oncológico</a></li>
+<li><a href="/perfil" data-i18n="nav.profile">Perfil</a></li>
+<li><a href="/blog" data-i18n="nav.blog">Blog</a></li>
+<li><a href="/perfil?booking=true" class="btn-header-premium" data-i18n="nav.book">AGENDAR</a></li>
+</ul>
+            </nav>
+            <div class="mobile-menu-toggle" aria-label="Abrir menu de navegação" role="button" tabindex="0">
+                <i data-lucide="menu" aria-hidden="true"></i>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <!-- Herói: sol nascente e os passos 0 a 5 -->
+        <section class="sv-hero sv-watch" id="topo">
+            <div class="oncologia-glow-left"></div>
+            <div class="oncologia-glow-right"></div>
+            <div class="container-wide">
+                <h1><span class="oncologia-eyebrow">Treino oncológico em Lisboa e online</span>Depois do tratamento do cancro<br>começa outra <span class="oncologia-highlight">fase</span></h1>
+                <p class="sv-hero-lead">Cada vez mais pessoas vivem muitos anos depois de um diagnóstico de cancro. Cinco passos ajudam a recuperar energia, a proteger a saúde e a voltar à vida com mais segurança. Do passo 0 ao passo 5, descobre-os um a um.</p>
+                <ol class="sv-stepper" aria-label="Passos do treino oncológico depois do cancro">
+                    <li style="--i:0"><a href="#passo-0" aria-label="Passo 0: O ponto de partida" title="O ponto de partida" class="is-start">0</a></li>
+                    <li style="--i:1"><a href="/osteopatia#efeitos-tardios" aria-label="Passo 1: Ouvir o corpo" title="Ouvir o corpo">1</a></li>
+                    <li style="--i:2"><a href="/sobre-mim#emocoes" aria-label="Passo 2: Cuidar da cabeça" title="Cuidar da cabeça">2</a></li>
+                    <li style="--i:3"><a href="/blog#protecao" aria-label="Passo 3: Proteger-te" title="Proteger-te">3</a></li>
+                    <li style="--i:4"><a href="/#dose-semanal" aria-label="Passo 4: Mexer-te" title="Mexer-te">4</a></li>
+                    <li style="--i:5"><a href="#plano" aria-label="Passo 5: Ter um plano" title="Ter um plano">5</a></li>
+                </ol>
+                <span class="sv-progress" data-sv-progress data-tpl="Descobriste {n} de 5 passos" data-done="Descobriste os 5 passos!"><span class="sv-pdots" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span><span class="sv-ptext" aria-live="polite">Descobriste 0 de 5 passos</span></span>
+                <svg class="sv-sun" viewBox="0 0 600 220" aria-hidden="true" focusable="false">
+                <defs><clipPath id="sv-sun-clip"><rect x="0" y="0" width="600" height="170"/></clipPath></defs>
+                <g clip-path="url(#sv-sun-clip)">
+                    <circle class="sv-sun-disc" cx="300" cy="170" r="70"/>
+                    <line class="sv-ray" style="--i:0" x1="205.5" y1="153.3" x2="168.0" y2="146.7"/>
+                    <line class="sv-ray" style="--i:1" x1="213.7" y1="127.9" x2="179.6" y2="111.3"/>
+                    <line class="sv-ray" style="--i:2" x1="228.7" y1="105.8" x2="200.4" y2="80.3"/>
+                    <line class="sv-ray" style="--i:3" x1="249.1" y1="88.6" x2="229.0" y2="56.4"/>
+                    <line class="sv-ray" style="--i:4" x1="273.5" y1="77.7" x2="263.1" y2="41.2"/>
+                    <line class="sv-ray" style="--i:5" x1="300.0" y1="74.0" x2="300.0" y2="36.0"/>
+                    <line class="sv-ray" style="--i:6" x1="326.5" y1="77.7" x2="336.9" y2="41.2"/>
+                    <line class="sv-ray" style="--i:7" x1="350.9" y1="88.6" x2="371.0" y2="56.4"/>
+                    <line class="sv-ray" style="--i:8" x1="371.3" y1="105.8" x2="399.6" y2="80.3"/>
+                    <line class="sv-ray" style="--i:9" x1="386.3" y1="127.9" x2="420.4" y2="111.3"/>
+                    <line class="sv-ray" style="--i:10" x1="394.5" y1="153.3" x2="432.0" y2="146.7"/>
+                </g>
+                <line class="sv-horizon" x1="40" y1="170" x2="560" y2="170"/>
+            </svg>
+            </div>
+        </section>
+
+        <section id="acompanhamento" class="sv-section" aria-labelledby="oncology-service-title">
+            <div class="container-wide">
+                <div class="oncologia-header sv-head">
+                    <h2 id="oncology-service-title">Treino oncológico<br>em Lisboa e <span class="oncologia-highlight">online</span></h2>
+                    <p>O treino oncológico de Paulo Morais é um acompanhamento de exercício físico adaptado depois do cancro. Há sessões presenciais em Lisboa e treino online, com um plano ajustado à condição física, aos objetivos e às recomendações da equipa de saúde.</p>
+                    <p>Este acompanhamento é um serviço de exercício físico, não uma consulta de oncologia ou um tratamento do cancro. A avaliação de exercício considera a orientação clínica e as limitações relevantes antes de definir a progressão do treino.</p>
+                    <p>O treino online está disponível em Portugal, na União Europeia e em países lusófonos, de língua inglesa e de língua espanhola. O guia seguinte ajuda a organizar os cuidados após o tratamento e a preparar a conversa com a equipa de saúde.</p>
+                </div>
+                <div class="sv-folder-actions">
+                    <a href="/perfil?booking=true" class="btn btn-primary">Agendar avaliação de exercício após o cancro <i data-lucide="chevron-right" aria-hidden="true"></i></a>
+                    <a href="/#servicos" class="sv-piece-link">Conhecer todos os serviços <svg class="sv-ico" aria-hidden="true" focusable="false"><use href="/images/sobrevivencia/sprite.svg#sv-i-arrow"/></svg></a>
+                    <a href="/treino-online" class="sv-piece-link">Conhecer o treino online <svg class="sv-ico" aria-hidden="true" focusable="false"><use href="/images/sobrevivencia/sprite.svg#sv-i-arrow"/></svg></a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Passo 0 · O ponto de partida -->
+        <section id="passo-0" class="sv-section sv-watch sv-journey">
+            <div class="oncologia-glow-left"></div>
+            <div class="oncologia-glow-right"></div>
+            <div class="container-wide">
+                <div class="oncologia-header sv-head">
+                    <span class="oncologia-eyebrow">Passo 0 · O ponto de partida</span>
+                    <h2>A última sessão de tratamento<br>do cancro não é o <span class="oncologia-highlight">fim</span></h2>
+                    <p>Para muitas pessoas, é aqui que começa outra fase depois do cancro: efeitos que ficam, emoções que pesam, dúvidas sobre o que fazer a seguir. Há <strong>5 passos</strong> que fazem diferença.</p>
+                </div>
+
+                <ol class="sv-timeline" aria-label="Percurso depois do diagnóstico de cancro">
+                    <li class="sv-step" style="--i:0"><span class="sv-dot" aria-hidden="true"></span><span class="sv-step-label">Diagnóstico do cancro</span></li>
+                    <li class="sv-step" style="--i:1"><span class="sv-dot" aria-hidden="true"></span><span class="sv-step-label">Tratamento do cancro</span></li>
+                    <li class="sv-step" style="--i:2"><span class="sv-dot" aria-hidden="true"></span><span class="sv-step-label">Última sessão</span></li>
+                    <li class="sv-step sv-step--core">
+                        <a class="sv-core" href="#passos">E agora?</a>
+                        <span class="sv-core-hint"><svg class="sv-ico" aria-hidden="true" focusable="false"><use href="/images/sobrevivencia/sprite.svg#sv-i-pointer"/></svg>Segue para o passo 1</span>
+                    </li>
+                </ol>
+            </div>
+        </section>
+
+        <!-- Passos 1 a 5 -->
+        <section id="passos" class="sv-section sv-watch">
+            <div class="container-wide">
+                <div class="oncologia-header sv-head">
+                    <span class="oncologia-eyebrow">Passos 1 a 5</span>
+                    <h2>Cinco passos<br>depois do <span class="oncologia-highlight">cancro</span></h2>
+                    <p>Cada passo vive numa página diferente do site, com uma forma diferente de o descobrir. Toca num cartão para ires ao sítio onde ele te espera.</p>
+                </div>
+                <ul class="sv-constellation sv-cards is-open">
+                <li class="sv-star" style="--i:0" data-sv-card="efeitos">
+                    <a href="/osteopatia#efeitos-tardios">
+                        <span class="sv-star-n">Passo 1</span>
+                        <span class="sv-star-ico"><svg class="sv-ico" aria-hidden="true" focusable="false"><use href="/images/sobrevivencia/sprite.svg#sv-i-activity"/></svg></span>
+                        <h3>Ouvir o corpo depois do cancro</h3>
+                        <p>Um mapa do corpo com 6 pontos para tocar: fadiga, sensibilidade, sono, dor, memória e coração.</p>
+                        <span class="sv-star-go">Ver em Osteopatia <svg class="sv-ico" aria-hidden="true" focusable="false"><use href="/images/sobrevivencia/sprite.svg#sv-i-arrow"/></svg></span>
+                    </a>
+                </li>
+                <li class="sv-star" style="--i:1" data-sv-card="emocoes">
+                    <a href="/sobre-mim#emocoes">
+                        <span class="sv-star-n">Passo 2</span>
+                        <span class="sv-star-ico"><svg class="sv-ico" aria-hidden="true" focusable="false"><use href="/images/sobrevivencia/sprite.svg#sv-i-smile"/></svg></span>
+                        <h3>Cuidar da cabeça depois do cancro</h3>
+                        <p>5 pedras para virar: humor, sono, medo, família e apoio.</p>
+                        <span class="sv-star-go">Ver em Sobre Mim <svg class="sv-ico" aria-hidden="true" focusable="false"><use href="/images/sobrevivencia/sprite.svg#sv-i-arrow"/></svg></span>
+                    </a>
+                </li>
+                <li class="sv-star" style="--i:2" data-sv-card="protecao">
+                    <a href="/blog#protecao">
+                        <span class="sv-star-n">Passo 3</span>
+                        <span class="sv-star-ico"><svg class="sv-ico" aria-hidden="true" focusable="false"><use href="/images/sobrevivencia/sprite.svg#sv-i-shield"/></svg></span>
+                        <h3>Proteger-te depois do cancro</h3>
+                        <p>Um escudo de 4 peças para fechar: as vacinas a confirmar com o teu médico.</p>
+                        <span class="sv-star-go">Ver no Blog <svg class="sv-ico" aria-hidden="true" focusable="false"><use href="/images/sobrevivencia/sprite.svg#sv-i-arrow"/></svg></span>
+                    </a>
+                </li>
+                <li class="sv-star" style="--i:3" data-sv-card="exercicio">
+                    <a href="/#dose-semanal">
+                        <span class="sv-star-n">Passo 4</span>
+                        <span class="sv-star-ico"><svg class="sv-ico" aria-hidden="true" focusable="false"><use href="/images/sobrevivencia/sprite.svg#sv-i-walk"/></svg></span>
+                        <h3>Mexer-te depois do cancro</h3>
+                        <p>Um anel de 150 minutos para fechar com as tuas atividades da semana.</p>
+                        <span class="sv-star-go">Ver no Início <svg class="sv-ico" aria-hidden="true" focusable="false"><use href="/images/sobrevivencia/sprite.svg#sv-i-arrow"/></svg></span>
+                    </a>
+                </li>
+                <li class="sv-star" style="--i:4" data-sv-card="plano">
+                    <a href="#plano">
+                        <span class="sv-star-n">Passo 5</span>
+                        <span class="sv-star-ico"><svg class="sv-ico" aria-hidden="true" focusable="false"><use href="/images/sobrevivencia/sprite.svg#sv-i-file"/></svg></span>
+                        <h3>Ter um plano depois do cancro</h3>
+                        <p>Uma pasta com 6 separadores para levar à consulta. Está mesmo aqui em baixo.</p>
+                        <span class="sv-star-go">Ver aqui <svg class="sv-ico" aria-hidden="true" focusable="false"><use href="/images/sobrevivencia/sprite.svg#sv-i-arrow"/></svg></span>
+                    </a>
+                </li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Passo 5 · Pasta do plano de sobrevivência -->
+        <section id="plano" class="sv-section sv-watch" data-sv-piece="plano">
+            <div class="oncologia-glow-left"></div>
+            <div class="oncologia-glow-right"></div>
+            <div class="container-wide">
+                <div class="oncologia-header sv-head">
+                    <span class="oncologia-eyebrow">Passo 5 · Ter um plano depois do cancro</span>
+                    <h2>O teu plano de<br><span class="oncologia-highlight">sobrevivência ao cancro</span></h2>
+                    <p>Depois do tratamento do cancro, muita gente sai da última consulta sem saber o que vem a seguir. Um plano de sobrevivência reúne, num só sítio, o que aconteceu, o que vigiar e o que fazer. Pede-o à tua equipa de oncologia, e usa esta pasta para saberes o que perguntar.</p>
+                </div>
+
+                <div class="sv-folder sv-watch" data-sv="tabs">
+                    <div class="sv-tablist" role="tablist" aria-label="Separadores do plano de sobrevivência ao cancro">
+                    <button type="button" role="tab" class="sv-tab" id="sv-tab-0" style="--i:0" aria-selected="true" aria-controls="sv-tp-0" tabindex="0"><svg class="sv-ico" aria-hidden="true" focusable="false"><use href="/images/sobrevivencia/sprite.svg#sv-i-file"/></svg><span>Diagnóstico</span></button>
+                    <button type="button" role="tab" class="sv-tab" id="sv-tab-1" style="--i:1" aria-selected="false" aria-controls="sv-tp-1" tabindex="-1"><svg class="sv-ico" aria-hidden="true" focusable="false"><use href="/images/sobrevivencia/sprite.svg#sv-i-pill"/></svg><span>Tratamentos</span></button>
+                    <button type="button" role="tab" class="sv-tab" id="sv-tab-2" style="--i:2" aria-selected="false" aria-controls="sv-tp-2" tabindex="-1"><svg class="sv-ico" aria-hidden="true" focusable="false"><use href="/images/sobrevivencia/sprite.svg#sv-i-activity"/></svg><span>Efeitos tardios</span></button>
+                    <button type="button" role="tab" class="sv-tab" id="sv-tab-3" style="--i:3" aria-selected="false" aria-controls="sv-tp-3" tabindex="-1"><svg class="sv-ico" aria-hidden="true" focusable="false"><use href="/images/sobrevivencia/sprite.svg#sv-i-calendar"/></svg><span>Exames de seguimento</span></button>
+                    <button type="button" role="tab" class="sv-tab" id="sv-tab-4" style="--i:4" aria-selected="false" aria-controls="sv-tp-4" tabindex="-1"><svg class="sv-ico" aria-hidden="true" focusable="false"><use href="/images/sobrevivencia/sprite.svg#sv-i-shield"/></svg><span>Prevenção</span></button>
+                    <button type="button" role="tab" class="sv-tab" id="sv-tab-5" style="--i:5" aria-selected="false" aria-controls="sv-tp-5" tabindex="-1"><svg class="sv-ico" aria-hidden="true" focusable="false"><use href="/images/sobrevivencia/sprite.svg#sv-i-sun"/></svg><span>Saúde e bem-estar</span></button>
+                    </div>
+                    <div class="sv-tabpanels">
+                    <div class="sv-panel is-active" role="tabpanel" id="sv-tp-0" aria-labelledby="sv-tab-0" tabindex="0">
+                        <div class="sv-panel-head"><span class="sv-panel-ico"><svg class="sv-ico" aria-hidden="true" focusable="false"><use href="/images/sobrevivencia/sprite.svg#sv-i-file"/></svg></span><h3>Diagnóstico</h3></div>
+                        <div class="sv-plan-cols">
+                            <div>
+                                <p class="sv-vac-legend">O que registar</p>
+                                <ul class="sv-plan-list">
+                                    <li>Tipo de cancro e onde começou</li>
+                                    <li>Data do diagnóstico</li>
+                                    <li>Estadio e características principais, se a equipa as tiver comunicado</li>
+                                    <li>Quem te acompanha: oncologista, médico de família, outros especialistas</li>
+                                </ul>
+                            </div>
+                            <blockquote class="sv-ask"><small>Pergunta à tua equipa</small>«Podem escrever-me um resumo do meu diagnóstico?»</blockquote>
+                        </div>
+                    </div>
+                    <div class="sv-panel" role="tabpanel" id="sv-tp-1" aria-labelledby="sv-tab-1" tabindex="0">
+                        <div class="sv-panel-head"><span class="sv-panel-ico"><svg class="sv-ico" aria-hidden="true" focusable="false"><use href="/images/sobrevivencia/sprite.svg#sv-i-pill"/></svg></span><h3>Tratamentos</h3></div>
+                        <div class="sv-plan-cols">
+                            <div>
+                                <p class="sv-vac-legend">O que registar</p>
+                                <ul class="sv-plan-list">
+                                    <li>Cirurgias realizadas e datas</li>
+                                    <li>Quimioterapia, imunoterapia ou terapêutica dirigida (nomes e períodos)</li>
+                                    <li>Radioterapia: zona tratada e datas</li>
+                                    <li>Medicação que ainda tomas</li>
+                                </ul>
+                            </div>
+                            <blockquote class="sv-ask"><small>Pergunta à tua equipa</small>«Que tratamentos fiz exatamente e como podem afetar-me mais tarde?»</blockquote>
+                        </div>
+                    </div>
+                    <div class="sv-panel" role="tabpanel" id="sv-tp-2" aria-labelledby="sv-tab-2" tabindex="0">
+                        <div class="sv-panel-head"><span class="sv-panel-ico"><svg class="sv-ico" aria-hidden="true" focusable="false"><use href="/images/sobrevivencia/sprite.svg#sv-i-activity"/></svg></span><h3>Efeitos tardios</h3></div>
+                        <div class="sv-plan-cols">
+                            <div>
+                                <p class="sv-vac-legend">O que registar</p>
+                                <ul class="sv-plan-list">
+                                    <li>Efeitos tardios possíveis do teu tratamento</li>
+                                    <li>Sintomas a vigiar (fadiga, dor, formigueiros, sono, memória, falta de ar, coração)</li>
+                                    <li>Sinais de alerta e a quem ligar</li>
+                                </ul>
+                            </div>
+                            <blockquote class="sv-ask"><small>Pergunta à tua equipa</small>«Que efeitos tardios devo esperar e quais são sinais de alerta?»</blockquote>
+                        </div>
+                    </div>
+                    <div class="sv-panel" role="tabpanel" id="sv-tp-3" aria-labelledby="sv-tab-3" tabindex="0">
+                        <div class="sv-panel-head"><span class="sv-panel-ico"><svg class="sv-ico" aria-hidden="true" focusable="false"><use href="/images/sobrevivencia/sprite.svg#sv-i-calendar"/></svg></span><h3>Exames de seguimento</h3></div>
+                        <div class="sv-plan-cols">
+                            <div>
+                                <p class="sv-vac-legend">O que registar</p>
+                                <ul class="sv-plan-list">
+                                    <li>Que exames fazer e com que frequência</li>
+                                    <li>Datas das próximas consultas</li>
+                                    <li>Quem pede e quem marca cada exame</li>
+                                </ul>
+                            </div>
+                            <blockquote class="sv-ask"><small>Pergunta à tua equipa</small>«Que exames faço, quando, e quem os marca?»</blockquote>
+                        </div>
+                    </div>
+                    <div class="sv-panel" role="tabpanel" id="sv-tp-4" aria-labelledby="sv-tab-4" tabindex="0">
+                        <div class="sv-panel-head"><span class="sv-panel-ico"><svg class="sv-ico" aria-hidden="true" focusable="false"><use href="/images/sobrevivencia/sprite.svg#sv-i-shield"/></svg></span><h3>Prevenção</h3></div>
+                        <div class="sv-plan-cols">
+                            <div>
+                                <p class="sv-vac-legend">O que registar</p>
+                                <ul class="sv-plan-list">
+                                    <li>Vacinas a rever: gripe, COVID-19, pneumocócica e herpes zóster</li>
+                                    <li>Rastreios recomendados para ti</li>
+                                    <li>Outras medidas de prevenção</li>
+                                </ul>
+                            </div>
+                            <blockquote class="sv-ask"><small>Pergunta à tua equipa</small>«Que vacinas e rastreios devo fazer agora?»</blockquote>
+                        </div>
+                    </div>
+                    <div class="sv-panel" role="tabpanel" id="sv-tp-5" aria-labelledby="sv-tab-5" tabindex="0">
+                        <div class="sv-panel-head"><span class="sv-panel-ico"><svg class="sv-ico" aria-hidden="true" focusable="false"><use href="/images/sobrevivencia/sprite.svg#sv-i-sun"/></svg></span><h3>Saúde e bem-estar</h3></div>
+                        <div class="sv-plan-cols">
+                            <div>
+                                <p class="sv-vac-legend">O que registar</p>
+                                <ul class="sv-plan-list">
+                                    <li>Exercício: 150 minutos por semana de atividade moderada, mais força</li>
+                                    <li>Sono e alimentação</li>
+                                    <li>Apoio emocional: psico-oncologia, grupos, família</li>
+                                </ul>
+                            </div>
+                            <blockquote class="sv-ask"><small>Pergunta à tua equipa</small>«Há alguma restrição ao exercício no meu caso?»</blockquote>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+
+                <div class="sv-folder-actions">
+                    <button type="button" class="btn btn-primary" data-sv-print><svg class="sv-ico" aria-hidden="true" focusable="false"><use href="/images/sobrevivencia/sprite.svg#sv-i-printer"/></svg>Imprimir a minha folha</button>
+                </div>
+                <p class="sv-note sv-note--center"><svg class="sv-ico" aria-hidden="true" focusable="false"><use href="/images/sobrevivencia/sprite.svg#sv-i-info"/></svg><span>É uma folha em branco para preencheres à mão com a tua equipa. Não guardamos nem enviamos nada. Os planos de sobrevivência ajudam a comunicação entre oncologistas, médicos de família e doentes, mas só funcionam se forem usados de forma consistente.</span></p>
+            </div>
+        </section>
+
+        <!-- faq:oncologia:start -->
+        <!-- Perguntas frequentes: o texto visível gera o FAQPage do JSON-LD (scripts/apply-seo.mjs) -->
+        <section id="perguntas" class="sv-section" aria-labelledby="faq-oncologia-title">
+            <div class="container-wide">
+                <div class="oncologia-header sv-head">
+                    <span class="oncologia-eyebrow">Perguntas frequentes</span>
+                    <h2 id="faq-oncologia-title">Treino depois do <span class="oncologia-highlight">cancro</span></h2>
+                    <p>O que precisas de saber sobre o treino oncológico com Paulo Morais, em Lisboa e online.</p>
+                </div>
+                <div class="pm-faq">
+                    <article><h3>O que é o treino oncológico?</h3><p>É exercício físico adaptado para pessoas a viver com cancro ou depois do tratamento do cancro. O plano considera a condição física, os objetivos e as recomendações da equipa de saúde.</p></article>
+                    <article><h3>Onde posso fazer treino oncológico com Paulo Morais?</h3><p>Presencialmente em Lisboa ou através de <a href="/treino-online">treino online</a>, em Portugal, na União Europeia e em países lusófonos, de língua inglesa e de língua espanhola.</p></article>
+                    <article><h3>Paulo Morais é uma clínica de oncologia?</h3><p>Não. É um serviço de exercício físico, não uma consulta de oncologia nem um tratamento do cancro. O treino oncológico é uma das áreas de Paulo Morais, a par do <a href="/treino-personalizado">treino personalizado</a>, do <a href="/treino-em-grupo">treino em grupo</a>, do treino online e da <a href="/osteopatia">osteopatia</a>.</p></article>
+                    <article><h3>Preciso de autorização médica para começar?</h3><p>A participação pode exigir autorização ou coordenação com a tua equipa de saúde. A avaliação de exercício considera a orientação clínica e as limitações relevantes antes de definir a progressão do treino.</p></article>
+                    <article><h3>Posso treinar durante o tratamento do cancro?</h3><p>O exercício adaptado pode acompanhar diferentes fases, durante ou depois do tratamento, sempre de acordo com as orientações da equipa de saúde.</p></article>
+                    <article><h3>O guia dos passos 0 a 5 substitui o plano da equipa de saúde?</h3><p>Não. O guia é informação geral para organizar os cuidados depois do cancro e preparar a conversa com a equipa de saúde. Não é um plano de tratamento personalizado.</p></article>
+                    <article><h3>Em que línguas decorrem as sessões?</h3><p>As sessões decorrem em português e inglês. Pedidos em espanhol, incluindo de países hispanófonos, são confirmados no contacto.</p></article>
+                    <article><h3>Como marcar uma avaliação?</h3><p>Podes agendar uma avaliação de exercício após o cancro na área de cliente, ou falar com o Paulo por WhatsApp ou telefone (+351 960 471 537) ou por email (pt@pmorais.pt).</p></article>
+                </div>
+            </div>
+        </section>
+        <!-- faq:oncologia:end -->
+
+        <!-- Fontes -->
+        <section id="fontes" class="sv-section">
+            <div class="container-wide">
+                <details class="sv-sources">
+                    <summary><svg class="sv-ico" aria-hidden="true" focusable="false"><use href="/images/sobrevivencia/sprite.svg#sv-i-info"/></svg>Fontes citadas neste guia de treino oncológico</summary>
+                    <div class="sv-sources-body">
+                        <ul>
+                        <li>ASCO (American Society of Clinical Oncology): cuidados de sobrevivência ao cancro como fase distinta dos cuidados oncológicos, com acompanhamento estruturado a longo prazo e planos de sobrevivência.</li>
+                        <li>ASCO: orientação para a vacinação em adultos com cancro; avaliação sistemática do estado vacinal (gripe, COVID-19, pneumocócica e herpes zóster).</li>
+                        <li>Revisão Cochrane em adultos com cancro imunossuprimidos: a vacinação contra a gripe é segura; dados observacionais apontam para menor mortalidade e melhores resultados em infeções.</li>
+                        <li>Meta-análise de 2023 (28 ensaios clínicos aleatorizados, 1.573 participantes): o exercício melhora a fadiga associada ao cancro e a qualidade de vida.</li>
+                        <li>Revisão sistemática: o medo de recorrência do cancro é um dos problemas psicossociais mais frequentes e perturbadores entre sobreviventes.</li>
+                        </ul>
+                        <p>Informação geral, baseada nas fontes acima; não é aconselhamento médico e não substitui a tua equipa de oncologia. O Paulo Morais adapta o exercício a cada pessoa; não trata o cancro nem receita vacinas ou medicação.</p>
+                    </div>
+                </details>
+            </div>
+        </section>
+
+        <!-- CTA final -->
+        <section class="sv-section sv-cta-final">
+            <div class="container-wide">
+                <div class="oncologia-header sv-head">
+                    <h2>Queres ajuda a pôr em prática o treino oncológico?</h2>
+                    <p>Numa avaliação, o Paulo ouve a tua história, percebe o que a tua equipa de saúde recomenda e adapta o exercício a ti, depois do cancro.</p>
+                </div>
+                <div class="sv-folder-actions">
+                    <a href="/perfil?booking=true" class="btn btn-primary">Agendar avaliação de exercício após o cancro <i data-lucide="chevron-right" aria-hidden="true"></i></a>
+                    <a href="/osteopatia#contacto" class="sv-piece-link">Falar com o Paulo <svg class="sv-ico" aria-hidden="true" focusable="false"><use href="/images/sobrevivencia/sprite.svg#sv-i-arrow"/></svg></a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-container-new">
+            <div class="footer-col branding-col">
+                <a href="/" class="footer-logo-link">
+                    <img loading="lazy" src="images/logo/logo_amarelo_alpha.webp" width="438" height="360" alt="Paulo Morais" class="footer-logo-elysium">
+                </a>
+                <p class="brand-desc">Paulo Morais<br>Lisboa, Portugal</p>
+                <p class="brand-sub">O verdadeiro treino personalizado que se adapta à tua vida.</p>
+            </div>
+
+            <div class="footer-col">
+                <ul class="footer-links-list">
+                    <li><a href="/" data-i18n="nav.home">Início</a></li>
+                    <li><a href="/sobre-mim" data-i18n="nav.about">Sobre Mim</a></li>
+                    <li><a href="/osteopatia">Osteopatia</a></li>
+                    <li><a href="/perfil" data-i18n="nav.profile">Perfil</a></li>
+                    <li><a href="/treino-oncologico">Treino Oncológico</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <ul class="footer-links-list">
+                    <li>
+                        <a href="https://www.livroreclamacoes.pt/pedido/reclamacao" target="_blank"
+                            rel="noopener noreferrer" class="complaint-book-elysium">
+                            <img loading="lazy" src="images/livro-de-reclamacoes.png" width="224" height="80" alt="Livro de Reclamações" style="height: 40px; width: auto; display: block;">
+                        </a>
+                    </li>
+                    <li><a href="/politica-privacidade">Política de Privacidade</a></li>
+                    <li><a href="/termos-e-condicoes">Termos e Condições</a></li>
+                    <li>
+                        <div class="footer-lang-switcher">
+                            <a href="/treino-oncologico" class="active" title="Português">PT</a>
+                            <span class="lang-divider">|</span>
+                            <a href="/en/oncology-training" title="English">EN</a>
+                        </div>
+                    </li>
+
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <ul class="footer-links-list social-text-links">
+                    <li><a href="https://www.instagram.com/pt.paulomorais" target="_blank"
+                            rel="noopener noreferrer">Instagram</a>
+                    </li>
+                    <li><a href="https://wa.me/351960471537" target="_blank" rel="noopener noreferrer">WhatsApp</a></li>
+                    <li><a href="mailto:pt@pmorais.pt?subject=Informação">Email</a></li>
+                    <li><a href="/osteopatia#contacto">Entre em contacto connosco</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer-bar-elysium">
+            <div class="crafted-text"><a href="https://elysiumdr.eu" target="_blank" rel="noopener noreferrer">Desenvolvido por Elysium λ Development & Research.</a><br><span class="version-label">V1.6.2</span></div>
+        </div>
+    </footer>
+
+    <!-- Folha em branco para imprimir (fora do elemento principal) -->
+    <div class="sv-print-sheet" aria-hidden="true">
+        <h2>O meu plano de sobrevivência ao cancro</h2>
+        <p>Folha em branco para preencher com a minha equipa de saúde (pmorais.pt/treino-oncologico)</p>
+        <div class="sv-print-field"><h3>Diagnóstico</h3><span></span><span></span><span></span></div>
+        <div class="sv-print-field"><h3>Tratamentos</h3><span></span><span></span><span></span></div>
+        <div class="sv-print-field"><h3>Efeitos tardios a vigiar</h3><span></span><span></span><span></span></div>
+        <div class="sv-print-field"><h3>Exames de seguimento</h3><span></span><span></span><span></span></div>
+        <div class="sv-print-field"><h3>Prevenção (vacinas e rastreios)</h3><span></span><span></span><span></span></div>
+        <div class="sv-print-field"><h3>Saúde e bem-estar</h3><span></span><span></span><span></span></div>
+    </div>
+
+    <!-- Scripts -->
+    <script nonce="pmorais-2026" src="js/script.js?v=1.6.2" defer></script>
+    <script nonce="pmorais-2026" src="js/sobrevivencia.js?v=1.6.2" defer></script>
+    <script nonce="pmorais-2026" src="js/webmcp.js?v=1.6.2" defer></script>
+    <script nonce="pmorais-2026" src="js/cookie-consent.js?v=1.6.2" defer></script>
+</body>
+
+</html>

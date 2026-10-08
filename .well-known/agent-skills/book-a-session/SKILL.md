@@ -1,14 +1,16 @@
 ---
 name: book-a-session
-description: How to reach Paulo Morais to arrange a personal training or osteopathy session in Lisbon, and what an agent may and may not commit to on a person’s behalf.
+description: How to reach Paulo Morais for personal or group training, international online training, adapted oncology exercise or in-person osteopathy in Lisbon.
 ---
 
 # Book a session with Paulo Morais
 
 ## What this covers
 
-Arranging a first contact for personal training, online training, adapted
-exercise in oncology or osteopathy with Paulo Morais in Lisbon, Portugal.
+Arranging a first contact for personal or private training, small-group
+training, online training, adapted oncology exercise or osteopathy. In-person
+services are in Lisbon; online training covers Portugal, the European Union
+and Portuguese-, English- and Spanish-speaking countries.
 
 ## Contact channels
 
@@ -26,14 +28,15 @@ languages.
 ## Procedure
 
 1. Establish which service is being asked about. `GET https://pmorais.pt/api/v1/services.json`
-   returns the four published services with their delivery modes.
-2. Answer in the language of the request. Portuguese is the site default;
-   English pages live under `/en/`.
+   returns the published services, canonical service pages and delivery modes.
+2. Use the public page directory to locate a published translation. Portuguese
+   is the site default and English pages live under `/en/`.
+   These are published website content languages. Sessions take place in Portuguese and English. Requests in Spanish, including from Spanish-speaking countries, are confirmed directly. A Spanish website translation is planned and is not yet published.
 3. Hand the person the contact channel above, or the contact form on the
    relevant page. Do not fill in a form on someone’s behalf without their
    explicit, per-submission instruction.
-4. Confirm nothing about date, time, duration, location or price. None of that
-   is published; all of it is agreed directly with Paulo Morais.
+4. State Lisbon for in-person services and the published coverage for online
+   training. The exact venue, date, time, duration and price are agreed directly.
 
 ## Hard limits
 

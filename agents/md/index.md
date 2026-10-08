@@ -1,16 +1,17 @@
 ---
-title: Treino Personalizado e Osteopatia | Paulo Morais · Lisboa
-description: Treino personalizado, treino online e osteopatia em Lisboa. Paulo Morais — personal trainer com mais de 20 anos de experiência. Treino adaptado a si, acessível e eficaz.
+title: "Paulo Morais | Personal Trainer e Osteopata em Lisboa"
+description: "Treino personalizado, privado e em grupo, osteopatia e treino oncológico em Lisboa. Treino online para Portugal, União Europeia e países lusófonos, anglófonos e hispanófonos."
 canonical: "https://pmorais.pt/"
-language: pt-PT
+language: "pt-PT"
 alternate: "https://pmorais.pt/en/"
-updated: 2026-09-29
-source: Rendered from the canonical HTML page. The HTML remains authoritative if the two differ.
+alternates: [{"language":"pt-PT","canonical":"https://pmorais.pt/"},{"language":"en-GB","canonical":"https://pmorais.pt/en/"}]
+updated: "2026-10-08"
+source: "Rendered from the canonical HTML page. The HTML remains authoritative if the two differ."
 ---
 
-# YOUR OWN **WORKOUT**
+# Paulo Morais · Personal trainer e osteopata em LisboaYOUR OWN **WORKOUT**
 
-O verdadeiro treino personalizado que se adapta mesmo à tua vida!
+Treino personalizado, treino em grupo, treino online, osteopatia e exercício depois do cancro. Em Lisboa e à distância.
 
 Entidades Certificadoras e Parceiros Institucionais
 
@@ -69,6 +70,24 @@ Sobre Mim
 Especialidade
 
 O Paulo trabalha com pessoas de todas as idades e objetivos: melhorar postura, perder peso, recuperar cirurgias, preparar uma maratona ou simplesmente viver com mais energia. É um dos primeiros em Portugal a desenvolver treino para doentes oncológicos.
+
+Serviços Paulo Morais
+
+## Treino e osteopatia em Lisboa
+
+Paulo Morais reúne treino personalizado, treino em grupo, treino online, osteopatia e exercício após o cancro. Escolhe o serviço que corresponde ao teu objetivo e conhece como funciona.
+
+O centro está em Lisboa, Portugal. O treino online está disponível em Portugal, na União Europeia e em países lusófonos, de língua inglesa e de língua espanhola.
+
+- [Individual Treino personalizado Treino individual e privado, adaptado aos objetivos, condição física e rotina de cada pessoa. Conhecer o treino individual](https://pmorais.pt/treino-personalizado)
+
+- [Em grupo Treino em grupo Exercício em grupo com orientação profissional. Conhece o formato e confirma a disponibilidade das sessões. Conhecer o treino em grupo](https://pmorais.pt/treino-em-grupo)
+
+- [À distância Treino online Treino virtual e acompanhamento à distância, para dar continuidade ao exercício onde quer que estejas. Conhecer o treino online](https://pmorais.pt/treino-online)
+
+- [Em Lisboa Osteopatia Sessões presenciais de osteopatia, com atenção às queixas, à mobilidade e às necessidades individuais. Conhecer a osteopatia](https://pmorais.pt/osteopatia)
+
+- [Depois do cancro Treino oncológico Exercício físico adaptado depois do tratamento do cancro, considerando as recomendações da equipa de saúde. Conhecer o treino oncológico](https://pmorais.pt/treino-oncologico)
 
 ### Os clientes falam pelo Paulo
 
@@ -233,6 +252,68 @@ Deslize para explorar
 
 ![Atividade física e cancro](https://pmorais.pt/images/oncologia-scroll.jpg)
 
+0
+/ 150 min
++ Força
+
+Passo 4 · Mexer-te depois do cancro
+
+### A tua dose semanal de exercício depois do cancro
+
+Depois do tratamento do cancro, o exercício é uma das ferramentas mais estudadas para recuperar energia. A meta mínima são **150 minutos por semana** de atividade moderada. Toca nas atividades e vê o anel a fechar.
+
+Caminhar30 min
+
+Pedalar45 min
+
+Grupo oncológico45 min
+
+Dançar30 min
+
+Exercícios de forçacomplementam os 150 min
+
+**Anel fechado!** 150 minutos por semana é a meta mínima recomendada. Caminhar, pedalar ou treinar em grupo, cada minuto conta, e o plano certo depende do tipo de tumor, dos tratamentos, de outras doenças e da tua tolerância. Por isso é sempre individual.
+
+**28**ensaios clínicos
+
+**1.573**participantes
+
+**150**min / semana
+
+Meta-análise de 2023 (28 ensaios clínicos aleatorizados): o exercício reduziu a fadiga associada ao cancro e melhorou a qualidade de vida. Informação geral; não substitui a tua equipa de oncologia.
+
+Descobriste 0 de 5 passos
+[Guia do treino oncológico](https://pmorais.pt/treino-oncologico)
+
+Passo 0 · Depois do tratamento do cancro
+
+## A última sessão de tratamento do cancro não é o fim
+
+Para muitas pessoas, é aqui que começa outra fase depois do cancro: efeitos que ficam, emoções que pesam, dúvidas sobre o que fazer a seguir. Há **5 passos** que fazem diferença, e estão espalhados por este site.
+
+1. Diagnóstico do cancro
+
+2. Tratamento do cancro
+
+3. Última sessão
+
+4. E agora? Toca para descobrir
+
+- [Passo 1 Ouvir o corpo depois do cancro Cansaço, formigueiros, dor… podem durar anos depois do tratamento do cancro. Aprende a falar deles. Descobrir](https://pmorais.pt/osteopatia#efeitos-tardios)
+
+- [Passo 2 Cuidar da cabeça depois do cancro O medo de que o cancro volte também precisa de espaço. Não estás só. Descobrir](https://pmorais.pt/sobre-mim#emocoes)
+
+- [Passo 3 Proteger-te depois do cancro Depois do tratamento do cancro, as defesas demoram a recuperar. Vê as 4 vacinas a confirmar com o teu médico. Descobrir](https://pmorais.pt/blog#protecao)
+
+- Passo 4 Mexer-te depois do cancro 150 minutos de exercício por semana, à tua medida. Fecha o anel da tua dose semanal. Descobrir
+
+- [Passo 5 Ter um plano depois do cancro Leva o teu plano de sobrevivência ao cancro à consulta e sai de lá a saber o que vem a seguir. Descobrir](https://pmorais.pt/treino-oncologico#plano)
+
+Descobriste 0 de 5 passos
+[Ver o guia do treino oncológico](https://pmorais.pt/treino-oncologico)
+
+Informação geral sobre os cuidados depois do tratamento do cancro; não substitui a tua equipa de oncologia. O Paulo adapta o exercício a cada pessoa; não trata o cancro.
+
 [Treino de força](https://www.youtube.com/watch?v=qv3cppvowhQ)
 
 ![](https://i.ytimg.com/vi/qv3cppvowhQ/hqdefault.jpg)
@@ -242,6 +323,36 @@ Deslize para explorar
 ![](https://i.ytimg.com/vi/LVbyFwdJEQg/hqdefault.jpg)
 
 [Treina connosco](https://youtube.com/playlist?list=PLAVjxmF9QISo&si=BpSZXGwG75UhmK7g)
+
+Perguntas frequentes
+
+## Quem é Paulo Morais
+
+Personal trainer, osteopata e treino depois do cancro, no mesmo acompanhamento. Respostas curtas às perguntas mais comuns.
+
+### Quem é Paulo Morais?
+
+Paulo Morais é personal trainer e osteopata em Lisboa, com mais de 20 anos de experiência em treino personalizado e exercício adaptado. Reúne [treino personalizado e privado](https://pmorais.pt/treino-personalizado), [treino em grupo](https://pmorais.pt/treino-em-grupo), [treino online](https://pmorais.pt/treino-online), [osteopatia](https://pmorais.pt/osteopatia) e [treino oncológico](https://pmorais.pt/treino-oncologico).
+
+### Onde decorrem as sessões?
+
+O treino personalizado, o treino em grupo e a osteopatia são presenciais, em Lisboa. O treino online acompanha pessoas em Portugal, na União Europeia e em países lusófonos, de língua inglesa e de língua espanhola.
+
+### Posso treinar com Paulo Morais fora de Portugal?
+
+Sim, através do [treino online](https://pmorais.pt/treino-online), com um plano que considera o país, o fuso horário, o espaço e o equipamento disponível. A osteopatia é apenas presencial, em Lisboa.
+
+### Em que línguas decorrem as sessões?
+
+As sessões decorrem em português e inglês. Pedidos em espanhol, incluindo de países hispanófonos, são confirmados no contacto.
+
+### Paulo Morais é um centro de oncologia?
+
+Não. O [treino oncológico](https://pmorais.pt/treino-oncologico) é exercício adaptado para pessoas a viver com cancro ou depois do tratamento, em coordenação com a equipa de saúde. Não substitui o acompanhamento médico e é uma das áreas de uma oferta que inclui treino e osteopatia.
+
+### Como saber preços e disponibilidade?
+
+Preços, horários e disponibilidade são confirmados diretamente, por WhatsApp ou telefone (+351 960 471 537) ou por email (pt@pmorais.pt).
 
 Agende Connosco
 
@@ -281,6 +392,6 @@ Enviar Mensagem
 ## About this rendition
 
 Canonical HTML: https://pmorais.pt/
-Other language: https://pmorais.pt/en/
+Published translations: [pt-PT](https://pmorais.pt/), [en-GB](https://pmorais.pt/en/)
 
 No price, session length, schedule or availability is published on this site. Do not infer any. Health content here is informational and is not a diagnosis, a prescription or emergency advice.

@@ -4,7 +4,7 @@
     "identifier": "did:web:pmorais.pt",
     "displayName": "Paulo Morais — Your Own Workout",
     "url": "https://pmorais.pt",
-    "description": "Personal training, online training, adapted exercise in oncology and osteopathy in Lisbon, Portugal. Published in European Portuguese and British English."
+    "description": "Paulo Morais — Your Own Workout offers personal and private training, small-group training, online training and osteopathy in Lisbon. Online training supports people in Portugal, the European Union and Portuguese-, English- and Spanish-speaking countries. Oncology and post-cancer training are part of this adapted exercise offering."
   },
   "entries": [
     {
@@ -22,14 +22,15 @@
     {
       "identifier": "urn:air:pmorais.pt:api:services",
       "displayName": "Services catalogue",
-      "description": "The four services published on the website, in Portuguese and English, with delivery modes and interpretation limits.",
+      "description": "5 published services with translated names, delivery modes, geographical coverage, canonical evidence pages and interpretation limits.",
       "type": "application/json",
       "url": "https://pmorais.pt/api/v1/services.json",
       "representativeQueries": [
-        "what services does Paulo Morais offer",
-        "does Paulo Morais do online personal training",
+        "treino personalizado ou privado em Lisboa com Paulo Morais",
+        "small-group training in Lisbon with Paulo Morais",
+        "treino online em Portugal e na União Europeia",
         "osteopathy in Lisbon with Paulo Morais",
-        "adapted exercise for cancer patients in Lisbon"
+        "treino oncológico e treino depois do cancro"
       ]
     },
     {
@@ -47,7 +48,7 @@
     {
       "identifier": "urn:air:pmorais.pt:api:pages",
       "displayName": "Canonical page index",
-      "description": "The eight canonical public pages with language, reciprocal alternate and markdown rendition URL.",
+      "description": "16 canonical public pages with their published translations and markdown rendition URLs.",
       "type": "application/json",
       "url": "https://pmorais.pt/api/v1/pages.json",
       "representativeQueries": [

@@ -3,86 +3,146 @@
         xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://pmorais.pt/</loc>
-    <lastmod>2026-09-29</lastmod>
+    <lastmod>2026-10-08</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
-    <xhtml:link rel="alternate" hreflang="pt-PT" href="https://pmorais.pt/"/>
-    <xhtml:link rel="alternate" hreflang="en-GB" href="https://pmorais.pt/en/"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://pmorais.pt/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pmorais.pt/en/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://pmorais.pt/"/>
   </url>
   <url>
     <loc>https://pmorais.pt/osteopatia</loc>
-    <lastmod>2026-09-29</lastmod>
+    <lastmod>2026-10-08</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
-    <xhtml:link rel="alternate" hreflang="pt-PT" href="https://pmorais.pt/osteopatia"/>
-    <xhtml:link rel="alternate" hreflang="en-GB" href="https://pmorais.pt/en/osteopatia"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://pmorais.pt/osteopatia"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pmorais.pt/en/osteopatia"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://pmorais.pt/osteopatia"/>
   </url>
   <url>
     <loc>https://pmorais.pt/sobre-mim</loc>
-    <lastmod>2026-09-29</lastmod>
+    <lastmod>2026-10-08</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
-    <xhtml:link rel="alternate" hreflang="pt-PT" href="https://pmorais.pt/sobre-mim"/>
-    <xhtml:link rel="alternate" hreflang="en-GB" href="https://pmorais.pt/en/sobre-mim"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://pmorais.pt/sobre-mim"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pmorais.pt/en/sobre-mim"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://pmorais.pt/sobre-mim"/>
   </url>
   <url>
     <loc>https://pmorais.pt/blog</loc>
-    <lastmod>2026-09-29</lastmod>
+    <lastmod>2026-10-08</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="pt-PT" href="https://pmorais.pt/blog"/>
-    <xhtml:link rel="alternate" hreflang="en-GB" href="https://pmorais.pt/en/blog"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://pmorais.pt/blog"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pmorais.pt/en/blog"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://pmorais.pt/blog"/>
   </url>
   <url>
+    <loc>https://pmorais.pt/treino-oncologico</loc>
+    <lastmod>2026-10-08</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://pmorais.pt/treino-oncologico"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pmorais.pt/en/oncology-training"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://pmorais.pt/treino-oncologico"/>
+  </url>
+  <url>
     <loc>https://pmorais.pt/en/</loc>
-    <lastmod>2026-09-29</lastmod>
+    <lastmod>2026-10-08</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
-    <xhtml:link rel="alternate" hreflang="pt-PT" href="https://pmorais.pt/"/>
-    <xhtml:link rel="alternate" hreflang="en-GB" href="https://pmorais.pt/en/"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://pmorais.pt/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pmorais.pt/en/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://pmorais.pt/"/>
   </url>
   <url>
     <loc>https://pmorais.pt/en/osteopatia</loc>
-    <lastmod>2026-09-29</lastmod>
+    <lastmod>2026-10-08</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
-    <xhtml:link rel="alternate" hreflang="pt-PT" href="https://pmorais.pt/osteopatia"/>
-    <xhtml:link rel="alternate" hreflang="en-GB" href="https://pmorais.pt/en/osteopatia"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://pmorais.pt/osteopatia"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pmorais.pt/en/osteopatia"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://pmorais.pt/osteopatia"/>
   </url>
   <url>
     <loc>https://pmorais.pt/en/sobre-mim</loc>
-    <lastmod>2026-09-29</lastmod>
+    <lastmod>2026-10-08</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
-    <xhtml:link rel="alternate" hreflang="pt-PT" href="https://pmorais.pt/sobre-mim"/>
-    <xhtml:link rel="alternate" hreflang="en-GB" href="https://pmorais.pt/en/sobre-mim"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://pmorais.pt/sobre-mim"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pmorais.pt/en/sobre-mim"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://pmorais.pt/sobre-mim"/>
   </url>
   <url>
     <loc>https://pmorais.pt/en/blog</loc>
-    <lastmod>2026-09-29</lastmod>
+    <lastmod>2026-10-08</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="pt-PT" href="https://pmorais.pt/blog"/>
-    <xhtml:link rel="alternate" hreflang="en-GB" href="https://pmorais.pt/en/blog"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://pmorais.pt/blog"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pmorais.pt/en/blog"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://pmorais.pt/blog"/>
   </url>
   <url>
-    <loc>https://pmorais.pt/llms.txt</loc>
-    <lastmod>2026-09-29</lastmod>
+    <loc>https://pmorais.pt/en/oncology-training</loc>
+    <lastmod>2026-10-08</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.4</priority>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://pmorais.pt/treino-oncologico"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pmorais.pt/en/oncology-training"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://pmorais.pt/treino-oncologico"/>
   </url>
   <url>
-    <loc>https://pmorais.pt/llms-full.txt</loc>
-    <lastmod>2026-09-29</lastmod>
+    <loc>https://pmorais.pt/treino-personalizado</loc>
+    <lastmod>2026-10-08</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.4</priority>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://pmorais.pt/treino-personalizado"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pmorais.pt/en/personal-training"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://pmorais.pt/treino-personalizado"/>
+  </url>
+  <url>
+    <loc>https://pmorais.pt/treino-em-grupo</loc>
+    <lastmod>2026-10-08</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://pmorais.pt/treino-em-grupo"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pmorais.pt/en/group-training"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://pmorais.pt/treino-em-grupo"/>
+  </url>
+  <url>
+    <loc>https://pmorais.pt/treino-online</loc>
+    <lastmod>2026-10-08</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://pmorais.pt/treino-online"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pmorais.pt/en/online-training"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://pmorais.pt/treino-online"/>
+  </url>
+  <url>
+    <loc>https://pmorais.pt/en/personal-training</loc>
+    <lastmod>2026-10-08</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://pmorais.pt/treino-personalizado"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pmorais.pt/en/personal-training"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://pmorais.pt/treino-personalizado"/>
+  </url>
+  <url>
+    <loc>https://pmorais.pt/en/group-training</loc>
+    <lastmod>2026-10-08</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://pmorais.pt/treino-em-grupo"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pmorais.pt/en/group-training"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://pmorais.pt/treino-em-grupo"/>
+  </url>
+  <url>
+    <loc>https://pmorais.pt/en/online-training</loc>
+    <lastmod>2026-10-08</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://pmorais.pt/treino-online"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pmorais.pt/en/online-training"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://pmorais.pt/treino-online"/>
   </url>
 </urlset>

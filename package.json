@@ -21,7 +21,8 @@
     "check:dns": "node scripts/check-dns-aid.mjs",
     "check:mcp": "node scripts/check-mcp.mjs",
     "build:cloudflare": "node scripts/build-cloudflare-dist.mjs",
-    "deploy:cloudflare": "node scripts/build-cloudflare-dist.mjs && (cd tmp/dist && npx wrangler pages deploy . --project-name=paulo-morais --branch=main) && rm -rf tmp/dist"
+    "deploy:cloudflare": "node scripts/build-cloudflare-dist.mjs && (cd tmp/dist && npx wrangler pages deploy . --project-name=paulo-morais --branch=main) && rm -rf tmp/dist",
+    "seo:indexnow": "node scripts/indexnow.mjs"
   },
   "repository": {
     "type": "git",

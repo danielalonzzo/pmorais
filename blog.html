@@ -21,17 +21,17 @@
         --color-brand-primary: #ffffff;
         --color-brand-secondary: var(--color-primary);
         --color-brand-tertiary: #0A6FE8;
-    
+
         /* Typography */
         --font-heading: 'Patron', sans-serif;
         --font-body: 'Patron', sans-serif;
         /* Clean, modern sans-serif */
-    
+
         /* Spacing */
         --container-width: 1200px;
         --section-padding: clamp(60px, 10vw, 100px) 20px;
         /* Fluid section padding */
-    
+
         /* Transitions */
         --transition-smooth: opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1), transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     }
@@ -81,7 +81,7 @@
         height: 100%;
         z-index: 2;
         pointer-events: none;
-    
+
         /* Mask the shimmer to the logo shape */
         -webkit-mask-image: url('images/logo/logo_bw_loading.png');
         mask-image: url('images/logo/logo_bw_loading.png');
@@ -91,7 +91,7 @@
         mask-repeat: no-repeat;
         -webkit-mask-position: center;
         mask-position: center;
-    
+
         /* The Moving Light Gradient */
         background: linear-gradient(135deg,
                 rgba(255, 255, 255, 0) 30%,
@@ -103,10 +103,10 @@
     }
     </style>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Blog de Treino, Osteopatia e Bem-Estar | Paulo Morais</title>
+    <title>Blog de Treino, Osteopatia e Exercício Oncológico | Paulo Morais</title>
     <!-- Preloads -->
     <link rel="preload" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700;800&family=Poppins:wght@300;400;500;600;700&display=swap" as="style">
-    <link rel="preload" href="css/style.css?v=1.6.1" as="style">
+    <link rel="preload" href="css/style.css?v=1.6.2" as="style">
 
     <link rel="shortcut icon" type="image/png" href="images/logo/logo_ios_android.png">
     <link rel="icon" type="image/png" href="images/logo/logo_ios_android.png">
@@ -131,8 +131,8 @@
     <script nonce="pmorais-2026" src="https://unpkg.com/lucide@0.460.0/dist/umd/lucide.min.js" integrity="sha384-ieG+IKD0d/ZPXyCBTMVAbqsQdns8QGJR/e26WMw7M4fkaI/rHcS/YIoi+ah9WGge" crossorigin="anonymous" defer></script>
 
     <!-- Custom Style -->
-    <link rel="stylesheet" href="css/style.css?v=1.6.1">
-    
+    <link rel="stylesheet" href="css/style.css?v=1.6.2">
+
     <style nonce="pmorais-2026">
         .blog-grid {
             display: grid;
@@ -329,16 +329,16 @@
             margin: 0;
         }
     </style>
-    
-    <script nonce="pmorais-2026" src="js/lang.js?v=1.6.1" defer></script>
-    <script nonce="pmorais-2026" src="js/theme.js?v=1.6.1" defer></script>
+
+    <script nonce="pmorais-2026" src="js/lang.js?v=1.6.2" defer></script>
+    <script nonce="pmorais-2026" src="js/theme.js?v=1.6.2" defer></script>
     <!-- SEO Architecture: generated from scripts/seo-config.mjs -->
     <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
     <meta name="googlebot" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
     <meta name="author" content="Paulo Morais">
     <link rel="canonical" href="https://pmorais.pt/blog">
-    <link rel="alternate" hreflang="pt-PT" href="https://pmorais.pt/blog">
-    <link rel="alternate" hreflang="en-GB" href="https://pmorais.pt/en/blog">
+    <link rel="alternate" hreflang="pt" href="https://pmorais.pt/blog">
+    <link rel="alternate" hreflang="en" href="https://pmorais.pt/en/blog">
     <link rel="alternate" hreflang="x-default" href="https://pmorais.pt/blog">
     <link rel="alternate" type="text/plain" href="https://pmorais.pt/llms.txt" title="LLM summary">
     <link rel="alternate" type="text/plain" href="https://pmorais.pt/llms-full.txt" title="Expanded LLM content">
@@ -350,58 +350,352 @@
     <meta property="og:url" content="https://pmorais.pt/blog">
     <meta property="og:locale" content="pt_PT">
     <meta property="og:locale:alternate" content="en_GB">
-    <meta property="og:title" content="Blog de Treino, Osteopatia e Bem-Estar | Paulo Morais">
+    <meta property="og:title" content="Blog de Treino, Osteopatia e Exercício Oncológico | Paulo Morais">
     <meta property="og:description" content="Artigos de Paulo Morais sobre treino personalizado, osteopatia, exercício em oncologia, recuperação, saúde e bem-estar.">
     <meta property="og:image" content="https://pmorais.pt/images/logo/paulo_morais-08.png">
     <meta property="og:image:alt" content="Paulo Morais — Your Own Workout">
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Blog de Treino, Osteopatia e Bem-Estar | Paulo Morais">
+    <meta name="twitter:title" content="Blog de Treino, Osteopatia e Exercício Oncológico | Paulo Morais">
     <meta name="twitter:description" content="Artigos de Paulo Morais sobre treino personalizado, osteopatia, exercício em oncologia, recuperação, saúde e bem-estar.">
     <meta name="twitter:image" content="https://pmorais.pt/images/logo/paulo_morais-08.png">
     <meta name="twitter:image:alt" content="Paulo Morais — Your Own Workout">
     <script nonce="pmorais-2026" type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
     {
-      "@context": "https://schema.org",
-      "@graph": [
+      "@type": "LocalBusiness",
+      "@id": "https://pmorais.pt/#business",
+      "name": "Paulo Morais — Your Own Workout",
+      "alternateName": [
+        "Paulo Morais",
+        "Your Own Workout",
+        "Paulo Morais Personal Trainer",
+        "Paulo Morais Osteopata",
+        "Paulo Dimas Morais"
+      ],
+      "slogan": "Your Own Workout",
+      "url": "https://pmorais.pt/",
+      "description": "Paulo Morais é personal trainer e osteopata em Lisboa, Portugal. Não é apenas um personal trainer, um osteopata ou um serviço de treino oncológico: reúne treino personalizado e privado, treino em grupo, treino online, osteopatia e exercício depois do cancro, presencialmente em Lisboa e online para Portugal, a União Europeia e países lusófonos, anglófonos e hispanófonos.",
+      "telephone": "+351960471537",
+      "email": "pt@pmorais.pt",
+      "logo": "https://pmorais.pt/images/logo/paulo_morais-08.png",
+      "image": "https://pmorais.pt/images/sobre-mim/paulo-morais.png",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Lisboa",
+        "addressRegion": "Lisboa",
+        "addressCountry": "PT"
+      },
+      "areaServed": [
         {
-          "@type": "CollectionPage",
-          "@id": "https://pmorais.pt/blog#collection",
-          "url": "https://pmorais.pt/blog",
-          "name": "Blog de Paulo Morais",
-          "description": "Artigos de Paulo Morais sobre treino personalizado, osteopatia, exercício em oncologia, recuperação, saúde e bem-estar.",
-          "inLanguage": "pt-PT",
-          "about": [
-            "Treino personalizado",
-            "Osteopatia",
-            "Exercício oncológico",
-            "Saúde e bem-estar"
-          ],
-          "isPartOf": {
-            "@id": "https://pmorais.pt/#website"
-          },
-          "publisher": {
-            "@id": "https://pmorais.pt/#business"
+          "@type": "City",
+          "name": "Lisboa",
+          "containedInPlace": {
+            "@type": "Country",
+            "name": "Portugal"
           }
         },
-        {
-          "@type": "BreadcrumbList",
-          "itemListElement": [
-            {
-              "@type": "ListItem",
-              "position": 1,
-              "name": "Início",
-              "item": "https://pmorais.pt/"
-            },
-            {
-              "@type": "ListItem",
-              "position": 2,
-              "name": "Blog",
-              "item": "https://pmorais.pt/blog"
+        "Portugal",
+        "European Union",
+        "Portuguese-speaking countries",
+        "English-speaking countries",
+        "Spanish-speaking countries"
+      ],
+      "knowsLanguage": [
+        "pt",
+        "en"
+      ],
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "contactType": "customer service",
+        "telephone": "+351960471537",
+        "email": "pt@pmorais.pt",
+        "availableLanguage": [
+          "pt",
+          "en"
+        ],
+        "areaServed": [
+          "Portugal",
+          "European Union",
+          "Portuguese-speaking countries",
+          "English-speaking countries",
+          "Spanish-speaking countries"
+        ]
+      },
+      "sameAs": [
+        "https://www.instagram.com/pt.paulomorais"
+      ],
+      "founder": {
+        "@id": "https://pmorais.pt/#person"
+      },
+      "hasOfferCatalog": {
+        "@type": "OfferCatalog",
+        "name": "Serviços de Paulo Morais",
+        "itemListElement": [
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@id": "https://pmorais.pt/#service-personal-training"
             }
-          ]
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@id": "https://pmorais.pt/#service-group-training"
+            }
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@id": "https://pmorais.pt/#service-online-training"
+            }
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@id": "https://pmorais.pt/#service-oncology-exercise"
+            }
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@id": "https://pmorais.pt/#service-osteopathy"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "@type": "Person",
+      "@id": "https://pmorais.pt/#person",
+      "name": "Paulo Morais",
+      "alternateName": "Paulo Dimas Morais",
+      "jobTitle": "Personal Trainer e Osteopata",
+      "description": "Paulo Morais é personal trainer e osteopata em Lisboa, Portugal. Não é apenas um personal trainer, um osteopata ou um serviço de treino oncológico: reúne treino personalizado e privado, treino em grupo, treino online, osteopatia e exercício depois do cancro, presencialmente em Lisboa e online para Portugal, a União Europeia e países lusófonos, anglófonos e hispanófonos.",
+      "url": "https://pmorais.pt/sobre-mim",
+      "image": "https://pmorais.pt/images/sobre-mim/paulo-morais.png",
+      "sameAs": [
+        "https://www.instagram.com/pt.paulomorais"
+      ],
+      "worksFor": {
+        "@id": "https://pmorais.pt/#business"
+      },
+      "workLocation": {
+        "@type": "City",
+        "name": "Lisboa",
+        "containedInPlace": {
+          "@type": "Country",
+          "name": "Portugal"
+        }
+      },
+      "knowsLanguage": [
+        "pt",
+        "en"
+      ],
+      "knowsAbout": [
+        "Treino personalizado",
+        "Treino privado",
+        "Treino em grupo",
+        "Treino online",
+        "Osteopatia",
+        "Exercício oncológico",
+        "Exercício depois do cancro",
+        "Treino de força",
+        "Mobilidade",
+        "Postura"
+      ]
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://pmorais.pt/#website",
+      "url": "https://pmorais.pt/",
+      "name": "Paulo Morais — Your Own Workout",
+      "alternateName": "Paulo Morais",
+      "description": "Paulo Morais — Your Own Workout disponibiliza treino personalizado e privado, treino em pequenos grupos, treino online e osteopatia em Lisboa. O treino online acompanha pessoas em Portugal, na União Europeia e em países lusófonos, anglófonos e hispanófonos. O treino oncológico e depois do cancro integra esta oferta de exercício adaptado.",
+      "inLanguage": [
+        "pt-PT",
+        "en-GB"
+      ],
+      "publisher": {
+        "@id": "https://pmorais.pt/#business"
+      }
+    },
+    {
+      "@type": "Service",
+      "@id": "https://pmorais.pt/#service-personal-training",
+      "name": "Treino personalizado e privado",
+      "alternateName": [
+        "Personal trainer em Lisboa",
+        "Treino individual",
+        "Treino privado"
+      ],
+      "description": "Treino individual e progressivo em Lisboa, com personal trainer e um plano adaptado aos objetivos, condição física e rotina de cada pessoa.",
+      "serviceType": "Treino personalizado e privado",
+      "url": "https://pmorais.pt/treino-personalizado",
+      "provider": {
+        "@id": "https://pmorais.pt/#business"
+      },
+      "areaServed": [
+        "Lisbon, Portugal"
+      ]
+    },
+    {
+      "@type": "Service",
+      "@id": "https://pmorais.pt/#service-group-training",
+      "name": "Treino em pequenos grupos",
+      "alternateName": [
+        "Treino em grupo em Lisboa",
+        "Treino em pequenos grupos"
+      ],
+      "description": "Treino em pequenos grupos em Lisboa, com acompanhamento profissional e exercício adaptado aos participantes.",
+      "serviceType": "Treino em pequenos grupos",
+      "url": "https://pmorais.pt/treino-em-grupo",
+      "provider": {
+        "@id": "https://pmorais.pt/#business"
+      },
+      "areaServed": [
+        "Lisbon, Portugal"
+      ]
+    },
+    {
+      "@type": "Service",
+      "@id": "https://pmorais.pt/#service-online-training",
+      "name": "Treino personalizado online e virtual",
+      "alternateName": [
+        "Personal trainer online",
+        "Treino virtual",
+        "Treino à distância"
+      ],
+      "description": "Acompanhamento de treino à distância para pessoas em Portugal, na União Europeia e em países lusófonos, anglófonos e hispanófonos.",
+      "serviceType": "Treino personalizado online e virtual",
+      "url": "https://pmorais.pt/treino-online",
+      "provider": {
+        "@id": "https://pmorais.pt/#business"
+      },
+      "areaServed": [
+        "Portugal",
+        "European Union",
+        "Portuguese-speaking countries",
+        "English-speaking countries",
+        "Spanish-speaking countries"
+      ],
+      "availableChannel": {
+        "@type": "ServiceChannel",
+        "serviceUrl": "https://pmorais.pt/treino-online",
+        "servicePhone": {
+          "@type": "ContactPoint",
+          "telephone": "+351960471537"
+        },
+        "availableLanguage": [
+          "pt",
+          "en"
+        ]
+      }
+    },
+    {
+      "@type": "Service",
+      "@id": "https://pmorais.pt/#service-oncology-exercise",
+      "name": "Treino oncológico e depois do cancro",
+      "alternateName": [
+        "Exercício oncológico",
+        "Treino depois do cancro",
+        "Exercício físico na oncologia"
+      ],
+      "description": "Exercício adaptado para pessoas a viver com ou a recuperar de cancro, em coordenação com a equipa de saúde. Integra a oferta de treino de Paulo Morais.",
+      "serviceType": "Treino oncológico e depois do cancro",
+      "url": "https://pmorais.pt/treino-oncologico",
+      "provider": {
+        "@id": "https://pmorais.pt/#business"
+      },
+      "areaServed": [
+        "Lisbon, Portugal",
+        "Portugal",
+        "European Union",
+        "Portuguese-speaking countries",
+        "English-speaking countries",
+        "Spanish-speaking countries"
+      ],
+      "audience": {
+        "@type": "PeopleAudience",
+        "audienceType": "Pessoas a viver com cancro ou depois do tratamento do cancro"
+      },
+      "availableChannel": {
+        "@type": "ServiceChannel",
+        "serviceUrl": "https://pmorais.pt/treino-oncologico",
+        "servicePhone": {
+          "@type": "ContactPoint",
+          "telephone": "+351960471537"
+        },
+        "availableLanguage": [
+          "pt",
+          "en"
+        ]
+      }
+    },
+    {
+      "@type": "Service",
+      "@id": "https://pmorais.pt/#service-osteopathy",
+      "name": "Osteopatia em Lisboa",
+      "alternateName": [
+        "Osteopata em Lisboa",
+        "Sessões de osteopatia"
+      ],
+      "description": "Acompanhamento presencial com uma abordagem manual e integrativa orientada para mobilidade, postura, alívio da dor e bem-estar.",
+      "serviceType": "Osteopatia em Lisboa",
+      "url": "https://pmorais.pt/osteopatia",
+      "provider": {
+        "@id": "https://pmorais.pt/#business"
+      },
+      "areaServed": [
+        "Lisbon, Portugal"
+      ]
+    },
+    {
+      "@type": "CollectionPage",
+      "@id": "https://pmorais.pt/blog#webpage",
+      "url": "https://pmorais.pt/blog",
+      "name": "Blog de Treino, Osteopatia e Exercício Oncológico | Paulo Morais",
+      "description": "Artigos de Paulo Morais sobre treino personalizado, osteopatia, exercício em oncologia, recuperação, saúde e bem-estar.",
+      "inLanguage": "pt-PT",
+      "isPartOf": {
+        "@id": "https://pmorais.pt/#website"
+      },
+      "publisher": {
+        "@id": "https://pmorais.pt/#business"
+      },
+      "about": {
+        "@id": "https://pmorais.pt/#business"
+      },
+      "workTranslation": [
+        {
+          "@id": "https://pmorais.pt/en/blog#webpage"
+        }
+      ],
+      "breadcrumb": {
+        "@id": "https://pmorais.pt/blog#breadcrumb"
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": "https://pmorais.pt/blog#breadcrumb",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Início",
+          "item": "https://pmorais.pt/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Blog de Treino, Osteopatia e Exercício Oncológico",
+          "item": "https://pmorais.pt/blog"
         }
       ]
     }
+  ]
+}
     </script>
     <!-- /SEO Architecture -->
 </head>
@@ -428,7 +722,9 @@
                 <ul>
 <li><a href="/" data-i18n="nav.home">Início</a></li>
 <li><a href="/sobre-mim" data-i18n="nav.about">Sobre Mim</a></li>
+<li><a href="/treino-personalizado">Personal Trainer</a></li>
 <li><a href="/osteopatia">Osteopatia</a></li>
+<li><a href="/treino-oncologico" data-i18n="nav.onco">Treino Oncológico</a></li>
 <li><a href="/perfil" data-i18n="nav.profile">Perfil</a></li>
 <li><a href="/blog" class="active" data-i18n="nav.blog">Blog</a></li>
 <li><a href="/perfil?booking=true" class="btn-header-premium" data-i18n="nav.book">AGENDAR</a></li>
@@ -473,13 +769,13 @@
                 <h1 class="premium-title" style="font-size: clamp(2.5rem, 5vw, 4rem);">O Blog</h1>
                 <p style="opacity: 0.8; max-width: 600px; margin: 20px auto 0; line-height: 1.6;">Dicas, conhecimentos e reflexões sobre osteopatia, mobilidade e bem-estar, pensados para te ajudar no dia a dia.</p>
             </div>
-            
+
             <div class="filter-bar" style="border: none; padding: 0; background: transparent;">
                 <div class="search-input-wrapper" style="max-width: 600px; margin: 0 auto 40px auto;">
                     <i data-lucide="search"></i>
                     <input type="text" id="blog-search-input" placeholder="Pesquisar artigos, videos, casos...">
                 </div>
-                
+
                 <div id="admin-publish-btn-container" style="display: none; text-align: center; margin-top: -20px; margin-bottom: 40px;">
                     <a href="/admin-blog" style="background: var(--color-primary); color: #000; font-weight: 700; font-size: 0.95rem; border-radius: 30px; padding: 12px 28px; text-decoration: none; display: inline-flex; align-items: center; gap: 8px; transition: transform 0.2s; box-shadow: 0 4px 15px rgba(234, 179, 8, 0.3);" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
                         <i data-lucide="pen-tool" style="width: 18px; height: 18px;"></i> Publicar / Gerir Artigos
@@ -490,6 +786,113 @@
             <div id="public-blog-grid" class="blog-grid" style="padding-top: 0;">
                 <!-- Posts will be loaded here via JS -->
             </div>
+
+            <!-- sv:protecao:start -->
+            <div class="sv-band-wrap">
+                <section id="protecao" class="sv-section sv-watch">
+                    <div class="oncologia-glow-left"></div>
+                    <div class="oncologia-glow-right"></div>
+                    <div class="container-wide">
+                        <div class="oncologia-header sv-head">
+                            <span class="oncologia-eyebrow">Passo 3 · Proteger-te depois do cancro</span>
+                            <h2>O escudo depois do cancro<br>tem <span class="oncologia-highlight">4 peças</span></h2>
+                            <p>Depois do tratamento do cancro, as defesas podem demorar a recuperar. As vacinas contra a gripe, a COVID-19, a doença pneumocócica e o herpes zóster são das mais importantes. Marca as que já confirmaste com a tua equipa e vê o escudo a fechar.</p>
+                        </div>
+
+                        <div class="sv-shield-layout sv-watch" data-sv="shield" data-sv-piece="protecao">
+                            <svg class="sv-shield-svg" viewBox="0 0 200 240" role="img" aria-label="Escudo com quatro peças: gripe, COVID-19, pneumocócica e herpes zóster" focusable="false">
+                                <defs>
+                                    <clipPath id="sv-shield-clip"><path d="M100 10 L176 38 V112 C176 170 142 208 100 230 C58 208 24 170 24 112 V38 Z"/></clipPath>
+                                </defs>
+                                <path class="sv-shield-body" d="M100 10 L176 38 V112 C176 170 142 208 100 230 C58 208 24 170 24 112 V38 Z"/>
+                                <g clip-path="url(#sv-shield-clip)">
+                                        <rect class="sv-q" data-q="gripe" x="0" y="0" width="100" height="112"/>
+                                        <rect class="sv-q" data-q="covid" x="100" y="0" width="100" height="112"/>
+                                        <rect class="sv-q" data-q="pneumo" x="0" y="112" width="100" height="130"/>
+                                        <rect class="sv-q" data-q="zoster" x="100" y="112" width="100" height="130"/>
+                                        <rect class="sv-q-hit" data-q="gripe" x="0" y="0" width="100" height="112"/>
+                                        <rect class="sv-q-hit" data-q="covid" x="100" y="0" width="100" height="112"/>
+                                        <rect class="sv-q-hit" data-q="pneumo" x="0" y="112" width="100" height="130"/>
+                                        <rect class="sv-q-hit" data-q="zoster" x="100" y="112" width="100" height="130"/>
+                                </g>
+                                <path class="sv-shield-cross" d="M100 12V228M26 112H174"/>
+                                <g>
+                                    <use class="sv-q-ico" data-q="gripe" href="/images/sobrevivencia/sprite.svg#sv-i-thermometer" x="44" y="52" width="36" height="36"/>
+                                    <use class="sv-q-ico" data-q="covid" href="/images/sobrevivencia/sprite.svg#sv-i-virus" x="120" y="52" width="36" height="36"/>
+                                    <use class="sv-q-ico" data-q="pneumo" href="/images/sobrevivencia/sprite.svg#sv-i-lungs" x="44" y="142" width="36" height="36"/>
+                                    <use class="sv-q-ico" data-q="zoster" href="/images/sobrevivencia/sprite.svg#sv-i-flame" x="120" y="142" width="36" height="36"/>
+                                </g>
+                                <path class="sv-shield-outline" d="M100 10 L176 38 V112 C176 170 142 208 100 230 C58 208 24 170 24 112 V38 Z"/>
+                                <g class="sv-shield-check"><circle class="sv-shield-check-bg" cx="100" cy="112" r="17"/><use href="/images/sobrevivencia/sprite.svg#sv-i-check" x="88" y="100" width="24" height="24"/></g>
+                            </svg>
+
+                            <div class="sv-shield-ui">
+                                <p class="sv-vac-legend">Já confirmei com o meu médico:</p>
+                                <div class="sv-vacs" role="group" aria-label="Já confirmei com o meu médico:">
+                                    <button type="button" class="sv-vac" data-q="gripe" aria-controls="sv-p-gripe" aria-pressed="false">
+                                        <span class="sv-vac-ico"><svg class="sv-ico" aria-hidden="true" focusable="false"><use href="/images/sobrevivencia/sprite.svg#sv-i-thermometer"/></svg></span>
+                                        <span class="sv-vac-txt"><span class="sv-vac-name">Gripe</span><span class="sv-vac-state" data-off="Por confirmar" data-on="Confirmado ✓">Por confirmar</span></span>
+                                    </button>
+                                    <button type="button" class="sv-vac" data-q="covid" aria-controls="sv-p-covid" aria-pressed="false">
+                                        <span class="sv-vac-ico"><svg class="sv-ico" aria-hidden="true" focusable="false"><use href="/images/sobrevivencia/sprite.svg#sv-i-virus"/></svg></span>
+                                        <span class="sv-vac-txt"><span class="sv-vac-name">COVID-19</span><span class="sv-vac-state" data-off="Por confirmar" data-on="Confirmado ✓">Por confirmar</span></span>
+                                    </button>
+                                    <button type="button" class="sv-vac" data-q="pneumo" aria-controls="sv-p-pneumo" aria-pressed="false">
+                                        <span class="sv-vac-ico"><svg class="sv-ico" aria-hidden="true" focusable="false"><use href="/images/sobrevivencia/sprite.svg#sv-i-lungs"/></svg></span>
+                                        <span class="sv-vac-txt"><span class="sv-vac-name">Pneumocócica</span><span class="sv-vac-state" data-off="Por confirmar" data-on="Confirmado ✓">Por confirmar</span></span>
+                                    </button>
+                                    <button type="button" class="sv-vac" data-q="zoster" aria-controls="sv-p-zoster" aria-pressed="false">
+                                        <span class="sv-vac-ico"><svg class="sv-ico" aria-hidden="true" focusable="false"><use href="/images/sobrevivencia/sprite.svg#sv-i-flame"/></svg></span>
+                                        <span class="sv-vac-txt"><span class="sv-vac-name">Herpes zóster</span><span class="sv-vac-state" data-off="Por confirmar" data-on="Confirmado ✓">Por confirmar</span></span>
+                                    </button>
+                                </div>
+                                <div class="sv-panels" aria-live="polite">
+                                    <div class="sv-panel sv-panel--idle" id="sv-p-idle" data-idle>
+                                        <svg class="sv-ico" aria-hidden="true" focusable="false"><use href="/images/sobrevivencia/sprite.svg#sv-i-syringe"/></svg>
+                                        <p><strong>Toca numa vacina</strong>Vê porque importa e marca-a quando a tiveres confirmado com o teu médico.</p>
+                                    </div>
+                                    <div class="sv-panel" id="sv-p-gripe" role="region" aria-label="Gripe">
+                                        <div class="sv-panel-head"><span class="sv-panel-ico"><svg class="sv-ico" aria-hidden="true" focusable="false"><use href="/images/sobrevivencia/sprite.svg#sv-i-thermometer"/></svg></span><h3>Gripe</h3></div>
+                                        <p>Uma revisão Cochrane em adultos com cancro imunossuprimidos concluiu que a vacina da gripe é segura, e dados observacionais apontam para menor mortalidade e melhores resultados em infeções.</p>
+                                        <blockquote class="sv-ask"><small>Pergunta ao teu médico</small>«Quando devo fazer a vacina da gripe, e qual?»</blockquote>
+                                    </div>
+                                    <div class="sv-panel" id="sv-p-covid" role="region" aria-label="COVID-19">
+                                        <div class="sv-panel-head"><span class="sv-panel-ico"><svg class="sv-ico" aria-hidden="true" focusable="false"><use href="/images/sobrevivencia/sprite.svg#sv-i-virus"/></svg></span><h3>COVID-19</h3></div>
+                                        <p>A ASCO recomenda avaliar de forma sistemática o estado vacinal de quem teve cancro, incluindo a COVID-19, como parte do seguimento.</p>
+                                        <blockquote class="sv-ask"><small>Pergunta ao teu médico</small>«Que esquema contra a COVID-19 é o certo para mim?»</blockquote>
+                                    </div>
+                                    <div class="sv-panel" id="sv-p-pneumo" role="region" aria-label="Pneumocócica">
+                                        <div class="sv-panel-head"><span class="sv-panel-ico"><svg class="sv-ico" aria-hidden="true" focusable="false"><use href="/images/sobrevivencia/sprite.svg#sv-i-lungs"/></svg></span><h3>Pneumocócica</h3></div>
+                                        <p>A doença pneumocócica pode causar infeções graves, como pneumonia. Está entre as vacinas que a ASCO inclui na revisão após o cancro.</p>
+                                        <blockquote class="sv-ask"><small>Pergunta ao teu médico</small>«Estou em dia com a vacina pneumocócica?»</blockquote>
+                                    </div>
+                                    <div class="sv-panel" id="sv-p-zoster" role="region" aria-label="Herpes zóster">
+                                        <div class="sv-panel-head"><span class="sv-panel-ico"><svg class="sv-ico" aria-hidden="true" focusable="false"><use href="/images/sobrevivencia/sprite.svg#sv-i-flame"/></svg></span><h3>Herpes zóster</h3></div>
+                                        <p>O herpes zóster («cobreiro») é uma das infeções a ter em conta quando as defesas estão em baixo. A vacina também faz parte da revisão recomendada.</p>
+                                        <blockquote class="sv-ask"><small>Pergunta ao teu médico</small>«A vacina do zóster é adequada para mim, e quando?»</blockquote>
+                                    </div>
+                                </div>
+                                <p class="sv-shield-done" role="status"><strong>Escudo completo!</strong> Continua a rever o boletim vacinal com o teu médico; as defesas e as recomendações mudam com o tempo.</p>
+                                <p class="sv-checklist-title">Leva isto à consulta</p>
+                                <ul class="sv-checklist">
+                                    <li><label class="sv-check"><input type="checkbox"><span class="sv-box" aria-hidden="true"><svg class="sv-ico" aria-hidden="true" focusable="false"><use href="/images/sobrevivencia/sprite.svg#sv-i-check"/></svg></span><span>Verifica o boletim vacinal</span></label></li>
+                                    <li><label class="sv-check"><input type="checkbox"><span class="sv-box" aria-hidden="true"><svg class="sv-ico" aria-hidden="true" focusable="false"><use href="/images/sobrevivencia/sprite.svg#sv-i-check"/></svg></span><span>Anota as vacinas que faltam</span></label></li>
+                                    <li><label class="sv-check"><input type="checkbox"><span class="sv-box" aria-hidden="true"><svg class="sv-ico" aria-hidden="true" focusable="false"><use href="/images/sobrevivencia/sprite.svg#sv-i-check"/></svg></span><span>Dá preferência a vacinas inativadas (pergunta ao teu médico)</span></label></li>
+                                    <li><label class="sv-check"><input type="checkbox"><span class="sv-box" aria-hidden="true"><svg class="sv-ico" aria-hidden="true" focusable="false"><use href="/images/sobrevivencia/sprite.svg#sv-i-check"/></svg></span><span>Se tens ou tiveste imunossupressão há pouco tempo, fala primeiro com a equipa de oncologia</span></label></li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <p class="sv-note sv-note--center"><svg class="sv-ico" aria-hidden="true" focusable="false"><use href="/images/sobrevivencia/sprite.svg#sv-i-info"/></svg><span>Quem decide que vacinas fazer é o teu médico: o Paulo não receita nem aconselha vacinas. Informação geral baseada nas orientações da ASCO; não substitui a tua equipa de oncologia.</span></p>
+
+                        <div class="sv-piece-foot">
+                            <span class="sv-progress" data-sv-progress data-tpl="Descobriste {n} de 5 passos" data-done="Descobriste os 5 passos!"><span class="sv-pdots" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span><span class="sv-ptext" aria-live="polite">Descobriste 0 de 5 passos</span></span>
+                            <a class="sv-piece-link" href="/treino-oncologico">Guia do treino oncológico <svg class="sv-ico" aria-hidden="true" focusable="false"><use href="/images/sobrevivencia/sprite.svg#sv-i-arrow"/></svg></a>
+                        </div>
+                    </div>
+                </section>
+            </div>
+            <!-- sv:protecao:end -->
         </div>
     </main>
 
@@ -508,6 +911,7 @@
                     <li><a href="/sobre-mim" data-i18n="nav.about">Sobre Mim</a></li>
                     <li><a href="/osteopatia">Osteopatia</a></li>
                     <li><a href="/blog" data-i18n="nav.blog">Blog</a></li>
+                    <li><a href="/treino-oncologico">Treino Oncológico</a></li>
                 </ul>
             </div>
             <div class="footer-col">
@@ -522,9 +926,9 @@
                     <li><a href="/termos-e-condicoes">Termos e Condições</a></li>
                     <li>
                         <div class="footer-lang-switcher">
-                            <a href="/" class="active" title="Português">PT</a>
+                            <a href="/blog" class="active" title="Português">PT</a>
                             <span class="lang-divider">|</span>
-                            <a href="/en/" title="English">EN</a>
+                            <a href="/en/blog" title="English">EN</a>
                         </div>
                     </li>
                 </ul>
@@ -538,24 +942,25 @@
             </div>
         </div>
         <div class="footer-bar-elysium">
-            <div class="crafted-text"><a href="https://elysiumdr.eu" target="_blank" rel="noopener noreferrer">Desenvolvido por Elysium λ Development & Research.</a><br><span class="version-label">V1.6.1</span></div>
+            <div class="crafted-text"><a href="https://elysiumdr.eu" target="_blank" rel="noopener noreferrer">Desenvolvido por Elysium λ Development & Research.</a><br><span class="version-label">V1.6.2</span></div>
         </div>
     </footer>
 
     <!-- Scripts -->
     <script nonce="pmorais-2026" type="module">
-        import { loadBlogPosts } from './js/blog.js?v=1.6.1';
+        import { loadBlogPosts } from './js/blog.js?v=1.6.2';
         document.addEventListener('DOMContentLoaded', () => {
             loadBlogPosts('public-blog-grid');
         });
     </script>
-    <script nonce="pmorais-2026" src="js/script.js?v=1.6.1" defer></script>
-    <script nonce="pmorais-2026" src="js/webmcp.js?v=1.6.1" defer></script>
+    <script nonce="pmorais-2026" src="js/script.js?v=1.6.2" defer></script>
+    <script nonce="pmorais-2026" src="js/sobrevivencia.js?v=1.6.2" defer></script>
+    <script nonce="pmorais-2026" src="js/webmcp.js?v=1.6.2" defer></script>
     <script nonce="pmorais-2026">
         document.addEventListener('DOMContentLoaded', () => {
             if (window.lucide) window.lucide.createIcons();
         });
     </script>
-    <script nonce="pmorais-2026" src="js/cookie-consent.js?v=1.6.1" defer></script>
+    <script nonce="pmorais-2026" src="js/cookie-consent.js?v=1.6.2" defer></script>
 </body>
 </html>

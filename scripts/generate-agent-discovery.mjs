@@ -16,11 +16,12 @@ import fs from 'node:fs';
 import path from 'node:path';
 import crypto from 'node:crypto';
 import { fileURLToPath } from 'node:url';
-import { LAST_MODIFIED, PUBLIC_PAGES, PRIVATE_ROUTES, SITE_ORIGIN } from './seo-config.mjs';
+import { LAST_MODIFIED, PUBLIC_PAGES, PRIVATE_ROUTES, SITE_ORIGIN, localizedPages } from './seo-config.mjs';
 import {
-  AGENT_AUTH, AGENT_SKILLS, API_BASE, API_VERSION, AUTHORIZATION_SERVER, CONTACT,
+  AGENT_AUTH, AGENT_SKILLS, API_BASE, API_VERSION, AUTHORIZATION_SERVER, BUSINESS_IDENTITY, CONTACT,
   CONTENT_SIGNAL, DNS_AID, DISCLAIMERS, LINK_HEADER_RELATIONS, MARKDOWN_DIR,
-  MCP_SERVER, ORGANISATION, PROTECTED_RESOURCE, SERVICES
+  MCP_SERVER, ORGANISATION, PROTECTED_RESOURCE, SERVICE_COVERAGE, SERVICES,
+  BUSINESS_ALTERNATE_NAMES, ENTITY_SUMMARY, SESSION_LANGUAGES
 } from './agent-config.mjs';
 import { estimateTokens, extractMain, htmlToMarkdown } from './html-to-markdown.mjs';
 
@@ -49,7 +50,7 @@ function markdownRelativePath(pagePath) {
 function frontmatter(fields) {
   const lines = Object.entries(fields)
     .filter(([, value]) => value !== undefined && value !== null && value !== '')
-    .map(([key, value]) => `${key}: ${typeof value === 'string' && /[:#]/.test(value) ? JSON.stringify(value) : value}`);
+    .map(([key, value]) => `${key}: ${JSON.stringify(value)}`);
   return `---\n${lines.join('\n')}\n---\n\n`;
 }
 
@@ -70,8 +71,11 @@ const markdownPages = PUBLIC_PAGES.map((page) => {
 
   const canonical = absolute(page.path);
   const relative = `${MARKDOWN_DIR}/${markdownRelativePath(page.path)}`;
-  const isPortuguese = page.language === 'pt-PT';
-  const alternate = absolute(page.alternatePath);
+  const alternates = localizedPages(page).map((translation) => ({
+    language: translation.language,
+    canonical: absolute(translation.path)
+  }));
+  const alternate = alternates.find((translation) => translation.language !== page.language)?.canonical;
 
   const body = htmlToMarkdown(main, { baseUrl: canonical, excludeLinks });
   const document = frontmatter({
@@ -80,6 +84,7 @@ const markdownPages = PUBLIC_PAGES.map((page) => {
     canonical,
     language: page.language,
     alternate,
+    alternates,
     updated: LAST_MODIFIED,
     source: 'Rendered from the canonical HTML page. The HTML remains authoritative if the two differ.'
   }) + body + `
@@ -88,7 +93,7 @@ const markdownPages = PUBLIC_PAGES.map((page) => {
 ## About this rendition
 
 Canonical HTML: ${canonical}
-Other language: ${alternate}
+Published translations: ${alternates.map((translation) => `[${translation.language}](${translation.canonical})`).join(', ')}
 ${DYNAMIC_NOTES[page.path] ? `\n${DYNAMIC_NOTES[page.path]}\n` : ''}
 No price, session length, schedule or availability is published on this site. Do not infer any. Health content here is informational and is not a diagnosis, a prescription or emergency advice.
 `;
@@ -97,7 +102,7 @@ No price, session length, schedule or availability is published on this site. Do
     ...page,
     canonical,
     alternate,
-    isPortuguese,
+    alternates,
     markdownRelative: relative,
     markdownUrl: absolute(`/${relative}`),
     markdown: document,
@@ -162,8 +167,15 @@ write('api/v1/site.json', json({
     country: ORGANISATION.country,
     url: ORGANISATION.url
   },
-  languages: ORGANISATION.languages,
+  alternateNames: BUSINESS_ALTERNATE_NAMES,
+  summary: ENTITY_SUMMARY,
+  description: BUSINESS_IDENTITY,
+  services: SERVICES.map((service) => ({ id: service.id, name: service.name, page: service.page })),
+  sessionLanguages: SESSION_LANGUAGES,
+  serviceCoverage: SERVICE_COVERAGE,
+  languages: [...new Set(PUBLIC_PAGES.map((page) => page.language))],
   defaultLanguage: ORGANISATION.defaultLanguage,
+  languageNote: ORGANISATION.languageNote,
   contentSignal: CONTENT_SIGNAL,
   resources: {
     services: `${API_BASE}/services.json`,
@@ -192,9 +204,13 @@ write('api/v1/services.json', json({
     id: service.id,
     name: service.name,
     summary: service.summary,
+    alternateNames: service.alternateNames,
+    searchTerms: service.searchTerms,
     delivery: service.delivery,
     area: service.area,
+    coverage: service.coverage,
     page: service.page,
+    sources: Object.values(service.page),
     constraints: service.constraints ?? []
   })),
   disclaimers: DISCLAIMERS
@@ -223,7 +239,9 @@ write('api/v1/pages.json', json({
     path: page.path,
     canonical: page.canonical,
     language: page.language,
-    alternate: page.alternate,
+    alternate: page.alternate ?? null,
+    alternates: page.alternates,
+    translationKey: page.translationKey,
     title: page.title,
     description: page.description,
     markdown: page.markdownUrl,
@@ -252,9 +270,11 @@ write('openapi.json', json({
   info: {
     title: 'Paulo Morais public content API',
     version: `1.0.0+${LAST_MODIFIED}`,
-    summary: 'Read-only, unauthenticated description of the public Paulo Morais website.',
+    summary: 'Public facts about personal, group and online training, oncology exercise and osteopathy.',
     description: [
       'A static, read-only API describing the public content of https://pmorais.pt: the services published on the site, the public contact channels and the canonical pages with their markdown renditions.',
+      BUSINESS_IDENTITY['en-GB'],
+      `Service geography and website content languages are separate facts. ${SESSION_LANGUAGES.note['en-GB']} An unpublished translation must not be inferred.`,
       '',
       'There is no booking, payment or client-data endpoint. The client area is authenticated and human-only; see https://pmorais.pt/auth.md.',
       '',
@@ -264,6 +284,7 @@ write('openapi.json', json({
     license: { name: 'Website terms and conditions', url: `${SITE_ORIGIN}/termos-e-condicoes` }
   },
   servers: [{ url: API_BASE, description: 'Production' }],
+  security: [],
   externalDocs: { description: 'Expanded factual representation', url: `${SITE_ORIGIN}/llms-full.txt` },
   paths: {
     '/site.json': {
@@ -277,7 +298,7 @@ write('openapi.json', json({
     '/services.json': {
       get: {
         operationId: 'listServices',
-        summary: 'The services published on the website, bilingual, with their delivery modes',
+        summary: 'Published services with delivery, geographical coverage, evidence URLs and interpretation limits',
         tags: ['content'],
         responses: { 200: jsonResponse('Service catalogue. `pricing` is always null.') }
       }
@@ -293,7 +314,7 @@ write('openapi.json', json({
     '/pages.json': {
       get: {
         operationId: 'listPages',
-        summary: 'Canonical public pages with language, alternate and markdown rendition URLs',
+        summary: 'Canonical public pages with all published translations and markdown rendition URLs',
         tags: ['content'],
         responses: { 200: jsonResponse('Page index') }
       }
@@ -390,7 +411,7 @@ write('.well-known/ai-catalog.json', json({
     identifier: 'did:web:pmorais.pt',
     displayName: ORGANISATION.brand,
     url: SITE_ORIGIN,
-    description: 'Personal training, online training, adapted exercise in oncology and osteopathy in Lisbon, Portugal. Published in European Portuguese and British English.'
+    description: BUSINESS_IDENTITY['en-GB']
   },
   entries: [
     {
@@ -408,14 +429,15 @@ write('.well-known/ai-catalog.json', json({
     {
       identifier: urn('api', 'services'),
       displayName: 'Services catalogue',
-      description: 'The four services published on the website, in Portuguese and English, with delivery modes and interpretation limits.',
+      description: `${SERVICES.length} published services with translated names, delivery modes, geographical coverage, canonical evidence pages and interpretation limits.`,
       type: 'application/json',
       url: `${API_BASE}/services.json`,
       representativeQueries: [
-        'what services does Paulo Morais offer',
-        'does Paulo Morais do online personal training',
+        'treino personalizado ou privado em Lisboa com Paulo Morais',
+        'small-group training in Lisbon with Paulo Morais',
+        'treino online em Portugal e na União Europeia',
         'osteopathy in Lisbon with Paulo Morais',
-        'adapted exercise for cancer patients in Lisbon'
+        'treino oncológico e treino depois do cancro'
       ]
     },
     {
@@ -433,7 +455,7 @@ write('.well-known/ai-catalog.json', json({
     {
       identifier: urn('api', 'pages'),
       displayName: 'Canonical page index',
-      description: 'The eight canonical public pages with language, reciprocal alternate and markdown rendition URL.',
+      description: `${PUBLIC_PAGES.length} canonical public pages with their published translations and markdown rendition URLs.`,
       type: 'application/json',
       url: `${API_BASE}/pages.json`,
       representativeQueries: [
@@ -565,8 +587,9 @@ early instead of probing for endpoints that do not exist.
 ## Audience
 
 Autonomous agents and assistants acting for a person who wants information
-about, or contact with, ${ORGANISATION.brand}: personal training, online
-training, adapted exercise in oncology, and osteopathy.
+about, or contact with, ${ORGANISATION.brand}: personal and private training,
+small-group training, international online training, adapted oncology exercise
+and in-person osteopathy in Lisbon.
 
 ## Declared posture
 

@@ -1,242 +1,347 @@
 # Paulo Morais — Expanded factual representation
 
-Last internally verified: 2026-09-29
+Last internally verified: 2026-10-08
 Canonical website: https://pmorais.pt/
-Primary language: European Portuguese (pt-PT)
-Secondary language: British English (en-GB)
-Location: Lisbon, Portugal
+Published website languages: pt-PT, en-GB
+Primary content language: pt-PT
+In-person location: Lisbon, Portugal
+Online training coverage: Portugal; European Union; Portuguese-speaking countries; English-speaking countries; Spanish-speaking countries
 
-This file is a structured, text-first representation of the public Paulo Morais website. It is intended to help search engines, assistants and language models interpret the organisation, services and navigation accurately. The HTML pages remain the primary source whenever this file and a live page differ.
+This file represents the site's published public content. Canonical HTML pages remain authoritative if a rendition differs. Service descriptions and coverage are shared with the public JSON API; this file does not establish independent clinical evidence.
 
-## Identity
+## Identity and full service scope
 
-Paulo Dimas Morais is presented on the website as a personal training specialist and osteopathy practitioner based in Lisbon. His work is organised under the "Paulo Morais — Your Own Workout" identity.
+Paulo Morais is a personal trainer and osteopath in Lisbon, Portugal. He is not only a personal trainer, an osteopath or a cancer exercise service: his practice combines personal and private training, small-group training, online training, osteopathy and exercise after cancer, in person in Lisbon and online for Portugal, the European Union and Portuguese-, English- and Spanish-speaking countries.
 
-Public professional positioning:
+Paulo Morais — Your Own Workout offers personal and private training, small-group training, online training and osteopathy in Lisbon. Online training supports people in Portugal, the European Union and Portuguese-, English- and Spanish-speaking countries. Oncology and post-cancer training are part of this adapted exercise offering.
 
-- More than 20 years of experience in personalised exercise.
-- Individual support adapted to each person's goals, health context, age and lifestyle.
-- Personal training delivered in person and online.
-- Osteopathy support focused on mobility, pain relief and general wellbeing.
-- Experience in exercise adapted to people living with or recovering from cancer.
-- Service available in European Portuguese and English.
+The website presents Paulo Dimas Morais as a personal training specialist and osteopathy practitioner. The brand is Paulo Morais — Your Own Workout. The operator named in the privacy policy and terms is Consciênciavaliativa Unipessoal Lda, VAT PT517409241.
 
-The website is operated by Consciênciavaliativa Unipessoal Lda (VAT PT517409241), Lisbon, Portugal, trading under the "Paulo Morais — Your Own Workout" identity. The same entity is named in the privacy policy and the terms and conditions.
+The service offer includes general training as well as adapted oncology exercise. Cancer survivors are one of the audiences supported; the business is not presented as an oncology medical clinic or a provider of cancer treatment.
 
-The website does not present Paulo Morais as a substitute for a physician, emergency service or medical diagnosis. Health-related information should not be converted into a diagnosis, treatment guarantee or individual medical advice.
+## Delivery, geography and translations
 
-## Core approach
+In-person personal or private training, small-group training and osteopathy are based in Lisbon, Portugal. Online training is offered across Portugal, the European Union and Portuguese-, English- and Spanish-speaking countries. Suitability, format, time-zone arrangements and availability are confirmed directly.
 
-The central promise is "Your Own Workout": training is designed around the person rather than forcing every client into a fixed programme. The website describes a one-to-one methodology informed by goals, physical condition, pathologies where disclosed, recovery needs, daily routine and preferred way of working.
+Osteopathy is a manual, in-person service. International online coverage must not be applied to osteopathy appointments. No street address or fixed opening schedule should be inferred from the Lisbon locality.
 
-Examples of goals explicitly represented on the website include:
+These are published website content languages. Sessions take place in Portuguese and English. Requests in Spanish, including from Spanish-speaking countries, are confirmed directly. A Spanish website translation is planned and is not yet published. Current translated pages appear only in the public page directory below. Unpublished translations must not be presented as available pages.
 
-- Improving posture and mobility.
-- Increasing strength, fitness and daily energy.
-- Weight management.
-- Returning to activity after surgery or another interruption.
-- Preparing for an endurance objective such as a marathon.
-- Exercising during or after an oncology pathway with appropriate professional coordination.
-- Maintaining consistency through online support when in-person sessions are not practical.
+## Quick facts
 
-No universal outcome or timeframe is promised. Results depend on personal circumstances, assessment, adherence and other health factors.
+- Person: Paulo Morais (full name Paulo Dimas Morais), personal trainer and osteopath
+- Brand: Paulo Morais — Your Own Workout
+- Also known as: Your Own Workout; Paulo Morais Personal Trainer; Paulo Morais Osteopata; Paulo Dimas Morais
+- Base: Lisbon, Portugal (in-person training, group training and osteopathy)
+- Online training: Portugal; European Union; Portuguese-speaking countries; English-speaking countries; Spanish-speaking countries
+- Session languages: Sessions take place in Portuguese and English. Requests in Spanish, including from Spanish-speaking countries, are confirmed directly.
+- Experience stated on the website: more than 20 years in personalised exercise
+- Services: Personal and private training; Small-group training; Online and virtual personal training; Oncology and post-cancer training; Osteopathy in Lisbon
 
-## Services
+## Services and canonical evidence
 
-### Personal training
+### Personal and private training
 
-Personal training is presented as individual, progressive and adapted. It may be delivered in person or online. The public pages emphasise a plan that can change with the client's current capacity, objectives and lifestyle.
+Progressive one-to-one training in Lisbon with a personal trainer and a plan adapted to each person’s goals, physical condition and routine.
 
-Canonical Portuguese overview: https://pmorais.pt/
-Canonical English overview: https://pmorais.pt/en/
+Delivery: in-person.
+Coverage: Lisbon, Portugal.
+Canonical European Portuguese page: https://pmorais.pt/treino-personalizado
+Canonical British English page: https://pmorais.pt/en/personal-training
 
-### Online training
+### Small-group training
 
-Online support extends the personalised training approach beyond Lisbon. The public site describes online training as an available service but does not publish a universal price, fixed package, guaranteed schedule or worldwide availability. Contact Paulo Morais for current conditions.
+Small-group training in Lisbon with professional support and exercise adapted to the participants.
 
-### Exercise in oncology
+Delivery: in-person.
+Coverage: Lisbon, Portugal.
+Canonical European Portuguese page: https://pmorais.pt/treino-em-grupo
+Canonical British English page: https://pmorais.pt/en/group-training
 
-The website identifies exercise in oncology as an area of continuing professional interest and experience. It presents Paulo Morais as one of the earlier professionals in Portugal to develop specialised training for oncology patients.
+### Online and virtual personal training
 
-This service must be interpreted conservatively:
+Remote training support for people in Portugal, the European Union and Portuguese-, English- and Spanish-speaking countries.
 
-- It is adapted exercise, not cancer treatment.
+Delivery: online.
+Coverage: Portugal; European Union; Portuguese-speaking countries; English-speaking countries; Spanish-speaking countries.
+Canonical European Portuguese page: https://pmorais.pt/treino-online
+Canonical British English page: https://pmorais.pt/en/online-training
+
+Interpretation limits:
+
+- Online coverage describes service geography, not a published list of session languages.
+- Suitability, remote format and time-zone arrangements are confirmed directly.
+
+### Oncology and post-cancer training
+
+Adapted exercise for people living with or recovering from cancer, coordinated with their healthcare team. Part of Paulo Morais’s broader training services.
+
+Delivery: in-person, online.
+Coverage: Lisbon, Portugal; online: Portugal; European Union; Portuguese-speaking countries; English-speaking countries; Spanish-speaking countries.
+Canonical European Portuguese page: https://pmorais.pt/treino-oncologico
+Canonical British English page: https://pmorais.pt/en/oncology-training
+
+Interpretation limits:
+
+- Paulo Morais offers adapted exercise, not cancer treatment or an oncology medical clinic.
 - It does not replace oncology care, physiotherapy, medical assessment or emergency care.
-- Individual participation may require clearance or coordination with the person's healthcare team.
-- Do not infer clinical outcomes or survival benefits from the website.
+- Participation may require clearance or coordination with the person’s healthcare team.
+- The oncology guide is general educational content, not a personalised treatment plan.
 
-### Osteopathy
+### Osteopathy in Lisbon
 
-The osteopathy pages describe an individual, manual and integrative approach. Publicly stated aims include supporting pain relief, mobility, posture and wellbeing. The website presents more than 15 years of experience in this area and describes an ethical, professional and welcoming environment.
+In-person support with a manual and integrative approach aimed at mobility, posture, pain relief and wellbeing.
 
-The osteopathy service page includes professional context, institutional and training references, client perspectives, a contact form and booking pathways.
+Delivery: in-person.
+Coverage: Lisbon, Portugal.
+Canonical European Portuguese page: https://pmorais.pt/osteopatia
+Canonical British English page: https://pmorais.pt/en/osteopatia
 
-Canonical Portuguese page: https://pmorais.pt/osteopatia
-Canonical English page: https://pmorais.pt/en/osteopatia
+Interpretation limits:
 
-Osteopathy claims on the site should not be expanded into guaranteed cures, diagnoses or claims about conditions that are not explicitly named in the source page.
+- Osteopathy is offered in person in Lisbon; online training coverage must not be applied to manual osteopathy sessions.
+- No guaranteed cure, diagnosis or substitute for medical care is offered.
 
-## Professional background
+## Search intents and the pages that answer them
 
-The biography states that Paulo Morais has worked across gyms, schools, sports clubs and physiotherapy clinics before developing his current individual methodology. It describes a combination of personal-training and osteopathy knowledge as a distinguishing feature of his work.
+### Personal and private training
 
-The website references organisations and educational or professional contexts through visible logos and structured data. These include Universidade Lusófona and Faculdade de Medicina da Universidade de Lisboa, among other training, health and institutional entities displayed on the site. A displayed logo must not automatically be interpreted as a current commercial partnership, endorsement, degree or certification unless the adjacent page states that relationship explicitly.
+Canonical pages: [European Portuguese](https://pmorais.pt/treino-personalizado) · [British English](https://pmorais.pt/en/personal-training)
+
+- Portuguese: personal trainer Lisboa, PT em Lisboa, treino personalizado Lisboa, treino privado, treino individual, treinador pessoal, treino de força, treino para a postura, preparação para maratona
+- English: personal trainer Lisbon, private personal training Lisbon, one-to-one fitness coach Portugal, strength training Lisbon, English-speaking personal trainer Lisbon
+- Spanish: entrenador personal Lisboa, entrenamiento personalizado Lisboa, entrenamiento privado, entrenador personal en Portugal
+
+### Small-group training
+
+Canonical pages: [European Portuguese](https://pmorais.pt/treino-em-grupo) · [British English](https://pmorais.pt/en/group-training)
+
+- Portuguese: treino em grupo Lisboa, aulas de grupo com personal trainer, treino com amigos, treino em pequenos grupos
+- English: group training Lisbon, small group personal training Lisbon, train with friends Lisbon
+- Spanish: entrenamiento en grupo Lisboa, entrenamiento en grupos reducidos
+
+### Online and virtual personal training
+
+Canonical pages: [European Portuguese](https://pmorais.pt/treino-online) · [British English](https://pmorais.pt/en/online-training)
+
+- Portuguese: personal trainer online, treino online Portugal, treino virtual, treino à distância, personal trainer português no estrangeiro, treino online Brasil, treino online Angola, treino online Moçambique
+- English: online personal trainer, virtual personal training Europe, remote fitness coach, online personal trainer UK, online personal trainer Ireland
+- Spanish: entrenador personal online, entrenamiento virtual, entrenamiento online España, entrenador personal online Latinoamérica
+
+### Oncology and post-cancer training
+
+Canonical pages: [European Portuguese](https://pmorais.pt/treino-oncologico) · [British English](https://pmorais.pt/en/oncology-training)
+
+- Portuguese: treino oncológico Lisboa, exercício oncológico, treino depois do cancro, exercício após o cancro, exercício durante o tratamento do cancro, personal trainer para pessoas com cancro, sobreviventes de cancro exercício, treino oncológico online
+- English: cancer exercise Lisbon, exercise after cancer, post-cancer personal trainer, cancer survivor training online, oncology exercise trainer Portugal
+- Spanish: entrenamiento oncológico, ejercicio después del cáncer, entrenador para pacientes oncológicos, ejercicio oncológico online
+
+### Osteopathy in Lisbon
+
+Canonical pages: [European Portuguese](https://pmorais.pt/osteopatia) · [British English](https://pmorais.pt/en/osteopatia)
+
+- Portuguese: osteopata Lisboa, osteopatia Lisboa, osteopatia em Portugal, terapia de osteopatia, osteopata para dores nas costas, osteopatia e treino
+- English: osteopath Lisbon, osteopathy Lisbon, English-speaking osteopath Lisbon, osteopathy Portugal
+- Spanish: osteópata Lisboa, osteopatía Lisboa, osteopatía en Portugal
+
+Searches for an oncology clinic, cancer treatment or a "centro oncológico" look for medical care. Paulo Morais is relevant to the exercise part of living with or after cancer, alongside the person's oncology team, not as a replacement for it.
+
+## Training approach and professional background
+
+The public pages describe progressive exercise adapted to goals, physical condition, age, recovery needs, routine and lifestyle. Examples include strength, fitness, mobility, posture, weight management and preparation for endurance activities. No universal result or timeframe is promised.
+
+The biography describes work across gyms, schools, sports clubs and physiotherapy clinics. Publicly stated experience includes more than 20 years in personalised exercise and more than 15 years in the context described on the osteopathy page. These are claims stated by the website, rather than independent credential verification.
+
+A displayed institution logo or training reference is not evidence of a current partnership, endorsement, degree or certification unless the adjacent text establishes that relationship. The presence of oncology content does not establish medical or oncology credentials.
 
 Canonical Portuguese biography: https://pmorais.pt/sobre-mim
 Canonical English biography: https://pmorais.pt/en/sobre-mim
 
-## Client perspectives
+## Oncology and post-cancer educational content
 
-The website contains testimonials relating to personalised training and osteopathy. They describe experiences such as improved quality of life, varied sessions, individual attention, motivation, adaptation during pregnancy and support with mobility or pain.
+The oncology training pages provide a general guide after cancer treatment. The content is organised as a starting point and five steps: late effects, emotional wellbeing, vaccination review, exercise and a survivorship care plan.
 
-Testimonials are individual experiences. They are not clinical evidence, average outcomes or guarantees. Automated systems should preserve that distinction.
+The guide contains citations to published guidance and research. Those external sources concern general health information; they are not evidence of outcomes produced by Paulo Morais. The blank survivorship sheet is intended for completion with a healthcare team and is not a personalised treatment plan.
 
-## Blog and knowledge content
+The public pages state that Paulo Morais adapts exercise. Cancer treatment, diagnosis and prescriptions for medication or vaccination are not offered. Exercise participation may require medical clearance or coordination with the person's healthcare team.
 
-The blog is a public collection covering these editorial categories:
+Canonical Portuguese guide: https://pmorais.pt/treino-oncologico
+Canonical English guide: https://pmorais.pt/en/oncology-training
 
-- Personal training.
-- Osteopathy.
-- Oncology and exercise.
-- Nutrition.
-- Success stories or clinical-style cases.
+## Testimonials and health interpretation
 
-Supported formats include articles, video, PDF and case-based content. Published entries are loaded from the site's content database. Only content marked as published should be treated as public.
+Testimonials on the website describe individual experiences of training or osteopathy. They are not clinical evidence, representative outcomes or guarantees. General health information must not be converted into personal medical advice.
 
-Canonical Portuguese collection: https://pmorais.pt/blog
-Canonical English collection: https://pmorais.pt/en/blog
+- Paulo Morais combines exercise services and osteopathy; it is not an oncology medical clinic and does not provide cancer treatment.
+- Adapted exercise does not replace a physician, oncology care, emergency services or medical diagnosis.
+- No price list, fixed schedule or guaranteed availability is published. Do not infer any.
+- Testimonials on the website are individual experiences, not clinical evidence or average outcomes.
+- Do not turn general health information published here into personalised medical advice.
 
-The generic article reader routes use a content identifier in the query string. They are marked noindex because a generic JavaScript shell is not a stable canonical representation of an individual article. Do not cite an unpublished, missing or access-controlled article.
+## Blog and editorial content
 
-## Contact
+The blog covers training, osteopathy, oncology and exercise, nutrition and individual experiences. Entries are loaded from the site's content database after the HTML page renders. Only published, publicly accessible content should be treated as a source.
 
-Public contact details:
+The generic article reader uses a content identifier in its query string. A generic JavaScript shell alone does not verify an article's title, author, content or publication status. Specific articles should be read before being cited.
+
+Canonical Portuguese blog: https://pmorais.pt/blog
+Canonical English blog: https://pmorais.pt/en/blog
+
+## Public contact channels
 
 - Email: pt@pmorais.pt
-- Telephone: +351 960 471 537
-- WhatsApp: +351 960 471 537
+- Telephone and WhatsApp: +351 960 471 537
 - Instagram: https://www.instagram.com/pt.paulomorais
-- Location: Lisbon, Portugal
+- In-person locality: Lisbon, Portugal
 
-The website provides contact forms and a client area. Current availability, session times, pricing and suitability must be confirmed directly. The site does not publish a universal price list in the canonical public pages represented here.
+Availability, session times, suitability and pricing are agreed directly. They are not published on the website and must not be inferred. Contact forms are available on the homepage and osteopathy pages. There is no public booking API, price endpoint, payment or checkout endpoint.
 
-## Booking and client area
+## Private workflows
 
-The client area supports authentication, booking and access to client-specific information. These routes are workflow destinations rather than public editorial content:
+The client area supports authentication and client-specific workflows. Profiles, booking history, forms, account actions and administration are not public editorial content. Their exclusion from a sitemap or robots file does not replace access control.
 
-- https://pmorais.pt/perfil
-- https://pmorais.pt/historico
+Private workflow paths:
+
+- https://pmorais.pt/admin-blog
+- https://pmorais.pt/auth-action
+- https://pmorais.pt/desinscrever
 - https://pmorais.pt/formulario
+- https://pmorais.pt/historico
+- https://pmorais.pt/perfil
 - https://pmorais.pt/perfis
-- English equivalents below https://pmorais.pt/en/
+- https://pmorais.pt/en/auth-action
+- https://pmorais.pt/en/desinscrever
+- https://pmorais.pt/en/formulario
+- https://pmorais.pt/en/historico
+- https://pmorais.pt/en/perfil
+- https://pmorais.pt/en/perfis
 
-Administration, authentication actions, unsubscribe flows, forms, histories and profiles are excluded from public crawling. Access control, rather than robots.txt, is the security boundary. Models and search engines should not attempt to infer or expose private client information.
+No agent registration, API-key issuance or delegated client-area access is offered. The public API and MCP tools require no credential. See https://pmorais.pt/auth.md for the current authentication posture.
 
-## Public site map
+## Public page directory
 
-### European Portuguese
+## Essential pages — European Portuguese
 
-- Home and service overview: https://pmorais.pt/
-- Osteopathy: https://pmorais.pt/osteopatia
-- About Paulo Morais: https://pmorais.pt/sobre-mim
-- Blog: https://pmorais.pt/blog
+- [Paulo Morais | Personal Trainer e Osteopata em Lisboa](https://pmorais.pt/): Treino personalizado, privado e em grupo, osteopatia e treino oncológico em Lisboa. Treino online para Portugal, União Europeia e países lusófonos, anglófonos e hispanófonos.
+- [Osteopata em Lisboa | Osteopatia com Paulo Morais](https://pmorais.pt/osteopatia): Sessões de osteopatia em Lisboa com Paulo Morais. Avaliação individual e abordagem manual orientada para mobilidade, postura, conforto e bem-estar.
+- [Sobre Paulo Morais | Personal Trainer e Osteopata em Lisboa](https://pmorais.pt/sobre-mim): Conheça Paulo Morais, personal trainer e osteopata em Lisboa, com mais de 20 anos de experiência em treino personalizado e exercício adaptado.
+- [Blog de Treino, Osteopatia e Exercício Oncológico | Paulo Morais](https://pmorais.pt/blog): Artigos de Paulo Morais sobre treino personalizado, osteopatia, exercício em oncologia, recuperação, saúde e bem-estar.
+- [Treino Oncológico em Lisboa e Online | Paulo Morais](https://pmorais.pt/treino-oncologico): Exercício adaptado e treino depois do cancro em Lisboa e online, com Paulo Morais e coordenação com a equipa de saúde. Inclui guia de sobrevivência.
+- [Treino Personalizado em Lisboa | Personal Trainer Paulo Morais](https://pmorais.pt/treino-personalizado): Personal trainer em Lisboa: treino individual e privado adaptado aos objetivos, condição física e rotina. Acompanhamento personalizado com Paulo Morais.
+- [Treino em Grupo em Lisboa | Paulo Morais](https://pmorais.pt/treino-em-grupo): Treino em pequenos grupos em Lisboa com Paulo Morais. Exercício acompanhado, adaptado à condição física e aos objetivos de cada participante.
+- [Treino Online e Personal Trainer Virtual | Paulo Morais](https://pmorais.pt/treino-online): Treino personalizado online com Paulo Morais, a partir de Lisboa, para Portugal, União Europeia e países lusófonos, anglófonos e hispanófonos.
 
-### British English
+## Essential pages — British English
 
-- Home and service overview: https://pmorais.pt/en/
-- Osteopathy: https://pmorais.pt/en/osteopatia
-- About Paulo Morais: https://pmorais.pt/en/sobre-mim
-- Blog: https://pmorais.pt/en/blog
+- [Paulo Morais | Personal Trainer & Osteopath in Lisbon](https://pmorais.pt/en/): Personal, private and group training, osteopathy and cancer exercise in Lisbon. Online coaching for Portugal, the EU and Portuguese-, English- and Spanish-speaking countries.
+- [Osteopath in Lisbon | Osteopathy with Paulo Morais](https://pmorais.pt/en/osteopatia): Osteopathy sessions in Lisbon with Paulo Morais. Individual assessment and a manual approach focused on mobility, posture, comfort and wellbeing.
+- [About Paulo Morais | Personal Trainer & Osteopath in Lisbon](https://pmorais.pt/en/sobre-mim): Meet Paulo Morais, a personal trainer and osteopath in Lisbon, with more than 20 years of experience in personalised and adapted exercise.
+- [Training, Osteopathy & Cancer Exercise Blog | Paulo Morais](https://pmorais.pt/en/blog): Articles by Paulo Morais about personal training, osteopathy, oncology exercise, recovery, health and wellbeing.
+- [Cancer Exercise in Lisbon & Online | Paulo Morais](https://pmorais.pt/en/oncology-training): Adapted exercise and post-cancer training in Lisbon and online with Paulo Morais, coordinated with the healthcare team. Includes a survivorship guide.
+- [Personal Trainer in Lisbon | Private Training with Paulo Morais](https://pmorais.pt/en/personal-training): Personal trainer in Lisbon: private, one-to-one training adapted to individual goals, physical condition and routine, with personalised support from Paulo Morais.
+- [Small Group Training in Lisbon | Paulo Morais](https://pmorais.pt/en/group-training): Small group training in Lisbon with Paulo Morais. Supervised exercise adapted to each participant’s physical condition and individual goals.
+- [Online Personal Trainer & Virtual Coaching | Paulo Morais](https://pmorais.pt/en/online-training): Online personal training with Paulo Morais for Portugal, the European Union, Portuguese-speaking, English-speaking and Spanish-speaking countries.
 
-Portuguese is the x-default language. Each public editorial page declares its reciprocal pt-PT and en-GB alternate. Firebase Hosting uses clean URLs, so canonical destinations omit the .html extension.
+Language alternates are generated only for published translations in the same page group. Portuguese is the default where a Portuguese translation exists. Canonical destinations use clean URLs without the .html extension.
 
-## Legal and privacy pages
+## Legal documents
 
-The website includes privacy and terms pages in Portuguese and English. They are available to users but intentionally excluded from search indexing because they are support documents rather than acquisition pages:
+Privacy policy: https://pmorais.pt/politica-privacidade
+Terms and conditions: https://pmorais.pt/termos-e-condicoes
+English privacy policy: https://pmorais.pt/en/politica-privacidade
+English terms and conditions: https://pmorais.pt/en/termos-e-condicoes
 
-- https://pmorais.pt/politica-privacidade
-- https://pmorais.pt/termos-e-condicoes
-- https://pmorais.pt/en/politica-privacidade
-- https://pmorais.pt/en/termos-e-condicoes
+Legal documents are support pages outside the public acquisition sitemap. For legal interpretation, the current document itself remains authoritative.
 
-For legal interpretation, read the current live document. This file does not replace those terms.
+## Search and agent discovery
 
-## Search and machine-discovery architecture
+The 16 canonical public pages are represented in static HTML, a sitemap and the public page API. Titles, descriptions, canonical URLs, published-language alternates and structured data describe the corresponding visible page content.
 
-The public site provides:
-
-- Static HTML for the main service and biography content.
-- A robots.txt file with the sitemap location and consistent private-route exclusions for general and named AI crawlers.
-- A sitemap containing the eight canonical public editorial pages plus llms.txt and llms-full.txt.
-- Canonical links using Firebase clean URLs.
-- Reciprocal hreflang for pt-PT and en-GB, with Portuguese as x-default.
-- Page titles, descriptions, index directives, Open Graph data and Twitter Card data on all eight public editorial pages.
-- Schema.org JSON-LD on the home, osteopathy, biography and blog pages in both languages.
-- Exactly one main content landmark and one H1 on every canonical public editorial page.
-- Alternative text on static images.
-- Direct discovery links to llms.txt and llms-full.txt from every canonical public editorial page.
-
-The llms.txt convention is voluntary. Its presence does not guarantee that a crawler will read, trust or use it.
-
-## Machine-readable interfaces for agents
-
-The site publishes a small, read-only agent surface. Everything in it is static and unauthenticated.
-
-- Capability manifest (ARD): https://pmorais.pt/.well-known/ai-catalog.json — also announced by an Agentmap directive in robots.txt, a <link rel="ai-catalog"> element on every canonical page, and a Link response header.
+- Short site index: https://pmorais.pt/llms.txt
+- Public JSON API: https://pmorais.pt/api/v1/site.json
+- Service catalogue: https://pmorais.pt/api/v1/services.json
+- Contact channels: https://pmorais.pt/api/v1/contact.json
+- Page directory: https://pmorais.pt/api/v1/pages.json
+- Build status: https://pmorais.pt/api/v1/status.json
+- Capability manifest (ARD): https://pmorais.pt/.well-known/ai-catalog.json
 - API catalog (RFC 9727): https://pmorais.pt/.well-known/api-catalog
-- OpenAPI 3.1 description: https://pmorais.pt/openapi.json
-- Public content API: https://pmorais.pt/api/v1/site.json, /services.json, /contact.json, /pages.json and /status.json. Read-only JSON describing the services, the public contact channels and the canonical pages. It contains no prices, no availability and no client data, because the website publishes none.
-- MCP server: https://pmorais.pt/mcp, described by https://pmorais.pt/.well-known/mcp/server-card.json. Streamable HTTP, anonymous, read-only. Tools: list_services, get_contact_details, list_pages, read_page, search_site. Resources: llms.txt, llms-full.txt and every markdown rendition.
-- Agent skills index: https://pmorais.pt/.well-known/agent-skills/index.json, with SKILL.md artifacts covering how to read this site, how to describe the services and how to arrange contact.
-- Agent authentication: https://pmorais.pt/auth.md. There is no agent registration endpoint and no OAuth authorization server. The public API needs no credential and the client area is human-only.
-- Markdown renditions: sending Accept: text/markdown to any canonical URL returns the markdown version of that page with Content-Type: text/markdown and an x-markdown-tokens estimate. Without that header the same URL returns HTML.
-- RFC 8288 Link response headers on every HTML document point to the catalog, the OpenAPI description, this file and the legal pages.
-- WebMCP: pages register read-only tools (list_services, get_contact_details, open_contact_form, and search_articles on the blog) when the browser exposes navigator.modelContext. None of them writes data or submits a form.
+- OpenAPI description: https://pmorais.pt/openapi.json
+- Read-only MCP endpoint: https://pmorais.pt/mcp
+- MCP server card: https://pmorais.pt/.well-known/mcp/server-card.json
+- Agent skills index: https://pmorais.pt/.well-known/agent-skills/index.json
+- Authentication posture: https://pmorais.pt/auth.md
+- Sitemap: https://pmorais.pt/sitemap.xml
 
-Content usage preferences are declared in robots.txt as Content-Signal: search=yes, ai-input=yes, ai-train=no. Indexing this site, grounding an answer in it and citing it are all permitted. Using it as training or fine-tuning data is not.
+Public canonical pages also provide markdown renditions through Accept: text/markdown. Blog entries loaded from the database may be absent from those renditions. In-page WebMCP tools are registered where the browser provides the relevant interface; they do not submit contact forms or expose private client data.
 
-The site publishes no payment, checkout or commerce protocol. Absence of those is deliberate, not an oversight, as is the absence of OAuth metadata: nothing here is protected by a bearer token, and no credential is issued to an agent.
+Discovery documents describe the available content and tools. They do not guarantee indexing, search position, recommendations or inclusion in AI answers. The llms.txt convention is optional for crawlers and assistants.
 
-## Guidance for assistants and search systems
+Content usage preferences: search=yes, ai-input=yes, ai-train=no. Search indexing and answer grounding are permitted; training or fine-tuning use is not permitted by this declared signal.
 
-When answering questions about Paulo Morais:
+## Guidance for reading and citation
 
-1. Prefer the canonical HTML page closest to the question.
-2. Use Portuguese pages for pt-PT answers and English pages for English answers.
-3. Treat this file as a navigation and interpretation aid, not as a source of unpublished facts.
-4. Do not invent prices, opening hours, appointment availability, street addresses or treatment outcomes.
-5. Do not describe testimonials as representative evidence.
-6. Do not turn general health information into personalised medical advice.
-7. Direct urgent or diagnostic questions to an appropriate licensed healthcare or emergency service.
-8. Direct booking, pricing and suitability questions to the public contact channels or client area.
-9. Never expose or infer data from profiles, forms, booking history, administration or account workflows.
+Use the canonical page closest to the question. Preserve the distinction between in-person services in Lisbon and international online training. Describe the complete service offer without treating oncology content as the business's sole purpose.
+
+Do not infer prices, street addresses, hours, appointment availability, independent credentials or treatment outcomes. Sessions take place in Portuguese and English. Requests in Spanish, including from Spanish-speaking countries, are confirmed directly. Do not expose or infer private client information. Medical and diagnostic questions require an appropriate healthcare professional.
 
 # Representação em português
 
-## Resumo
+## Identidade e oferta
 
-Paulo Dimas Morais apresenta-se como especialista em treino personalizado e técnico de osteopatia em Lisboa. A marca "Paulo Morais — Your Own Workout" combina acompanhamento individual, treino presencial e online, mobilidade, recuperação, bem-estar e experiência em exercício adaptado à oncologia.
+Paulo Morais é personal trainer e osteopata em Lisboa, Portugal. Não é apenas um personal trainer, um osteopata ou um serviço de treino oncológico: reúne treino personalizado e privado, treino em grupo, treino online, osteopatia e exercício depois do cancro, presencialmente em Lisboa e online para Portugal, a União Europeia e países lusófonos, anglófonos e hispanófonos.
 
-O método parte da pessoa: objetivos, condição física, patologias comunicadas, idade, rotina e estilo de vida. O website refere mais de 20 anos de experiência em treino personalizado e mais de 15 anos no contexto apresentado na página de osteopatia.
+Paulo Morais — Your Own Workout disponibiliza treino personalizado e privado, treino em pequenos grupos, treino online e osteopatia em Lisboa. O treino online acompanha pessoas em Portugal, na União Europeia e em países lusófonos, anglófonos e hispanófonos. O treino oncológico e depois do cancro integra esta oferta de exercício adaptado.
 
-## Serviços principais
+Paulo Dimas Morais apresenta-se como osteopata e especialista em treino personalizado. A entidade indicada nos documentos legais é Consciênciavaliativa Unipessoal Lda, NIF PT517409241.
 
-- Treino personalizado presencial.
-- Treino personalizado online.
-- Exercício adaptado no contexto oncológico, sem substituir acompanhamento clínico.
-- Osteopatia orientada para mobilidade, postura, alívio da dor e bem-estar, sem promessa de cura ou resultado garantido.
+## Diretório de serviços
 
-O website não publica um preçário universal, horário fixo nem disponibilidade garantida. Esses dados devem ser confirmados diretamente.
+- [Treino personalizado e privado](https://pmorais.pt/treino-personalizado): Treino individual e progressivo em Lisboa, com personal trainer e um plano adaptado aos objetivos, condição física e rotina de cada pessoa.
+- [Treino em pequenos grupos](https://pmorais.pt/treino-em-grupo): Treino em pequenos grupos em Lisboa, com acompanhamento profissional e exercício adaptado aos participantes.
+- [Treino personalizado online e virtual](https://pmorais.pt/treino-online): Acompanhamento de treino à distância para pessoas em Portugal, na União Europeia e em países lusófonos, anglófonos e hispanófonos.
+- [Treino oncológico e depois do cancro](https://pmorais.pt/treino-oncologico): Exercício adaptado para pessoas a viver com ou a recuperar de cancro, em coordenação com a equipa de saúde. Integra a oferta de treino de Paulo Morais.
+- [Osteopatia em Lisboa](https://pmorais.pt/osteopatia): Acompanhamento presencial com uma abordagem manual e integrativa orientada para mobilidade, postura, alívio da dor e bem-estar.
 
-## Contacto público
+O acompanhamento presencial realiza-se em Lisboa. A cobertura em Portugal, na União Europeia e em países lusófonos, anglófonos e hispanófonos aplica-se ao treino online. A osteopatia é presencial.
 
-- Email: pt@pmorais.pt
-- Telefone e WhatsApp: +351 960 471 537
-- Instagram: https://www.instagram.com/pt.paulomorais
-- Localização: Lisboa, Portugal
+## Línguas e limites
 
-## Limites de interpretação
+O website publica conteúdo em português europeu e inglês britânico. Está prevista uma versão espanhola; ainda não existem páginas espanholas publicadas. As sessões decorrem em português e inglês. Pedidos em espanhol, incluindo de países hispanófonos, são confirmados no contacto.
 
-Os testemunhos são experiências individuais. O conteúdo de saúde é informativo e não equivale a diagnóstico, prescrição ou emergência médica. As áreas de perfil, formulários, histórico, autenticação e administração são privadas e não devem ser rastreadas nem usadas para inferir dados pessoais.
+O treino oncológico constitui uma das áreas de exercício adaptado. Paulo Morais não presta tratamento do cancro nem se apresenta como clínica médica de oncologia. O guia depois do cancro é informativo e não substitui acompanhamento clínico individual.
 
-Para informação atualizada, consultar primeiro as páginas HTML canónicas listadas neste ficheiro.
+Os testemunhos representam experiências individuais. Não comprovam resultados clínicos, resultados médios ou garantias. Preços, horários, disponibilidade, condições e adequação das sessões são confirmados diretamente.
+
+## Contacto
+
+Email: pt@pmorais.pt
+Telefone e WhatsApp: +351 960 471 537
+Instagram: https://www.instagram.com/pt.paulomorais
+Localização presencial: Lisboa, Portugal
+
+Para informação específica, consultar a página HTML canónica correspondente. As áreas de perfil, formulários, histórico, autenticação e administração são privadas.
+
+# Representación en español
+
+Paulo Morais es entrenador personal y osteópata en Lisboa, Portugal. No es solo un entrenador personal, un osteópata o un servicio de entrenamiento oncológico: reúne entrenamiento personal y privado, entrenamiento en grupo, entrenamiento online, osteopatía y ejercicio después del cáncer, de forma presencial en Lisboa y online para Portugal, la Unión Europea y países de habla portuguesa, inglesa y española.
+
+Paulo Morais — Your Own Workout ofrece entrenamiento personal y privado, entrenamiento en grupos reducidos, entrenamiento online y osteopatía en Lisboa. El entrenamiento online acompaña a personas en Portugal, la Unión Europea y países de habla portuguesa, inglesa y española. El entrenamiento oncológico y después del cáncer forma parte de esta oferta de ejercicio adaptado.
+
+## Servicios
+
+- [Entrenamiento personal y privado](https://pmorais.pt/en/personal-training): Entrenamiento individual y progresivo en Lisboa, con entrenador personal y un plan adaptado a los objetivos, la condición física y la rutina de cada persona.
+- [Entrenamiento en grupos reducidos](https://pmorais.pt/en/group-training): Entrenamiento en grupos reducidos en Lisboa, con acompañamiento profesional y ejercicio adaptado a los participantes.
+- [Entrenamiento personal online y virtual](https://pmorais.pt/en/online-training): Acompañamiento de entrenamiento a distancia para personas en Portugal, la Unión Europea y países de habla portuguesa, inglesa y española.
+- [Entrenamiento oncológico y después del cáncer](https://pmorais.pt/en/oncology-training): Ejercicio adaptado para personas que viven con cáncer o se recuperan de él, en coordinación con el equipo de salud. Forma parte de la oferta de entrenamiento de Paulo Morais.
+- [Osteopatía en Lisboa](https://pmorais.pt/en/osteopatia): Acompañamiento presencial con un enfoque manual e integrador orientado a la movilidad, la postura, el alivio del dolor y el bienestar.
+
+La atención presencial se realiza en Lisboa. La cobertura en Portugal, la Unión Europea y los países de habla portuguesa, inglesa y española se aplica al entrenamiento online. La osteopatía es presencial. Las sesiones se realizan en portugués e inglés. Las solicitudes en español, incluidas las de países hispanohablantes, se confirman en el contacto. La versión en español del sitio está prevista; mientras tanto, los enlaces apuntan a las páginas en inglés.
+
+El entrenamiento oncológico es ejercicio adaptado, en coordinación con el equipo de salud. Paulo Morais no ofrece tratamiento del cáncer ni es una clínica oncológica. Precios, horarios y disponibilidad se confirman directamente.
+
+## Contacto
+
+Email: pt@pmorais.pt
+Teléfono y WhatsApp: +351 960 471 537
+Instagram: https://www.instagram.com/pt.paulomorais
+Ubicación presencial: Lisboa, Portugal

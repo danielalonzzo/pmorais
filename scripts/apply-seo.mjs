@@ -1,7 +1,8 @@
 import fs from 'node:fs';
 import path from 'node:path';
-import { NON_PUBLIC_DESCRIPTIONS, PUBLIC_PAGES, SITE_ORIGIN } from './seo-config.mjs';
+import { LOCALES, NON_PUBLIC_DESCRIPTIONS, PUBLIC_PAGES, SITE_ORIGIN, localizedPages, pageAlternates } from './seo-config.mjs';
 import { MARKDOWN_DIR } from './agent-config.mjs';
+import { structuredData } from './structured-data.mjs';
 
 const imageUrl = `${SITE_ORIGIN}/images/logo/paulo_morais-08.png`;
 
@@ -9,42 +10,27 @@ function escapeHtml(value) {
   return value.replaceAll('&', '&amp;').replaceAll('"', '&quot;').replaceAll('&amp;amp;', '&amp;');
 }
 
-function pageAlternates(page) {
-  const portuguesePath = page.language === 'pt-PT' ? page.path : page.alternatePath;
-  const englishPath = page.language === 'en-GB' ? page.path : page.alternatePath;
-  return { portuguesePath, englishPath };
+function plainText(fragment) {
+  return fragment.replace(/<\/(?:p|li|h\d)>/g, ' ').replace(/<[^>]+>/g, '')
+    .replaceAll('&nbsp;', ' ').replaceAll('&quot;', '"').replaceAll('&#39;', "'").replaceAll('&amp;', '&')
+    .replace(/\s+/g, ' ').trim();
 }
 
-function blogSchema(page) {
-  if (!page.file.endsWith('blog.html')) return '';
-  const isPortuguese = page.language === 'pt-PT';
-  const home = isPortuguese ? '/' : '/en/';
-  const schema = {
-    '@context': 'https://schema.org',
-    '@graph': [
-      {
-        '@type': 'CollectionPage',
-        '@id': `${new URL(page.path, SITE_ORIGIN).href}#collection`,
-        url: new URL(page.path, SITE_ORIGIN).href,
-        name: isPortuguese ? 'Blog de Paulo Morais' : 'Paulo Morais Blog',
-        description: page.description,
-        inLanguage: page.language,
-        about: isPortuguese
-          ? ['Treino personalizado', 'Osteopatia', 'Exercício oncológico', 'Saúde e bem-estar']
-          : ['Personal training', 'Osteopathy', 'Oncology exercise', 'Health and wellbeing'],
-        isPartOf: { '@id': `${SITE_ORIGIN}/#website` },
-        publisher: { '@id': `${SITE_ORIGIN}/#business` }
-      },
-      {
-        '@type': 'BreadcrumbList',
-        itemListElement: [
-          { '@type': 'ListItem', position: 1, name: isPortuguese ? 'Início' : 'Home', item: new URL(home, SITE_ORIGIN).href },
-          { '@type': 'ListItem', position: 2, name: 'Blog', item: new URL(page.path, SITE_ORIGIN).href }
-        ]
-      }
-    ]
-  };
-  const json = JSON.stringify(schema, null, 2).split('\n').map((line) => `    ${line}`).join('\n');
+// Visible FAQ blocks (`.service-faq` or `.pm-faq`, one <article> per
+// question) become FAQPage markup, so structured answers cannot drift from
+// the text a visitor reads on the page.
+function visibleFaq(html) {
+  const faq = [];
+  for (const [, block] of html.matchAll(/<div class="(?:service-faq|pm-faq)\b[^"]*">([\s\S]*?)<\/div>/g)) {
+    for (const [, question, answer] of block.matchAll(/<article>\s*<h3>([\s\S]*?)<\/h3>([\s\S]*?)<\/article>/g)) {
+      faq.push({ question: plainText(question), answer: plainText(answer) });
+    }
+  }
+  return faq;
+}
+
+function schemaBlock(page, html) {
+  const json = JSON.stringify(structuredData(page, { faq: visibleFaq(html) }), null, 2).replaceAll('<', '\\u003c');
   return `
     <script nonce="pmorais-2026" type="application/ld+json">
 ${json}
@@ -56,20 +42,20 @@ function markdownRelative(pagePath) {
   return trimmed === '' || trimmed.endsWith('/') ? `${trimmed}index.md` : `${trimmed}.md`;
 }
 
-function seoBlock(page) {
+function seoBlock(page, html) {
   const canonical = new URL(page.path, SITE_ORIGIN).href;
-  const { portuguesePath, englishPath } = pageAlternates(page);
-  const alternateLocale = page.language === 'pt-PT' ? 'en_GB' : 'pt_PT';
-  const locale = page.language.replace('-', '_');
+  const alternates = pageAlternates(page).map((entry) =>
+    `    <link rel="alternate" hreflang="${entry.language}" href="${new URL(entry.path, SITE_ORIGIN).href}">`).join('\n');
+  const alternateLocales = localizedPages(page).filter((entry) => entry.language !== page.language).map((entry) =>
+    `    <meta property="og:locale:alternate" content="${LOCALES[entry.language]?.ogLocale ?? entry.language.replace('-', '_')}">`).join('\n');
+  const locale = LOCALES[page.language]?.ogLocale ?? page.language.replace('-', '_');
   const markdownUrl = `${SITE_ORIGIN}/${MARKDOWN_DIR}/${markdownRelative(page.path)}`;
   return `    <!-- SEO Architecture: generated from scripts/seo-config.mjs -->
     <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
     <meta name="googlebot" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
     <meta name="author" content="Paulo Morais">
     <link rel="canonical" href="${canonical}">
-    <link rel="alternate" hreflang="pt-PT" href="${new URL(portuguesePath, SITE_ORIGIN).href}">
-    <link rel="alternate" hreflang="en-GB" href="${new URL(englishPath, SITE_ORIGIN).href}">
-    <link rel="alternate" hreflang="x-default" href="${new URL(portuguesePath, SITE_ORIGIN).href}">
+${alternates}
     <link rel="alternate" type="text/plain" href="${SITE_ORIGIN}/llms.txt" title="LLM summary">
     <link rel="alternate" type="text/plain" href="${SITE_ORIGIN}/llms-full.txt" title="Expanded LLM content">
     <link rel="alternate" type="text/markdown" href="${markdownUrl}" title="Markdown rendition">
@@ -79,7 +65,7 @@ function seoBlock(page) {
     <meta property="og:site_name" content="Paulo Morais">
     <meta property="og:url" content="${canonical}">
     <meta property="og:locale" content="${locale}">
-    <meta property="og:locale:alternate" content="${alternateLocale}">
+${alternateLocales}
     <meta property="og:title" content="${escapeHtml(page.title)}">
     <meta property="og:description" content="${escapeHtml(page.description)}">
     <meta property="og:image" content="${imageUrl}">
@@ -88,8 +74,28 @@ function seoBlock(page) {
     <meta name="twitter:title" content="${escapeHtml(page.title)}">
     <meta name="twitter:description" content="${escapeHtml(page.description)}">
     <meta name="twitter:image" content="${imageUrl}">
-    <meta name="twitter:image:alt" content="Paulo Morais — Your Own Workout">${blogSchema(page)}
+    <meta name="twitter:image:alt" content="Paulo Morais — Your Own Workout">${schemaBlock(page, html)}
     <!-- /SEO Architecture -->`;
+}
+
+const LANGUAGE_LINKS = {
+  'pt-PT': { code: 'PT', name: 'Português' },
+  'en-GB': { code: 'EN', name: 'English' },
+  'es': { code: 'ES', name: 'Español' }
+};
+
+// The footer switcher links each page to its own published translations, so a
+// Spanish page appears there as soon as it is registered in seo-config.mjs.
+function setLanguageSwitcher(html, page) {
+  const order = Object.keys(LOCALES);
+  const translations = localizedPages(page).sort((a, b) => order.indexOf(a.language) - order.indexOf(b.language));
+  return html.replace(/(<div class="footer-lang-switcher">\n)([ \t]*)[\s\S]*?(\n[ \t]*<\/div>)/, (match, open, indent, close) => {
+    const links = translations.map((entry) => {
+      const label = LANGUAGE_LINKS[entry.language] ?? { code: entry.language.toUpperCase(), name: entry.language };
+      return `<a href="${entry.path}"${entry.path === page.path ? ' class="active"' : ''} title="${label.name}">${label.code}</a>`;
+    });
+    return `${open}${indent}${links.join(`\n${indent}<span class="lang-divider">|</span>\n${indent}`)}${close}`;
+  });
 }
 
 function setDescription(html, description) {
@@ -113,8 +119,12 @@ for (const page of PUBLIC_PAGES) {
   html = html.replace(/<html\s+lang=["'][^"']+["']>/i, `<html lang="${page.language}">`);
   html = html.replace(/<title>[\s\S]*?<\/title>/i, `<title>${escapeHtml(page.title)}</title>`);
   html = setDescription(html, page.description);
+  html = setLanguageSwitcher(html, page);
 
-  const generated = seoBlock(page);
+  // Replace legacy per-template graphs with the shared provider/service graph.
+  // Metadata and visible page content now describe the same service catalogue.
+  html = html.replace(/<script\b[^>]*type=["']application\/ld\+json["'][^>]*>[\s\S]*?<\/script>/gi, '');
+  const generated = seoBlock(page, html);
   const generatedRegex = /    <!-- SEO Architecture:[\s\S]*?    <!-- \/SEO Architecture -->/;
   const legacyRegex = /    <!-- SEO Meta Tags -->[\s\S]*?(?=    <!-- (?:PWA Meta Tags|Schema\.org JSON-LD))/;
   if (generatedRegex.test(html)) {
@@ -142,7 +152,7 @@ for (const page of PUBLIC_PAGES) {
 
 // The static CSP permits this known GTM bootstrap through the same nonce used
 // by the site's other trusted inline scripts.
-for (const directory of ['.', 'en']) {
+for (const directory of ['.', 'en', 'es'].filter((entry) => fs.existsSync(entry))) {
   for (const name of fs.readdirSync(directory).filter((entry) => entry.endsWith('.html') && !entry.startsWith('google'))) {
     const file = path.join(directory, name);
     let html = fs.readFileSync(file, 'utf8');
@@ -167,9 +177,11 @@ const cleanUrlReplacements = new Map([
   ['/osteopatia.html', '/osteopatia'],
   ['/sobre-mim.html', '/sobre-mim'],
   ['/blog.html', '/blog'],
+  ['/treino-oncologico.html', '/treino-oncologico'],
   ['/en/osteopatia.html', '/en/osteopatia'],
   ['/en/sobre-mim.html', '/en/sobre-mim'],
-  ['/en/blog.html', '/en/blog']
+  ['/en/blog.html', '/en/blog'],
+  ['/en/oncology-training.html', '/en/oncology-training']
 ]);
 for (const page of PUBLIC_PAGES) {
   let html = fs.readFileSync(page.file, 'utf8');

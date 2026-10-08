@@ -20,17 +20,17 @@
         --color-brand-primary: #ffffff;
         --color-brand-secondary: var(--color-primary);
         --color-brand-tertiary: #0A6FE8;
-    
+
         /* Typography */
         --font-heading: 'Patron', sans-serif;
         --font-body: 'Patron', sans-serif;
         /* Clean, modern sans-serif */
-    
+
         /* Spacing */
         --container-width: 1200px;
         --section-padding: clamp(60px, 10vw, 100px) 20px;
         /* Fluid section padding */
-    
+
         /* Transitions */
         --transition-smooth: opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1), transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     }
@@ -80,7 +80,7 @@
         height: 100%;
         z-index: 2;
         pointer-events: none;
-    
+
         /* Mask the shimmer to the logo shape */
         -webkit-mask-image: url('../images/logo/logo_bw_loading.png');
         mask-image: url('../images/logo/logo_bw_loading.png');
@@ -90,7 +90,7 @@
         mask-repeat: no-repeat;
         -webkit-mask-position: center;
         mask-position: center;
-    
+
         /* The Moving Light Gradient */
         background: linear-gradient(135deg,
                 rgba(255, 255, 255, 0) 30%,
@@ -105,7 +105,7 @@
     <meta name="robots" content="noindex, follow">
     <title>Article - Paulo Morais</title>
     <meta name="description" content="Article reader for Paulo Morais content about training, osteopathy, health and wellbeing.">
-    
+
     <!-- OpenGraph Tags that will be overwritten by JS (for bots that execute JS) -->
     <meta property="og:title" content="Article - Paulo Morais">
     <meta property="og:description" content="Osteopathy and wellness article by Paulo Morais">
@@ -113,7 +113,7 @@
 
     <!-- Preloads -->
     <link rel="preload" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700;800&family=Poppins:wght@300;400;500;600;700&display=swap" as="style">
-    <link rel="preload" href="../css/style.css?v=1.6.1" as="style">
+    <link rel="preload" href="../css/style.css?v=1.6.2" as="style">
 
     <link rel="shortcut icon" type="image/png" href="../images/logo/logo_ios_android.png">
     <link rel="icon" type="image/png" href="../images/logo/logo_ios_android.png">
@@ -138,8 +138,8 @@
     <script nonce="pmorais-2026" src="https://unpkg.com/lucide@0.460.0/dist/umd/lucide.min.js" integrity="sha384-ieG+IKD0d/ZPXyCBTMVAbqsQdns8QGJR/e26WMw7M4fkaI/rHcS/YIoi+ah9WGge" crossorigin="anonymous" defer></script>
 
     <!-- Custom Style -->
-    <link rel="stylesheet" href="../css/style.css?v=1.6.1">
-    
+    <link rel="stylesheet" href="../css/style.css?v=1.6.2">
+
     <style nonce="pmorais-2026">        /* Article Reading Redesign */
         .article-container {
             max-width: 720px;
@@ -236,7 +236,7 @@
                 column-gap: 40px;
             }
         }
-        
+
         /* Overrides for Quill viewer inside dark mode */
         .ql-editor {
             padding: 0;
@@ -248,7 +248,7 @@
             color: var(--color-text) !important;
             font-family: var(--font-body) !important;
         }
-        
+
         .ql-editor p {
             margin-bottom: 2.2em !important; /* Increased space between paragraphs */
             font-size: 1.15rem !important;
@@ -279,7 +279,7 @@
             font-weight: 800;
             color: var(--color-primary);
         }
-        
+
         .ql-editor h1, .ql-editor h2, .ql-editor h3, .ql-editor h4, .ql-editor h5, .ql-editor h6 {
             color: var(--color-text) !important;
             margin-top: 2em !important;
@@ -289,7 +289,7 @@
         }
         .ql-editor h2 { font-size: 1.8rem !important; }
         .ql-editor h3 { font-size: 1.4rem !important; }
-        
+
         .ql-editor a, .ql-editor a * {
             color: var(--color-primary) !important;
             text-decoration: none !important;
@@ -299,14 +299,14 @@
         .ql-editor a:hover {
             border-bottom-color: var(--color-primary);
         }
-        
+
         .ql-editor img {
             max-width: 100% !important;
             border-radius: 12px !important;
             margin: 30px 0 !important;
             box-shadow: 0 10px 30px rgba(0,0,0,0.3);
         }
-        
+
         .ql-editor blockquote {
             border-left: 4px solid var(--color-primary) !important;
             background: rgba(255,255,255,0.03) !important;
@@ -319,9 +319,9 @@
             margin-bottom: 0 !important;
         }
     </style>
-    
-    <script nonce="pmorais-2026" src="../js/lang.js?v=1.6.1" defer></script>
-    <script nonce="pmorais-2026" src="../js/theme.js?v=1.6.1" defer></script>
+
+    <script nonce="pmorais-2026" src="../js/lang.js?v=1.6.2" defer></script>
+    <script nonce="pmorais-2026" src="../js/theme.js?v=1.6.2" defer></script>
 </head>
 
 <body class="bg-dark">
@@ -346,7 +346,9 @@
                 <ul>
 <li><a href="/en/" data-i18n="nav.home">Home</a></li>
 <li><a href="/en/sobre-mim" data-i18n="nav.about">About Me</a></li>
+<li><a href="/en/personal-training">Personal Trainer</a></li>
 <li><a href="/en/osteopatia">Osteopathy</a></li>
+<li><a href="/en/oncology-training">Oncology Training</a></li>
 <li><a href="/en/perfil" data-i18n="nav.profile">Profile</a></li>
 <li><a href="/en/blog" class="active" data-i18n="nav.blog">Blog</a></li>
 <li><a href="/en/perfil?booking=true" class="btn-header-premium" data-i18n="nav.book">BOOK NOW</a></li>
@@ -439,23 +441,23 @@
             </div>
         </div>
         <div class="footer-bar-elysium">
-            <div class="crafted-text"><a href="https://elysiumdr.eu" target="_blank" rel="noopener noreferrer">Developed by Elysium λ Development & Research.</a><br><span class="version-label">V1.6.1</span></div>
+            <div class="crafted-text"><a href="https://elysiumdr.eu" target="_blank" rel="noopener noreferrer">Developed by Elysium λ Development & Research.</a><br><span class="version-label">V1.6.2</span></div>
         </div>
     </footer>
 
     <!-- Scripts -->
     <script nonce="pmorais-2026" type="module">
-        import { loadSingleArticle } from '../js/blog.js?v=1.6.1';
+        import { loadSingleArticle } from '../js/blog.js?v=1.6.2';
         document.addEventListener('DOMContentLoaded', () => {
             loadSingleArticle('article-content');
         });
     </script>
-    <script nonce="pmorais-2026" src="../js/script.js?v=1.6.1" defer></script>
+    <script nonce="pmorais-2026" src="../js/script.js?v=1.6.2" defer></script>
     <script nonce="pmorais-2026">
         document.addEventListener('DOMContentLoaded', () => {
             if (window.lucide) window.lucide.createIcons();
         });
     </script>
-    <script nonce="pmorais-2026" src="../js/cookie-consent.js?v=1.6.1" defer></script>
+    <script nonce="pmorais-2026" src="../js/cookie-consent.js?v=1.6.2" defer></script>
 </body>
 </html>

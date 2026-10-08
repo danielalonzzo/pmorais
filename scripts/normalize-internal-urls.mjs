@@ -1,6 +1,6 @@
 import fs from 'node:fs';
 import path from 'node:path';
-import { ASSET_VERSION } from './seo-config.mjs';
+import { ASSET_VERSION, PUBLIC_PAGES } from './seo-config.mjs';
 import { localModules, versionLocalModules } from './asset-versioning.mjs';
 
 const root = process.cwd();
@@ -12,6 +12,7 @@ const portugueseRoutes = {
   'osteopatia.html': '/osteopatia',
   'sobre-mim.html': '/sobre-mim',
   'blog.html': '/blog',
+  'treino-oncologico.html': '/treino-oncologico',
   'artigo.html': '/artigo',
   'perfil.html': '/perfil',
   'perfis.html': '/perfis',
@@ -29,6 +30,7 @@ const englishRoutes = {
   'osteopatia.html': '/en/osteopatia',
   'sobre-mim.html': '/en/sobre-mim',
   'blog.html': '/en/blog',
+  'oncology-training.html': '/en/oncology-training',
   'article.html': '/en/article',
   'perfil.html': '/en/perfil',
   'perfis.html': '/en/perfis',
@@ -39,6 +41,15 @@ const englishRoutes = {
   'desinscrever.html': '/en/desinscrever',
   'auth-action.html': '/en/auth-action'
 };
+
+const publicRoutes = new Map();
+for (const page of PUBLIC_PAGES) {
+  const routes = publicRoutes.get(page.language) ?? {};
+  routes[path.basename(page.file)] = page.path;
+  publicRoutes.set(page.language, routes);
+}
+Object.assign(portugueseRoutes, publicRoutes.get('pt-PT'));
+Object.assign(englishRoutes, publicRoutes.get('en-GB'));
 
 function htmlFiles(directory) {
   return fs.readdirSync(directory)
@@ -78,6 +89,10 @@ function normalizeHtml(file, routes) {
 
 for (const file of htmlFiles(root)) normalizeHtml(file, portugueseRoutes);
 for (const file of htmlFiles(path.join(root, 'en'))) normalizeHtml(file, englishRoutes);
+// Future language trees participate as soon as translated pages are registered.
+for (const page of PUBLIC_PAGES.filter((entry) => !['pt-PT', 'en-GB'].includes(entry.language))) {
+  normalizeHtml(path.join(root, page.file), publicRoutes.get(page.language));
+}
 
 // JavaScript navigation remains relative so shared scripts work in both language trees.
 for (const directory of [path.join(root, 'js'), path.join(root, 'en/js')]) {

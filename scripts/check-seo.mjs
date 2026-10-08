@@ -1,9 +1,9 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { ASSET_VERSION, LAST_MODIFIED, PRIVATE_ROUTES, PUBLIC_PAGES, SITE_ORIGIN } from './seo-config.mjs';
+import { ASSET_VERSION, LAST_MODIFIED, PLANNED_SPANISH_PATHS, PRIVATE_ROUTES, PUBLIC_PAGES, SITE_ORIGIN, LOCALES, pageAlternates } from './seo-config.mjs';
 import { eachLocalModuleSpecifier, localModules } from './asset-versioning.mjs';
-import { AGENT_AUTH, AGENT_SKILLS, API_BASE, CONTENT_SIGNAL, DNS_AID, LINK_HEADER_RELATIONS, MARKDOWN_DIR, MCP_SERVER, PROTECTED_RESOURCE } from './agent-config.mjs';
+import { AGENT_AUTH, AGENT_SKILLS, API_BASE, CONTENT_SIGNAL, DNS_AID, LINK_HEADER_RELATIONS, MARKDOWN_DIR, MCP_SERVER, PROTECTED_RESOURCE, SERVICES, SERVICE_COVERAGE } from './agent-config.mjs';
 import crypto from 'node:crypto';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
@@ -33,21 +33,34 @@ function hasLink(source, rel, href) {
     && new RegExp(`\\bhref=["']${href.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}["']`, 'i').test(link));
 }
 
+// Configuration mistakes must fail before generated duplicates can look valid.
+for (const field of ['file', 'path']) {
+  if (new Set(PUBLIC_PAGES.map((page) => page[field])).size !== PUBLIC_PAGES.length) fail(`duplicate public ${field}`);
+}
+for (const page of PUBLIC_PAGES) {
+  if (!LOCALES[page.language]?.published) fail(`${page.file}: locale is not marked published`);
+  if (page.language === 'es' && PLANNED_SPANISH_PATHS[page.translationKey] !== page.path) {
+    fail(`${page.file}: Spanish path must be ${PLANNED_SPANISH_PATHS[page.translationKey]} (scripts/seo-config.mjs)`);
+  }
+  const group = PUBLIC_PAGES.filter((entry) => entry.translationKey === page.translationKey);
+  if (new Set(group.map((entry) => entry.language)).size !== group.length) fail(`${page.file}: duplicate translation language`);
+}
+
 for (const page of PUBLIC_PAGES) {
   const html = read(page.file);
   const visible = stripCode(html);
   const expectedCanonical = absoluteUrl(page.path);
-  const isPortuguese = page.language === 'pt-PT';
-  const ptPath = isPortuguese ? page.path : page.alternatePath;
-  const enPath = isPortuguese ? page.alternatePath : page.path;
+  const alternates = pageAlternates(page);
 
   if (!new RegExp(`<html\\s+lang=["']${page.language}["']`, 'i').test(html)) fail(`${page.file}: incorrect html lang`);
   if (!hasLink(html, 'canonical', expectedCanonical)) fail(`${page.file}: missing clean canonical ${expectedCanonical}`);
-  if (!html.includes(`<title>${page.title}</title>`)) fail(`${page.file}: title differs from scripts/seo-config.mjs`);
-  if (!html.includes(`hreflang="pt-PT" href="${absoluteUrl(ptPath)}"`)) fail(`${page.file}: missing pt-PT alternate`);
-  if (!html.includes(`hreflang="en-GB" href="${absoluteUrl(enPath)}"`)) fail(`${page.file}: missing en-GB alternate`);
-  if (!html.includes(`hreflang="x-default" href="${absoluteUrl(ptPath)}"`)) fail(`${page.file}: missing x-default alternate`);
-  if (occurrences(html, /hreflang=/gi) !== 3) fail(`${page.file}: expected exactly 3 hreflang declarations`);
+  if (!html.includes(`<title>${page.title.replaceAll('&', '&amp;')}</title>`)) fail(`${page.file}: title differs from scripts/seo-config.mjs`);
+  for (const alternate of alternates) {
+    if (!html.includes(`hreflang="${alternate.language}" href="${absoluteUrl(alternate.path)}"`)) {
+      fail(`${page.file}: missing ${alternate.language} alternate`);
+    }
+  }
+  if (occurrences(html, /hreflang=/gi) !== alternates.length) fail(`${page.file}: unexpected or unpublished language alternates`);
   if (!/<meta\s+name=["']description["'][^>]+content=["'][^"']{50,}["']/i.test(html)) fail(`${page.file}: missing or short meta description`);
   if (!/<meta\s+name=["']robots["'][^>]+content=["'][^"']*index[^"']*follow/i.test(html)) fail(`${page.file}: missing index/follow directive`);
   for (const signal of ['og:title', 'og:description', 'og:url', 'og:image']) {
@@ -71,8 +84,36 @@ for (const page of PUBLIC_PAGES) {
   }
 }
 
+// Check semantic identity as well as JSON syntax: services share one provider,
+// with virtual coverage attached to exercise rather than manual osteopathy.
+for (const page of PUBLIC_PAGES) {
+  const blocks = [...read(page.file).matchAll(/<script\b[^>]*type=["']application\/ld\+json["'][^>]*>([\s\S]*?)<\/script>/gi)];
+  if (blocks.length !== 1) fail(`${page.file}: expected one authoritative JSON-LD graph`);
+  let graph;
+  try { graph = JSON.parse(blocks[0]?.[1])['@graph']; } catch { continue; }
+  if (!Array.isArray(graph)) { fail(`${page.file}: missing entity graph`); continue; }
+  if (new Set(graph.map((entry) => entry['@id'])).size !== graph.length) fail(`${page.file}: duplicate entity IDs`);
+  const business = graph.find((entry) => entry['@id'] === `${SITE_ORIGIN}/#business`);
+  if (business?.['@type'] !== 'LocalBusiness') fail(`${page.file}: business must describe the broad local provider`);
+  const offers = business?.hasOfferCatalog?.itemListElement ?? [];
+  if (offers.length !== SERVICES.length) fail(`${page.file}: incomplete service catalog`);
+  for (const service of SERVICES) {
+    const node = graph.find((entry) => entry['@id'] === `${SITE_ORIGIN}/#service-${service.id}`);
+    if (node?.['@type'] !== 'Service' || node.provider?.['@id'] !== `${SITE_ORIGIN}/#business`) fail(`${page.file}: invalid ${service.id} identity`);
+    // A translation can launch before every service page exists in its language;
+    // structured data then falls back to the Portuguese page, as the generator does.
+    if (node?.url !== (service.page[page.language] ?? service.page['pt-PT'])) fail(`${page.file}: ${service.id} points to wrong language/service page`);
+    if (service.id === 'osteopathy' && node?.availableChannel) fail(`${page.file}: osteopathy must not advertise virtual manual therapy`);
+    if (service.id === 'online-training' && JSON.stringify(node?.areaServed) !== JSON.stringify(SERVICE_COVERAGE.online)) fail(`${page.file}: incomplete virtual coverage`);
+  }
+  const webpage = graph.find((entry) => entry['@id'] === `${absoluteUrl(page.path)}#webpage`);
+  if (webpage?.url !== absoluteUrl(page.path) || webpage.inLanguage !== page.language) fail(`${page.file}: incorrect webpage identity`);
+}
+
 const htmlFiles = fs.readdirSync(root).filter((name) => name.endsWith('.html'))
-  .concat(fs.readdirSync(path.join(root, 'en')).filter((name) => name.endsWith('.html')).map((name) => `en/${name}`))
+  .concat(['en', 'es'].filter((directory) => fs.existsSync(path.join(root, directory)))
+    .flatMap((directory) => fs.readdirSync(path.join(root, directory)).filter((name) => name.endsWith('.html')).map((name) => `${directory}/${name}`)))
+  .concat(PUBLIC_PAGES.map((page) => page.file).filter((file) => !['.', 'en'].includes(path.dirname(file))))
   .filter((name) => !name.startsWith('google'));
 const publicFiles = new Set(PUBLIC_PAGES.map((page) => page.file));
 const modules = localModules(root);
@@ -94,9 +135,18 @@ for (const file of htmlFiles) {
 
 const sitemap = read('sitemap.xml');
 const sitemapUrls = [...sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)].map((match) => match[1]);
-const expectedSitemapUrls = PUBLIC_PAGES.map((page) => absoluteUrl(page.path)).concat(`${SITE_ORIGIN}/llms.txt`, `${SITE_ORIGIN}/llms-full.txt`);
+const expectedSitemapUrls = PUBLIC_PAGES.map((page) => absoluteUrl(page.path));
 if (JSON.stringify(sitemapUrls) !== JSON.stringify(expectedSitemapUrls)) fail('sitemap.xml URLs do not match scripts/seo-config.mjs');
 if (sitemapUrls.some((url) => url.endsWith('.html'))) fail('sitemap.xml contains non-canonical .html URLs');
+const sitemapEntries = [...sitemap.matchAll(/<url>([\s\S]*?)<\/url>/g)].map((match) => match[1]);
+for (const [index, page] of PUBLIC_PAGES.entries()) {
+  const expected = pageAlternates(page);
+  const entry = sitemapEntries[index] ?? '';
+  for (const alternate of expected) {
+    if (!entry.includes(`hreflang="${alternate.language}" href="${absoluteUrl(alternate.path)}"`)) fail(`sitemap.xml: ${page.path} missing ${alternate.language} alternate`);
+  }
+  if (occurrences(entry, /hreflang=/g) !== expected.length) fail(`sitemap.xml: ${page.path} advertises unexpected translations`);
+}
 
 const robots = read('robots.txt');
 for (const route of PRIVATE_ROUTES) {

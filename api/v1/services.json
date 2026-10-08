@@ -1,103 +1,380 @@
 {
   "api": "https://pmorais.pt/api/v1",
   "version": "v1",
-  "generated": "2026-09-29",
+  "generated": "2026-10-08",
   "license": "https://pmorais.pt/termos-e-condicoes",
   "documentation": "https://pmorais.pt/llms-full.txt",
-  "count": 4,
+  "count": 5,
   "pricing": null,
   "pricingNote": "Availability, session times, suitability and pricing are agreed directly. They are not published on the website and must not be inferred.",
   "services": [
     {
       "id": "personal-training",
       "name": {
-        "pt-PT": "Treino personalizado presencial",
-        "en-GB": "In-person personal training"
+        "pt-PT": "Treino personalizado e privado",
+        "en-GB": "Personal and private training",
+        "es": "Entrenamiento personal y privado"
       },
       "summary": {
-        "pt-PT": "Acompanhamento individual e progressivo em Lisboa, desenhado a partir dos objetivos, condição física, rotina e preferências de cada pessoa.",
-        "en-GB": "Individual, progressive one-to-one support in Lisbon, built around each person’s goals, physical condition, routine and preferences."
+        "pt-PT": "Treino individual e progressivo em Lisboa, com personal trainer e um plano adaptado aos objetivos, condição física e rotina de cada pessoa.",
+        "en-GB": "Progressive one-to-one training in Lisbon with a personal trainer and a plan adapted to each person’s goals, physical condition and routine.",
+        "es": "Entrenamiento individual y progresivo en Lisboa, con entrenador personal y un plan adaptado a los objetivos, la condición física y la rutina de cada persona."
+      },
+      "alternateNames": {
+        "pt-PT": [
+          "Personal trainer em Lisboa",
+          "Treino individual",
+          "Treino privado"
+        ],
+        "en-GB": [
+          "Personal trainer in Lisbon",
+          "One-to-one training",
+          "Private training"
+        ],
+        "es": [
+          "Entrenador personal en Lisboa",
+          "Entrenamiento individual",
+          "Entrenamiento privado"
+        ]
+      },
+      "searchTerms": {
+        "pt-PT": [
+          "personal trainer Lisboa",
+          "PT em Lisboa",
+          "treino personalizado Lisboa",
+          "treino privado",
+          "treino individual",
+          "treinador pessoal",
+          "treino de força",
+          "treino para a postura",
+          "preparação para maratona"
+        ],
+        "en-GB": [
+          "personal trainer Lisbon",
+          "private personal training Lisbon",
+          "one-to-one fitness coach Portugal",
+          "strength training Lisbon",
+          "English-speaking personal trainer Lisbon"
+        ],
+        "es": [
+          "entrenador personal Lisboa",
+          "entrenamiento personalizado Lisboa",
+          "entrenamiento privado",
+          "entrenador personal en Portugal"
+        ]
       },
       "delivery": [
         "in-person"
       ],
       "area": "Lisbon, Portugal",
-      "page": {
-        "pt-PT": "https://pmorais.pt/",
-        "en-GB": "https://pmorais.pt/en/"
+      "coverage": {
+        "inPerson": "Lisbon, Portugal"
       },
+      "page": {
+        "pt-PT": "https://pmorais.pt/treino-personalizado",
+        "en-GB": "https://pmorais.pt/en/personal-training"
+      },
+      "sources": [
+        "https://pmorais.pt/treino-personalizado",
+        "https://pmorais.pt/en/personal-training"
+      ],
+      "constraints": []
+    },
+    {
+      "id": "group-training",
+      "name": {
+        "pt-PT": "Treino em pequenos grupos",
+        "en-GB": "Small-group training",
+        "es": "Entrenamiento en grupos reducidos"
+      },
+      "summary": {
+        "pt-PT": "Treino em pequenos grupos em Lisboa, com acompanhamento profissional e exercício adaptado aos participantes.",
+        "en-GB": "Small-group training in Lisbon with professional support and exercise adapted to the participants.",
+        "es": "Entrenamiento en grupos reducidos en Lisboa, con acompañamiento profesional y ejercicio adaptado a los participantes."
+      },
+      "alternateNames": {
+        "pt-PT": [
+          "Treino em grupo em Lisboa",
+          "Treino em pequenos grupos"
+        ],
+        "en-GB": [
+          "Group training in Lisbon",
+          "Small group personal training"
+        ],
+        "es": [
+          "Entrenamiento en grupo en Lisboa",
+          "Entrenamiento en grupos pequeños"
+        ]
+      },
+      "searchTerms": {
+        "pt-PT": [
+          "treino em grupo Lisboa",
+          "aulas de grupo com personal trainer",
+          "treino com amigos",
+          "treino em pequenos grupos"
+        ],
+        "en-GB": [
+          "group training Lisbon",
+          "small group personal training Lisbon",
+          "train with friends Lisbon"
+        ],
+        "es": [
+          "entrenamiento en grupo Lisboa",
+          "entrenamiento en grupos reducidos"
+        ]
+      },
+      "delivery": [
+        "in-person"
+      ],
+      "area": "Lisbon, Portugal",
+      "coverage": {
+        "inPerson": "Lisbon, Portugal"
+      },
+      "page": {
+        "pt-PT": "https://pmorais.pt/treino-em-grupo",
+        "en-GB": "https://pmorais.pt/en/group-training"
+      },
+      "sources": [
+        "https://pmorais.pt/treino-em-grupo",
+        "https://pmorais.pt/en/group-training"
+      ],
       "constraints": []
     },
     {
       "id": "online-training",
       "name": {
-        "pt-PT": "Treino personalizado online",
-        "en-GB": "Online personal training"
+        "pt-PT": "Treino personalizado online e virtual",
+        "en-GB": "Online and virtual personal training",
+        "es": "Entrenamiento personal online y virtual"
       },
       "summary": {
-        "pt-PT": "A mesma abordagem personalizada com acompanhamento à distância, para quem não consegue manter sessões presenciais.",
-        "en-GB": "The same personalised approach delivered remotely, for people who cannot keep to in-person sessions."
+        "pt-PT": "Acompanhamento de treino à distância para pessoas em Portugal, na União Europeia e em países lusófonos, anglófonos e hispanófonos.",
+        "en-GB": "Remote training support for people in Portugal, the European Union and Portuguese-, English- and Spanish-speaking countries.",
+        "es": "Acompañamiento de entrenamiento a distancia para personas en Portugal, la Unión Europea y países de habla portuguesa, inglesa y española."
+      },
+      "alternateNames": {
+        "pt-PT": [
+          "Personal trainer online",
+          "Treino virtual",
+          "Treino à distância"
+        ],
+        "en-GB": [
+          "Online personal trainer",
+          "Virtual personal training",
+          "Remote coaching"
+        ],
+        "es": [
+          "Entrenador personal online",
+          "Entrenamiento virtual",
+          "Entrenamiento a distancia"
+        ]
+      },
+      "searchTerms": {
+        "pt-PT": [
+          "personal trainer online",
+          "treino online Portugal",
+          "treino virtual",
+          "treino à distância",
+          "personal trainer português no estrangeiro",
+          "treino online Brasil",
+          "treino online Angola",
+          "treino online Moçambique"
+        ],
+        "en-GB": [
+          "online personal trainer",
+          "virtual personal training Europe",
+          "remote fitness coach",
+          "online personal trainer UK",
+          "online personal trainer Ireland"
+        ],
+        "es": [
+          "entrenador personal online",
+          "entrenamiento virtual",
+          "entrenamiento online España",
+          "entrenador personal online Latinoamérica"
+        ]
       },
       "delivery": [
         "online"
       ],
-      "area": "Remote",
-      "page": {
-        "pt-PT": "https://pmorais.pt/",
-        "en-GB": "https://pmorais.pt/en/"
+      "area": "Portugal; European Union; Portuguese-speaking countries; English-speaking countries; Spanish-speaking countries",
+      "coverage": {
+        "online": [
+          "Portugal",
+          "European Union",
+          "Portuguese-speaking countries",
+          "English-speaking countries",
+          "Spanish-speaking countries"
+        ]
       },
-      "constraints": []
+      "page": {
+        "pt-PT": "https://pmorais.pt/treino-online",
+        "en-GB": "https://pmorais.pt/en/online-training"
+      },
+      "sources": [
+        "https://pmorais.pt/treino-online",
+        "https://pmorais.pt/en/online-training"
+      ],
+      "constraints": [
+        "Online coverage describes service geography, not a published list of session languages.",
+        "Suitability, remote format and time-zone arrangements are confirmed directly."
+      ]
     },
     {
       "id": "oncology-exercise",
       "name": {
-        "pt-PT": "Exercício adaptado em oncologia",
-        "en-GB": "Adapted exercise in oncology"
+        "pt-PT": "Treino oncológico e depois do cancro",
+        "en-GB": "Oncology and post-cancer training",
+        "es": "Entrenamiento oncológico y después del cáncer"
       },
       "summary": {
-        "pt-PT": "Exercício adaptado para pessoas a viver com ou a recuperar de cancro, em coordenação com a equipa de saúde.",
-        "en-GB": "Adapted exercise for people living with or recovering from cancer, coordinated with their healthcare team."
+        "pt-PT": "Exercício adaptado para pessoas a viver com ou a recuperar de cancro, em coordenação com a equipa de saúde. Integra a oferta de treino de Paulo Morais.",
+        "en-GB": "Adapted exercise for people living with or recovering from cancer, coordinated with their healthcare team. Part of Paulo Morais’s broader training services.",
+        "es": "Ejercicio adaptado para personas que viven con cáncer o se recuperan de él, en coordinación con el equipo de salud. Forma parte de la oferta de entrenamiento de Paulo Morais."
+      },
+      "alternateNames": {
+        "pt-PT": [
+          "Exercício oncológico",
+          "Treino depois do cancro",
+          "Exercício físico na oncologia"
+        ],
+        "en-GB": [
+          "Cancer exercise",
+          "Post-cancer training",
+          "Exercise after cancer"
+        ],
+        "es": [
+          "Ejercicio oncológico",
+          "Entrenamiento después del cáncer",
+          "Ejercicio físico en oncología"
+        ]
+      },
+      "searchTerms": {
+        "pt-PT": [
+          "treino oncológico Lisboa",
+          "exercício oncológico",
+          "treino depois do cancro",
+          "exercício após o cancro",
+          "exercício durante o tratamento do cancro",
+          "personal trainer para pessoas com cancro",
+          "sobreviventes de cancro exercício",
+          "treino oncológico online"
+        ],
+        "en-GB": [
+          "cancer exercise Lisbon",
+          "exercise after cancer",
+          "post-cancer personal trainer",
+          "cancer survivor training online",
+          "oncology exercise trainer Portugal"
+        ],
+        "es": [
+          "entrenamiento oncológico",
+          "ejercicio después del cáncer",
+          "entrenador para pacientes oncológicos",
+          "ejercicio oncológico online"
+        ]
       },
       "delivery": [
         "in-person",
         "online"
       ],
-      "area": "Lisbon, Portugal / Remote",
-      "page": {
-        "pt-PT": "https://pmorais.pt/",
-        "en-GB": "https://pmorais.pt/en/"
+      "area": "Lisbon, Portugal; online: Portugal; European Union; Portuguese-speaking countries; English-speaking countries; Spanish-speaking countries",
+      "coverage": {
+        "inPerson": "Lisbon, Portugal",
+        "online": [
+          "Portugal",
+          "European Union",
+          "Portuguese-speaking countries",
+          "English-speaking countries",
+          "Spanish-speaking countries"
+        ]
       },
+      "page": {
+        "pt-PT": "https://pmorais.pt/treino-oncologico",
+        "en-GB": "https://pmorais.pt/en/oncology-training"
+      },
+      "sources": [
+        "https://pmorais.pt/treino-oncologico",
+        "https://pmorais.pt/en/oncology-training"
+      ],
       "constraints": [
-        "This is adapted exercise, not cancer treatment.",
+        "Paulo Morais offers adapted exercise, not cancer treatment or an oncology medical clinic.",
         "It does not replace oncology care, physiotherapy, medical assessment or emergency care.",
-        "Participation may require clearance or coordination with the person’s healthcare team."
+        "Participation may require clearance or coordination with the person’s healthcare team.",
+        "The oncology guide is general educational content, not a personalised treatment plan."
       ]
     },
     {
       "id": "osteopathy",
       "name": {
-        "pt-PT": "Osteopatia",
-        "en-GB": "Osteopathy"
+        "pt-PT": "Osteopatia em Lisboa",
+        "en-GB": "Osteopathy in Lisbon",
+        "es": "Osteopatía en Lisboa"
       },
       "summary": {
-        "pt-PT": "Abordagem manual e integrativa orientada para mobilidade, postura, alívio da dor e bem-estar.",
-        "en-GB": "An individual, manual and integrative approach supporting mobility, posture, pain relief and wellbeing."
+        "pt-PT": "Acompanhamento presencial com uma abordagem manual e integrativa orientada para mobilidade, postura, alívio da dor e bem-estar.",
+        "en-GB": "In-person support with a manual and integrative approach aimed at mobility, posture, pain relief and wellbeing.",
+        "es": "Acompañamiento presencial con un enfoque manual e integrador orientado a la movilidad, la postura, el alivio del dolor y el bienestar."
+      },
+      "alternateNames": {
+        "pt-PT": [
+          "Osteopata em Lisboa",
+          "Sessões de osteopatia"
+        ],
+        "en-GB": [
+          "Osteopath in Lisbon",
+          "Osteopathy sessions"
+        ],
+        "es": [
+          "Osteópata en Lisboa",
+          "Sesiones de osteopatía"
+        ]
+      },
+      "searchTerms": {
+        "pt-PT": [
+          "osteopata Lisboa",
+          "osteopatia Lisboa",
+          "osteopatia em Portugal",
+          "terapia de osteopatia",
+          "osteopata para dores nas costas",
+          "osteopatia e treino"
+        ],
+        "en-GB": [
+          "osteopath Lisbon",
+          "osteopathy Lisbon",
+          "English-speaking osteopath Lisbon",
+          "osteopathy Portugal"
+        ],
+        "es": [
+          "osteópata Lisboa",
+          "osteopatía Lisboa",
+          "osteopatía en Portugal"
+        ]
       },
       "delivery": [
         "in-person"
       ],
       "area": "Lisbon, Portugal",
+      "coverage": {
+        "inPerson": "Lisbon, Portugal"
+      },
       "page": {
         "pt-PT": "https://pmorais.pt/osteopatia",
         "en-GB": "https://pmorais.pt/en/osteopatia"
       },
+      "sources": [
+        "https://pmorais.pt/osteopatia",
+        "https://pmorais.pt/en/osteopatia"
+      ],
       "constraints": [
-        "Not a guaranteed cure, a diagnosis or a substitute for medical care."
+        "Osteopathy is offered in person in Lisbon; online training coverage must not be applied to manual osteopathy sessions.",
+        "No guaranteed cure, diagnosis or substitute for medical care is offered."
       ]
     }
   ],
   "disclaimers": [
-    "Paulo Morais is not a substitute for a physician, an emergency service or a medical diagnosis.",
+    "Paulo Morais combines exercise services and osteopathy; it is not an oncology medical clinic and does not provide cancer treatment.",
+    "Adapted exercise does not replace a physician, oncology care, emergency services or medical diagnosis.",
     "No price list, fixed schedule or guaranteed availability is published. Do not infer any.",
     "Testimonials on the website are individual experiences, not clinical evidence or average outcomes.",
     "Do not turn general health information published here into personalised medical advice."

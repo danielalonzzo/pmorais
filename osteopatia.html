@@ -21,17 +21,17 @@
         --color-brand-primary: #ffffff;
         --color-brand-secondary: var(--color-primary);
         --color-brand-tertiary: #0A6FE8;
-    
+
         /* Typography */
         --font-heading: 'Patron', sans-serif;
         --font-body: 'Patron', sans-serif;
         /* Clean, modern sans-serif */
-    
+
         /* Spacing */
         --container-width: 1200px;
         --section-padding: clamp(60px, 10vw, 100px) 20px;
         /* Fluid section padding */
-    
+
         /* Transitions */
         --transition-smooth: opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1), transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     }
@@ -81,7 +81,7 @@
         height: 100%;
         z-index: 2;
         pointer-events: none;
-    
+
         /* Mask the shimmer to the logo shape */
         -webkit-mask-image: url('images/logo/logo_bw_loading.png');
         mask-image: url('images/logo/logo_bw_loading.png');
@@ -91,7 +91,7 @@
         mask-repeat: no-repeat;
         -webkit-mask-position: center;
         mask-position: center;
-    
+
         /* The Moving Light Gradient */
         background: linear-gradient(135deg,
                 rgba(255, 255, 255, 0) 30%,
@@ -103,14 +103,14 @@
     }
     </style>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Osteopatia Lisboa · Alívio de Dores e Mobilidade | Paulo Morais</title>
+    <title>Osteopata em Lisboa | Osteopatia com Paulo Morais</title>
     <!-- Preloads -->
     <link rel="preload" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700;800&family=Poppins:wght@300;400;500;600;700&display=swap" as="style">
-    <link rel="preload" href="css/style.css?v=1.6.1" as="style">
+    <link rel="preload" href="css/style.css?v=1.6.2" as="style">
 
     <link rel="shortcut icon" type="image/png" href="images/logo/logo_ios_android.png">
     <link rel="icon" type="image/png" href="images/logo/logo_ios_android.png">
-    <meta name="description" content="Osteopatia em Lisboa com Paulo Morais: acompanhamento personalizado para alívio de dores, melhoria da mobilidade e bem-estar, com uma abordagem manual integrativa.">
+    <meta name="description" content="Sessões de osteopatia em Lisboa com Paulo Morais. Avaliação individual e abordagem manual orientada para mobilidade, postura, conforto e bem-estar.">
 
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -123,15 +123,15 @@
     <script nonce="pmorais-2026" src="https://unpkg.com/lucide@0.460.0/dist/umd/lucide.min.js" integrity="sha384-ieG+IKD0d/ZPXyCBTMVAbqsQdns8QGJR/e26WMw7M4fkaI/rHcS/YIoi+ah9WGge" crossorigin="anonymous" defer></script>
 
     <!-- Custom Style -->
-    <link rel="stylesheet" href="css/style.css?v=1.6.1">
+    <link rel="stylesheet" href="css/style.css?v=1.6.2">
 
     <!-- SEO Architecture: generated from scripts/seo-config.mjs -->
     <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
     <meta name="googlebot" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
     <meta name="author" content="Paulo Morais">
     <link rel="canonical" href="https://pmorais.pt/osteopatia">
-    <link rel="alternate" hreflang="pt-PT" href="https://pmorais.pt/osteopatia">
-    <link rel="alternate" hreflang="en-GB" href="https://pmorais.pt/en/osteopatia">
+    <link rel="alternate" hreflang="pt" href="https://pmorais.pt/osteopatia">
+    <link rel="alternate" hreflang="en" href="https://pmorais.pt/en/osteopatia">
     <link rel="alternate" hreflang="x-default" href="https://pmorais.pt/osteopatia">
     <link rel="alternate" type="text/plain" href="https://pmorais.pt/llms.txt" title="LLM summary">
     <link rel="alternate" type="text/plain" href="https://pmorais.pt/llms-full.txt" title="Expanded LLM content">
@@ -143,15 +143,418 @@
     <meta property="og:url" content="https://pmorais.pt/osteopatia">
     <meta property="og:locale" content="pt_PT">
     <meta property="og:locale:alternate" content="en_GB">
-    <meta property="og:title" content="Osteopatia Lisboa · Alívio de Dores e Mobilidade | Paulo Morais">
-    <meta property="og:description" content="Osteopatia em Lisboa com Paulo Morais: acompanhamento personalizado para alívio de dores, melhoria da mobilidade e bem-estar, com uma abordagem manual integrativa.">
+    <meta property="og:title" content="Osteopata em Lisboa | Osteopatia com Paulo Morais">
+    <meta property="og:description" content="Sessões de osteopatia em Lisboa com Paulo Morais. Avaliação individual e abordagem manual orientada para mobilidade, postura, conforto e bem-estar.">
     <meta property="og:image" content="https://pmorais.pt/images/logo/paulo_morais-08.png">
     <meta property="og:image:alt" content="Paulo Morais — Your Own Workout">
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Osteopatia Lisboa · Alívio de Dores e Mobilidade | Paulo Morais">
-    <meta name="twitter:description" content="Osteopatia em Lisboa com Paulo Morais: acompanhamento personalizado para alívio de dores, melhoria da mobilidade e bem-estar, com uma abordagem manual integrativa.">
+    <meta name="twitter:title" content="Osteopata em Lisboa | Osteopatia com Paulo Morais">
+    <meta name="twitter:description" content="Sessões de osteopatia em Lisboa com Paulo Morais. Avaliação individual e abordagem manual orientada para mobilidade, postura, conforto e bem-estar.">
     <meta name="twitter:image" content="https://pmorais.pt/images/logo/paulo_morais-08.png">
     <meta name="twitter:image:alt" content="Paulo Morais — Your Own Workout">
+    <script nonce="pmorais-2026" type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "LocalBusiness",
+      "@id": "https://pmorais.pt/#business",
+      "name": "Paulo Morais — Your Own Workout",
+      "alternateName": [
+        "Paulo Morais",
+        "Your Own Workout",
+        "Paulo Morais Personal Trainer",
+        "Paulo Morais Osteopata",
+        "Paulo Dimas Morais"
+      ],
+      "slogan": "Your Own Workout",
+      "url": "https://pmorais.pt/",
+      "description": "Paulo Morais é personal trainer e osteopata em Lisboa, Portugal. Não é apenas um personal trainer, um osteopata ou um serviço de treino oncológico: reúne treino personalizado e privado, treino em grupo, treino online, osteopatia e exercício depois do cancro, presencialmente em Lisboa e online para Portugal, a União Europeia e países lusófonos, anglófonos e hispanófonos.",
+      "telephone": "+351960471537",
+      "email": "pt@pmorais.pt",
+      "logo": "https://pmorais.pt/images/logo/paulo_morais-08.png",
+      "image": "https://pmorais.pt/images/sobre-mim/paulo-morais.png",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Lisboa",
+        "addressRegion": "Lisboa",
+        "addressCountry": "PT"
+      },
+      "areaServed": [
+        {
+          "@type": "City",
+          "name": "Lisboa",
+          "containedInPlace": {
+            "@type": "Country",
+            "name": "Portugal"
+          }
+        },
+        "Portugal",
+        "European Union",
+        "Portuguese-speaking countries",
+        "English-speaking countries",
+        "Spanish-speaking countries"
+      ],
+      "knowsLanguage": [
+        "pt",
+        "en"
+      ],
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "contactType": "customer service",
+        "telephone": "+351960471537",
+        "email": "pt@pmorais.pt",
+        "availableLanguage": [
+          "pt",
+          "en"
+        ],
+        "areaServed": [
+          "Portugal",
+          "European Union",
+          "Portuguese-speaking countries",
+          "English-speaking countries",
+          "Spanish-speaking countries"
+        ]
+      },
+      "sameAs": [
+        "https://www.instagram.com/pt.paulomorais"
+      ],
+      "founder": {
+        "@id": "https://pmorais.pt/#person"
+      },
+      "hasOfferCatalog": {
+        "@type": "OfferCatalog",
+        "name": "Serviços de Paulo Morais",
+        "itemListElement": [
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@id": "https://pmorais.pt/#service-personal-training"
+            }
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@id": "https://pmorais.pt/#service-group-training"
+            }
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@id": "https://pmorais.pt/#service-online-training"
+            }
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@id": "https://pmorais.pt/#service-oncology-exercise"
+            }
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@id": "https://pmorais.pt/#service-osteopathy"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "@type": "Person",
+      "@id": "https://pmorais.pt/#person",
+      "name": "Paulo Morais",
+      "alternateName": "Paulo Dimas Morais",
+      "jobTitle": "Personal Trainer e Osteopata",
+      "description": "Paulo Morais é personal trainer e osteopata em Lisboa, Portugal. Não é apenas um personal trainer, um osteopata ou um serviço de treino oncológico: reúne treino personalizado e privado, treino em grupo, treino online, osteopatia e exercício depois do cancro, presencialmente em Lisboa e online para Portugal, a União Europeia e países lusófonos, anglófonos e hispanófonos.",
+      "url": "https://pmorais.pt/sobre-mim",
+      "image": "https://pmorais.pt/images/sobre-mim/paulo-morais.png",
+      "sameAs": [
+        "https://www.instagram.com/pt.paulomorais"
+      ],
+      "worksFor": {
+        "@id": "https://pmorais.pt/#business"
+      },
+      "workLocation": {
+        "@type": "City",
+        "name": "Lisboa",
+        "containedInPlace": {
+          "@type": "Country",
+          "name": "Portugal"
+        }
+      },
+      "knowsLanguage": [
+        "pt",
+        "en"
+      ],
+      "knowsAbout": [
+        "Treino personalizado",
+        "Treino privado",
+        "Treino em grupo",
+        "Treino online",
+        "Osteopatia",
+        "Exercício oncológico",
+        "Exercício depois do cancro",
+        "Treino de força",
+        "Mobilidade",
+        "Postura"
+      ]
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://pmorais.pt/#website",
+      "url": "https://pmorais.pt/",
+      "name": "Paulo Morais — Your Own Workout",
+      "alternateName": "Paulo Morais",
+      "description": "Paulo Morais — Your Own Workout disponibiliza treino personalizado e privado, treino em pequenos grupos, treino online e osteopatia em Lisboa. O treino online acompanha pessoas em Portugal, na União Europeia e em países lusófonos, anglófonos e hispanófonos. O treino oncológico e depois do cancro integra esta oferta de exercício adaptado.",
+      "inLanguage": [
+        "pt-PT",
+        "en-GB"
+      ],
+      "publisher": {
+        "@id": "https://pmorais.pt/#business"
+      }
+    },
+    {
+      "@type": "Service",
+      "@id": "https://pmorais.pt/#service-personal-training",
+      "name": "Treino personalizado e privado",
+      "alternateName": [
+        "Personal trainer em Lisboa",
+        "Treino individual",
+        "Treino privado"
+      ],
+      "description": "Treino individual e progressivo em Lisboa, com personal trainer e um plano adaptado aos objetivos, condição física e rotina de cada pessoa.",
+      "serviceType": "Treino personalizado e privado",
+      "url": "https://pmorais.pt/treino-personalizado",
+      "provider": {
+        "@id": "https://pmorais.pt/#business"
+      },
+      "areaServed": [
+        "Lisbon, Portugal"
+      ]
+    },
+    {
+      "@type": "Service",
+      "@id": "https://pmorais.pt/#service-group-training",
+      "name": "Treino em pequenos grupos",
+      "alternateName": [
+        "Treino em grupo em Lisboa",
+        "Treino em pequenos grupos"
+      ],
+      "description": "Treino em pequenos grupos em Lisboa, com acompanhamento profissional e exercício adaptado aos participantes.",
+      "serviceType": "Treino em pequenos grupos",
+      "url": "https://pmorais.pt/treino-em-grupo",
+      "provider": {
+        "@id": "https://pmorais.pt/#business"
+      },
+      "areaServed": [
+        "Lisbon, Portugal"
+      ]
+    },
+    {
+      "@type": "Service",
+      "@id": "https://pmorais.pt/#service-online-training",
+      "name": "Treino personalizado online e virtual",
+      "alternateName": [
+        "Personal trainer online",
+        "Treino virtual",
+        "Treino à distância"
+      ],
+      "description": "Acompanhamento de treino à distância para pessoas em Portugal, na União Europeia e em países lusófonos, anglófonos e hispanófonos.",
+      "serviceType": "Treino personalizado online e virtual",
+      "url": "https://pmorais.pt/treino-online",
+      "provider": {
+        "@id": "https://pmorais.pt/#business"
+      },
+      "areaServed": [
+        "Portugal",
+        "European Union",
+        "Portuguese-speaking countries",
+        "English-speaking countries",
+        "Spanish-speaking countries"
+      ],
+      "availableChannel": {
+        "@type": "ServiceChannel",
+        "serviceUrl": "https://pmorais.pt/treino-online",
+        "servicePhone": {
+          "@type": "ContactPoint",
+          "telephone": "+351960471537"
+        },
+        "availableLanguage": [
+          "pt",
+          "en"
+        ]
+      }
+    },
+    {
+      "@type": "Service",
+      "@id": "https://pmorais.pt/#service-oncology-exercise",
+      "name": "Treino oncológico e depois do cancro",
+      "alternateName": [
+        "Exercício oncológico",
+        "Treino depois do cancro",
+        "Exercício físico na oncologia"
+      ],
+      "description": "Exercício adaptado para pessoas a viver com ou a recuperar de cancro, em coordenação com a equipa de saúde. Integra a oferta de treino de Paulo Morais.",
+      "serviceType": "Treino oncológico e depois do cancro",
+      "url": "https://pmorais.pt/treino-oncologico",
+      "provider": {
+        "@id": "https://pmorais.pt/#business"
+      },
+      "areaServed": [
+        "Lisbon, Portugal",
+        "Portugal",
+        "European Union",
+        "Portuguese-speaking countries",
+        "English-speaking countries",
+        "Spanish-speaking countries"
+      ],
+      "audience": {
+        "@type": "PeopleAudience",
+        "audienceType": "Pessoas a viver com cancro ou depois do tratamento do cancro"
+      },
+      "availableChannel": {
+        "@type": "ServiceChannel",
+        "serviceUrl": "https://pmorais.pt/treino-oncologico",
+        "servicePhone": {
+          "@type": "ContactPoint",
+          "telephone": "+351960471537"
+        },
+        "availableLanguage": [
+          "pt",
+          "en"
+        ]
+      }
+    },
+    {
+      "@type": "Service",
+      "@id": "https://pmorais.pt/#service-osteopathy",
+      "name": "Osteopatia em Lisboa",
+      "alternateName": [
+        "Osteopata em Lisboa",
+        "Sessões de osteopatia"
+      ],
+      "description": "Acompanhamento presencial com uma abordagem manual e integrativa orientada para mobilidade, postura, alívio da dor e bem-estar.",
+      "serviceType": "Osteopatia em Lisboa",
+      "url": "https://pmorais.pt/osteopatia",
+      "provider": {
+        "@id": "https://pmorais.pt/#business"
+      },
+      "areaServed": [
+        "Lisbon, Portugal"
+      ]
+    },
+    {
+      "@type": "WebPage",
+      "@id": "https://pmorais.pt/osteopatia#webpage",
+      "url": "https://pmorais.pt/osteopatia",
+      "name": "Osteopata em Lisboa | Osteopatia com Paulo Morais",
+      "description": "Sessões de osteopatia em Lisboa com Paulo Morais. Avaliação individual e abordagem manual orientada para mobilidade, postura, conforto e bem-estar.",
+      "inLanguage": "pt-PT",
+      "isPartOf": {
+        "@id": "https://pmorais.pt/#website"
+      },
+      "publisher": {
+        "@id": "https://pmorais.pt/#business"
+      },
+      "about": {
+        "@id": "https://pmorais.pt/#service-osteopathy"
+      },
+      "mainEntity": {
+        "@id": "https://pmorais.pt/#service-osteopathy"
+      },
+      "hasPart": {
+        "@id": "https://pmorais.pt/osteopatia#faq"
+      },
+      "workTranslation": [
+        {
+          "@id": "https://pmorais.pt/en/osteopatia#webpage"
+        }
+      ],
+      "breadcrumb": {
+        "@id": "https://pmorais.pt/osteopatia#breadcrumb"
+      }
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://pmorais.pt/osteopatia#faq",
+      "url": "https://pmorais.pt/osteopatia",
+      "inLanguage": "pt-PT",
+      "isPartOf": {
+        "@id": "https://pmorais.pt/osteopatia#webpage"
+      },
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Onde são as sessões de osteopatia?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "As sessões de osteopatia com Paulo Morais realizam-se presencialmente em Lisboa. O local e o horário são combinados no contacto."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Como funciona o acompanhamento de osteopatia?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Cada acompanhamento começa com uma avaliação individual das queixas, da mobilidade e da postura. A abordagem é manual e integrativa, orientada para a mobilidade, a postura, o alívio da dor e o bem-estar."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Existe osteopatia online?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Não. A osteopatia é um serviço manual e presencial, em Lisboa. Para quem vive fora de Lisboa ou de Portugal, Paulo Morais disponibiliza treino online."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Posso combinar osteopatia com treino?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Sim. Paulo Morais é osteopata e personal trainer, por isso a osteopatia pode ser combinada com treino personalizado, treino em grupo ou treino oncológico, conforme as necessidades e os objetivos de cada pessoa."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "A osteopatia substitui o médico?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Não. A osteopatia não substitui o diagnóstico nem o acompanhamento médico. Perante sintomas novos, persistentes ou urgentes, deve ser consultado um médico."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Em que línguas decorrem as sessões e como marcar?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "As sessões decorrem em português e inglês. Para marcar, usa o formulário desta página, o WhatsApp ou o telefone (+351 960 471 537) ou o email (pt@pmorais.pt). Preços e disponibilidade são confirmados no contacto."
+          }
+        }
+      ]
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": "https://pmorais.pt/osteopatia#breadcrumb",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Início",
+          "item": "https://pmorais.pt/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Osteopata em Lisboa",
+          "item": "https://pmorais.pt/osteopatia"
+        }
+      ]
+    }
+  ]
+}
+    </script>
     <!-- /SEO Architecture -->
     <!-- PWA Meta Tags -->
     <link rel="manifest" href="/manifest.json">
@@ -159,78 +562,10 @@
     <link rel="apple-touch-icon" href="/images/logo/logo_ios_android.png">
 
     <!-- Schema.org JSON-LD: MedicalBusiness + BreadcrumbList -->
-    <script nonce="pmorais-2026" type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@graph": [
-        {
-          "@type": ["MedicalBusiness", "LocalBusiness"],
-          "@id": "https://pmorais.pt/osteopatia#service",
-          "name": "Osteopatia | Paulo Morais",
-          "description": "Tratamento osteopático personalizado em Lisboa. Alívio de dores, melhoria de mobilidade e bem-estar geral.",
-          "url": "https://pmorais.pt/osteopatia",
-          "telephone": "+351960471537",
-          "email": "pt@pmorais.pt",
-          "image": "https://pmorais.pt/images/logo/paulo_morais-08.png",
-          "medicalSpecialty": {
-            "@type": "MedicalSpecialty",
-            "name": "Osteopathy"
-          },
-          "address": {
-            "@type": "PostalAddress",
-            "addressLocality": "Lisboa",
-            "addressRegion": "Lisboa",
-            "addressCountry": "PT"
-          },
-          "parentOrganization": {"@id": "https://pmorais.pt/#business"},
-          "hasOfferCatalog": {
-            "@type": "OfferCatalog",
-            "name": "Serviços de Osteopatia",
-            "itemListElement": [
-              {
-                "@type": "Offer",
-                "itemOffered": {
-                  "@type": "Service",
-                  "name": "Consulta de Osteopatia",
-                  "serviceType": "Osteopatia",
-                  "description": "Avaliação e tratamento osteopático completo, abordagem manual integrativa."
-                }
-              },
-              {
-                "@type": "Offer",
-                "itemOffered": {
-                  "@type": "Service",
-                  "name": "Tratamento de Dores Crónicas",
-                  "serviceType": "Osteopatia",
-                  "description": "Intervenção especializada em dores musculares, articulares e posturais."
-                }
-              }
-            ]
-          }
-        },
-        {
-          "@type": "BreadcrumbList",
-          "itemListElement": [
-            {
-              "@type": "ListItem",
-              "position": 1,
-              "name": "Início",
-              "item": "https://pmorais.pt/"
-            },
-            {
-              "@type": "ListItem",
-              "position": 2,
-              "name": "Osteopatia",
-              "item": "https://pmorais.pt/osteopatia"
-            }
-          ]
-        }
-      ]
-    }
-    </script>
-    
-    <script nonce="pmorais-2026" src="js/lang.js?v=1.6.1" defer></script>
-    <script nonce="pmorais-2026" src="js/theme.js?v=1.6.1" defer></script>
+
+
+    <script nonce="pmorais-2026" src="js/lang.js?v=1.6.2" defer></script>
+    <script nonce="pmorais-2026" src="js/theme.js?v=1.6.2" defer></script>
 </head>
 
 <body class="page-osteopatia">
@@ -282,7 +617,9 @@
                 <ul>
 <li><a href="/" data-i18n="nav.home">Início</a></li>
 <li><a href="/sobre-mim" data-i18n="nav.about">Sobre Mim</a></li>
+<li><a href="/treino-personalizado">Personal Trainer</a></li>
 <li><a href="/osteopatia" class="active" data-i18n="nav.osteo">OSTEOPATIA</a></li>
+<li><a href="/treino-oncologico" data-i18n="nav.onco">Treino Oncológico</a></li>
 <li><a href="/perfil" data-i18n="nav.profile">Perfil</a></li>
 <li><a href="/blog" data-i18n="nav.blog">Blog</a></li>
 <li><a href="/perfil?booking=true" class="btn-header-premium" data-i18n="nav.book">AGENDAR</a></li>
@@ -307,12 +644,11 @@
                         </ol>
                     </nav>
                     <div class="header-line"></div>
-                    <h1 class="osteopatia-title">Osteopatia</h1>
+                    <h1 class="osteopatia-title">Osteopatia <span class="osteopatia-title-place">em Lisboa</span></h1>
                 </div>
 
                 <div class="osteopatia-hero-content fade-in delay-1">
-                    <p class="osteopatia-description">A osteopatia ajuda a aliviar tensões, melhorar a mobilidade e dar
-                        leveza ao corpo.</p>
+                    <p class="osteopatia-description">Sessões presenciais de osteopatia em Lisboa com Paulo Morais. A avaliação individual orienta o acompanhamento das queixas e da mobilidade.</p>
                 </div>
 
                 <!-- Video/Image Section -->
@@ -665,7 +1001,7 @@
                             </div>
 
                         </div>
-                        
+
                         <!-- Leave Review CTA (Hidden by default, shown via auth.js if logged in) -->
                         <div id="leave-review-cta" style="display: none; text-align: center; margin-top: 30px;">
                             <a href="/perfil?tab=review-osteopatia" class="btn btn-primary" style="padding: 12px 30px; border-radius: 50px; font-weight: 600;">Deixar avaliação</a>
@@ -678,7 +1014,164 @@
 
 
 
+        <!-- sv:efeitos:start -->
+        <section id="efeitos-tardios" class="sv-section sv-watch">
+            <div class="oncologia-glow-left"></div>
+            <div class="oncologia-glow-right"></div>
+            <div class="container-wide">
+                <div class="oncologia-header sv-head">
+                    <span class="oncologia-eyebrow">Passo 1 · Ouvir o corpo depois do cancro</span>
+                    <h2>O corpo lembra-se do cancro.<br><span class="oncologia-highlight">Fala sobre isso.</span></h2>
+                    <p>Fadiga, formigueiros, dor, sono, memória… Muitos efeitos do tratamento do cancro só aparecem, ou só se notam, meses ou anos depois. E muitos sobreviventes não os referem na consulta: acham que é normal, ou não querem voltar a sentir-se «doentes». Falar é o primeiro passo.</p>
+                </div>
+
+                <div class="sv-body-layout sv-watch" data-sv="hotspots" data-sv-piece="efeitos">
+                    <div class="sv-body" role="group" aria-label="Mapa do corpo com seis efeitos tardios">
+                                    <svg class="sv-body-svg" viewBox="0 0 240 480" aria-hidden="true" focusable="false">
+                                        <defs>
+                                            <linearGradient id="sv-scan-grad" x1="0" y1="0" x2="0" y2="1">
+                                                <stop offset="0" style="stop-color:var(--color-primary);stop-opacity:0"/>
+                                                <stop offset="0.5" style="stop-color:var(--color-primary);stop-opacity:0.55"/>
+                                                <stop offset="1" style="stop-color:var(--color-primary);stop-opacity:0"/>
+                                            </linearGradient>
+                                            <clipPath id="sv-body-clip">
+                                                <circle cx="120" cy="50" r="26"/>
+                                                <rect x="110" y="72" width="20" height="34" rx="6"/>
+                                                <path d="M78 104 Q120 92 162 104 Q172 112 170 132 L164 232 Q162 250 150 262 L90 262 Q78 250 76 232 L70 132 Q68 112 78 104Z"/>
+                                                <rect x="-11" y="0" width="22" height="150" rx="11" transform="translate(66 118) rotate(14)"/>
+                                                <rect x="-11" y="0" width="22" height="150" rx="11" transform="translate(174 118) rotate(-14)"/>
+                                                <rect x="-14" y="0" width="28" height="200" rx="14" transform="translate(104 256) rotate(3)"/>
+                                                <rect x="-14" y="0" width="28" height="200" rx="14" transform="translate(136 256) rotate(-3)"/>
+                                            </clipPath>
+                                        </defs>
+                                        <g class="sv-sil">
+                                            <rect x="-11" y="0" width="22" height="150" rx="11" transform="translate(66 118) rotate(14)"/>
+                                            <rect x="-11" y="0" width="22" height="150" rx="11" transform="translate(174 118) rotate(-14)"/>
+                                            <rect x="-14" y="0" width="28" height="200" rx="14" transform="translate(104 256) rotate(3)"/>
+                                            <rect x="-14" y="0" width="28" height="200" rx="14" transform="translate(136 256) rotate(-3)"/>
+                                            <rect x="110" y="72" width="20" height="34" rx="6"/>
+                                            <path d="M78 104 Q120 92 162 104 Q172 112 170 132 L164 232 Q162 250 150 262 L90 262 Q78 250 76 232 L70 132 Q68 112 78 104Z"/>
+                                            <circle cx="120" cy="50" r="26"/>
+                                        </g>
+                                        <g clip-path="url(#sv-body-clip)"><rect class="sv-scan" x="0" y="0" width="240" height="70"/></g>
+                                        <g aria-hidden="true">
+                                            <circle class="sv-spark" style="--d:0" cx="20" cy="262" r="2.6"/><circle class="sv-spark" style="--d:2" cx="40" cy="276" r="2"/>
+                                            <circle class="sv-spark" style="--d:1" cx="220" cy="262" r="2.6"/><circle class="sv-spark" style="--d:3" cx="200" cy="278" r="2"/>
+                                            <circle class="sv-spark" style="--d:2" cx="88" cy="456" r="2.4"/><circle class="sv-spark" style="--d:0" cx="152" cy="456" r="2.4"/>
+                                        </g>
+                                    </svg>
+                                    <button type="button" class="sv-hotspot" style="--x:20.00%;--y:8.33%;--d:0" aria-controls="sv-p-cognicao" aria-pressed="false" aria-label="Memória">
+                                        <span class="sv-hs-core"><svg class="sv-ico" aria-hidden="true" focusable="false"><use href="/images/sobrevivencia/sprite.svg#sv-i-cloud"/></svg></span><span class="sv-hs-label">Memória</span>
+                                    </button>
+                                    <button type="button" class="sv-hotspot is-left" style="--x:80.00%;--y:8.33%;--d:1" aria-controls="sv-p-sono" aria-pressed="false" aria-label="Sono">
+                                        <span class="sv-hs-core"><svg class="sv-ico" aria-hidden="true" focusable="false"><use href="/images/sobrevivencia/sprite.svg#sv-i-moon"/></svg></span><span class="sv-hs-label">Sono</span>
+                                    </button>
+                                    <button type="button" class="sv-hotspot is-left" style="--x:67.50%;--y:26.67%;--d:2" aria-controls="sv-p-dor" aria-pressed="false" aria-label="Dor">
+                                        <span class="sv-hs-core"><svg class="sv-ico" aria-hidden="true" focusable="false"><use href="/images/sobrevivencia/sprite.svg#sv-i-bolt"/></svg></span><span class="sv-hs-label">Dor</span>
+                                    </button>
+                                    <button type="button" class="sv-hotspot" style="--x:50.00%;--y:31.25%;--d:3" aria-controls="sv-p-coracao" aria-pressed="false" aria-label="Falta de ar e coração">
+                                        <span class="sv-hs-core"><svg class="sv-ico" aria-hidden="true" focusable="false"><use href="/images/sobrevivencia/sprite.svg#sv-i-heart"/></svg></span><span class="sv-hs-label">Falta de ar e coração</span>
+                                    </button>
+                                    <button type="button" class="sv-hotspot" style="--x:50.00%;--y:45.00%;--d:4" aria-controls="sv-p-fadiga" aria-pressed="false" aria-label="Fadiga">
+                                        <span class="sv-hs-core"><svg class="sv-ico" aria-hidden="true" focusable="false"><use href="/images/sobrevivencia/sprite.svg#sv-i-fatigue"/></svg></span><span class="sv-hs-label">Fadiga</span>
+                                    </button>
+                                    <button type="button" class="sv-hotspot is-left" style="--x:87.50%;--y:55.42%;--d:5" aria-controls="sv-p-neuro" aria-pressed="false" aria-label="Mãos e pés">
+                                        <span class="sv-hs-core"><svg class="sv-ico" aria-hidden="true" focusable="false"><use href="/images/sobrevivencia/sprite.svg#sv-i-hand"/></svg></span><span class="sv-hs-label">Mãos e pés</span>
+                                    </button>
+                        <span class="sv-hint-chip"><svg class="sv-ico" aria-hidden="true" focusable="false"><use href="/images/sobrevivencia/sprite.svg#sv-i-pointer"/></svg>Toca nos pontos</span>
+                    </div>
+                    <div class="sv-body-aside">
+                        <div class="sv-panels" aria-live="polite">
+                                    <div class="sv-panel sv-panel--idle" id="sv-p-idle" data-idle>
+                                        <svg class="sv-ico" aria-hidden="true" focusable="false"><use href="/images/sobrevivencia/sprite.svg#sv-i-pointer"/></svg>
+                                        <p><strong>Escolhe um ponto no corpo</strong>Cada ponto é um efeito tardio do tratamento do cancro que muitos sobreviventes sentem e que raramente chega à consulta. Toca para ver o que podes sentir e a pergunta a levar à tua equipa.</p>
+                                    </div>
+                                    <div class="sv-panel" id="sv-p-cognicao" role="region" aria-label="Memória e concentração">
+                                        <div class="sv-panel-head"><span class="sv-panel-ico"><svg class="sv-ico" aria-hidden="true" focusable="false"><use href="/images/sobrevivencia/sprite.svg#sv-i-cloud"/></svg></span><h3>Memória e concentração</h3></div>
+                                        <p>O «nevoeiro mental»: esquecer palavras, perder o fio ao que estavas a dizer, ter dificuldade em concentrar-te.</p>
+                                        <blockquote class="sv-ask"><small>Pergunta à tua equipa</small>«Estas falhas de memória podem estar relacionadas com o tratamento?»</blockquote>
+                                    </div>
+                                    <div class="sv-panel" id="sv-p-sono" role="region" aria-label="Sono">
+                                        <div class="sv-panel-head"><span class="sv-panel-ico"><svg class="sv-ico" aria-hidden="true" focusable="false"><use href="/images/sobrevivencia/sprite.svg#sv-i-moon"/></svg></span><h3>Sono</h3></div>
+                                        <p>Adormecer com dificuldade, acordar a meio da noite ou levantar-te sem ter descansado é muito frequente depois do tratamento.</p>
+                                        <blockquote class="sv-ask"><small>Pergunta à tua equipa</small>«Posso fazer alguma coisa para dormir melhor? Pode estar ligado ao tratamento ou à ansiedade?»</blockquote>
+                                    </div>
+                                    <div class="sv-panel" id="sv-p-dor" role="region" aria-label="Dor que não passa">
+                                        <div class="sv-panel-head"><span class="sv-panel-ico"><svg class="sv-ico" aria-hidden="true" focusable="false"><use href="/images/sobrevivencia/sprite.svg#sv-i-bolt"/></svg></span><h3>Dor que não passa</h3></div>
+                                        <p>Dor que continua depois da cirurgia ou do tratamento, no ombro, na cicatriz, nas articulações ou nos músculos. A dor crónica também merece avaliação.</p>
+                                        <blockquote class="sv-ask"><small>Pergunta à tua equipa</small>«De onde vem esta dor e que opções tenho para a aliviar?»</blockquote>
+                                    </div>
+                                    <div class="sv-panel" id="sv-p-coracao" role="region" aria-label="Falta de ar e coração">
+                                        <div class="sv-panel-head"><span class="sv-panel-ico"><svg class="sv-ico" aria-hidden="true" focusable="false"><use href="/images/sobrevivencia/sprite.svg#sv-i-heart"/></svg></span><h3>Falta de ar e coração</h3></div>
+                                        <p>Cansaço a subir escadas, falta de ar ou palpitações que antes não tinhas devem ser sempre mencionados à equipa de saúde.</p>
+                                        <blockquote class="sv-ask"><small>Pergunta à tua equipa</small>«Devo fazer algum exame ao coração ou aos pulmões?»</blockquote>
+                                        <p class="sv-alert"><svg class="sv-ico" aria-hidden="true" focusable="false"><use href="/images/sobrevivencia/sprite.svg#sv-i-info"/></svg><span>Se for súbito ou intenso (dor no peito, falta de ar forte), liga 112.</span></p>
+                                    </div>
+                                    <div class="sv-panel" id="sv-p-fadiga" role="region" aria-label="Fadiga e resistência física">
+                                        <div class="sv-panel-head"><span class="sv-panel-ico"><svg class="sv-ico" aria-hidden="true" focusable="false"><use href="/images/sobrevivencia/sprite.svg#sv-i-fatigue"/></svg></span><h3>Fadiga e resistência física</h3></div>
+                                        <p>Um cansaço que o descanso não resolve, ou perder a resistência que tinhas, pode durar anos depois do tratamento. Não é «preguiça» nem «exagero».</p>
+                                        <blockquote class="sv-ask"><small>Pergunta à tua equipa</small>«Esta fadiga é esperada no meu caso? O que posso fazer para a reduzir?»</blockquote>
+                                    </div>
+                                    <div class="sv-panel" id="sv-p-neuro" role="region" aria-label="Mãos e pés: sensibilidade">
+                                        <div class="sv-panel-head"><span class="sv-panel-ico"><svg class="sv-ico" aria-hidden="true" focusable="false"><use href="/images/sobrevivencia/sprite.svg#sv-i-hand"/></svg></span><h3>Mãos e pés: sensibilidade</h3></div>
+                                        <p>Formigueiro, dormência ou ardor nas mãos e nos pés (polineuropatia), dificuldade em abotoar a roupa ou em sentir bem o chão.</p>
+                                        <blockquote class="sv-ask"><small>Pergunta à tua equipa</small>«Isto pode ser efeito do tratamento? Preciso de ser avaliado?»</blockquote>
+                                    </div>
+                        </div>
+                        <p class="sv-note"><svg class="sv-ico" aria-hidden="true" focusable="false"><use href="/images/sobrevivencia/sprite.svg#sv-i-info"/></svg><span>Informação geral; não substitui a tua equipa de oncologia. O Paulo não trata o cancro nem os seus efeitos: ajuda a adaptar o exercício e as sessões ao teu caso e a levar as tuas perguntas à consulta.</span></p>
+                        <div class="sv-body-cta">
+                            <p class="sv-vac-legend">Reconheces algum destes sinais?</p>
+                            <a href="#contacto" class="btn btn-primary">Falar com o Paulo <i data-lucide="chevron-right" aria-hidden="true"></i></a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="sv-piece-foot">
+                    <span class="sv-progress" data-sv-progress data-tpl="Descobriste {n} de 5 passos" data-done="Descobriste os 5 passos!"><span class="sv-pdots" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span><span class="sv-ptext" aria-live="polite">Descobriste 0 de 5 passos</span></span>
+                    <a class="sv-piece-link" href="/treino-oncologico">Guia do treino oncológico <svg class="sv-ico" aria-hidden="true" focusable="false"><use href="/images/sobrevivencia/sprite.svg#sv-i-arrow"/></svg></a>
+                </div>
+            </div>
+        </section>
+        <!-- sv:efeitos:end -->
+
         <!-- Contact Form Section -->
+        <section class="sv-section" aria-labelledby="osteopathy-training-title">
+            <div class="container-wide">
+                <div class="oncologia-header sv-head">
+                    <h2 id="osteopathy-training-title">Osteopatia e treino<br>com <span class="oncologia-highlight">Paulo Morais</span></h2>
+                    <p>A osteopatia é um dos serviços de Paulo Morais, a par do treino personalizado, do treino em grupo e do exercício depois do cancro. A escolha do acompanhamento depende das necessidades e dos objetivos de cada pessoa.</p>
+                    <p>As sessões de osteopatia realizam-se presencialmente em Lisboa. Para exercício à distância, o treino online está disponível em Portugal, na União Europeia e em países lusófonos, de língua inglesa e de língua espanhola.</p>
+                </div>
+                <div class="sv-folder-actions">
+                    <a href="/treino-personalizado" class="sv-piece-link">Treino personalizado <svg class="sv-ico" aria-hidden="true" focusable="false"><use href="/images/sobrevivencia/sprite.svg#sv-i-arrow"/></svg></a>
+                    <a href="/treino-em-grupo" class="sv-piece-link">Treino em grupo <svg class="sv-ico" aria-hidden="true" focusable="false"><use href="/images/sobrevivencia/sprite.svg#sv-i-arrow"/></svg></a>
+                    <a href="/treino-online" class="sv-piece-link">Treino online <svg class="sv-ico" aria-hidden="true" focusable="false"><use href="/images/sobrevivencia/sprite.svg#sv-i-arrow"/></svg></a>
+                    <a href="/treino-oncologico" class="sv-piece-link">Treino oncológico <svg class="sv-ico" aria-hidden="true" focusable="false"><use href="/images/sobrevivencia/sprite.svg#sv-i-arrow"/></svg></a>
+                </div>
+            </div>
+        </section>
+
+        <!-- faq:osteopatia:start -->
+        <!-- Perguntas frequentes: o texto visível gera o FAQPage do JSON-LD (scripts/apply-seo.mjs) -->
+        <section id="perguntas" class="sv-section" aria-labelledby="faq-osteopatia-title">
+            <div class="container-wide">
+                <div class="oncologia-header sv-head">
+                    <span class="oncologia-eyebrow">Perguntas frequentes</span>
+                    <h2 id="faq-osteopatia-title">Osteopata em <span class="oncologia-highlight">Lisboa</span></h2>
+                    <p>O que saber antes da primeira sessão de osteopatia com Paulo Morais.</p>
+                </div>
+                <div class="pm-faq">
+                    <article><h3>Onde são as sessões de osteopatia?</h3><p>As sessões de osteopatia com Paulo Morais realizam-se presencialmente em Lisboa. O local e o horário são combinados no contacto.</p></article>
+                    <article><h3>Como funciona o acompanhamento de osteopatia?</h3><p>Cada acompanhamento começa com uma avaliação individual das queixas, da mobilidade e da postura. A abordagem é manual e integrativa, orientada para a mobilidade, a postura, o alívio da dor e o bem-estar.</p></article>
+                    <article><h3>Existe osteopatia online?</h3><p>Não. A osteopatia é um serviço manual e presencial, em Lisboa. Para quem vive fora de Lisboa ou de Portugal, Paulo Morais disponibiliza <a href="/treino-online">treino online</a>.</p></article>
+                    <article><h3>Posso combinar osteopatia com treino?</h3><p>Sim. Paulo Morais é osteopata e personal trainer, por isso a osteopatia pode ser combinada com <a href="/treino-personalizado">treino personalizado</a>, <a href="/treino-em-grupo">treino em grupo</a> ou <a href="/treino-oncologico">treino oncológico</a>, conforme as necessidades e os objetivos de cada pessoa.</p></article>
+                    <article><h3>A osteopatia substitui o médico?</h3><p>Não. A osteopatia não substitui o diagnóstico nem o acompanhamento médico. Perante sintomas novos, persistentes ou urgentes, deve ser consultado um médico.</p></article>
+                    <article><h3>Em que línguas decorrem as sessões e como marcar?</h3><p>As sessões decorrem em português e inglês. Para marcar, usa o formulário desta página, o WhatsApp ou o telefone (+351 960 471 537) ou o email (pt@pmorais.pt). Preços e disponibilidade são confirmados no contacto.</p></article>
+                </div>
+            </div>
+        </section>
+        <!-- faq:osteopatia:end -->
+
         <section id="contacto" class="osteopatia-contact-section">
             <div class="container">
                 <div class="cta-wrapper shadow-gold no-padding-mobile">
@@ -756,6 +1249,7 @@
                     <li><a href="/osteopatia">Osteopatia</a></li>
                     <li><a href="/blog" data-i18n="nav.blog">Blog</a></li>
                     <li><a href="/perfil" data-i18n="nav.profile">Perfil</a></li>
+                    <li><a href="/treino-oncologico">Treino Oncológico</a></li>
                 </ul>
             </div>
 
@@ -771,12 +1265,12 @@
                     <li><a href="/termos-e-condicoes">Termos e Condições</a></li>
                     <li>
                         <div class="footer-lang-switcher">
-                            <a href="/" class="active" title="Português">PT</a>
+                            <a href="/osteopatia" class="active" title="Português">PT</a>
                             <span class="lang-divider">|</span>
-                            <a href="/en/" title="English">EN</a>
+                            <a href="/en/osteopatia" title="English">EN</a>
                         </div>
                     </li>
-                    
+
                 </ul>
             </div>
 
@@ -793,13 +1287,14 @@
         </div>
 
         <div class="footer-bar-elysium">
-            <div class="crafted-text"><a href="https://elysiumdr.eu" target="_blank" rel="noopener noreferrer">Desenvolvido por Elysium λ Development & Research.</a><br><span class="version-label">V1.6.1</span></div>
+            <div class="crafted-text"><a href="https://elysiumdr.eu" target="_blank" rel="noopener noreferrer">Desenvolvido por Elysium λ Development & Research.</a><br><span class="version-label">V1.6.2</span></div>
         </div>
     </footer>
 
     <!-- Scripts -->
-    <script nonce="pmorais-2026" src="js/script.js?v=1.6.1" defer></script>
-    <script nonce="pmorais-2026" src="js/webmcp.js?v=1.6.1" defer></script>
+    <script nonce="pmorais-2026" src="js/script.js?v=1.6.2" defer></script>
+    <script nonce="pmorais-2026" src="js/sobrevivencia.js?v=1.6.2" defer></script>
+    <script nonce="pmorais-2026" src="js/webmcp.js?v=1.6.2" defer></script>
 
     <!-- Firebase SDK -->
     <script nonce="pmorais-2026" src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
@@ -874,7 +1369,7 @@
             }
         });
     </script>
-    <script nonce="pmorais-2026" src="js/cookie-consent.js?v=1.6.1" defer></script>
+    <script nonce="pmorais-2026" src="js/cookie-consent.js?v=1.6.2" defer></script>
     <!-- Dynamic Reviews Loader for Osteopatia -->
     <script nonce="pmorais-2026">
         document.addEventListener('DOMContentLoaded', async function () {
@@ -913,7 +1408,7 @@
                 dbReviews.forEach(function (r) {
                     const year = new Date(r.timestamp).getFullYear();
                     const safeUserName = (typeof r.userName === 'string' ? r.userName : 'Anónimo').trim() || 'Anónimo';
-                    
+
                     // Use exact original black badge to match design perfectly
                     const badgeSvg = ' <i data-lucide="badge-check" style="width:18px; height:18px; color:#000; fill:#000; vertical-align: text-bottom;" aria-hidden="true"></i>';
 
@@ -940,7 +1435,7 @@
                     contentDiv.appendChild(roleEl);
                     contentDiv.appendChild(textEl);
                     div.appendChild(contentDiv);
-                    
+
                     if (firstCard) {
                         carousel.insertBefore(div, firstCard);
                     } else {

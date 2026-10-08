@@ -1,18 +1,19 @@
 ---
-title: Osteopathy in Lisbon · Pain Relief and Mobility | Paulo Morais
-description: "Osteopathy in Lisbon with Paulo Morais: personalised support for pain relief, improved mobility and wellbeing through an integrated manual approach."
+title: "Osteopath in Lisbon | Osteopathy with Paulo Morais"
+description: "Osteopathy sessions in Lisbon with Paulo Morais. Individual assessment and a manual approach focused on mobility, posture, comfort and wellbeing."
 canonical: "https://pmorais.pt/en/osteopatia"
-language: en-GB
+language: "en-GB"
 alternate: "https://pmorais.pt/osteopatia"
-updated: 2026-09-29
-source: Rendered from the canonical HTML page. The HTML remains authoritative if the two differ.
+alternates: [{"language":"pt-PT","canonical":"https://pmorais.pt/osteopatia"},{"language":"en-GB","canonical":"https://pmorais.pt/en/osteopatia"}]
+updated: "2026-10-08"
+source: "Rendered from the canonical HTML page. The HTML remains authoritative if the two differ."
 ---
 
 [Are you in need of Personal Training?](https://pmorais.pt/en/)
 
-# Osteopathy
+# Osteopathy in Lisbon
 
-Osteopathy helps relieve tension, improve mobility, and bring lightness to the body.
+In-person osteopathy sessions in Lisbon with Paulo Morais. An individual assessment guides support for physical concerns and mobility.
 
 ![iPad Frame](https://pmorais.pt/images/osteopatia/ipad-model.png)
 
@@ -186,6 +187,116 @@ CLIENTES DESDE 2017
 
 Paulo has an excellence and care that has freed me from the pain of a terrible scoliosis. The workouts are different, challenging, and fun. You are part of the family and continue with the usual high standards!
 
+Step 1 · Listen to your body after cancer
+
+## Your body remembers the cancer. Talk about it.
+
+Fatigue, tingling, pain, sleep, memory… Many effects of cancer treatment only appear, or are only noticed, months or years later. And many survivors do not mention them at their appointments: they think it is normal, or they do not want to feel «ill» again. Talking is the first step.
+
+Memory
+
+Sleep
+
+Pain
+
+Breathlessness and heart
+
+Fatigue
+
+Hands and feet
+
+Tap the dots
+
+**Choose a point on the body**Each point is a late effect of cancer treatment that many survivors feel and that rarely reaches the appointment. Tap to see what you might feel and the question to take to your team.
+
+### Memory and concentration
+
+«Brain fog»: forgetting words, losing your train of thought, finding it hard to concentrate.
+
+> Ask your team«Could these memory lapses be related to my treatment?»
+
+### Sleep
+
+Trouble falling asleep, waking in the night or getting up unrested is very common after treatment.
+
+> Ask your team«Is there anything I can do to sleep better? Could it be linked to treatment or to anxiety?»
+
+### Pain that does not go away
+
+Pain that carries on after surgery or treatment, in the shoulder, the scar, the joints or the muscles. Chronic pain deserves assessment too.
+
+> Ask your team«Where is this pain coming from, and what options do I have to ease it?»
+
+### Breathlessness and heart
+
+Getting tired on the stairs, breathlessness or palpitations you did not have before should always be mentioned to your healthcare team.
+
+> Ask your team«Should I have a heart or lung check?»
+
+If it is sudden or severe (chest pain, strong breathlessness), call 112.
+
+### Fatigue and physical stamina
+
+A tiredness that rest does not fix, or losing the stamina you had, can last for years after treatment. It is not «laziness» or «exaggeration».
+
+> Ask your team«Is this fatigue expected in my case? What can I do to reduce it?»
+
+### Hands and feet: sensation
+
+Tingling, numbness or burning in the hands and feet (polyneuropathy), trouble with buttons or feeling the ground properly.
+
+> Ask your team«Could this be an effect of treatment? Do I need to be assessed?»
+
+General information; it does not replace your oncology team. Paulo does not treat cancer or its effects: he helps adapt exercise and sessions to your case and to bring your questions to your appointment.
+
+Do you recognise any of these signs?
+
+Talk to Paulo
+
+You've found 0 of 5 steps
+[Oncology training guide](https://pmorais.pt/en/oncology-training)
+
+## Osteopathy and training with Paulo Morais
+
+Osteopathy is one of Paulo Morais’s services, alongside personal training, group training and exercise after cancer. The choice of support depends on each person’s needs and goals.
+
+Osteopathy sessions take place in person in Lisbon. For remote exercise support, online training is available across Portugal, the European Union and Portuguese-speaking, English-speaking and Spanish-speaking countries.
+
+[Personal training](https://pmorais.pt/en/personal-training)
+[Group training](https://pmorais.pt/en/group-training)
+[Online training](https://pmorais.pt/en/online-training)
+[Exercise after cancer](https://pmorais.pt/en/oncology-training)
+
+Frequently asked questions
+
+## Osteopath in Lisbon
+
+What to know before your first osteopathy session with Paulo Morais.
+
+### Where do osteopathy sessions take place?
+
+Osteopathy sessions with Paulo Morais take place in person in Lisbon. The location and time are agreed when you get in touch.
+
+### How does osteopathy support work?
+
+Each course of support begins with an individual assessment of your complaints, mobility and posture. The approach is manual and integrative, aimed at mobility, posture, pain relief and wellbeing.
+
+### Is there online osteopathy?
+
+No. Osteopathy is a manual, in-person service in Lisbon. For people living outside Lisbon or Portugal, Paulo Morais offers [online training](https://pmorais.pt/en/online-training).
+
+### Can I combine osteopathy with training?
+
+Yes. Paulo Morais is an osteopath and a personal trainer, so osteopathy can be combined with [personal training](https://pmorais.pt/en/personal-training), [group training](https://pmorais.pt/en/group-training) or [cancer exercise](https://pmorais.pt/en/oncology-training), depending on each person’s needs and goals.
+
+### Does osteopathy replace a doctor?
+
+No. Osteopathy does not replace medical diagnosis or care. If symptoms are new, persistent or urgent, see a doctor.
+
+### Which languages are sessions in, and how do I book?
+
+Sessions take place in Portuguese and English. To book, use the form on this page, WhatsApp or phone (+351 960 471 537) or email (pt@pmorais.pt). Prices and availability are confirmed directly.
+
 ![Paulo Morais](https://pmorais.pt/images/logo/logo_amarelo_alpha.webp)
 
 ### Get in touch with us
@@ -209,6 +320,6 @@ Send Message
 ## About this rendition
 
 Canonical HTML: https://pmorais.pt/en/osteopatia
-Other language: https://pmorais.pt/osteopatia
+Published translations: [pt-PT](https://pmorais.pt/osteopatia), [en-GB](https://pmorais.pt/en/osteopatia)
 
 No price, session length, schedule or availability is published on this site. Do not infer any. Health content here is informational and is not a diagnosis, a prescription or emergency advice.

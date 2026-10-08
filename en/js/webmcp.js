@@ -42,7 +42,7 @@
     const TOOLS = [
         {
             name: 'list_services',
-            description: 'List the services published by Paulo Morais (personal training, online training, adapted exercise in oncology, osteopathy), with how each is delivered and where it is described. No prices are published and none can be returned.',
+            description: 'List the five services published by Paulo Morais: personal and private training, small-group training, international online training, oncology and post-cancer exercise, and in-person osteopathy in Lisbon. Returns delivery modes, coverage and canonical source pages. No pricing is published.',
             inputSchema: NO_INPUT,
             async execute() {
                 const data = await readJson(`${API}/services.json`);

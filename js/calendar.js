@@ -934,7 +934,7 @@ window.openGlobalAgenda = async function() {
     if (previewSection) previewSection.classList.add('hidden');
     if (globalAgenda) globalAgenda.classList.remove('hidden');
     
-    const { auth, db } = await import('./firebase-config.js?v=1.6.1');
+    const { auth, db } = await import('./firebase-config.js?v=1.6.2');
     renderAdminGrid(db, auth.currentUser);
 };
 
@@ -962,7 +962,7 @@ window.changeGlobalWeek = async function(offset) {
     const weekText = `${formatter.format(currentWeekStart)} - ${formatter.format(endDate)}`;
     weekHeaders.forEach(el => el.textContent = weekText);
     
-    const { auth, db } = await import('./firebase-config.js?v=1.6.1');
+    const { auth, db } = await import('./firebase-config.js?v=1.6.2');
     renderAdminGrid(db, auth.currentUser);
 };
 

@@ -162,7 +162,7 @@ function toolDefinitions(): array
         [
             'name' => 'list_services',
             'title' => 'List published services',
-            'description' => 'The services published on pmorais.pt — in-person personal training, online training, adapted exercise in oncology, and osteopathy — with delivery modes and the limits the site places on each. No pricing is published and none is returned.',
+            'description' => 'The five services published on pmorais.pt: personal and private training, small-group training, international online training, oncology and post-cancer exercise, and in-person osteopathy in Lisbon. Includes delivery modes, coverage, canonical sources and interpretation limits. No pricing is published.',
             'inputSchema' => [
                 'type' => 'object',
                 'properties' => [

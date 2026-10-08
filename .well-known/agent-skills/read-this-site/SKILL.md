@@ -8,7 +8,7 @@ description: Fetch pmorais.pt efficiently as an agent: markdown content negotiat
 ## Fetch order
 
 1. `https://pmorais.pt/llms.txt` — short index of the public site.
-2. `https://pmorais.pt/api/v1/pages.json` — the eight canonical pages with language,
+2. `https://pmorais.pt/api/v1/pages.json` — the published canonical pages with language,
    canonical URL and markdown URL.
 3. The page itself with `Accept: text/markdown`, which returns a markdown
    rendition with `Content-Type: text/markdown` and an `x-markdown-tokens`

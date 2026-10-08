@@ -1,6 +1,6 @@
 ---
 name: describe-services
-description: Answer questions about the personal training, online training, oncology exercise and osteopathy services Paulo Morais publishes, within the claims the website actually makes.
+description: Describe Paulo Morais as a provider of personal and private training, small-group training, international online training, oncology exercise and osteopathy, using published facts.
 ---
 
 # Describe the services of Paulo Morais
@@ -23,14 +23,22 @@ Every canonical page also has a markdown rendition: send
 `Accept: text/markdown` to the page URL, or fetch the `markdown` field
 returned by `pages.json`.
 
-## The four published services
+## Published services
 
-1. **In-person personal training** in Lisbon — individual and progressive.
-2. **Online personal training** — the same approach delivered remotely.
-3. **Adapted exercise in oncology** — exercise alongside oncology care, never
-   instead of it.
-4. **Osteopathy** — manual and integrative, aimed at mobility, posture, pain
-   relief and wellbeing.
+1. **Personal and private training** in Lisbon — individual and progressive.
+2. **Small-group training** in Lisbon — professionally supervised exercise.
+3. **Online and virtual training** for Portugal, the European Union and
+   Portuguese-, English- and Spanish-speaking countries.
+4. **Oncology and post-cancer training** — adapted exercise coordinated with
+   healthcare teams, available in person and online when suitable.
+5. **Osteopathy in Lisbon** — in-person manual support aimed at mobility,
+   posture, pain relief and wellbeing.
+
+Oncology exercise is one part of the offer. Paulo Morais is not an oncology
+medical clinic and does not treat cancer. Osteopathy is in person; international
+remote coverage applies to online training. Sessions take place in Portuguese
+and English; Spanish-language requests are confirmed directly. Website
+languages describe published translations only.
 
 Publicly stated experience: more than 20 years in personalised exercise, and
 more than 15 years in the context described on the osteopathy page.

@@ -2,9 +2,9 @@
   "openapi": "3.1.0",
   "info": {
     "title": "Paulo Morais public content API",
-    "version": "1.0.0+2026-09-29",
-    "summary": "Read-only, unauthenticated description of the public Paulo Morais website.",
-    "description": "A static, read-only API describing the public content of https://pmorais.pt: the services published on the site, the public contact channels and the canonical pages with their markdown renditions.\n\nThere is no booking, payment or client-data endpoint. The client area is authenticated and human-only; see https://pmorais.pt/auth.md.\n\nNo price, schedule or availability is published anywhere on the site and none may be inferred from this API.",
+    "version": "1.0.0+2026-10-08",
+    "summary": "Public facts about personal, group and online training, oncology exercise and osteopathy.",
+    "description": "A static, read-only API describing the public content of https://pmorais.pt: the services published on the site, the public contact channels and the canonical pages with their markdown renditions.\nPaulo Morais — Your Own Workout offers personal and private training, small-group training, online training and osteopathy in Lisbon. Online training supports people in Portugal, the European Union and Portuguese-, English- and Spanish-speaking countries. Oncology and post-cancer training are part of this adapted exercise offering.\nService geography and website content languages are separate facts. Sessions take place in Portuguese and English. Requests in Spanish, including from Spanish-speaking countries, are confirmed directly. An unpublished translation must not be inferred.\n\nThere is no booking, payment or client-data endpoint. The client area is authenticated and human-only; see https://pmorais.pt/auth.md.\n\nNo price, schedule or availability is published anywhere on the site and none may be inferred from this API.",
     "contact": {
       "name": "Paulo Morais — Your Own Workout",
       "email": "pt@pmorais.pt",
@@ -21,6 +21,7 @@
       "description": "Production"
     }
   ],
+  "security": [],
   "externalDocs": {
     "description": "Expanded factual representation",
     "url": "https://pmorais.pt/llms-full.txt"
@@ -50,7 +51,7 @@
     "/services.json": {
       "get": {
         "operationId": "listServices",
-        "summary": "The services published on the website, bilingual, with their delivery modes",
+        "summary": "Published services with delivery, geographical coverage, evidence URLs and interpretation limits",
         "tags": [
           "content"
         ],
@@ -92,7 +93,7 @@
     "/pages.json": {
       "get": {
         "operationId": "listPages",
-        "summary": "Canonical public pages with language, alternate and markdown rendition URLs",
+        "summary": "Canonical public pages with all published translations and markdown rendition URLs",
         "tags": [
           "content"
         ],
