@@ -103,14 +103,14 @@
     }
     </style>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sobre Paulo Morais | Personal Trainer e Osteopata em Lisboa</title>
+    <title>Personal Trainer em Lisboa | Sobre Paulo Morais</title>
     <!-- Preloads -->
     <link rel="preload" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700;800&family=Poppins:wght@300;400;500;600;700&display=swap" as="style">
-    <link rel="preload" href="css/style.css?v=1.6.2" as="style">
+    <link rel="preload" href="css/style.css?v=1.7.0" as="style">
 
     <link rel="shortcut icon" type="image/png" href="images/logo/logo_ios_android.png">
     <link rel="icon" type="image/png" href="images/logo/logo_ios_android.png">
-    <meta name="description" content="Conheça Paulo Morais, personal trainer e osteopata em Lisboa, com mais de 20 anos de experiência em treino personalizado e exercício adaptado.">
+    <meta name="description" content="Conheça Paulo Morais, personal trainer e osteopata em Lisboa com mais de 20 anos de experiência. Treino individual e privado, adaptado aos objetivos e à rotina.">
 
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -123,12 +123,43 @@
     <script nonce="pmorais-2026" src="https://unpkg.com/lucide@0.460.0/dist/umd/lucide.min.js" integrity="sha384-ieG+IKD0d/ZPXyCBTMVAbqsQdns8QGJR/e26WMw7M4fkaI/rHcS/YIoi+ah9WGge" crossorigin="anonymous" defer></script>
 
     <!-- Custom Style -->
-    <link rel="stylesheet" href="css/style.css?v=1.6.2">
+    <link rel="stylesheet" href="css/style.css?v=1.7.0">
+
+    <!-- Treino personalizado: blocos herdados da antiga página /treino-personalizado -->
+    <style nonce="pmorais-2026">
+        .about-hero-role { color: var(--color-primary-text); font-size: .85rem; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; margin: -14px 0 28px; }
+        .page-about .service-actions { display: flex; flex-wrap: wrap; gap: 16px; align-items: center; margin-top: 28px; }
+        .page-about .service-text-link { color: var(--color-primary-text); text-decoration: underline; text-underline-offset: 4px; }
+        .about-training .service-section { padding: 70px 0; border-top: 1px solid color-mix(in srgb, var(--color-text) 15%, transparent); scroll-margin-top: 110px; }
+        .about-training .service-section:last-child { padding-bottom: 110px; }
+        .about-training h2 { font-size: clamp(1.85rem, 3vw, 2.75rem); line-height: 1.2; margin: 0 0 22px; color: var(--color-text); }
+        .about-training h3 { font-size: 1.15rem; line-height: 1.35; margin: 0 0 14px; color: var(--color-text); }
+        .page-about .about-training p { color: var(--color-text-dim); line-height: 1.75; margin: 0 0 20px; text-align: left; }
+        .about-training .service-eyebrow { display: block; color: var(--color-primary-text); font-size: .8rem; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; margin-bottom: 18px; }
+        .page-about .about-training .service-lead { font-size: 1.12rem; color: var(--color-text); }
+        .about-training .service-section-intro { max-width: 800px; margin-bottom: 35px; }
+        .about-training .service-card-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 22px; }
+        .about-training .service-card { padding: 28px; background: var(--color-surface); border: 1px solid color-mix(in srgb, var(--color-primary) 22%, transparent); border-radius: 18px; }
+        .page-about .about-training .service-card p { margin-bottom: 0; }
+        .about-training .service-step-number { display: block; font-size: .8rem; font-weight: 700; color: var(--color-primary-text); margin-bottom: 16px; }
+        .about-training .service-faq { max-width: 880px; }
+        .about-training .service-faq article { padding: 24px 0; border-bottom: 1px solid color-mix(in srgb, var(--color-text) 15%, transparent); }
+        .about-training .service-faq article:first-child { padding-top: 0; }
+        .page-about .about-training .service-faq p { margin-bottom: 0; }
+        .about-training .service-contact { padding: 38px; background: var(--color-surface); border: 1px solid color-mix(in srgb, var(--color-primary) 30%, transparent); border-radius: 22px; }
+        .about-training .service-contact-links { display: flex; flex-wrap: wrap; gap: 22px; margin-top: 24px; }
+        .about-training .service-contact-links a { color: var(--color-primary-text); }
+        @media (max-width: 800px) {
+            .about-training .service-card-grid { grid-template-columns: 1fr; }
+            .about-training .service-section { padding: 48px 0; }
+            .about-training .service-contact { padding: 26px; }
+        }
+    </style>
 
     <!-- Schema.org JSON-LD: Person + BreadcrumbList -->
 
-    <script nonce="pmorais-2026" src="js/lang.js?v=1.6.2" defer></script>
-    <script nonce="pmorais-2026" src="js/theme.js?v=1.6.2" defer></script>
+    <script nonce="pmorais-2026" src="js/lang.js?v=1.7.0" defer></script>
+    <script nonce="pmorais-2026" src="js/theme.js?v=1.7.0" defer></script>
     <!-- SEO Architecture: generated from scripts/seo-config.mjs -->
     <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
     <meta name="googlebot" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
@@ -147,13 +178,13 @@
     <meta property="og:url" content="https://pmorais.pt/sobre-mim">
     <meta property="og:locale" content="pt_PT">
     <meta property="og:locale:alternate" content="en_GB">
-    <meta property="og:title" content="Sobre Paulo Morais | Personal Trainer e Osteopata em Lisboa">
-    <meta property="og:description" content="Conheça Paulo Morais, personal trainer e osteopata em Lisboa, com mais de 20 anos de experiência em treino personalizado e exercício adaptado.">
+    <meta property="og:title" content="Personal Trainer em Lisboa | Sobre Paulo Morais">
+    <meta property="og:description" content="Conheça Paulo Morais, personal trainer e osteopata em Lisboa com mais de 20 anos de experiência. Treino individual e privado, adaptado aos objetivos e à rotina.">
     <meta property="og:image" content="https://pmorais.pt/images/logo/paulo_morais-08.png">
     <meta property="og:image:alt" content="Paulo Morais — Your Own Workout">
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Sobre Paulo Morais | Personal Trainer e Osteopata em Lisboa">
-    <meta name="twitter:description" content="Conheça Paulo Morais, personal trainer e osteopata em Lisboa, com mais de 20 anos de experiência em treino personalizado e exercício adaptado.">
+    <meta name="twitter:title" content="Personal Trainer em Lisboa | Sobre Paulo Morais">
+    <meta name="twitter:description" content="Conheça Paulo Morais, personal trainer e osteopata em Lisboa com mais de 20 anos de experiência. Treino individual e privado, adaptado aos objetivos e à rotina.">
     <meta name="twitter:image" content="https://pmorais.pt/images/logo/paulo_morais-08.png">
     <meta name="twitter:image:alt" content="Paulo Morais — Your Own Workout">
     <script nonce="pmorais-2026" type="application/ld+json">
@@ -173,7 +204,7 @@
       ],
       "slogan": "Your Own Workout",
       "url": "https://pmorais.pt/",
-      "description": "Paulo Morais é personal trainer e osteopata em Lisboa, Portugal. Não é apenas um personal trainer, um osteopata ou um serviço de treino oncológico: reúne treino personalizado e privado, treino em grupo, treino online, osteopatia e exercício depois do cancro, presencialmente em Lisboa e online para Portugal, a União Europeia e países lusófonos, anglófonos e hispanófonos.",
+      "description": "Paulo Morais é personal trainer e osteopata em Lisboa, Portugal. A oferta reúne treino personalizado e privado, treino em pequenos grupos, treino online, osteopatia e exercício adaptado durante ou depois do cancro. O acompanhamento presencial realiza-se em Lisboa; o treino online abrange Portugal, a União Europeia e países lusófonos, anglófonos e hispanófonos.",
       "telephone": "+351960471537",
       "email": "pt@pmorais.pt",
       "logo": "https://pmorais.pt/images/logo/paulo_morais-08.png",
@@ -269,7 +300,7 @@
       "name": "Paulo Morais",
       "alternateName": "Paulo Dimas Morais",
       "jobTitle": "Personal Trainer e Osteopata",
-      "description": "Paulo Morais é personal trainer e osteopata em Lisboa, Portugal. Não é apenas um personal trainer, um osteopata ou um serviço de treino oncológico: reúne treino personalizado e privado, treino em grupo, treino online, osteopatia e exercício depois do cancro, presencialmente em Lisboa e online para Portugal, a União Europeia e países lusófonos, anglófonos e hispanófonos.",
+      "description": "Paulo Morais é personal trainer e osteopata em Lisboa, Portugal. A oferta reúne treino personalizado e privado, treino em pequenos grupos, treino online, osteopatia e exercício adaptado durante ou depois do cancro. O acompanhamento presencial realiza-se em Lisboa; o treino online abrange Portugal, a União Europeia e países lusófonos, anglófonos e hispanófonos.",
       "url": "https://pmorais.pt/sobre-mim",
       "image": "https://pmorais.pt/images/sobre-mim/paulo-morais.png",
       "sameAs": [
@@ -278,6 +309,14 @@
       "worksFor": {
         "@id": "https://pmorais.pt/#business"
       },
+      "mainEntityOfPage": [
+        {
+          "@id": "https://pmorais.pt/sobre-mim#webpage"
+        },
+        {
+          "@id": "https://pmorais.pt/en/sobre-mim#webpage"
+        }
+      ],
       "workLocation": {
         "@type": "City",
         "name": "Lisboa",
@@ -329,10 +368,18 @@
       ],
       "description": "Treino individual e progressivo em Lisboa, com personal trainer e um plano adaptado aos objetivos, condição física e rotina de cada pessoa.",
       "serviceType": "Treino personalizado e privado",
-      "url": "https://pmorais.pt/treino-personalizado",
+      "url": "https://pmorais.pt/sobre-mim",
       "provider": {
         "@id": "https://pmorais.pt/#business"
       },
+      "subjectOf": [
+        {
+          "@id": "https://pmorais.pt/sobre-mim#webpage"
+        },
+        {
+          "@id": "https://pmorais.pt/en/sobre-mim#webpage"
+        }
+      ],
       "areaServed": [
         "Lisbon, Portugal"
       ]
@@ -351,6 +398,14 @@
       "provider": {
         "@id": "https://pmorais.pt/#business"
       },
+      "subjectOf": [
+        {
+          "@id": "https://pmorais.pt/treino-em-grupo#webpage"
+        },
+        {
+          "@id": "https://pmorais.pt/en/group-training#webpage"
+        }
+      ],
       "areaServed": [
         "Lisbon, Portugal"
       ]
@@ -370,6 +425,14 @@
       "provider": {
         "@id": "https://pmorais.pt/#business"
       },
+      "subjectOf": [
+        {
+          "@id": "https://pmorais.pt/treino-online#webpage"
+        },
+        {
+          "@id": "https://pmorais.pt/en/online-training#webpage"
+        }
+      ],
       "areaServed": [
         "Portugal",
         "European Union",
@@ -379,6 +442,10 @@
       ],
       "availableChannel": {
         "@type": "ServiceChannel",
+        "name": "Acompanhamento de treino online",
+        "providesService": {
+          "@id": "https://pmorais.pt/#service-online-training"
+        },
         "serviceUrl": "https://pmorais.pt/treino-online",
         "servicePhone": {
           "@type": "ContactPoint",
@@ -397,6 +464,7 @@
       "alternateName": [
         "Exercício oncológico",
         "Treino depois do cancro",
+        "Treino pós-cancro",
         "Exercício físico na oncologia"
       ],
       "description": "Exercício adaptado para pessoas a viver com ou a recuperar de cancro, em coordenação com a equipa de saúde. Integra a oferta de treino de Paulo Morais.",
@@ -405,6 +473,14 @@
       "provider": {
         "@id": "https://pmorais.pt/#business"
       },
+      "subjectOf": [
+        {
+          "@id": "https://pmorais.pt/treino-oncologico#webpage"
+        },
+        {
+          "@id": "https://pmorais.pt/en/oncology-training#webpage"
+        }
+      ],
       "areaServed": [
         "Lisbon, Portugal",
         "Portugal",
@@ -419,6 +495,10 @@
       },
       "availableChannel": {
         "@type": "ServiceChannel",
+        "name": "Acompanhamento de treino online",
+        "providesService": {
+          "@id": "https://pmorais.pt/#service-oncology-exercise"
+        },
         "serviceUrl": "https://pmorais.pt/treino-oncologico",
         "servicePhone": {
           "@type": "ContactPoint",
@@ -444,6 +524,14 @@
       "provider": {
         "@id": "https://pmorais.pt/#business"
       },
+      "subjectOf": [
+        {
+          "@id": "https://pmorais.pt/osteopatia#webpage"
+        },
+        {
+          "@id": "https://pmorais.pt/en/osteopatia#webpage"
+        }
+      ],
       "areaServed": [
         "Lisbon, Portugal"
       ]
@@ -452,8 +540,8 @@
       "@type": "ProfilePage",
       "@id": "https://pmorais.pt/sobre-mim#webpage",
       "url": "https://pmorais.pt/sobre-mim",
-      "name": "Sobre Paulo Morais | Personal Trainer e Osteopata em Lisboa",
-      "description": "Conheça Paulo Morais, personal trainer e osteopata em Lisboa, com mais de 20 anos de experiência em treino personalizado e exercício adaptado.",
+      "name": "Personal Trainer em Lisboa | Sobre Paulo Morais",
+      "description": "Conheça Paulo Morais, personal trainer e osteopata em Lisboa com mais de 20 anos de experiência. Treino individual e privado, adaptado aos objetivos e à rotina.",
       "inLanguage": "pt-PT",
       "isPartOf": {
         "@id": "https://pmorais.pt/#website"
@@ -461,11 +549,19 @@
       "publisher": {
         "@id": "https://pmorais.pt/#business"
       },
-      "about": {
-        "@id": "https://pmorais.pt/#business"
-      },
+      "about": [
+        {
+          "@id": "https://pmorais.pt/#person"
+        },
+        {
+          "@id": "https://pmorais.pt/#service-personal-training"
+        }
+      ],
       "mainEntity": {
         "@id": "https://pmorais.pt/#person"
+      },
+      "hasPart": {
+        "@id": "https://pmorais.pt/sobre-mim#faq"
       },
       "workTranslation": [
         {
@@ -475,6 +571,49 @@
       "breadcrumb": {
         "@id": "https://pmorais.pt/sobre-mim#breadcrumb"
       }
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://pmorais.pt/sobre-mim#faq",
+      "url": "https://pmorais.pt/sobre-mim",
+      "inLanguage": "pt-PT",
+      "isPartOf": {
+        "@id": "https://pmorais.pt/sobre-mim#webpage"
+      },
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "O treino personalizado é individual?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Esta modalidade corresponde a acompanhamento individual, também procurado como treino privado ou personal training. O treino em grupo constitui uma opção distinta, descrita numa página própria."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "É necessário ter experiência de treino?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "A experiência anterior é uma informação relevante para definir o ponto de partida. O contacto inicial permite esclarecer objetivos e necessidades antes de escolher o acompanhamento."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Existe acompanhamento fora de Lisboa?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "O acompanhamento presencial tem base em Lisboa. O treino online permite solicitar acompanhamento à distância em Portugal e nos mercados internacionais abrangidos pelo serviço."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Como conhecer preços e disponibilidade?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Os preços, a disponibilidade e as condições do acompanhamento são esclarecidos diretamente no contacto. O pedido pode ser enviado por WhatsApp ou por email, com indicação da modalidade pretendida."
+          }
+        }
+      ]
     },
     {
       "@type": "BreadcrumbList",
@@ -489,7 +628,7 @@
         {
           "@type": "ListItem",
           "position": 2,
-          "name": "Sobre Paulo Morais",
+          "name": "Personal Trainer em Lisboa",
           "item": "https://pmorais.pt/sobre-mim"
         }
       ]
@@ -549,7 +688,6 @@
                 <ul>
 <li><a href="/" data-i18n="nav.home">Início</a></li>
 <li><a href="/sobre-mim" class="active" data-i18n="nav.about">Sobre Mim</a></li>
-<li><a href="/treino-personalizado">Personal Trainer</a></li>
 <li><a href="/osteopatia" data-i18n="nav.osteo">OSTEOPATIA</a></li>
 <li><a href="/treino-oncologico" data-i18n="nav.onco">Treino Oncológico</a></li>
 <li><a href="/perfil" data-i18n="nav.profile">Perfil</a></li>
@@ -596,6 +734,7 @@
                     <!-- Right Side (Text) -->
                     <div class="about-split-right">
                         <h2 class="about-hero-name">Paulo Morais</h2>
+                        <p class="about-hero-role">Personal trainer e osteopata em Lisboa</p>
 
                         <div class="about-hero-text">
                             <p>O Paulo trabalha com pessoas de todas as idades e objetivos: melhorar postura, perder peso,
@@ -607,6 +746,11 @@
                             <p>Adora o mar, a família e a adrenalina de um novo desafio. Ama viajar, seja um trilho a pé, um passeio de jipe ou uma viagem de mota.</p>
 
                             <p class="about-quote-inline">"O Paulo é uma pessoa de pessoas, sempre pronto para uma boa conversa."</p>
+                        </div>
+
+                        <div class="service-actions">
+                            <a href="#contacto" class="btn btn-primary">Pedir informações<i data-lucide="chevron-right" aria-hidden="true"></i></a>
+                            <a href="/perfil?booking=true" class="service-text-link">Agendar</a>
                         </div>
                     </div>
                 </div>
@@ -655,7 +799,7 @@
                     <p>O centro está em Lisboa e as sessões de osteopatia são presenciais. O treino online permite acompanhar clientes em Portugal, na União Europeia e em países lusófonos, de língua inglesa e de língua espanhola.</p>
                 </div>
                 <div class="sv-folder-actions" aria-label="Conhecer os serviços">
-                    <a href="/treino-personalizado" class="sv-piece-link">Treino personalizado <svg class="sv-ico" aria-hidden="true" focusable="false"><use href="/images/sobrevivencia/sprite.svg#sv-i-arrow"/></svg></a>
+                    <a href="#treino-personalizado" class="sv-piece-link">Treino personalizado <svg class="sv-ico" aria-hidden="true" focusable="false"><use href="/images/sobrevivencia/sprite.svg#sv-i-arrow"/></svg></a>
                     <a href="/treino-em-grupo" class="sv-piece-link">Treino em grupo <svg class="sv-ico" aria-hidden="true" focusable="false"><use href="/images/sobrevivencia/sprite.svg#sv-i-arrow"/></svg></a>
                     <a href="/treino-online" class="sv-piece-link">Treino online <svg class="sv-ico" aria-hidden="true" focusable="false"><use href="/images/sobrevivencia/sprite.svg#sv-i-arrow"/></svg></a>
                     <a href="/osteopatia" class="sv-piece-link">Osteopatia <svg class="sv-ico" aria-hidden="true" focusable="false"><use href="/images/sobrevivencia/sprite.svg#sv-i-arrow"/></svg></a>
@@ -697,110 +841,72 @@
 
             </div>
         </section>
-        <!-- sv:emocoes:start -->
-        <section id="emocoes" class="sv-section sv-watch" data-sv-piece="emocoes">
-            <div class="oncologia-glow-left"></div>
-            <div class="oncologia-glow-right"></div>
-            <div class="container-wide">
-                <div class="oncologia-header sv-head">
-                    <span class="oncologia-eyebrow">Passo 2 · Cuidar da cabeça depois do cancro</span>
-                    <h2>Como estás,<br>de verdade <span class="oncologia-highlight">depois do cancro?</span></h2>
-                    <p>O tratamento do cancro acaba, mas a cabeça não desliga logo. O medo de o cancro voltar, o sono, a tristeza e o cansaço de «ter de ser forte» podem durar anos. Aqui ninguém te dá uma nota: vira as pedras e vê se alguma te diz alguma coisa.</p>
+        <!-- Treino personalizado (antiga página /treino-personalizado, que redireciona para aqui) -->
+        <div class="about-training">
+            <section id="treino-personalizado" class="service-section" aria-labelledby="treino-personalizado-title">
+                <div class="container">
+                    <div class="service-section-intro">
+                        <span class="service-eyebrow">Lisboa · Acompanhamento individual</span>
+                        <h2 id="treino-personalizado-title">Treino personalizado em Lisboa</h2>
+                        <p class="service-lead">O treino personalizado com Paulo Morais consiste num acompanhamento individual, adaptado aos objetivos, à condição física e ao estilo de vida. O serviço presencial tem base em Lisboa.</p>
+                        <p>A modalidade permite concentrar o trabalho numa pessoa, com um plano ajustado às suas necessidades. Integra uma oferta que inclui treino em grupo, acompanhamento online, osteopatia e exercício oncológico.</p>
+                    </div>
                 </div>
-
-                <div class="sv-orb" aria-hidden="true">
-                    <span class="sv-orb-ring"></span><span class="sv-orb-ring"></span>
-                    <span class="sv-orb-core"><span class="sv-orb-in">Inspira</span><span class="sv-orb-out">Expira</span></span>
+            </section>
+            <section class="service-section" aria-labelledby="objetivos-title">
+                <div class="container">
+                    <div class="service-section-intro">
+                        <h2 id="objetivos-title">Um plano individual com objetivos definidos</h2>
+                        <p>A escolha do treino privado depende do objetivo, da experiência e do tipo de acompanhamento pretendido. O programa pode considerar diferentes prioridades, sem estabelecer resultados iguais para todas as pessoas.</p>
+                    </div>
+                    <div class="service-card-grid">
+                        <article class="service-card"><h3>Condição física e força</h3><p>O treino pode ter como objetivo desenvolver a condição física e a força. A seleção de exercícios e a progressão devem refletir o ponto de partida individual.</p></article>
+                        <article class="service-card"><h3>Rotina e continuidade</h3><p>O plano considera o estilo de vida e a disponibilidade para treinar. A organização do acompanhamento procura tornar a prática compatível com a rotina.</p></article>
+                        <article class="service-card"><h3>Objetivos específicos</h3><p>A experiência de Paulo Morais inclui pessoas com objetivos como melhorar a postura ou preparar uma maratona. Cada objetivo exige uma proposta adequada ao contexto individual.</p></article>
+                    </div>
                 </div>
-
-                <ul class="sv-stones" data-sv="flip" aria-label="Cinco pedras para virar">
-                        <li class="sv-stone-cell" style="--i:0">
-                            <button type="button" class="sv-stone" aria-pressed="false">
-                                <span class="sv-stone-inner">
-                                    <span class="sv-face sv-face--front">
-                                        <span class="sv-stone-ico"><svg class="sv-ico" aria-hidden="true" focusable="false"><use href="/images/sobrevivencia/sprite.svg#sv-i-smile"/></svg></span>
-                                        <span class="sv-stone-name">Humor</span>
-                                        <span class="sv-stone-q">Como tem estado o teu humor?</span>
-                                        <span class="sv-stone-tap">Toca para virar</span>
-                                    </span>
-                                    <span class="sv-face sv-face--back" aria-hidden="true">
-                                        <span class="sv-stone-msg"><strong>Pensa nisto</strong>Tristeza ou desânimo que não passam merecem ser ditos em voz alta. Não precisas de levar isto sem ajuda.</span>
-                                    </span>
-                                </span>
-                            </button>
-                        </li>
-                        <li class="sv-stone-cell" style="--i:1">
-                            <button type="button" class="sv-stone" aria-pressed="false">
-                                <span class="sv-stone-inner">
-                                    <span class="sv-face sv-face--front">
-                                        <span class="sv-stone-ico"><svg class="sv-ico" aria-hidden="true" focusable="false"><use href="/images/sobrevivencia/sprite.svg#sv-i-moon"/></svg></span>
-                                        <span class="sv-stone-name">Sono</span>
-                                        <span class="sv-stone-q">Dormes bem? Ou a cabeça não pára à noite?</span>
-                                        <span class="sv-stone-tap">Toca para virar</span>
-                                    </span>
-                                    <span class="sv-face sv-face--back" aria-hidden="true">
-                                        <span class="sv-stone-msg"><strong>Pensa nisto</strong>O sono mexe com o humor, com a dor e com a energia. Vale a pena falar disto com a tua equipa.</span>
-                                    </span>
-                                </span>
-                            </button>
-                        </li>
-                        <li class="sv-stone-cell" style="--i:2">
-                            <button type="button" class="sv-stone" aria-pressed="false">
-                                <span class="sv-stone-inner">
-                                    <span class="sv-face sv-face--front">
-                                        <span class="sv-stone-ico"><svg class="sv-ico" aria-hidden="true" focusable="false"><use href="/images/sobrevivencia/sprite.svg#sv-i-worry"/></svg></span>
-                                        <span class="sv-stone-name">Preocupações</span>
-                                        <span class="sv-stone-q">Há um medo que volta sempre?</span>
-                                        <span class="sv-stone-tap">Toca para virar</span>
-                                    </span>
-                                    <span class="sv-face sv-face--back" aria-hidden="true">
-                                        <span class="sv-stone-msg"><strong>Pensa nisto</strong>O medo de o cancro regressar é um dos mais comuns, e dos mais difíceis. Muitos sobreviventes sentem o mesmo. A psico-oncologia pode ajudar.</span>
-                                    </span>
-                                </span>
-                            </button>
-                        </li>
-                        <li class="sv-stone-cell" style="--i:3">
-                            <button type="button" class="sv-stone" aria-pressed="false">
-                                <span class="sv-stone-inner">
-                                    <span class="sv-face sv-face--front">
-                                        <span class="sv-stone-ico"><svg class="sv-ico" aria-hidden="true" focusable="false"><use href="/images/sobrevivencia/sprite.svg#sv-i-users"/></svg></span>
-                                        <span class="sv-stone-name">Família</span>
-                                        <span class="sv-stone-q">Como está o stress cá em casa?</span>
-                                        <span class="sv-stone-tap">Toca para virar</span>
-                                    </span>
-                                    <span class="sv-face sv-face--back" aria-hidden="true">
-                                        <span class="sv-stone-msg"><strong>Pensa nisto</strong>A família também viveu isto. Falar em conjunto, ou pedir apoio para quem cuida de ti, ajuda toda a gente.</span>
-                                    </span>
-                                </span>
-                            </button>
-                        </li>
-                        <li class="sv-stone-cell" style="--i:4">
-                            <button type="button" class="sv-stone" aria-pressed="false">
-                                <span class="sv-stone-inner">
-                                    <span class="sv-face sv-face--front">
-                                        <span class="sv-stone-ico"><svg class="sv-ico" aria-hidden="true" focusable="false"><use href="/images/sobrevivencia/sprite.svg#sv-i-lifebuoy"/></svg></span>
-                                        <span class="sv-stone-name">Apoio</span>
-                                        <span class="sv-stone-q">Tens com quem falar?</span>
-                                        <span class="sv-stone-tap">Toca para virar</span>
-                                    </span>
-                                    <span class="sv-face sv-face--back" aria-hidden="true">
-                                        <span class="sv-stone-msg"><strong>Pensa nisto</strong>Amigos, grupos de sobreviventes, psico-oncologia. O isolamento pesa; uma rede, por pequena que seja, alivia.</span>
-                                    </span>
-                                </span>
-                            </button>
-                        </li>
-                </ul>
-
-                <p class="sv-quote">Quando os tratamentos do cancro acabam, muita gente sente que ficou sozinha: a equipa que a acompanhava todas as semanas desaparece de repente. <strong>É normal sentir isso, e há ajuda.</strong></p>
-                <p class="sv-note sv-note--center"><svg class="sv-ico" aria-hidden="true" focusable="false"><use href="/images/sobrevivencia/sprite.svg#sv-i-info"/></svg><span>Isto não é um teste nem um diagnóstico, e nada é guardado ou enviado. Se pesa, fala com a tua equipa de saúde ou com um profissional de psico-oncologia. Em caso de crise, liga 112 ou SNS 24 (808 24 24 24).</span></p>
-
-                <div class="sv-piece-foot">
-                    <span class="sv-progress" data-sv-progress data-tpl="Descobriste {n} de 5 passos" data-done="Descobriste os 5 passos!"><span class="sv-pdots" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span><span class="sv-ptext" aria-live="polite">Descobriste 0 de 5 passos</span></span>
-                    <a class="sv-piece-link" href="/treino-oncologico">Guia do treino oncológico <svg class="sv-ico" aria-hidden="true" focusable="false"><use href="/images/sobrevivencia/sprite.svg#sv-i-arrow"/></svg></a>
+            </section>
+            <section class="service-section" aria-labelledby="formato-title">
+                <div class="container">
+                    <div class="service-section-intro">
+                        <h2 id="formato-title">Como preparar o acompanhamento</h2>
+                        <p>O contacto inicial permite esclarecer o objetivo e a modalidade mais adequada. A definição do plano deve considerar a experiência de treino e as necessidades relevantes para a prática.</p>
+                    </div>
+                    <div class="service-card-grid">
+                        <article class="service-card"><span class="service-step-number">01</span><h3>Identificar o objetivo</h3><p>No primeiro contacto, podem ser apresentados os objetivos, a experiência anterior e a disponibilidade. Estas informações ajudam a enquadrar o pedido de acompanhamento individual.</p></article>
+                        <article class="service-card"><span class="service-step-number">02</span><h3>Definir o formato</h3><p>O treino privado presencial realiza-se em Lisboa, com condições acordadas no contacto. Para acompanhamento à distância, existe também a modalidade de <a href="/treino-online" class="service-text-link">treino online</a>.</p></article>
+                        <article class="service-card"><span class="service-step-number">03</span><h3>Adaptar o plano</h3><p>O programa individual considera as necessidades, o estilo de vida e a evolução do treino. As dúvidas e dificuldades devem ser comunicadas durante o acompanhamento.</p></article>
+                    </div>
                 </div>
-            </div>
-        </section>
-        <!-- sv:emocoes:end -->
+            </section>
+            <section class="service-section" aria-labelledby="informacoes-title">
+                <div class="container">
+                    <h2 id="informacoes-title">Informações antes de começar</h2>
+                    <div class="service-faq">
+                        <article><h3>O treino personalizado é individual?</h3><p>Esta modalidade corresponde a acompanhamento individual, também procurado como treino privado ou personal training. O <a href="/treino-em-grupo">treino em grupo</a> constitui uma opção distinta, descrita numa página própria.</p></article>
+                        <article><h3>É necessário ter experiência de treino?</h3><p>A experiência anterior é uma informação relevante para definir o ponto de partida. O contacto inicial permite esclarecer objetivos e necessidades antes de escolher o acompanhamento.</p></article>
+                        <article><h3>Existe acompanhamento fora de Lisboa?</h3><p>O acompanhamento presencial tem base em Lisboa. O <a href="/treino-online">treino online</a> permite solicitar acompanhamento à distância em Portugal e nos mercados internacionais abrangidos pelo serviço.</p></article>
+                        <article><h3>Como conhecer preços e disponibilidade?</h3><p>Os preços, a disponibilidade e as condições do acompanhamento são esclarecidos diretamente no contacto. O pedido pode ser enviado por WhatsApp ou por email, com indicação da modalidade pretendida.</p></article>
+                    </div>
+                </div>
+            </section>
+            <section id="contacto" class="service-section" aria-labelledby="contacto-title">
+                <div class="container">
+                    <div class="service-contact">
+                        <h2 id="contacto-title">Contactar sobre treino personalizado</h2>
+                        <p>O contacto permite esclarecer o acompanhamento individual em Lisboa e as condições do serviço. Para enquadrar o pedido, basta indicar o objetivo, a modalidade pretendida e a disponibilidade.</p>
+                        <div class="service-actions">
+                            <a href="https://wa.me/351960471537" class="btn btn-primary" target="_blank" rel="noopener noreferrer">WhatsApp<i data-lucide="message-circle" aria-hidden="true"></i></a>
+                            <a href="/perfil?booking=true" class="service-text-link">Agendar</a>
+                        </div>
+                        <div class="service-contact-links">
+                            <a href="mailto:pt@pmorais.pt">pt@pmorais.pt</a>
+                            <a href="tel:+351960471537">Telefone: +351 960 471 537</a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
 
     </main>
 
@@ -819,6 +925,9 @@
                 <ul class="footer-links-list">
                     <li><a href="/" data-i18n="nav.home">Início</a></li>
                     <li><a href="/sobre-mim" data-i18n="nav.about">Sobre Mim</a></li>
+                    <li><a href="/sobre-mim#treino-personalizado">Treino personalizado</a></li>
+                    <li><a href="/treino-em-grupo">Treino em grupo</a></li>
+                    <li><a href="/treino-online">Treino online</a></li>
                     <li><a href="/osteopatia">Osteopatia</a></li>
                     <li><a href="/perfil" data-i18n="nav.profile">Perfil</a></li>
                     <li><a href="/treino-oncologico">Treino Oncológico</a></li>
@@ -853,21 +962,20 @@
                     </li>
                     <li><a href="https://wa.me/351960471537" target="_blank" rel="noopener noreferrer">WhatsApp</a></li>
                     <li><a href="mailto:pt@pmorais.pt?subject=Informação">Email</a></li>
-                    <li><a href="/osteopatia#contacto">Entre em contacto connosco</a></li>
+                    <li><a href="#contacto">Entre em contacto connosco</a></li>
                 </ul>
             </div>
         </div>
 
         <div class="footer-bar-elysium">
-            <div class="crafted-text"><a href="https://elysiumdr.eu" target="_blank" rel="noopener noreferrer">Desenvolvido por Elysium λ Development & Research.</a><br><span class="version-label">V1.6.2</span></div>
+            <div class="crafted-text"><a href="https://elysiumdr.eu" target="_blank" rel="noopener noreferrer">Desenvolvido por Elysium λ Development & Research.</a><br><span class="version-label">V1.7.0</span></div>
         </div>
     </footer>
 
     <!-- Scripts -->
-    <script nonce="pmorais-2026" src="js/script.js?v=1.6.2" defer></script>
-    <script nonce="pmorais-2026" src="js/sobrevivencia.js?v=1.6.2" defer></script>
-    <script nonce="pmorais-2026" src="js/webmcp.js?v=1.6.2" defer></script>
-    <script nonce="pmorais-2026" src="js/cookie-consent.js?v=1.6.2" defer></script>
+    <script nonce="pmorais-2026" src="js/script.js?v=1.7.0" defer></script>
+    <script nonce="pmorais-2026" src="js/webmcp.js?v=1.7.0" defer></script>
+    <script nonce="pmorais-2026" src="js/cookie-consent.js?v=1.7.0" defer></script>
 </body>
 
 </html>

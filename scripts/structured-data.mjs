@@ -15,21 +15,24 @@ const LABELS = {
     home: 'Início',
     jobTitle: 'Personal Trainer e Osteopata',
     knowsAbout: ['Treino personalizado', 'Treino privado', 'Treino em grupo', 'Treino online', 'Osteopatia', 'Exercício oncológico', 'Exercício depois do cancro', 'Treino de força', 'Mobilidade', 'Postura'],
-    oncologyAudience: 'Pessoas a viver com cancro ou depois do tratamento do cancro'
+    oncologyAudience: 'Pessoas a viver com cancro ou depois do tratamento do cancro',
+    onlineChannel: 'Acompanhamento de treino online'
   },
   'en-GB': {
     catalog: 'Paulo Morais services',
     home: 'Home',
     jobTitle: 'Personal Trainer and Osteopath',
     knowsAbout: ['Personal training', 'Private training', 'Group training', 'Online training', 'Osteopathy', 'Cancer exercise', 'Exercise after cancer', 'Strength training', 'Mobility', 'Posture'],
-    oncologyAudience: 'People living with cancer or after cancer treatment'
+    oncologyAudience: 'People living with cancer or after cancer treatment',
+    onlineChannel: 'Online training support'
   },
   'es': {
     catalog: 'Servicios de Paulo Morais',
     home: 'Inicio',
     jobTitle: 'Entrenador Personal y Osteópata',
     knowsAbout: ['Entrenamiento personal', 'Entrenamiento privado', 'Entrenamiento en grupo', 'Entrenamiento online', 'Osteopatía', 'Ejercicio oncológico', 'Ejercicio después del cáncer', 'Entrenamiento de fuerza', 'Movilidad', 'Postura'],
-    oncologyAudience: 'Personas que viven con cáncer o después del tratamiento del cáncer'
+    oncologyAudience: 'Personas que viven con cáncer o después del tratamiento del cáncer',
+    onlineChannel: 'Acompañamiento de entrenamiento online'
   }
 };
 
@@ -44,6 +47,8 @@ export function structuredData(page, { faq = [] } = {}) {
   const languages = [...new Set(PUBLIC_PAGES.map((entry) => entry.language))];
   const text = (translations) => translations[locale] ?? translations[locale.split('-')[0]] ?? translations['pt-PT'];
   const label = LABELS[locale] ?? LABELS[locale.split('-')[0]] ?? LABELS['pt-PT'];
+  const publishedServicePages = (service) => PUBLIC_PAGES.filter((entry) =>
+    LOCALES[entry.language]?.published && service.page[entry.language] === absolute(entry.path));
   const serviceNodes = SERVICES.map((service) => ({
     '@type': 'Service',
     '@id': serviceId(service),
@@ -53,6 +58,9 @@ export function structuredData(page, { faq = [] } = {}) {
     serviceType: text(service.name),
     url: service.page[locale] ?? service.page['pt-PT'],
     provider: { '@id': businessId },
+    // A single service has several published language pages, while its entity
+    // ID remains stable. No reserved Spanish URL enters this relationship.
+    subjectOf: publishedServicePages(service).map((entry) => ({ '@id': `${absolute(entry.path)}#webpage` })),
     areaServed: [service.coverage?.inPerson, ...(service.coverage?.online ?? [])].filter(Boolean),
     ...(service.id === 'oncology-exercise' ? {
       audience: { '@type': 'PeopleAudience', audienceType: label.oncologyAudience }
@@ -60,6 +68,8 @@ export function structuredData(page, { faq = [] } = {}) {
     ...(service.delivery.includes('online') ? {
       availableChannel: {
         '@type': 'ServiceChannel',
+        name: label.onlineChannel,
+        providesService: { '@id': serviceId(service) },
         serviceUrl: service.page[locale] ?? service.page['pt-PT'],
         servicePhone: { '@type': 'ContactPoint', telephone: CONTACT.telephone },
         availableLanguage: SESSION_LANGUAGES.offered
@@ -79,8 +89,10 @@ export function structuredData(page, { faq = [] } = {}) {
     inLanguage: locale,
     isPartOf: { '@id': websiteId },
     publisher: { '@id': businessId },
-    about: { '@id': service ? serviceId(service) : businessId },
-    ...(service || isProfile ? { mainEntity: { '@id': isProfile ? personId : serviceId(service) } } : {}),
+    about: isProfile
+      ? [{ '@id': personId }, ...(service ? [{ '@id': serviceId(service) }] : [])]
+      : { '@id': service ? serviceId(service) : businessId },
+    ...(!isBlog ? { mainEntity: { '@id': isProfile ? personId : service ? serviceId(service) : businessId } } : {}),
     ...(faq.length ? { hasPart: { '@id': faqId } } : {}),
     workTranslation: localizedPages(page).filter((entry) => entry.path !== page.path)
       .map((entry) => ({ '@id': `${absolute(entry.path)}#webpage` }))
@@ -135,6 +147,8 @@ export function structuredData(page, { faq = [] } = {}) {
       image: `${SITE_ORIGIN}/images/sobre-mim/paulo-morais.png`,
       sameAs: [CONTACT.instagram],
       worksFor: { '@id': businessId },
+      mainEntityOfPage: PUBLIC_PAGES.filter((entry) => entry.translationKey === 'about' && LOCALES[entry.language]?.published)
+        .map((entry) => ({ '@id': `${absolute(entry.path)}#webpage` })),
       workLocation: lisbon,
       knowsLanguage: SESSION_LANGUAGES.offered,
       knowsAbout: label.knowsAbout

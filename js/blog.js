@@ -1,4 +1,4 @@
-import { db, auth } from './firebase-config.js?v=1.6.2';
+import { db, auth } from './firebase-config.js?v=1.7.0';
 import { collection, getDocs, doc, getDoc, query, where, orderBy } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
 
@@ -9,6 +9,28 @@ let allPosts = [];
 let currentFormat = 'all';
 let currentCategory = 'all';
 let currentSearch = '';
+let exportedArticleIndex;
+const exportedArticles = new Map();
+
+// The registry contains only published, genuinely translated static exports.
+// New posts retain the existing live reader until the next export/deployment.
+async function loadExportedArticleIndex() {
+    if (!exportedArticleIndex) {
+        exportedArticleIndex = fetch('/api/v1/articles.json', { cache: 'no-cache' })
+            .then(response => response.ok ? response.json() : null)
+            .then(manifest => {
+                for (const article of manifest?.articles || []) {
+                    const language = article.language?.split('-')[0];
+                    const expected = `${language === 'en' ? '/en/articles' : '/artigos'}/${article.id}`;
+                    if (['pt-PT', 'en-GB'].includes(article.language) && /^[A-Za-z0-9_-]{1,150}$/.test(article.id) && article.path === expected) {
+                        exportedArticles.set(`${article.id}:${language}`, article.path);
+                    }
+                }
+            })
+            .catch(() => { /* The live reader remains available if the registry cannot load. */ });
+    }
+    return exportedArticleIndex;
+}
 
 const CATEGORY_NAMES = {
     'osteopatia': isEnglish ? 'Osteopathy' : 'Osteopatia',
@@ -45,7 +67,7 @@ export async function loadBlogPosts(containerId) {
 
         // Only fetch published posts
         const q = query(collection(db, "blog_posts"), where("published", "==", true), orderBy("createdAt", "desc"));
-        const snapshot = await getDocs(q);
+        const [snapshot] = await Promise.all([getDocs(q), loadExportedArticleIndex()]);
         
         allPosts = [];
         snapshot.forEach(docSnap => {
@@ -131,6 +153,8 @@ function renderPosts(containerId) {
     });
 
     container.innerHTML = '';
+    const staticIndex = document.getElementById('static-article-index');
+    if (staticIndex) staticIndex.hidden = true;
     
     if (filtered.length === 0) {
         container.innerHTML = `<p class="text-center" style="opacity: 0.7; padding: 50px 0; grid-column: 1/-1;">${isEnglish ? 'No articles found matching your criteria.' : 'Nenhum artigo encontrado com estes critérios.'}</p>`;
@@ -158,7 +182,10 @@ function createPostCard(data) {
     }
 
     const articlePath = isEnglish ? '/en/article' : '/artigo';
-    const articleUrl = `${articlePath}?id=${data.slug || data.id}`;
+    const preferredLanguage = isEnglish ? 'en' : 'pt';
+    const articleUrl = exportedArticles.get(`${data.id}:${preferredLanguage}`)
+        || exportedArticles.get(`${data.id}:${preferredLanguage === 'en' ? 'pt' : 'en'}`)
+        || `${articlePath}?id=${encodeURIComponent(data.id)}`;
     const dateStr = data.createdAt ? new Date(data.createdAt.seconds * 1000).toLocaleDateString(isEnglish ? 'en-GB' : 'pt-PT', { year: 'numeric', month: 'long', day: 'numeric' }) : '';
     const readTime = data.readTime || 5;
     

@@ -1,6 +1,6 @@
 export const SITE_ORIGIN = 'https://pmorais.pt';
-export const LAST_MODIFIED = '2026-10-08';
-export const ASSET_VERSION = '1.6.2';
+export const LAST_MODIFIED = '2026-10-10';
+export const ASSET_VERSION = '1.7.0';
 
 // Add a fully translated /es/ page with a matching translationKey to activate
 // Spanish hreflang in HTML, sitemaps and discovery. Unpublished URLs stay absent.
@@ -17,10 +17,10 @@ export const LOCALES = {
 export const PLANNED_SPANISH_PATHS = {
   'home': '/es/',
   'osteopathy': '/es/osteopatia',
+  // Personal training lives on the about page (/sobre-mim#treino-personalizado).
   'about': '/es/sobre-mi',
   'blog': '/es/blog',
   'oncology-training': '/es/entrenamiento-oncologico',
-  'personal-training': '/es/entrenamiento-personal',
   'group-training': '/es/entrenamiento-en-grupo',
   'online-training': '/es/entrenamiento-online'
 };
@@ -54,10 +54,10 @@ export const PUBLIC_PAGES = [
     "path": "/sobre-mim",
     "language": "pt-PT",
     "alternatePath": "/en/sobre-mim",
-    "title": "Sobre Paulo Morais | Personal Trainer e Osteopata em Lisboa",
-    "description": "Conheça Paulo Morais, personal trainer e osteopata em Lisboa, com mais de 20 anos de experiência em treino personalizado e exercício adaptado.",
+    "title": "Personal Trainer em Lisboa | Sobre Paulo Morais",
+    "description": "Conheça Paulo Morais, personal trainer e osteopata em Lisboa com mais de 20 anos de experiência. Treino individual e privado, adaptado aos objetivos e à rotina.",
     "ogType": "profile",
-    "priority": "0.8"
+    "priority": "0.9"
   },
   {
     "file": "blog.html",
@@ -109,10 +109,10 @@ export const PUBLIC_PAGES = [
     "path": "/en/sobre-mim",
     "language": "en-GB",
     "alternatePath": "/sobre-mim",
-    "title": "About Paulo Morais | Personal Trainer & Osteopath in Lisbon",
-    "description": "Meet Paulo Morais, a personal trainer and osteopath in Lisbon, with more than 20 years of experience in personalised and adapted exercise.",
+    "title": "Personal Trainer in Lisbon | About Paulo Morais",
+    "description": "Meet Paulo Morais, a personal trainer and osteopath in Lisbon with more than 20 years of experience. Private, one-to-one training adapted to your goals and routine.",
     "ogType": "profile",
-    "priority": "0.8"
+    "priority": "0.9"
   },
   {
     "file": "en/blog.html",
@@ -137,17 +137,6 @@ export const PUBLIC_PAGES = [
     "priority": "0.8"
   },
   {
-    "file": "treino-personalizado.html",
-    "translationKey": "personal-training",
-    "path": "/treino-personalizado",
-    "language": "pt-PT",
-    "alternatePath": "/en/personal-training",
-    "title": "Treino Personalizado em Lisboa | Personal Trainer Paulo Morais",
-    "description": "Personal trainer em Lisboa: treino individual e privado adaptado aos objetivos, condição física e rotina. Acompanhamento personalizado com Paulo Morais.",
-    "ogType": "website",
-    "priority": "0.9"
-  },
-  {
     "file": "treino-em-grupo.html",
     "translationKey": "group-training",
     "path": "/treino-em-grupo",
@@ -166,17 +155,6 @@ export const PUBLIC_PAGES = [
     "alternatePath": "/en/online-training",
     "title": "Treino Online e Personal Trainer Virtual | Paulo Morais",
     "description": "Treino personalizado online com Paulo Morais, a partir de Lisboa, para Portugal, União Europeia e países lusófonos, anglófonos e hispanófonos.",
-    "ogType": "website",
-    "priority": "0.9"
-  },
-  {
-    "file": "en/personal-training.html",
-    "translationKey": "personal-training",
-    "path": "/en/personal-training",
-    "language": "en-GB",
-    "alternatePath": "/treino-personalizado",
-    "title": "Personal Trainer in Lisbon | Private Training with Paulo Morais",
-    "description": "Personal trainer in Lisbon: private, one-to-one training adapted to individual goals, physical condition and routine, with personalised support from Paulo Morais.",
     "ogType": "website",
     "priority": "0.9"
   },
@@ -205,7 +183,10 @@ export const PUBLIC_PAGES = [
 ];
 
 export function localizedPages(page, pages = PUBLIC_PAGES) {
-  return pages.filter((candidate) => candidate.translationKey === page.translationKey);
+  // A reserved locale is not a published translation. Both the locale and
+  // the individual translated page must be registered before advertising it.
+  return pages.filter((candidate) => candidate.translationKey === page.translationKey
+    && LOCALES[candidate.language]?.published);
 }
 
 export function pageAlternates(page, pages = PUBLIC_PAGES) {
@@ -215,6 +196,32 @@ export function pageAlternates(page, pages = PUBLIC_PAGES) {
     language: LOCALES[candidate.language]?.hreflang ?? candidate.language,
     path: candidate.path
   })).concat(fallback ? [{ language: 'x-default', path: fallback.path }] : []);
+}
+
+// Fail before rewriting any HTML when a future translation or service page
+// introduces a conflicting URL, an unpublished locale or an invalid canonical.
+export function assertPublicPages(pages = PUBLIC_PAGES) {
+  const seenFiles = new Set();
+  const seenPaths = new Set();
+  const seenTranslations = new Set();
+  for (const page of pages) {
+    const label = page.file ?? page.path ?? 'Public page';
+    if (!LOCALES[page.language]?.published) throw new Error(`${label}: locale ${page.language} is not published`);
+    if (!page.translationKey || !page.file || !page.title || !page.description) throw new Error(`${label}: incomplete SEO metadata`);
+    if (!page.path?.startsWith('/') || page.path.startsWith('//') || /[?#]|\.html$/i.test(page.path)) {
+      throw new Error(`${label}: expected a clean, on-site canonical path`);
+    }
+    if (page.language === 'es' && PLANNED_SPANISH_PATHS[page.translationKey] !== page.path) {
+      throw new Error(`${label}: Spanish URL must match its reserved translation path`);
+    }
+    const translation = `${page.translationKey}:${page.language}`;
+    if (seenFiles.has(page.file) || seenPaths.has(page.path) || seenTranslations.has(translation)) {
+      throw new Error(`${label}: duplicate file, canonical path or translation`);
+    }
+    seenFiles.add(page.file);
+    seenPaths.add(page.path);
+    seenTranslations.add(translation);
+  }
 }
 
 export const PRIVATE_ROUTES = [

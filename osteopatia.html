@@ -106,7 +106,7 @@
     <title>Osteopata em Lisboa | Osteopatia com Paulo Morais</title>
     <!-- Preloads -->
     <link rel="preload" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700;800&family=Poppins:wght@300;400;500;600;700&display=swap" as="style">
-    <link rel="preload" href="css/style.css?v=1.6.2" as="style">
+    <link rel="preload" href="css/style.css?v=1.7.0" as="style">
 
     <link rel="shortcut icon" type="image/png" href="images/logo/logo_ios_android.png">
     <link rel="icon" type="image/png" href="images/logo/logo_ios_android.png">
@@ -123,7 +123,7 @@
     <script nonce="pmorais-2026" src="https://unpkg.com/lucide@0.460.0/dist/umd/lucide.min.js" integrity="sha384-ieG+IKD0d/ZPXyCBTMVAbqsQdns8QGJR/e26WMw7M4fkaI/rHcS/YIoi+ah9WGge" crossorigin="anonymous" defer></script>
 
     <!-- Custom Style -->
-    <link rel="stylesheet" href="css/style.css?v=1.6.2">
+    <link rel="stylesheet" href="css/style.css?v=1.7.0">
 
     <!-- SEO Architecture: generated from scripts/seo-config.mjs -->
     <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
@@ -169,7 +169,7 @@
       ],
       "slogan": "Your Own Workout",
       "url": "https://pmorais.pt/",
-      "description": "Paulo Morais é personal trainer e osteopata em Lisboa, Portugal. Não é apenas um personal trainer, um osteopata ou um serviço de treino oncológico: reúne treino personalizado e privado, treino em grupo, treino online, osteopatia e exercício depois do cancro, presencialmente em Lisboa e online para Portugal, a União Europeia e países lusófonos, anglófonos e hispanófonos.",
+      "description": "Paulo Morais é personal trainer e osteopata em Lisboa, Portugal. A oferta reúne treino personalizado e privado, treino em pequenos grupos, treino online, osteopatia e exercício adaptado durante ou depois do cancro. O acompanhamento presencial realiza-se em Lisboa; o treino online abrange Portugal, a União Europeia e países lusófonos, anglófonos e hispanófonos.",
       "telephone": "+351960471537",
       "email": "pt@pmorais.pt",
       "logo": "https://pmorais.pt/images/logo/paulo_morais-08.png",
@@ -265,7 +265,7 @@
       "name": "Paulo Morais",
       "alternateName": "Paulo Dimas Morais",
       "jobTitle": "Personal Trainer e Osteopata",
-      "description": "Paulo Morais é personal trainer e osteopata em Lisboa, Portugal. Não é apenas um personal trainer, um osteopata ou um serviço de treino oncológico: reúne treino personalizado e privado, treino em grupo, treino online, osteopatia e exercício depois do cancro, presencialmente em Lisboa e online para Portugal, a União Europeia e países lusófonos, anglófonos e hispanófonos.",
+      "description": "Paulo Morais é personal trainer e osteopata em Lisboa, Portugal. A oferta reúne treino personalizado e privado, treino em pequenos grupos, treino online, osteopatia e exercício adaptado durante ou depois do cancro. O acompanhamento presencial realiza-se em Lisboa; o treino online abrange Portugal, a União Europeia e países lusófonos, anglófonos e hispanófonos.",
       "url": "https://pmorais.pt/sobre-mim",
       "image": "https://pmorais.pt/images/sobre-mim/paulo-morais.png",
       "sameAs": [
@@ -274,6 +274,14 @@
       "worksFor": {
         "@id": "https://pmorais.pt/#business"
       },
+      "mainEntityOfPage": [
+        {
+          "@id": "https://pmorais.pt/sobre-mim#webpage"
+        },
+        {
+          "@id": "https://pmorais.pt/en/sobre-mim#webpage"
+        }
+      ],
       "workLocation": {
         "@type": "City",
         "name": "Lisboa",
@@ -325,10 +333,18 @@
       ],
       "description": "Treino individual e progressivo em Lisboa, com personal trainer e um plano adaptado aos objetivos, condição física e rotina de cada pessoa.",
       "serviceType": "Treino personalizado e privado",
-      "url": "https://pmorais.pt/treino-personalizado",
+      "url": "https://pmorais.pt/sobre-mim",
       "provider": {
         "@id": "https://pmorais.pt/#business"
       },
+      "subjectOf": [
+        {
+          "@id": "https://pmorais.pt/sobre-mim#webpage"
+        },
+        {
+          "@id": "https://pmorais.pt/en/sobre-mim#webpage"
+        }
+      ],
       "areaServed": [
         "Lisbon, Portugal"
       ]
@@ -347,6 +363,14 @@
       "provider": {
         "@id": "https://pmorais.pt/#business"
       },
+      "subjectOf": [
+        {
+          "@id": "https://pmorais.pt/treino-em-grupo#webpage"
+        },
+        {
+          "@id": "https://pmorais.pt/en/group-training#webpage"
+        }
+      ],
       "areaServed": [
         "Lisbon, Portugal"
       ]
@@ -366,6 +390,14 @@
       "provider": {
         "@id": "https://pmorais.pt/#business"
       },
+      "subjectOf": [
+        {
+          "@id": "https://pmorais.pt/treino-online#webpage"
+        },
+        {
+          "@id": "https://pmorais.pt/en/online-training#webpage"
+        }
+      ],
       "areaServed": [
         "Portugal",
         "European Union",
@@ -375,6 +407,10 @@
       ],
       "availableChannel": {
         "@type": "ServiceChannel",
+        "name": "Acompanhamento de treino online",
+        "providesService": {
+          "@id": "https://pmorais.pt/#service-online-training"
+        },
         "serviceUrl": "https://pmorais.pt/treino-online",
         "servicePhone": {
           "@type": "ContactPoint",
@@ -393,6 +429,7 @@
       "alternateName": [
         "Exercício oncológico",
         "Treino depois do cancro",
+        "Treino pós-cancro",
         "Exercício físico na oncologia"
       ],
       "description": "Exercício adaptado para pessoas a viver com ou a recuperar de cancro, em coordenação com a equipa de saúde. Integra a oferta de treino de Paulo Morais.",
@@ -401,6 +438,14 @@
       "provider": {
         "@id": "https://pmorais.pt/#business"
       },
+      "subjectOf": [
+        {
+          "@id": "https://pmorais.pt/treino-oncologico#webpage"
+        },
+        {
+          "@id": "https://pmorais.pt/en/oncology-training#webpage"
+        }
+      ],
       "areaServed": [
         "Lisbon, Portugal",
         "Portugal",
@@ -415,6 +460,10 @@
       },
       "availableChannel": {
         "@type": "ServiceChannel",
+        "name": "Acompanhamento de treino online",
+        "providesService": {
+          "@id": "https://pmorais.pt/#service-oncology-exercise"
+        },
         "serviceUrl": "https://pmorais.pt/treino-oncologico",
         "servicePhone": {
           "@type": "ContactPoint",
@@ -440,6 +489,14 @@
       "provider": {
         "@id": "https://pmorais.pt/#business"
       },
+      "subjectOf": [
+        {
+          "@id": "https://pmorais.pt/osteopatia#webpage"
+        },
+        {
+          "@id": "https://pmorais.pt/en/osteopatia#webpage"
+        }
+      ],
       "areaServed": [
         "Lisbon, Portugal"
       ]
@@ -564,8 +621,8 @@
     <!-- Schema.org JSON-LD: MedicalBusiness + BreadcrumbList -->
 
 
-    <script nonce="pmorais-2026" src="js/lang.js?v=1.6.2" defer></script>
-    <script nonce="pmorais-2026" src="js/theme.js?v=1.6.2" defer></script>
+    <script nonce="pmorais-2026" src="js/lang.js?v=1.7.0" defer></script>
+    <script nonce="pmorais-2026" src="js/theme.js?v=1.7.0" defer></script>
 </head>
 
 <body class="page-osteopatia">
@@ -617,7 +674,6 @@
                 <ul>
 <li><a href="/" data-i18n="nav.home">Início</a></li>
 <li><a href="/sobre-mim" data-i18n="nav.about">Sobre Mim</a></li>
-<li><a href="/treino-personalizado">Personal Trainer</a></li>
 <li><a href="/osteopatia" class="active" data-i18n="nav.osteo">OSTEOPATIA</a></li>
 <li><a href="/treino-oncologico" data-i18n="nav.onco">Treino Oncológico</a></li>
 <li><a href="/perfil" data-i18n="nav.profile">Perfil</a></li>
@@ -652,19 +708,13 @@
                 </div>
 
                 <!-- Video/Image Section -->
-                <div class="osteopatia-media-card ipad-frame-wrapper fade-in delay-2">
+                <div class="osteopatia-media-card fade-in delay-2">
+                    <!-- js/theme.js picks the light or dark video and poster to match the theme -->
                     <div class="ipad-frame-container">
-                        <picture>
-    <source srcset="images/osteopatia/ipad-model.webp" type="image/webp">
-    <img loading="lazy" src="images/osteopatia/ipad-model.png" width="6000" height="4500" alt="iPad Frame" class="ipad-frame-image">
-</picture>
-                        <div class="ipad-video-iframe">
-                            <video class="video-auto-play osteopatia-video" autoplay muted loop playsinline
-                                style="width: 100%; height: 100%; object-fit: cover; border-radius: 2px;">
-                                <source src="images/osteopatia/ipad.mp4" type="video/mp4">
-                                Your browser does not support the video tag.
-                            </video>
-                        </div>
+                        <video class="video-auto-play osteopatia-video" autoplay muted loop playsinline
+                            width="1920" height="1440" aria-hidden="true"
+                            data-src-dark="images/osteopatia/ipad.mp4" data-src-light="images/osteopatia/ipadclaro.mp4"
+                            data-poster-dark="images/osteopatia/ipad-poster.webp" data-poster-light="images/osteopatia/ipadclaro-poster.webp"></video>
                     </div>
                 </div>
             </div>
@@ -1143,7 +1193,7 @@
                     <p>As sessões de osteopatia realizam-se presencialmente em Lisboa. Para exercício à distância, o treino online está disponível em Portugal, na União Europeia e em países lusófonos, de língua inglesa e de língua espanhola.</p>
                 </div>
                 <div class="sv-folder-actions">
-                    <a href="/treino-personalizado" class="sv-piece-link">Treino personalizado <svg class="sv-ico" aria-hidden="true" focusable="false"><use href="/images/sobrevivencia/sprite.svg#sv-i-arrow"/></svg></a>
+                    <a href="/sobre-mim#treino-personalizado" class="sv-piece-link">Treino personalizado <svg class="sv-ico" aria-hidden="true" focusable="false"><use href="/images/sobrevivencia/sprite.svg#sv-i-arrow"/></svg></a>
                     <a href="/treino-em-grupo" class="sv-piece-link">Treino em grupo <svg class="sv-ico" aria-hidden="true" focusable="false"><use href="/images/sobrevivencia/sprite.svg#sv-i-arrow"/></svg></a>
                     <a href="/treino-online" class="sv-piece-link">Treino online <svg class="sv-ico" aria-hidden="true" focusable="false"><use href="/images/sobrevivencia/sprite.svg#sv-i-arrow"/></svg></a>
                     <a href="/treino-oncologico" class="sv-piece-link">Treino oncológico <svg class="sv-ico" aria-hidden="true" focusable="false"><use href="/images/sobrevivencia/sprite.svg#sv-i-arrow"/></svg></a>
@@ -1160,13 +1210,13 @@
                     <h2 id="faq-osteopatia-title">Osteopata em <span class="oncologia-highlight">Lisboa</span></h2>
                     <p>O que saber antes da primeira sessão de osteopatia com Paulo Morais.</p>
                 </div>
-                <div class="pm-faq">
-                    <article><h3>Onde são as sessões de osteopatia?</h3><p>As sessões de osteopatia com Paulo Morais realizam-se presencialmente em Lisboa. O local e o horário são combinados no contacto.</p></article>
-                    <article><h3>Como funciona o acompanhamento de osteopatia?</h3><p>Cada acompanhamento começa com uma avaliação individual das queixas, da mobilidade e da postura. A abordagem é manual e integrativa, orientada para a mobilidade, a postura, o alívio da dor e o bem-estar.</p></article>
-                    <article><h3>Existe osteopatia online?</h3><p>Não. A osteopatia é um serviço manual e presencial, em Lisboa. Para quem vive fora de Lisboa ou de Portugal, Paulo Morais disponibiliza <a href="/treino-online">treino online</a>.</p></article>
-                    <article><h3>Posso combinar osteopatia com treino?</h3><p>Sim. Paulo Morais é osteopata e personal trainer, por isso a osteopatia pode ser combinada com <a href="/treino-personalizado">treino personalizado</a>, <a href="/treino-em-grupo">treino em grupo</a> ou <a href="/treino-oncologico">treino oncológico</a>, conforme as necessidades e os objetivos de cada pessoa.</p></article>
-                    <article><h3>A osteopatia substitui o médico?</h3><p>Não. A osteopatia não substitui o diagnóstico nem o acompanhamento médico. Perante sintomas novos, persistentes ou urgentes, deve ser consultado um médico.</p></article>
-                    <article><h3>Em que línguas decorrem as sessões e como marcar?</h3><p>As sessões decorrem em português e inglês. Para marcar, usa o formulário desta página, o WhatsApp ou o telefone (+351 960 471 537) ou o email (pt@pmorais.pt). Preços e disponibilidade são confirmados no contacto.</p></article>
+                <div class="pm-faq pm-faq--toggle">
+                    <details><summary><h3>Onde são as sessões de osteopatia?</h3></summary><p>As sessões de osteopatia com Paulo Morais realizam-se presencialmente em Lisboa. O local e o horário são combinados no contacto.</p></details>
+                    <details><summary><h3>Como funciona o acompanhamento de osteopatia?</h3></summary><p>Cada acompanhamento começa com uma avaliação individual das queixas, da mobilidade e da postura. A abordagem é manual e integrativa, orientada para a mobilidade, a postura, o alívio da dor e o bem-estar.</p></details>
+                    <details><summary><h3>Existe osteopatia online?</h3></summary><p>Não. A osteopatia é um serviço manual e presencial, em Lisboa. Para quem vive fora de Lisboa ou de Portugal, Paulo Morais disponibiliza <a href="/treino-online">treino online</a>.</p></details>
+                    <details><summary><h3>Posso combinar osteopatia com treino?</h3></summary><p>Sim. Paulo Morais é osteopata e personal trainer, por isso a osteopatia pode ser combinada com <a href="/sobre-mim#treino-personalizado">treino personalizado</a>, <a href="/treino-em-grupo">treino em grupo</a> ou <a href="/treino-oncologico">treino oncológico</a>, conforme as necessidades e os objetivos de cada pessoa.</p></details>
+                    <details><summary><h3>A osteopatia substitui o médico?</h3></summary><p>Não. A osteopatia não substitui o diagnóstico nem o acompanhamento médico. Perante sintomas novos, persistentes ou urgentes, deve ser consultado um médico.</p></details>
+                    <details><summary><h3>Em que línguas decorrem as sessões e como marcar?</h3></summary><p>As sessões decorrem em português e inglês. Para marcar, usa o formulário desta página, o WhatsApp ou o telefone (+351 960 471 537) ou o email (pt@pmorais.pt). Preços e disponibilidade são confirmados no contacto.</p></details>
                 </div>
             </div>
         </section>
@@ -1246,6 +1296,9 @@
                 <ul class="footer-links-list">
                     <li><a href="/" data-i18n="nav.home">Início</a></li>
                     <li><a href="/sobre-mim" data-i18n="nav.about">Sobre Mim</a></li>
+                    <li><a href="/sobre-mim#treino-personalizado">Treino personalizado</a></li>
+                    <li><a href="/treino-em-grupo">Treino em grupo</a></li>
+                    <li><a href="/treino-online">Treino online</a></li>
                     <li><a href="/osteopatia">Osteopatia</a></li>
                     <li><a href="/blog" data-i18n="nav.blog">Blog</a></li>
                     <li><a href="/perfil" data-i18n="nav.profile">Perfil</a></li>
@@ -1287,14 +1340,14 @@
         </div>
 
         <div class="footer-bar-elysium">
-            <div class="crafted-text"><a href="https://elysiumdr.eu" target="_blank" rel="noopener noreferrer">Desenvolvido por Elysium λ Development & Research.</a><br><span class="version-label">V1.6.2</span></div>
+            <div class="crafted-text"><a href="https://elysiumdr.eu" target="_blank" rel="noopener noreferrer">Desenvolvido por Elysium λ Development & Research.</a><br><span class="version-label">V1.7.0</span></div>
         </div>
     </footer>
 
     <!-- Scripts -->
-    <script nonce="pmorais-2026" src="js/script.js?v=1.6.2" defer></script>
-    <script nonce="pmorais-2026" src="js/sobrevivencia.js?v=1.6.2" defer></script>
-    <script nonce="pmorais-2026" src="js/webmcp.js?v=1.6.2" defer></script>
+    <script nonce="pmorais-2026" src="js/script.js?v=1.7.0" defer></script>
+    <script nonce="pmorais-2026" src="js/sobrevivencia.js?v=1.7.0" defer></script>
+    <script nonce="pmorais-2026" src="js/webmcp.js?v=1.7.0" defer></script>
 
     <!-- Firebase SDK -->
     <script nonce="pmorais-2026" src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
@@ -1369,7 +1422,7 @@
             }
         });
     </script>
-    <script nonce="pmorais-2026" src="js/cookie-consent.js?v=1.6.2" defer></script>
+    <script nonce="pmorais-2026" src="js/cookie-consent.js?v=1.7.0" defer></script>
     <!-- Dynamic Reviews Loader for Osteopatia -->
     <script nonce="pmorais-2026">
         document.addEventListener('DOMContentLoaded', async function () {

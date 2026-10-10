@@ -13,7 +13,6 @@ const LANGUAGE_ROUTES = new Map([
     ['/sobre-mim', '/en/sobre-mim'],
     ['/blog', '/en/blog'],
     ['/treino-oncologico', '/en/oncology-training'],
-    ['/treino-personalizado', '/en/personal-training'],
     ['/treino-em-grupo', '/en/group-training'],
     ['/treino-online', '/en/online-training'],
     ['/artigo', '/en/article'],
@@ -33,6 +32,7 @@ function cleanPath(pathname) {
     let path = pathname.replace(/\.html$/, '');
     if (path === '/index' || path === '') path = '/';
     if (path === '/en' || path === '/en/index') path = '/en/';
+    if (path === '/es' || path === '/es/index') path = '/es/';
     return path;
 }
 
@@ -45,6 +45,21 @@ function languageDestination(language, pathname) {
     if (alternate) return new URL(alternate.href).pathname;
     if (language === 'en') return LANGUAGE_ROUTES.get(path) || null;
     return REVERSE_LANGUAGE_ROUTES.get(path) || null;
+}
+
+// Equivalent visible section IDs differ between the PT and EN pages.
+// Keep shared anchors, and translate the known localized section names.
+const LANGUAGE_FRAGMENTS = [
+    { pt: 'treino-personalizado', en: 'personal-training' },
+    { pt: 'servicos', en: 'services' },
+    { pt: 'perguntas', en: 'questions' }
+];
+
+function languageFragment(language, hash) {
+    if (!hash) return '';
+    const fragment = hash.slice(1);
+    const equivalent = LANGUAGE_FRAGMENTS.find(group => Object.values(group).includes(fragment));
+    return equivalent ? (equivalent[language] ? `#${equivalent[language]}` : '') : hash;
 }
 
 window.toggleLanguage = function() {
@@ -68,5 +83,5 @@ window.toggleLanguage = function() {
             ? `${destination}index.html`
             : `${destination}.html`;
     }
-    window.location.href = `${destination}${window.location.search}${window.location.hash}`;
+    window.location.href = `${destination}${window.location.search}${languageFragment(language, window.location.hash)}`;
 };

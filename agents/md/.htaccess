@@ -10,27 +10,24 @@
     Header set Vary "Accept"
   </FilesMatch>
   <Files "index.md">
-    Header set x-markdown-tokens "4654"
+    Header set x-markdown-tokens "4608"
   </Files>
   <Files "osteopatia.md">
-    Header set x-markdown-tokens "3987"
+    Header set x-markdown-tokens "3961"
   </Files>
   <Files "sobre-mim.md">
-    Header set x-markdown-tokens "1431"
+    Header set x-markdown-tokens "1886"
   </Files>
   <Files "blog.md">
-    Header set x-markdown-tokens "864"
+    Header set x-markdown-tokens "481"
   </Files>
   <Files "treino-oncologico.md">
-    Header set x-markdown-tokens "2389"
-  </Files>
-  <Files "treino-personalizado.md">
-    Header set x-markdown-tokens "1383"
+    Header set x-markdown-tokens "4138"
   </Files>
   <Files "treino-em-grupo.md">
-    Header set x-markdown-tokens "1376"
+    Header set x-markdown-tokens "1379"
   </Files>
   <Files "treino-online.md">
-    Header set x-markdown-tokens "1351"
+    Header set x-markdown-tokens "1354"
   </Files>
 </IfModule>

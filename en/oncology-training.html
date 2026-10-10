@@ -8,7 +8,7 @@
     <title>Cancer Exercise in Lisbon &amp; Online | Paulo Morais</title>
     <!-- Preloads -->
     <link rel="preload" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700;800&family=Poppins:wght@300;400;500;600;700&display=swap" as="style">
-    <link rel="preload" href="../css/style.css?v=1.6.2" as="style">
+    <link rel="preload" href="../css/style.css?v=1.7.0" as="style">
 
     <link rel="shortcut icon" type="image/png" href="../images/logo/logo_ios_android.png">
     <link rel="icon" type="image/png" href="../images/logo/logo_ios_android.png">
@@ -25,12 +25,12 @@
     <script nonce="pmorais-2026" src="https://unpkg.com/lucide@latest" defer></script>
 
     <!-- Custom Style -->
-    <link rel="stylesheet" href="../css/style.css?v=1.6.2">
+    <link rel="stylesheet" href="../css/style.css?v=1.7.0">
 
     <!-- Schema.org JSON-LD: WebPage + BreadcrumbList -->
 
-    <script nonce="pmorais-2026" src="js/lang.js?v=1.6.2" defer></script>
-    <script nonce="pmorais-2026" src="js/theme.js?v=1.6.2" defer></script>
+    <script nonce="pmorais-2026" src="js/lang.js?v=1.7.0" defer></script>
+    <script nonce="pmorais-2026" src="js/theme.js?v=1.7.0" defer></script>
     <!-- SEO Architecture: generated from scripts/seo-config.mjs -->
     <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
     <meta name="googlebot" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
@@ -75,7 +75,7 @@
       ],
       "slogan": "Your Own Workout",
       "url": "https://pmorais.pt/",
-      "description": "Paulo Morais is a personal trainer and osteopath in Lisbon, Portugal. He is not only a personal trainer, an osteopath or a cancer exercise service: his practice combines personal and private training, small-group training, online training, osteopathy and exercise after cancer, in person in Lisbon and online for Portugal, the European Union and Portuguese-, English- and Spanish-speaking countries.",
+      "description": "Paulo Morais is a personal trainer and osteopath in Lisbon, Portugal. His services include personal and private training, small-group training, online training, osteopathy and adapted exercise during or after cancer. In-person services are in Lisbon; online training covers Portugal, the European Union and Portuguese-, English- and Spanish-speaking countries.",
       "telephone": "+351960471537",
       "email": "pt@pmorais.pt",
       "logo": "https://pmorais.pt/images/logo/paulo_morais-08.png",
@@ -171,7 +171,7 @@
       "name": "Paulo Morais",
       "alternateName": "Paulo Dimas Morais",
       "jobTitle": "Personal Trainer and Osteopath",
-      "description": "Paulo Morais is a personal trainer and osteopath in Lisbon, Portugal. He is not only a personal trainer, an osteopath or a cancer exercise service: his practice combines personal and private training, small-group training, online training, osteopathy and exercise after cancer, in person in Lisbon and online for Portugal, the European Union and Portuguese-, English- and Spanish-speaking countries.",
+      "description": "Paulo Morais is a personal trainer and osteopath in Lisbon, Portugal. His services include personal and private training, small-group training, online training, osteopathy and adapted exercise during or after cancer. In-person services are in Lisbon; online training covers Portugal, the European Union and Portuguese-, English- and Spanish-speaking countries.",
       "url": "https://pmorais.pt/en/sobre-mim",
       "image": "https://pmorais.pt/images/sobre-mim/paulo-morais.png",
       "sameAs": [
@@ -180,6 +180,14 @@
       "worksFor": {
         "@id": "https://pmorais.pt/#business"
       },
+      "mainEntityOfPage": [
+        {
+          "@id": "https://pmorais.pt/sobre-mim#webpage"
+        },
+        {
+          "@id": "https://pmorais.pt/en/sobre-mim#webpage"
+        }
+      ],
       "workLocation": {
         "@type": "City",
         "name": "Lisboa",
@@ -231,10 +239,18 @@
       ],
       "description": "Progressive one-to-one training in Lisbon with a personal trainer and a plan adapted to each person’s goals, physical condition and routine.",
       "serviceType": "Personal and private training",
-      "url": "https://pmorais.pt/en/personal-training",
+      "url": "https://pmorais.pt/en/sobre-mim",
       "provider": {
         "@id": "https://pmorais.pt/#business"
       },
+      "subjectOf": [
+        {
+          "@id": "https://pmorais.pt/sobre-mim#webpage"
+        },
+        {
+          "@id": "https://pmorais.pt/en/sobre-mim#webpage"
+        }
+      ],
       "areaServed": [
         "Lisbon, Portugal"
       ]
@@ -253,6 +269,14 @@
       "provider": {
         "@id": "https://pmorais.pt/#business"
       },
+      "subjectOf": [
+        {
+          "@id": "https://pmorais.pt/treino-em-grupo#webpage"
+        },
+        {
+          "@id": "https://pmorais.pt/en/group-training#webpage"
+        }
+      ],
       "areaServed": [
         "Lisbon, Portugal"
       ]
@@ -272,6 +296,14 @@
       "provider": {
         "@id": "https://pmorais.pt/#business"
       },
+      "subjectOf": [
+        {
+          "@id": "https://pmorais.pt/treino-online#webpage"
+        },
+        {
+          "@id": "https://pmorais.pt/en/online-training#webpage"
+        }
+      ],
       "areaServed": [
         "Portugal",
         "European Union",
@@ -281,6 +313,10 @@
       ],
       "availableChannel": {
         "@type": "ServiceChannel",
+        "name": "Online training support",
+        "providesService": {
+          "@id": "https://pmorais.pt/#service-online-training"
+        },
         "serviceUrl": "https://pmorais.pt/en/online-training",
         "servicePhone": {
           "@type": "ContactPoint",
@@ -299,7 +335,8 @@
       "alternateName": [
         "Cancer exercise",
         "Post-cancer training",
-        "Exercise after cancer"
+        "Exercise after cancer",
+        "Exercise during cancer treatment"
       ],
       "description": "Adapted exercise for people living with or recovering from cancer, coordinated with their healthcare team. Part of Paulo Morais’s broader training services.",
       "serviceType": "Oncology and post-cancer training",
@@ -307,6 +344,14 @@
       "provider": {
         "@id": "https://pmorais.pt/#business"
       },
+      "subjectOf": [
+        {
+          "@id": "https://pmorais.pt/treino-oncologico#webpage"
+        },
+        {
+          "@id": "https://pmorais.pt/en/oncology-training#webpage"
+        }
+      ],
       "areaServed": [
         "Lisbon, Portugal",
         "Portugal",
@@ -321,6 +366,10 @@
       },
       "availableChannel": {
         "@type": "ServiceChannel",
+        "name": "Online training support",
+        "providesService": {
+          "@id": "https://pmorais.pt/#service-oncology-exercise"
+        },
         "serviceUrl": "https://pmorais.pt/en/oncology-training",
         "servicePhone": {
           "@type": "ContactPoint",
@@ -346,6 +395,14 @@
       "provider": {
         "@id": "https://pmorais.pt/#business"
       },
+      "subjectOf": [
+        {
+          "@id": "https://pmorais.pt/osteopatia#webpage"
+        },
+        {
+          "@id": "https://pmorais.pt/en/osteopatia#webpage"
+        }
+      ],
       "areaServed": [
         "Lisbon, Portugal"
       ]
@@ -518,7 +575,6 @@
                 <ul>
 <li><a href="/en/">Home</a></li>
 <li><a href="/en/sobre-mim">About Me</a></li>
-<li><a href="/en/personal-training">Personal Trainer</a></li>
 <li><a href="/en/osteopatia">OSTEOPATHY</a></li>
 <li><a href="/en/oncology-training" class="active">Oncology Training</a></li>
 <li><a href="/en/perfil">Profile</a></li>
@@ -542,10 +598,10 @@
                 <p class="sv-hero-lead">More and more people live for many years after a cancer diagnosis. Five steps help you get your energy back, protect your health and return to life with more confidence. From step 0 to step 5, discover them one by one.</p>
                 <ol class="sv-stepper" aria-label="Oncology training steps after cancer">
                     <li style="--i:0"><a href="#passo-0" aria-label="Step 0: The starting point" title="The starting point" class="is-start">0</a></li>
-                    <li style="--i:1"><a href="/en/osteopatia#efeitos-tardios" aria-label="Step 1: Listen to your body" title="Listen to your body">1</a></li>
-                    <li style="--i:2"><a href="/en/sobre-mim#emocoes" aria-label="Step 2: Look after your mind" title="Look after your mind">2</a></li>
-                    <li style="--i:3"><a href="/en/blog#protecao" aria-label="Step 3: Protect yourself" title="Protect yourself">3</a></li>
-                    <li style="--i:4"><a href="/en/#dose-semanal" aria-label="Step 4: Move" title="Move">4</a></li>
+                    <li style="--i:1"><a href="#efeitos-tardios" aria-label="Step 1: Listen to your body" title="Listen to your body">1</a></li>
+                    <li style="--i:2"><a href="#emocoes" aria-label="Step 2: Look after your mind" title="Look after your mind">2</a></li>
+                    <li style="--i:3"><a href="#protecao" aria-label="Step 3: Protect yourself" title="Protect yourself">3</a></li>
+                    <li style="--i:4"><a href="#dose-semanal" aria-label="Step 4: Move" title="Move">4</a></li>
                     <li style="--i:5"><a href="#plano" aria-label="Step 5: Have a plan" title="Have a plan">5</a></li>
                 </ol>
                 <span class="sv-progress" data-sv-progress data-tpl="You've found {n} of 5 steps" data-done="You've found all 5 steps!"><span class="sv-pdots" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span><span class="sv-ptext" aria-live="polite">You've found 0 of 5 steps</span></span>
@@ -615,43 +671,43 @@
                 <div class="oncologia-header sv-head">
                     <span class="oncologia-eyebrow">Steps 1 to 5</span>
                     <h2>Five steps<br>after <span class="oncologia-highlight">cancer</span></h2>
-                    <p>Each step lives on a different page of the site, with a different way to discover it. Tap a card to go to the place where it is waiting for you.</p>
+                    <p>Each step has a different way to discover it, and they are all here, in order. Tap a card to jump to it.</p>
                 </div>
                 <ul class="sv-constellation sv-cards is-open">
                 <li class="sv-star" style="--i:0" data-sv-card="efeitos">
-                    <a href="/en/osteopatia#efeitos-tardios">
+                    <a href="#efeitos-tardios">
                         <span class="sv-star-n">Step 1</span>
                         <span class="sv-star-ico"><svg class="sv-ico" aria-hidden="true" focusable="false"><use href="/images/sobrevivencia/sprite.svg#sv-i-activity"/></svg></span>
                         <h3>Listen to your body after cancer</h3>
                         <p>A body map with 6 points to tap: fatigue, sensation, sleep, pain, memory and heart.</p>
-                        <span class="sv-star-go">See it in Osteopathy <svg class="sv-ico" aria-hidden="true" focusable="false"><use href="/images/sobrevivencia/sprite.svg#sv-i-arrow"/></svg></span>
+                        <span class="sv-star-go">See it here <svg class="sv-ico" aria-hidden="true" focusable="false"><use href="/images/sobrevivencia/sprite.svg#sv-i-arrow"/></svg></span>
                     </a>
                 </li>
                 <li class="sv-star" style="--i:1" data-sv-card="emocoes">
-                    <a href="/en/sobre-mim#emocoes">
+                    <a href="#emocoes">
                         <span class="sv-star-n">Step 2</span>
                         <span class="sv-star-ico"><svg class="sv-ico" aria-hidden="true" focusable="false"><use href="/images/sobrevivencia/sprite.svg#sv-i-smile"/></svg></span>
                         <h3>Look after your mind after cancer</h3>
                         <p>5 stones to flip: mood, sleep, fear, family and support.</p>
-                        <span class="sv-star-go">See it in About Me <svg class="sv-ico" aria-hidden="true" focusable="false"><use href="/images/sobrevivencia/sprite.svg#sv-i-arrow"/></svg></span>
+                        <span class="sv-star-go">See it here <svg class="sv-ico" aria-hidden="true" focusable="false"><use href="/images/sobrevivencia/sprite.svg#sv-i-arrow"/></svg></span>
                     </a>
                 </li>
                 <li class="sv-star" style="--i:2" data-sv-card="protecao">
-                    <a href="/en/blog#protecao">
+                    <a href="#protecao">
                         <span class="sv-star-n">Step 3</span>
                         <span class="sv-star-ico"><svg class="sv-ico" aria-hidden="true" focusable="false"><use href="/images/sobrevivencia/sprite.svg#sv-i-shield"/></svg></span>
                         <h3>Protect yourself after cancer</h3>
                         <p>A shield of 4 pieces to close: the vaccines to confirm with your doctor.</p>
-                        <span class="sv-star-go">See it in the Blog <svg class="sv-ico" aria-hidden="true" focusable="false"><use href="/images/sobrevivencia/sprite.svg#sv-i-arrow"/></svg></span>
+                        <span class="sv-star-go">See it here <svg class="sv-ico" aria-hidden="true" focusable="false"><use href="/images/sobrevivencia/sprite.svg#sv-i-arrow"/></svg></span>
                     </a>
                 </li>
                 <li class="sv-star" style="--i:3" data-sv-card="exercicio">
-                    <a href="/en/#dose-semanal">
+                    <a href="#dose-semanal">
                         <span class="sv-star-n">Step 4</span>
                         <span class="sv-star-ico"><svg class="sv-ico" aria-hidden="true" focusable="false"><use href="/images/sobrevivencia/sprite.svg#sv-i-walk"/></svg></span>
                         <h3>Move after cancer</h3>
                         <p>A 150-minute ring to close with your activities of the week.</p>
-                        <span class="sv-star-go">See it on Home <svg class="sv-ico" aria-hidden="true" focusable="false"><use href="/images/sobrevivencia/sprite.svg#sv-i-arrow"/></svg></span>
+                        <span class="sv-star-go">See it here <svg class="sv-ico" aria-hidden="true" focusable="false"><use href="/images/sobrevivencia/sprite.svg#sv-i-arrow"/></svg></span>
                     </a>
                 </li>
                 <li class="sv-star" style="--i:4" data-sv-card="plano">
@@ -659,11 +715,413 @@
                         <span class="sv-star-n">Step 5</span>
                         <span class="sv-star-ico"><svg class="sv-ico" aria-hidden="true" focusable="false"><use href="/images/sobrevivencia/sprite.svg#sv-i-file"/></svg></span>
                         <h3>Have a plan after cancer</h3>
-                        <p>A folder with 6 tabs to take to your appointment. It is right down below.</p>
+                        <p>A folder with 6 tabs to take to your appointment.</p>
                         <span class="sv-star-go">See it here <svg class="sv-ico" aria-hidden="true" focusable="false"><use href="/images/sobrevivencia/sprite.svg#sv-i-arrow"/></svg></span>
                     </a>
                 </li>
                 </ul>
+            </div>
+        </section>
+
+        <!-- sv:efeitos:start -->
+        <section id="efeitos-tardios" class="sv-section sv-watch">
+            <div class="oncologia-glow-left"></div>
+            <div class="oncologia-glow-right"></div>
+            <div class="container-wide">
+                <div class="oncologia-header sv-head">
+                    <span class="oncologia-eyebrow">Step 1 · Listen to your body after cancer</span>
+                    <h2>Your body remembers the cancer.<br><span class="oncologia-highlight">Talk about it.</span></h2>
+                    <p>Fatigue, tingling, pain, sleep, memory… Many effects of cancer treatment only appear, or are only noticed, months or years later. And many survivors do not mention them at their appointments: they think it is normal, or they do not want to feel «ill» again. Talking is the first step.</p>
+                </div>
+
+                <div class="sv-body-layout sv-watch" data-sv="hotspots" data-sv-piece="efeitos">
+                    <div class="sv-body" role="group" aria-label="Body map with six late effects">
+                                    <svg class="sv-body-svg" viewBox="0 0 240 480" aria-hidden="true" focusable="false">
+                                        <defs>
+                                            <linearGradient id="sv-scan-grad" x1="0" y1="0" x2="0" y2="1">
+                                                <stop offset="0" style="stop-color:var(--color-primary);stop-opacity:0"/>
+                                                <stop offset="0.5" style="stop-color:var(--color-primary);stop-opacity:0.55"/>
+                                                <stop offset="1" style="stop-color:var(--color-primary);stop-opacity:0"/>
+                                            </linearGradient>
+                                            <clipPath id="sv-body-clip">
+                                                <circle cx="120" cy="50" r="26"/>
+                                                <rect x="110" y="72" width="20" height="34" rx="6"/>
+                                                <path d="M78 104 Q120 92 162 104 Q172 112 170 132 L164 232 Q162 250 150 262 L90 262 Q78 250 76 232 L70 132 Q68 112 78 104Z"/>
+                                                <rect x="-11" y="0" width="22" height="150" rx="11" transform="translate(66 118) rotate(14)"/>
+                                                <rect x="-11" y="0" width="22" height="150" rx="11" transform="translate(174 118) rotate(-14)"/>
+                                                <rect x="-14" y="0" width="28" height="200" rx="14" transform="translate(104 256) rotate(3)"/>
+                                                <rect x="-14" y="0" width="28" height="200" rx="14" transform="translate(136 256) rotate(-3)"/>
+                                            </clipPath>
+                                        </defs>
+                                        <g class="sv-sil">
+                                            <rect x="-11" y="0" width="22" height="150" rx="11" transform="translate(66 118) rotate(14)"/>
+                                            <rect x="-11" y="0" width="22" height="150" rx="11" transform="translate(174 118) rotate(-14)"/>
+                                            <rect x="-14" y="0" width="28" height="200" rx="14" transform="translate(104 256) rotate(3)"/>
+                                            <rect x="-14" y="0" width="28" height="200" rx="14" transform="translate(136 256) rotate(-3)"/>
+                                            <rect x="110" y="72" width="20" height="34" rx="6"/>
+                                            <path d="M78 104 Q120 92 162 104 Q172 112 170 132 L164 232 Q162 250 150 262 L90 262 Q78 250 76 232 L70 132 Q68 112 78 104Z"/>
+                                            <circle cx="120" cy="50" r="26"/>
+                                        </g>
+                                        <g clip-path="url(#sv-body-clip)"><rect class="sv-scan" x="0" y="0" width="240" height="70"/></g>
+                                        <g aria-hidden="true">
+                                            <circle class="sv-spark" style="--d:0" cx="20" cy="262" r="2.6"/><circle class="sv-spark" style="--d:2" cx="40" cy="276" r="2"/>
+                                            <circle class="sv-spark" style="--d:1" cx="220" cy="262" r="2.6"/><circle class="sv-spark" style="--d:3" cx="200" cy="278" r="2"/>
+                                            <circle class="sv-spark" style="--d:2" cx="88" cy="456" r="2.4"/><circle class="sv-spark" style="--d:0" cx="152" cy="456" r="2.4"/>
+                                        </g>
+                                    </svg>
+                                    <button type="button" class="sv-hotspot" style="--x:20.00%;--y:8.33%;--d:0" aria-controls="sv-p-cognicao" aria-pressed="false" aria-label="Memory">
+                                        <span class="sv-hs-core"><svg class="sv-ico" aria-hidden="true" focusable="false"><use href="/images/sobrevivencia/sprite.svg#sv-i-cloud"/></svg></span><span class="sv-hs-label">Memory</span>
+                                    </button>
+                                    <button type="button" class="sv-hotspot is-left" style="--x:80.00%;--y:8.33%;--d:1" aria-controls="sv-p-sono" aria-pressed="false" aria-label="Sleep">
+                                        <span class="sv-hs-core"><svg class="sv-ico" aria-hidden="true" focusable="false"><use href="/images/sobrevivencia/sprite.svg#sv-i-moon"/></svg></span><span class="sv-hs-label">Sleep</span>
+                                    </button>
+                                    <button type="button" class="sv-hotspot is-left" style="--x:67.50%;--y:26.67%;--d:2" aria-controls="sv-p-dor" aria-pressed="false" aria-label="Pain">
+                                        <span class="sv-hs-core"><svg class="sv-ico" aria-hidden="true" focusable="false"><use href="/images/sobrevivencia/sprite.svg#sv-i-bolt"/></svg></span><span class="sv-hs-label">Pain</span>
+                                    </button>
+                                    <button type="button" class="sv-hotspot" style="--x:50.00%;--y:31.25%;--d:3" aria-controls="sv-p-coracao" aria-pressed="false" aria-label="Breathlessness and heart">
+                                        <span class="sv-hs-core"><svg class="sv-ico" aria-hidden="true" focusable="false"><use href="/images/sobrevivencia/sprite.svg#sv-i-heart"/></svg></span><span class="sv-hs-label">Breathlessness and heart</span>
+                                    </button>
+                                    <button type="button" class="sv-hotspot" style="--x:50.00%;--y:45.00%;--d:4" aria-controls="sv-p-fadiga" aria-pressed="false" aria-label="Fatigue">
+                                        <span class="sv-hs-core"><svg class="sv-ico" aria-hidden="true" focusable="false"><use href="/images/sobrevivencia/sprite.svg#sv-i-fatigue"/></svg></span><span class="sv-hs-label">Fatigue</span>
+                                    </button>
+                                    <button type="button" class="sv-hotspot is-left" style="--x:87.50%;--y:55.42%;--d:5" aria-controls="sv-p-neuro" aria-pressed="false" aria-label="Hands and feet">
+                                        <span class="sv-hs-core"><svg class="sv-ico" aria-hidden="true" focusable="false"><use href="/images/sobrevivencia/sprite.svg#sv-i-hand"/></svg></span><span class="sv-hs-label">Hands and feet</span>
+                                    </button>
+                        <span class="sv-hint-chip"><svg class="sv-ico" aria-hidden="true" focusable="false"><use href="/images/sobrevivencia/sprite.svg#sv-i-pointer"/></svg>Tap the dots</span>
+                    </div>
+                    <div class="sv-body-aside">
+                        <div class="sv-panels" aria-live="polite">
+                                    <div class="sv-panel sv-panel--idle" id="sv-p-corpo-idle" data-idle>
+                                        <svg class="sv-ico" aria-hidden="true" focusable="false"><use href="/images/sobrevivencia/sprite.svg#sv-i-pointer"/></svg>
+                                        <p><strong>Choose a point on the body</strong>Each point is a late effect of cancer treatment that many survivors feel and that rarely reaches the appointment. Tap to see what you might feel and the question to take to your team.</p>
+                                    </div>
+                                    <div class="sv-panel" id="sv-p-cognicao" role="region" aria-label="Memory and concentration">
+                                        <div class="sv-panel-head"><span class="sv-panel-ico"><svg class="sv-ico" aria-hidden="true" focusable="false"><use href="/images/sobrevivencia/sprite.svg#sv-i-cloud"/></svg></span><h3>Memory and concentration</h3></div>
+                                        <p>«Brain fog»: forgetting words, losing your train of thought, finding it hard to concentrate.</p>
+                                        <blockquote class="sv-ask"><small>Ask your team</small>«Could these memory lapses be related to my treatment?»</blockquote>
+                                    </div>
+                                    <div class="sv-panel" id="sv-p-sono" role="region" aria-label="Sleep">
+                                        <div class="sv-panel-head"><span class="sv-panel-ico"><svg class="sv-ico" aria-hidden="true" focusable="false"><use href="/images/sobrevivencia/sprite.svg#sv-i-moon"/></svg></span><h3>Sleep</h3></div>
+                                        <p>Trouble falling asleep, waking in the night or getting up unrested is very common after treatment.</p>
+                                        <blockquote class="sv-ask"><small>Ask your team</small>«Is there anything I can do to sleep better? Could it be linked to treatment or to anxiety?»</blockquote>
+                                    </div>
+                                    <div class="sv-panel" id="sv-p-dor" role="region" aria-label="Pain that does not go away">
+                                        <div class="sv-panel-head"><span class="sv-panel-ico"><svg class="sv-ico" aria-hidden="true" focusable="false"><use href="/images/sobrevivencia/sprite.svg#sv-i-bolt"/></svg></span><h3>Pain that does not go away</h3></div>
+                                        <p>Pain that carries on after surgery or treatment, in the shoulder, the scar, the joints or the muscles. Chronic pain deserves assessment too.</p>
+                                        <blockquote class="sv-ask"><small>Ask your team</small>«Where is this pain coming from, and what options do I have to ease it?»</blockquote>
+                                    </div>
+                                    <div class="sv-panel" id="sv-p-coracao" role="region" aria-label="Breathlessness and heart">
+                                        <div class="sv-panel-head"><span class="sv-panel-ico"><svg class="sv-ico" aria-hidden="true" focusable="false"><use href="/images/sobrevivencia/sprite.svg#sv-i-heart"/></svg></span><h3>Breathlessness and heart</h3></div>
+                                        <p>Getting tired on the stairs, breathlessness or palpitations you did not have before should always be mentioned to your healthcare team.</p>
+                                        <blockquote class="sv-ask"><small>Ask your team</small>«Should I have a heart or lung check?»</blockquote>
+                                        <p class="sv-alert"><svg class="sv-ico" aria-hidden="true" focusable="false"><use href="/images/sobrevivencia/sprite.svg#sv-i-info"/></svg><span>If it is sudden or severe (chest pain, strong breathlessness), call 112.</span></p>
+                                    </div>
+                                    <div class="sv-panel" id="sv-p-fadiga" role="region" aria-label="Fatigue and physical stamina">
+                                        <div class="sv-panel-head"><span class="sv-panel-ico"><svg class="sv-ico" aria-hidden="true" focusable="false"><use href="/images/sobrevivencia/sprite.svg#sv-i-fatigue"/></svg></span><h3>Fatigue and physical stamina</h3></div>
+                                        <p>A tiredness that rest does not fix, or losing the stamina you had, can last for years after treatment. It is not «laziness» or «exaggeration».</p>
+                                        <blockquote class="sv-ask"><small>Ask your team</small>«Is this fatigue expected in my case? What can I do to reduce it?»</blockquote>
+                                    </div>
+                                    <div class="sv-panel" id="sv-p-neuro" role="region" aria-label="Hands and feet: sensation">
+                                        <div class="sv-panel-head"><span class="sv-panel-ico"><svg class="sv-ico" aria-hidden="true" focusable="false"><use href="/images/sobrevivencia/sprite.svg#sv-i-hand"/></svg></span><h3>Hands and feet: sensation</h3></div>
+                                        <p>Tingling, numbness or burning in the hands and feet (polyneuropathy), trouble with buttons or feeling the ground properly.</p>
+                                        <blockquote class="sv-ask"><small>Ask your team</small>«Could this be an effect of treatment? Do I need to be assessed?»</blockquote>
+                                    </div>
+                        </div>
+                        <p class="sv-note"><svg class="sv-ico" aria-hidden="true" focusable="false"><use href="/images/sobrevivencia/sprite.svg#sv-i-info"/></svg><span>General information; it does not replace your oncology team. Paulo does not treat cancer or its effects: he helps adapt exercise and sessions to your case and to bring your questions to your appointment.</span></p>
+                        <div class="sv-body-cta">
+                            <p class="sv-vac-legend">Do you recognise any of these signs?</p>
+                            <a href="/en/osteopatia#contacto" class="btn btn-primary">Talk to Paulo <i data-lucide="chevron-right" aria-hidden="true"></i></a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="sv-piece-foot">
+                    <span class="sv-progress" data-sv-progress data-tpl="You've found {n} of 5 steps" data-done="You've found all 5 steps!"><span class="sv-pdots" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span><span class="sv-ptext" aria-live="polite">You've found 0 of 5 steps</span></span>
+                    <a class="sv-piece-link" href="#passos">See all five steps <svg class="sv-ico" aria-hidden="true" focusable="false"><use href="/images/sobrevivencia/sprite.svg#sv-i-arrow"/></svg></a>
+                </div>
+            </div>
+        </section>
+        <!-- sv:efeitos:end -->
+
+        <!-- sv:emocoes:start -->
+        <section id="emocoes" class="sv-section sv-watch" data-sv-piece="emocoes">
+            <div class="oncologia-glow-left"></div>
+            <div class="oncologia-glow-right"></div>
+            <div class="container-wide">
+                <div class="oncologia-header sv-head">
+                    <span class="oncologia-eyebrow">Step 2 · Look after your mind after cancer</span>
+                    <h2>How are you,<br>really <span class="oncologia-highlight">after cancer?</span></h2>
+                    <p>Cancer treatment ends, but your mind does not switch off straight away. The fear of the cancer coming back, sleep, sadness and the tiredness of «having to be strong» can last for years. Nobody is marking you here: flip the stones and see if any of them speaks to you.</p>
+                </div>
+
+                <div class="sv-orb" aria-hidden="true">
+                    <span class="sv-orb-ring"></span><span class="sv-orb-ring"></span>
+                    <span class="sv-orb-core"><span class="sv-orb-in">Inhale</span><span class="sv-orb-out">Exhale</span></span>
+                </div>
+
+                <ul class="sv-stones" data-sv="flip" aria-label="Five stones to flip">
+                        <li class="sv-stone-cell" style="--i:0">
+                            <button type="button" class="sv-stone" aria-pressed="false">
+                                <span class="sv-stone-inner">
+                                    <span class="sv-face sv-face--front">
+                                        <span class="sv-stone-ico"><svg class="sv-ico" aria-hidden="true" focusable="false"><use href="/images/sobrevivencia/sprite.svg#sv-i-smile"/></svg></span>
+                                        <span class="sv-stone-name">Mood</span>
+                                        <span class="sv-stone-q">How has your mood been?</span>
+                                        <span class="sv-stone-tap">Tap to flip</span>
+                                    </span>
+                                    <span class="sv-face sv-face--back" aria-hidden="true">
+                                        <span class="sv-stone-msg"><strong>Think about it</strong>Sadness or low spirits that do not pass deserve to be said out loud. You do not have to carry this without help.</span>
+                                    </span>
+                                </span>
+                            </button>
+                        </li>
+                        <li class="sv-stone-cell" style="--i:1">
+                            <button type="button" class="sv-stone" aria-pressed="false">
+                                <span class="sv-stone-inner">
+                                    <span class="sv-face sv-face--front">
+                                        <span class="sv-stone-ico"><svg class="sv-ico" aria-hidden="true" focusable="false"><use href="/images/sobrevivencia/sprite.svg#sv-i-moon"/></svg></span>
+                                        <span class="sv-stone-name">Sleep</span>
+                                        <span class="sv-stone-q">Do you sleep well? Or does your mind race at night?</span>
+                                        <span class="sv-stone-tap">Tap to flip</span>
+                                    </span>
+                                    <span class="sv-face sv-face--back" aria-hidden="true">
+                                        <span class="sv-stone-msg"><strong>Think about it</strong>Sleep affects mood, pain and energy. It is worth talking about with your team.</span>
+                                    </span>
+                                </span>
+                            </button>
+                        </li>
+                        <li class="sv-stone-cell" style="--i:2">
+                            <button type="button" class="sv-stone" aria-pressed="false">
+                                <span class="sv-stone-inner">
+                                    <span class="sv-face sv-face--front">
+                                        <span class="sv-stone-ico"><svg class="sv-ico" aria-hidden="true" focusable="false"><use href="/images/sobrevivencia/sprite.svg#sv-i-worry"/></svg></span>
+                                        <span class="sv-stone-name">Worries</span>
+                                        <span class="sv-stone-q">Is there a fear that keeps coming back?</span>
+                                        <span class="sv-stone-tap">Tap to flip</span>
+                                    </span>
+                                    <span class="sv-face sv-face--back" aria-hidden="true">
+                                        <span class="sv-stone-msg"><strong>Think about it</strong>The fear of the cancer returning is one of the most common, and hardest. Many survivors feel the same. Psycho-oncology can help.</span>
+                                    </span>
+                                </span>
+                            </button>
+                        </li>
+                        <li class="sv-stone-cell" style="--i:3">
+                            <button type="button" class="sv-stone" aria-pressed="false">
+                                <span class="sv-stone-inner">
+                                    <span class="sv-face sv-face--front">
+                                        <span class="sv-stone-ico"><svg class="sv-ico" aria-hidden="true" focusable="false"><use href="/images/sobrevivencia/sprite.svg#sv-i-users"/></svg></span>
+                                        <span class="sv-stone-name">Family</span>
+                                        <span class="sv-stone-q">How is the stress at home?</span>
+                                        <span class="sv-stone-tap">Tap to flip</span>
+                                    </span>
+                                    <span class="sv-face sv-face--back" aria-hidden="true">
+                                        <span class="sv-stone-msg"><strong>Think about it</strong>Your family lived through this too. Talking together, or asking for support for the people who look after you, helps everyone.</span>
+                                    </span>
+                                </span>
+                            </button>
+                        </li>
+                        <li class="sv-stone-cell" style="--i:4">
+                            <button type="button" class="sv-stone" aria-pressed="false">
+                                <span class="sv-stone-inner">
+                                    <span class="sv-face sv-face--front">
+                                        <span class="sv-stone-ico"><svg class="sv-ico" aria-hidden="true" focusable="false"><use href="/images/sobrevivencia/sprite.svg#sv-i-lifebuoy"/></svg></span>
+                                        <span class="sv-stone-name">Support</span>
+                                        <span class="sv-stone-q">Do you have someone to talk to?</span>
+                                        <span class="sv-stone-tap">Tap to flip</span>
+                                    </span>
+                                    <span class="sv-face sv-face--back" aria-hidden="true">
+                                        <span class="sv-stone-msg"><strong>Think about it</strong>Friends, survivor groups, psycho-oncology. Isolation weighs; a network, however small, lightens it.</span>
+                                    </span>
+                                </span>
+                            </button>
+                        </li>
+                </ul>
+
+                <p class="sv-quote">When cancer treatment ends, many people feel left alone: the team that saw them every week suddenly disappears. <strong>Feeling that is normal, and there is help.</strong></p>
+                <p class="sv-note sv-note--center"><svg class="sv-ico" aria-hidden="true" focusable="false"><use href="/images/sobrevivencia/sprite.svg#sv-i-info"/></svg><span>This is not a test or a diagnosis, and nothing is saved or sent. If it weighs on you, talk to your healthcare team or a psycho-oncology professional. In a crisis, call 112 or SNS 24 (808 24 24 24, Portugal).</span></p>
+
+                <div class="sv-piece-foot">
+                    <span class="sv-progress" data-sv-progress data-tpl="You've found {n} of 5 steps" data-done="You've found all 5 steps!"><span class="sv-pdots" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span><span class="sv-ptext" aria-live="polite">You've found 0 of 5 steps</span></span>
+                    <a class="sv-piece-link" href="#passos">See all five steps <svg class="sv-ico" aria-hidden="true" focusable="false"><use href="/images/sobrevivencia/sprite.svg#sv-i-arrow"/></svg></a>
+                </div>
+            </div>
+        </section>
+        <!-- sv:emocoes:end -->
+
+        <!-- sv:protecao:start -->
+        <section id="protecao" class="sv-section sv-watch">
+            <div class="oncologia-glow-left"></div>
+            <div class="oncologia-glow-right"></div>
+            <div class="container-wide">
+                <div class="oncologia-header sv-head">
+                    <span class="oncologia-eyebrow">Step 3 · Protect yourself after cancer</span>
+                    <h2>Your shield after cancer<br>has <span class="oncologia-highlight">4 pieces</span></h2>
+                    <p>After cancer treatment, your defences can take time to recover. Vaccines against flu, COVID-19, pneumococcal disease and shingles are among the most important. Tick the ones you have already confirmed with your team and watch the shield close.</p>
+                </div>
+
+                <div class="sv-shield-layout sv-watch" data-sv="shield" data-sv-piece="protecao">
+                    <svg class="sv-shield-svg" viewBox="0 0 200 240" role="img" aria-label="Shield with four pieces: flu, COVID-19, pneumococcal and shingles" focusable="false">
+                        <defs>
+                            <clipPath id="sv-shield-clip"><path d="M100 10 L176 38 V112 C176 170 142 208 100 230 C58 208 24 170 24 112 V38 Z"/></clipPath>
+                        </defs>
+                        <path class="sv-shield-body" d="M100 10 L176 38 V112 C176 170 142 208 100 230 C58 208 24 170 24 112 V38 Z"/>
+                        <g clip-path="url(#sv-shield-clip)">
+                                <rect class="sv-q" data-q="gripe" x="0" y="0" width="100" height="112"/>
+                                <rect class="sv-q" data-q="covid" x="100" y="0" width="100" height="112"/>
+                                <rect class="sv-q" data-q="pneumo" x="0" y="112" width="100" height="130"/>
+                                <rect class="sv-q" data-q="zoster" x="100" y="112" width="100" height="130"/>
+                                <rect class="sv-q-hit" data-q="gripe" x="0" y="0" width="100" height="112"/>
+                                <rect class="sv-q-hit" data-q="covid" x="100" y="0" width="100" height="112"/>
+                                <rect class="sv-q-hit" data-q="pneumo" x="0" y="112" width="100" height="130"/>
+                                <rect class="sv-q-hit" data-q="zoster" x="100" y="112" width="100" height="130"/>
+                        </g>
+                        <path class="sv-shield-cross" d="M100 12V228M26 112H174"/>
+                        <g>
+                            <use class="sv-q-ico" data-q="gripe" href="/images/sobrevivencia/sprite.svg#sv-i-thermometer" x="44" y="52" width="36" height="36"/>
+                            <use class="sv-q-ico" data-q="covid" href="/images/sobrevivencia/sprite.svg#sv-i-virus" x="120" y="52" width="36" height="36"/>
+                            <use class="sv-q-ico" data-q="pneumo" href="/images/sobrevivencia/sprite.svg#sv-i-lungs" x="44" y="142" width="36" height="36"/>
+                            <use class="sv-q-ico" data-q="zoster" href="/images/sobrevivencia/sprite.svg#sv-i-flame" x="120" y="142" width="36" height="36"/>
+                        </g>
+                        <path class="sv-shield-outline" d="M100 10 L176 38 V112 C176 170 142 208 100 230 C58 208 24 170 24 112 V38 Z"/>
+                        <g class="sv-shield-check"><circle class="sv-shield-check-bg" cx="100" cy="112" r="17"/><use href="/images/sobrevivencia/sprite.svg#sv-i-check" x="88" y="100" width="24" height="24"/></g>
+                    </svg>
+
+                    <div class="sv-shield-ui">
+                        <p class="sv-vac-legend">Already confirmed with my doctor:</p>
+                        <div class="sv-vacs" role="group" aria-label="Already confirmed with my doctor:">
+                            <button type="button" class="sv-vac" data-q="gripe" aria-controls="sv-p-gripe" aria-pressed="false">
+                                <span class="sv-vac-ico"><svg class="sv-ico" aria-hidden="true" focusable="false"><use href="/images/sobrevivencia/sprite.svg#sv-i-thermometer"/></svg></span>
+                                <span class="sv-vac-txt"><span class="sv-vac-name">Flu</span><span class="sv-vac-state" data-off="To confirm" data-on="Confirmed ✓">To confirm</span></span>
+                            </button>
+                            <button type="button" class="sv-vac" data-q="covid" aria-controls="sv-p-covid" aria-pressed="false">
+                                <span class="sv-vac-ico"><svg class="sv-ico" aria-hidden="true" focusable="false"><use href="/images/sobrevivencia/sprite.svg#sv-i-virus"/></svg></span>
+                                <span class="sv-vac-txt"><span class="sv-vac-name">COVID-19</span><span class="sv-vac-state" data-off="To confirm" data-on="Confirmed ✓">To confirm</span></span>
+                            </button>
+                            <button type="button" class="sv-vac" data-q="pneumo" aria-controls="sv-p-pneumo" aria-pressed="false">
+                                <span class="sv-vac-ico"><svg class="sv-ico" aria-hidden="true" focusable="false"><use href="/images/sobrevivencia/sprite.svg#sv-i-lungs"/></svg></span>
+                                <span class="sv-vac-txt"><span class="sv-vac-name">Pneumococcal</span><span class="sv-vac-state" data-off="To confirm" data-on="Confirmed ✓">To confirm</span></span>
+                            </button>
+                            <button type="button" class="sv-vac" data-q="zoster" aria-controls="sv-p-zoster" aria-pressed="false">
+                                <span class="sv-vac-ico"><svg class="sv-ico" aria-hidden="true" focusable="false"><use href="/images/sobrevivencia/sprite.svg#sv-i-flame"/></svg></span>
+                                <span class="sv-vac-txt"><span class="sv-vac-name">Shingles</span><span class="sv-vac-state" data-off="To confirm" data-on="Confirmed ✓">To confirm</span></span>
+                            </button>
+                        </div>
+                        <div class="sv-panels" aria-live="polite">
+                            <div class="sv-panel sv-panel--idle" id="sv-p-idle" data-idle>
+                                <svg class="sv-ico" aria-hidden="true" focusable="false"><use href="/images/sobrevivencia/sprite.svg#sv-i-syringe"/></svg>
+                                <p><strong>Tap a vaccine</strong>See why it matters and tick it once you have confirmed it with your doctor.</p>
+                            </div>
+                            <div class="sv-panel" id="sv-p-gripe" role="region" aria-label="Flu">
+                                <div class="sv-panel-head"><span class="sv-panel-ico"><svg class="sv-ico" aria-hidden="true" focusable="false"><use href="/images/sobrevivencia/sprite.svg#sv-i-thermometer"/></svg></span><h3>Flu</h3></div>
+                                <p>A Cochrane review in immunosuppressed adults with cancer concluded that flu vaccination is safe, and observational data point to lower mortality and better infection-related outcomes.</p>
+                                <blockquote class="sv-ask"><small>Ask your doctor</small>«When should I have the flu vaccine, and which one?»</blockquote>
+                            </div>
+                            <div class="sv-panel" id="sv-p-covid" role="region" aria-label="COVID-19">
+                                <div class="sv-panel-head"><span class="sv-panel-ico"><svg class="sv-ico" aria-hidden="true" focusable="false"><use href="/images/sobrevivencia/sprite.svg#sv-i-virus"/></svg></span><h3>COVID-19</h3></div>
+                                <p>ASCO recommends systematically checking the vaccination status of people who have had cancer, including COVID-19, as part of follow-up care.</p>
+                                <blockquote class="sv-ask"><small>Ask your doctor</small>«Which COVID-19 schedule is right for me?»</blockquote>
+                            </div>
+                            <div class="sv-panel" id="sv-p-pneumo" role="region" aria-label="Pneumococcal">
+                                <div class="sv-panel-head"><span class="sv-panel-ico"><svg class="sv-ico" aria-hidden="true" focusable="false"><use href="/images/sobrevivencia/sprite.svg#sv-i-lungs"/></svg></span><h3>Pneumococcal</h3></div>
+                                <p>Pneumococcal disease can cause serious infections such as pneumonia. It is among the vaccines ASCO includes in the review after cancer.</p>
+                                <blockquote class="sv-ask"><small>Ask your doctor</small>«Am I up to date with the pneumococcal vaccine?»</blockquote>
+                            </div>
+                            <div class="sv-panel" id="sv-p-zoster" role="region" aria-label="Shingles">
+                                <div class="sv-panel-head"><span class="sv-panel-ico"><svg class="sv-ico" aria-hidden="true" focusable="false"><use href="/images/sobrevivencia/sprite.svg#sv-i-flame"/></svg></span><h3>Shingles</h3></div>
+                                <p>Shingles (herpes zoster) is one of the infections to watch for when defences are low. The vaccine is also part of the recommended review.</p>
+                                <blockquote class="sv-ask"><small>Ask your doctor</small>«Is the shingles vaccine suitable for me, and when?»</blockquote>
+                            </div>
+                        </div>
+                        <p class="sv-shield-done" role="status"><strong>Shield complete!</strong> Keep reviewing your vaccination record with your doctor; your defences and the recommendations change over time.</p>
+                    </div>
+                </div>
+
+                <div class="sv-shield-checklist">
+                    <p class="sv-checklist-title">Take this to your appointment</p>
+                    <ul class="sv-checklist">
+                        <li><label class="sv-check"><input type="checkbox"><span class="sv-box" aria-hidden="true"><svg class="sv-ico" aria-hidden="true" focusable="false"><use href="/images/sobrevivencia/sprite.svg#sv-i-check"/></svg></span><span>Check your vaccination record</span></label></li>
+                        <li><label class="sv-check"><input type="checkbox"><span class="sv-box" aria-hidden="true"><svg class="sv-ico" aria-hidden="true" focusable="false"><use href="/images/sobrevivencia/sprite.svg#sv-i-check"/></svg></span><span>Write down any vaccines that are missing</span></label></li>
+                        <li><label class="sv-check"><input type="checkbox"><span class="sv-box" aria-hidden="true"><svg class="sv-ico" aria-hidden="true" focusable="false"><use href="/images/sobrevivencia/sprite.svg#sv-i-check"/></svg></span><span>Prefer inactivated vaccines (ask your doctor)</span></label></li>
+                        <li><label class="sv-check"><input type="checkbox"><span class="sv-box" aria-hidden="true"><svg class="sv-ico" aria-hidden="true" focusable="false"><use href="/images/sobrevivencia/sprite.svg#sv-i-check"/></svg></span><span>If you have, or recently had, immunosuppression, talk to your oncology team first</span></label></li>
+                    </ul>
+                </div>
+
+                <p class="sv-note sv-note--center"><svg class="sv-ico" aria-hidden="true" focusable="false"><use href="/images/sobrevivencia/sprite.svg#sv-i-info"/></svg><span>Your doctor decides which vaccines you need: Paulo does not prescribe or recommend vaccines. General information based on ASCO guidance; it does not replace your oncology team.</span></p>
+
+                <div class="sv-piece-foot">
+                    <span class="sv-progress" data-sv-progress data-tpl="You've found {n} of 5 steps" data-done="You've found all 5 steps!"><span class="sv-pdots" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span><span class="sv-ptext" aria-live="polite">You've found 0 of 5 steps</span></span>
+                    <a class="sv-piece-link" href="#passos">See all five steps <svg class="sv-ico" aria-hidden="true" focusable="false"><use href="/images/sobrevivencia/sprite.svg#sv-i-arrow"/></svg></a>
+                </div>
+            </div>
+        </section>
+        <!-- sv:protecao:end -->
+
+        <!-- Passo 4 · Mexer-te depois do cancro: anel dos 150 minutos semanais -->
+        <section id="dose-semanal" class="sv-section sv-watch">
+            <div class="oncologia-glow-left"></div>
+            <div class="oncologia-glow-right"></div>
+            <div class="container-wide">
+                <div class="oncologia-header sv-head">
+                    <span class="oncologia-eyebrow">Step 4 · Move after cancer</span>
+                    <h2>Your weekly dose of exercise<br>after <span class="oncologia-highlight">cancer</span></h2>
+                    <p>After cancer treatment, exercise is one of the most studied tools for getting your energy back. The minimum target is <strong>150 minutes a week</strong> of moderate activity. Tap the activities and watch the ring close.</p>
+                </div>
+
+                <div class="sv-ring-wrap sv-watch" data-sv="ring" data-sv-piece="exercicio" data-goal="150">
+                    <div class="sv-ring-visual">
+                        <svg class="sv-ring-svg" viewBox="0 0 200 200" aria-hidden="true" focusable="false">
+                            <circle class="sv-ring-track" cx="100" cy="100" r="84"/>
+                            <g class="sv-comet-spin"><circle class="sv-ring-comet" cx="100" cy="100" r="84" pathLength="100" transform="rotate(-90 100 100)"/></g>
+                            <circle class="sv-ring-bar" cx="100" cy="100" r="84" pathLength="100" transform="rotate(-90 100 100)"/>
+                            <circle class="sv-ring-burst" cx="100" cy="100" r="84"/>
+                        </svg>
+                        <div class="sv-ring-center">
+                            <span class="sv-ring-num">0</span>
+                            <span class="sv-ring-unit">/ 150 min</span>
+                            <span class="sv-ring-badge">+ Strength</span>
+                        </div>
+                    </div>
+                    <div class="sv-ring-ui">
+                        <div class="sv-acts" role="group" aria-label="This week's activities">
+                            <button type="button" class="sv-act" data-min="30" aria-pressed="false">
+                                <svg class="sv-ico" aria-hidden="true" focusable="false"><use href="/images/sobrevivencia/sprite.svg#sv-i-walk"/></svg>
+                                <span class="sv-act-name">Walk</span><span class="sv-act-min">30 min</span>
+                                <span class="sv-act-check" aria-hidden="true"><svg class="sv-ico" aria-hidden="true" focusable="false"><use href="/images/sobrevivencia/sprite.svg#sv-i-check"/></svg></span>
+                            </button>
+                            <button type="button" class="sv-act" data-min="45" aria-pressed="false">
+                                <svg class="sv-ico" aria-hidden="true" focusable="false"><use href="/images/sobrevivencia/sprite.svg#sv-i-bike"/></svg>
+                                <span class="sv-act-name">Cycle</span><span class="sv-act-min">45 min</span>
+                                <span class="sv-act-check" aria-hidden="true"><svg class="sv-ico" aria-hidden="true" focusable="false"><use href="/images/sobrevivencia/sprite.svg#sv-i-check"/></svg></span>
+                            </button>
+                            <button type="button" class="sv-act" data-min="45" aria-pressed="false">
+                                <svg class="sv-ico" aria-hidden="true" focusable="false"><use href="/images/sobrevivencia/sprite.svg#sv-i-users"/></svg>
+                                <span class="sv-act-name">Oncology group</span><span class="sv-act-min">45 min</span>
+                                <span class="sv-act-check" aria-hidden="true"><svg class="sv-ico" aria-hidden="true" focusable="false"><use href="/images/sobrevivencia/sprite.svg#sv-i-check"/></svg></span>
+                            </button>
+                            <button type="button" class="sv-act" data-min="30" aria-pressed="false">
+                                <svg class="sv-ico" aria-hidden="true" focusable="false"><use href="/images/sobrevivencia/sprite.svg#sv-i-music"/></svg>
+                                <span class="sv-act-name">Dance</span><span class="sv-act-min">30 min</span>
+                                <span class="sv-act-check" aria-hidden="true"><svg class="sv-ico" aria-hidden="true" focusable="false"><use href="/images/sobrevivencia/sprite.svg#sv-i-check"/></svg></span>
+                            </button>
+                            <button type="button" class="sv-act sv-act--strength" data-strength aria-pressed="false">
+                                <svg class="sv-ico" aria-hidden="true" focusable="false"><use href="/images/sobrevivencia/sprite.svg#sv-i-dumbbell"/></svg>
+                                <span class="sv-act-name">Strength exercises</span><span class="sv-act-min">complement the 150 min</span>
+                                <span class="sv-act-check" aria-hidden="true"><svg class="sv-ico" aria-hidden="true" focusable="false"><use href="/images/sobrevivencia/sprite.svg#sv-i-check"/></svg></span>
+                            </button>
+                        </div>
+                        <p class="sv-ring-done" role="status"><strong>Ring closed!</strong> 150 minutes a week is the recommended minimum. Walking, cycling or training in a group, every minute counts, and the right plan depends on the type of tumour, the treatments you had, other conditions and how much you can tolerate. That is why it is always individual.</p>
+                        <div class="sv-stats">
+                            <div class="sv-stat"><strong><span class="sv-count" data-to="28">28</span></strong><span>clinical trials</span></div>
+                            <div class="sv-stat"><strong><span class="sv-count" data-to="1573" data-sep=",">1,573</span></strong><span>participants</span></div>
+                            <div class="sv-stat"><strong>150</strong><span>min / week</span></div>
+                        </div>
+                        <p class="sv-note"><svg class="sv-ico" aria-hidden="true" focusable="false"><use href="/images/sobrevivencia/sprite.svg#sv-i-info"/></svg><span>2023 meta-analysis (28 randomised clinical trials): exercise reduced cancer-related fatigue and improved quality of life. General information; it does not replace your oncology team.</span></p>
+                        <div class="sv-piece-foot">
+                            <span class="sv-progress" data-sv-progress data-tpl="You've found {n} of 5 steps" data-done="You've found all 5 steps!"><span class="sv-pdots" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span><span class="sv-ptext" aria-live="polite">You've found 0 of 5 steps</span></span>
+                            <a class="sv-piece-link" href="#passos">See all five steps <svg class="sv-ico" aria-hidden="true" focusable="false"><use href="/images/sobrevivencia/sprite.svg#sv-i-arrow"/></svg></a>
+                        </div>
+                    </div>
+                </div>
             </div>
         </section>
 
@@ -793,15 +1251,15 @@
                     <h2 id="faq-oncologia-title">Training after <span class="oncologia-highlight">cancer</span></h2>
                     <p>What you need to know about cancer exercise with Paulo Morais, in Lisbon and online.</p>
                 </div>
-                <div class="pm-faq">
-                    <article><h3>What is cancer exercise?</h3><p>It is adapted physical exercise for people living with cancer or after cancer treatment. The plan takes into account physical condition, goals and the healthcare team’s recommendations.</p></article>
-                    <article><h3>Where can I do cancer exercise with Paulo Morais?</h3><p>In person in Lisbon or through <a href="/en/online-training">online training</a>, across Portugal, the European Union and Portuguese-, English- and Spanish-speaking countries.</p></article>
-                    <article><h3>Is Paulo Morais an oncology clinic?</h3><p>No. It is an exercise service, not an oncology consultation or cancer treatment. Cancer exercise is one of Paulo Morais’s areas, alongside <a href="/en/personal-training">personal training</a>, <a href="/en/group-training">group training</a>, online training and <a href="/en/osteopatia">osteopathy</a>.</p></article>
-                    <article><h3>Do I need medical clearance to start?</h3><p>Taking part may require clearance from, or coordination with, your healthcare team. The exercise assessment considers clinical guidance and relevant limitations before setting training progression.</p></article>
-                    <article><h3>Can I train during cancer treatment?</h3><p>Adapted exercise can support different stages, during or after treatment, always in line with the healthcare team’s guidance.</p></article>
-                    <article><h3>Does the step 0 to 5 guide replace my healthcare team’s plan?</h3><p>No. The guide is general information to help organise care after cancer and prepare conversations with your healthcare team. It is not a personalised treatment plan.</p></article>
-                    <article><h3>Which languages are sessions in?</h3><p>Sessions take place in Portuguese and English. Requests in Spanish, including from Spanish-speaking countries, are confirmed directly.</p></article>
-                    <article><h3>How do I book an assessment?</h3><p>You can book an exercise assessment after cancer in the client area, or talk to Paulo by WhatsApp or phone (+351 960 471 537) or by email (pt@pmorais.pt).</p></article>
+                <div class="pm-faq pm-faq--toggle">
+                    <details><summary><h3>What is cancer exercise?</h3></summary><p>It is adapted physical exercise for people living with cancer or after cancer treatment. The plan takes into account physical condition, goals and the healthcare team’s recommendations.</p></details>
+                    <details><summary><h3>Where can I do cancer exercise with Paulo Morais?</h3></summary><p>In person in Lisbon or through <a href="/en/online-training">online training</a>, across Portugal, the European Union and Portuguese-, English- and Spanish-speaking countries.</p></details>
+                    <details><summary><h3>Is Paulo Morais an oncology clinic?</h3></summary><p>No. It is an exercise service, not an oncology consultation or cancer treatment. Cancer exercise is one of Paulo Morais’s areas, alongside <a href="/en/sobre-mim#personal-training">personal training</a>, <a href="/en/group-training">group training</a>, online training and <a href="/en/osteopatia">osteopathy</a>.</p></details>
+                    <details><summary><h3>Do I need medical clearance to start?</h3></summary><p>Taking part may require clearance from, or coordination with, your healthcare team. The exercise assessment considers clinical guidance and relevant limitations before setting training progression.</p></details>
+                    <details><summary><h3>Can I train during cancer treatment?</h3></summary><p>Adapted exercise can support different stages, during or after treatment, always in line with the healthcare team’s guidance.</p></details>
+                    <details><summary><h3>Does the step 0 to 5 guide replace my healthcare team’s plan?</h3></summary><p>No. The guide is general information to help organise care after cancer and prepare conversations with your healthcare team. It is not a personalised treatment plan.</p></details>
+                    <details><summary><h3>Which languages are sessions in?</h3></summary><p>Sessions take place in Portuguese and English. Requests in Spanish, including from Spanish-speaking countries, are confirmed directly.</p></details>
+                    <details><summary><h3>How do I book an assessment?</h3></summary><p>You can book an exercise assessment after cancer in the client area, or talk to Paulo by WhatsApp or phone (+351 960 471 537) or by email (pt@pmorais.pt).</p></details>
                 </div>
             </div>
         </section>
@@ -856,6 +1314,9 @@
                 <ul class="footer-links-list">
                     <li><a href="/en/">Home</a></li>
                     <li><a href="/en/sobre-mim">About Me</a></li>
+                    <li><a href="/en/sobre-mim#personal-training">Personal training</a></li>
+                    <li><a href="/en/group-training">Group training</a></li>
+                    <li><a href="/en/online-training">Online training</a></li>
                     <li><a href="/en/osteopatia">Osteopathy</a></li>
                     <li><a href="/en/perfil">Profile</a></li>
                     <li><a href="/en/oncology-training">Oncology Training</a></li>
@@ -895,7 +1356,7 @@
         </div>
 
         <div class="footer-bar-elysium">
-            <div class="crafted-text"><a href="https://elysiumdr.eu" target="_blank" rel="noopener noreferrer">Developed by Elysium λ Development & Research.</a><br><span class="version-label">V1.6.2</span></div>
+            <div class="crafted-text"><a href="https://elysiumdr.eu" target="_blank" rel="noopener noreferrer">Developed by Elysium λ Development & Research.</a><br><span class="version-label">V1.7.0</span></div>
         </div>
     </footer>
 
@@ -912,10 +1373,10 @@
     </div>
 
     <!-- Scripts -->
-    <script nonce="pmorais-2026" src="js/script.js?v=1.6.2" defer></script>
-    <script nonce="pmorais-2026" src="../js/sobrevivencia.js?v=1.6.2" defer></script>
-    <script nonce="pmorais-2026" src="js/webmcp.js?v=1.6.2" defer></script>
-    <script nonce="pmorais-2026" src="../js/cookie-consent.js?v=1.6.2" defer></script>
+    <script nonce="pmorais-2026" src="js/script.js?v=1.7.0" defer></script>
+    <script nonce="pmorais-2026" src="../js/sobrevivencia.js?v=1.7.0" defer></script>
+    <script nonce="pmorais-2026" src="js/webmcp.js?v=1.7.0" defer></script>
+    <script nonce="pmorais-2026" src="../js/cookie-consent.js?v=1.7.0" defer></script>
 </body>
 
 </html>

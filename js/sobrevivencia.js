@@ -242,6 +242,9 @@
     /* ── Escudo das 4 vacinas (proteção) ──────────────────────────────────── */
     $$('[data-sv="shield"]').forEach((shield) => {
         const buttons = $$('.sv-vac', shield);
+        /* Sem um painel ativo, os painéis escondidos ocupam espaço vazio */
+        const idle = $('.sv-panel[data-idle]', shield);
+        if (idle) showPanel(shield, idle.id);
 
         buttons.forEach((button) => {
             button.addEventListener('click', () => {

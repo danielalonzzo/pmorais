@@ -46,20 +46,30 @@ Tudo o que motores de busca e assistentes leem é gerado a partir de duas fontes
 Depois de editar HTML ou estas fontes:
 
 1. `npm run seo:apply` regenera metadados, JSON-LD, sitemap, robots, llms.txt, API e renditions em markdown.
-2. `npm test` valida tudo (o CI falha se o resultado não estiver gerado).
+2. `npm test` valida os resultados e os comportamentos de idiomas e entidades (o CI falha se o resultado não estiver gerado).
 3. Ao mudar CSS ou JS, sobe `ASSET_VERSION` para que os visitantes não fiquem com a versão em cache.
-4. Depois do deploy, `npm run seo:indexnow` avisa o Bing e outros motores (IndexNow) de que as páginas mudaram.
+4. Antes de publicar, `npm run seo:release` atualiza os artigos públicos do Firestore, regenera a descoberta e executa os testes.
+5. Depois do deploy, `npm run seo:indexnow` avisa o Bing e outros motores que suportam IndexNow. A chave e ambos os sitemaps têm de corresponder à produção.
 
-As perguntas frequentes visíveis (`.pm-faq` e `.service-faq`, uma `<article>` por pergunta) geram automaticamente o `FAQPage` do JSON-LD; basta editar o texto no HTML.
+### Artigos públicos indexáveis
+
+`npm run seo:articles` consulta apenas os documentos publicados de `blog_posts`, sem credenciais privadas. Gera HTML em `artigos/` e `en/articles/`, metadados em `api/v1/articles.json`, um índice visível no blog e `sitemap-articles.xml`. Apenas idiomas com conteúdo original preenchido são exportados. O leitor antigo com `?id=` continua disponível como alternativa para artigos ainda não exportados.
+
+Os artigos exportados são cópias estáticas. Cada publicação, alteração, remoção ou retirada de publicação no painel deve ser seguida de `npm run seo:release` e de um deploy. Uma falha de leitura não elimina as cópias anteriores; uma leitura válida remove exportações que deixaram de ser públicas. O deploy Cloudflare já executa esta preparação. Para cPanel ou Firebase, executar a preparação antes do envio. Não publicar exportações antigas depois de retirar um artigo.
+
+O plano de lançamento, a ficha de Google Maps ainda inexistente e a medição estão em [scripts/SEO-OPERATIONS.md](scripts/SEO-OPERATIONS.md). `llms.txt`, a API e os dados estruturados apoiam a interpretação do conteúdo; não garantem indexação, citações de IA ou posições.
+
+As perguntas frequentes visíveis (`.pm-faq` e `.service-faq`, uma `<article>` por pergunta, ou um `<details>` com o `<h3>` dentro do `<summary>` quando a resposta abre ao tocar) geram automaticamente o `FAQPage` do JSON-LD; basta editar o texto no HTML.
 
 ### Lançar a versão em espanhol
 
 Os endereços estão reservados em `PLANNED_SPANISH_PATHS` (`scripts/seo-config.mjs`) e os textos em espanhol do JSON-LD e da API já existem em `scripts/agent-config.mjs`.
 
-1. Criar as páginas em `es/` com `<html lang="es">`, uma por cada caminho reservado (por exemplo `es/entrenamiento-personal.html`), com caminhos `../js/` e `../css/` para os ficheiros partilhados.
+1. Criar as páginas em `es/` com `<html lang="es">`, uma por cada caminho reservado (por exemplo `es/sobre-mi.html`, que inclui o treino personalizado), com caminhos `../js/` e `../css/` para os ficheiros partilhados.
 2. Acrescentar cada página a `PUBLIC_PAGES` com `"language": "es"` e o mesmo `translationKey` da versão PT/EN.
 3. Mudar `LOCALES.es.published` para `true`.
 4. `npm run seo:apply && npm test`: hreflang, sitemap, llms.txt, API, rotas privadas em robots.txt e o seletor de idioma passam a incluir o espanhol.
+5. Traduzir os IDs de secção em `LANGUAGE_FRAGMENTS` de `js/lang.js` e `en/js/lang.js` quando diferirem, e verificar os destinos dos botões e das ligações entre idiomas.
 
 ---
 Desenvolvido com carinho para Paulo Morais.

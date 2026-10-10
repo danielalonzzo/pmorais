@@ -3091,68 +3091,35 @@ a.about-hero-photo.ig-photo-link:hover .ig-feed-overlay {
 .ipad-frame-container {
     position: relative;
     width: 100%;
-    display: flex;
-    justify-content: center;
 }
 
 .ipad-frame-container::after {
     content: '';
     position: absolute;
-    bottom: -15px; /* Positioned slightly below */
+    bottom: calc(2.5% - 15px); /* Slightly below the iPad, which ends 2.5% above the video edge */
     left: 50%;
     transform: translateX(-50%);
     width: 85%;
     height: 12px;
     background: radial-gradient(ellipse at center, rgba(230, 174, 23, 0.45) 0%, transparent 80%);
     filter: blur(6px);
-    z-index: 0; /* Behind the iPad image which has z-index 1 */
+    z-index: 0; /* Behind the iPad video which has z-index 1 */
     pointer-events: none;
 }
 
-.ipad-frame-image {
+/* ipad.mp4 and ipadclaro.mp4 already draw the iPad, on a near-black or white
+   background. The clip keeps only the device outline (measured on the 1920x1440
+   frames: top 39px, bottom 36px, left 2px, corner radius about 105px), so the
+   video sits cleanly on the page background in both themes. */
+.osteopatia-video {
+    position: relative;
+    z-index: 1;
     display: block;
     width: 100%;
     height: auto;
-    position: relative;
-    z-index: 1;
-    /* Frame behind video */
-    pointer-events: none;
-}
-
-.ipad-video-iframe {
-    position: absolute;
-    /* Adjust these percentages to match the iPad Model image screen area */
-    top: 5.7%;
-    left: 4.5%;
-    width: 90.9%;
-    height: 88.5%;
-    z-index: 5;
-    /* Video on top */
-    border-radius: 4px;
-    background: var(--color-bg);
-}
-
-.ipad-screen-content {
-    position: absolute;
-    /* Adjust these percentages to match the iPad Model image screen area */
-    top: 5.7%;
-    left: 4.5%;
-    width: 90.9%;
-    height: 88.5%;
-    z-index: 5;
-    /* Video on top */
-    background-color: var(--color-bg);
-    /* Fallback */
-    overflow: hidden;
-    /* Border radius to match screen corners if frame is behind */
-    border-radius: 4px;
-}
-
-.osteopatia-video {
-    width: 100%;
-    height: 100%;
+    aspect-ratio: 4 / 3;
     object-fit: cover;
-    display: block;
+    clip-path: inset(2.7% 0 2.5% 0.1% round 5.5% / 7.3%);
 }
 
 .osteopatia-video-overlay {
@@ -7516,194 +7483,6 @@ a.about-hero-photo.ig-photo-link:hover .ig-feed-overlay {
     font-weight: 600;
 }
 
-/* --- Layout Side-by-Side --- */
-.oncologia-layout {
-    display: flex;
-    gap: 3rem;
-    align-items: center;
-    max-width: 960px;
-    margin: 0 auto 4.5rem;
-}
-
-/* --- Main Image (static poster) --- */
-.oncologia-image-main {
-    flex: 1;
-    min-width: 0;
-    max-width: 440px;
-}
-
-.oncologia-img-wrapper {
-    position: relative;
-    border-radius: 40px;
-    overflow: hidden;
-    box-shadow:
-        0 0 0 1px rgba(230, 174, 23, 0.15),
-        0 20px 60px rgba(0, 0, 0, 0.5),
-        0 0 80px rgba(230, 174, 23, 0.05);
-    transition: box-shadow 0.5s ease, transform 0.5s cubic-bezier(0.165, 0.84, 0.44, 1);
-}
-
-.oncologia-img-wrapper:hover {
-    transform: translateY(-6px);
-    box-shadow:
-        0 0 0 1px rgba(230, 174, 23, 0.3),
-        0 30px 70px rgba(0, 0, 0, 0.6),
-        0 0 100px rgba(230, 174, 23, 0.1);
-}
-
-.oncologia-img-wrapper img {
-    width: 100%;
-    height: auto;
-    display: block;
-    border-radius: 40px;
-    transition: transform 0.7s cubic-bezier(0.165, 0.84, 0.44, 1);
-}
-
-.oncologia-img-wrapper:hover img {
-    transform: scale(1.03);
-}
-
-/* Glassmorphism badge */
-.oncologia-badge {
-    position: absolute;
-    bottom: 18px;
-    left: 50%;
-    transform: translateX(-50%);
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    padding: 8px 18px;
-    border-radius: 50px;
-    background: rgba(10, 10, 10, 0.6);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    border: 1px solid rgba(230, 174, 23, 0.4);
-    color: var(--color-primary-text);
-    font-size: 0.78rem;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 1.5px;
-    white-space: nowrap;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
-    animation: badge-glow 3s ease-in-out infinite alternate;
-}
-
-@keyframes badge-glow {
-    0%   { box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4), 0 0 10px rgba(230,174,23,0); }
-    100% { box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4), 0 0 20px rgba(230,174,23,0.25); }
-}
-
-.oncologia-badge i {
-    width: 16px;
-    height: 16px;
-    flex-shrink: 0;
-}
-
-/* --- Scrollable Image Panel --- */
-.oncologia-image-scroll-wrap {
-    flex: 1;
-    min-width: 0;
-    max-width: 440px;
-    display: flex;
-    flex-direction: column;
-    position: relative;
-}
-
-.oncologia-scroll-label {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    font-size: 0.72rem;
-    font-weight: 600;
-    letter-spacing: 2.5px;
-    text-transform: uppercase;
-    color: var(--color-primary-text);
-    margin-bottom: 0.75rem;
-    opacity: 0.8;
-}
-
-.oncologia-image-scroll-inner {
-    position: relative;
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-}
-
-.oncologia-image-scroll {
-    flex: 1;
-    border-radius: 40px;
-    overflow-y: auto;
-    max-height: 580px; /* Reduced scroll container height */
-    border: 1px solid rgba(230, 174, 23, 0.15);
-    box-shadow:
-        0 0 0 1px rgba(230, 174, 23, 0.08),
-        0 20px 60px rgba(0, 0, 0, 0.5);
-
-    transition: box-shadow 0.4s ease, border-color 0.4s ease;
-    scrollbar-width: thin;
-    scrollbar-color: var(--color-primary) rgba(255,255,255,0.05);
-    background: #000;
-}
-
-.oncologia-image-scroll:hover {
-    border-color: rgba(230, 174, 23, 0.35);
-    box-shadow:
-        0 0 0 1px rgba(230, 174, 23, 0.2),
-        0 30px 70px rgba(0, 0, 0, 0.6);
-}
-
-.oncologia-image-scroll::-webkit-scrollbar {
-    width: 5px;
-}
-
-.oncologia-image-scroll::-webkit-scrollbar-track {
-    background: rgba(255, 255, 255, 0.03);
-    border-radius: 10px;
-}
-
-.oncologia-image-scroll::-webkit-scrollbar-thumb {
-    background: linear-gradient(180deg, var(--color-primary), #d5a015);
-    border-radius: 10px;
-}
-
-.oncologia-image-scroll img {
-    width: 100%;
-    height: auto;
-    display: block;
-    border-radius: 40px;
-}
-
-/* Bottom fade hint */
-.oncologia-scroll-fade {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: 80px;
-    background: linear-gradient(to top, var(--color-bg) 0%, transparent 100%);
-    pointer-events: none;
-    border-radius: 0 0 40px 40px;
-}
-
-.light-mode .oncologia-scroll-fade {
-    background: linear-gradient(to top, #ffffff 0%, transparent 100%);
-}
-
-/* --- Column CTA --- */
-.oncologia-column-cta {
-    margin-top: 1.5rem;
-    display: flex;
-    justify-content: center;
-    width: 100%;
-}
-
-.oncologia-column-cta .btn {
-    width: 100%;
-    justify-content: center;
-    box-sizing: border-box;
-}
-
-
 /* --- Reveal animations --- */
 .oncologia-section .reveal {
     opacity: 0;
@@ -7728,150 +7507,12 @@ a.about-hero-photo.ig-photo-link:hover .ig-feed-overlay {
 .oncologia-section .reveal.is-visible:nth-child(2) { transition-delay: 0.15s; }
 .oncologia-section .reveal.is-visible:nth-child(3) { transition-delay: 0.3s; }
 
-/* --- Light Mode adjustments --- */
-.light-mode .oncologia-image-scroll {
-    background: #fafafa;
-    scrollbar-color: var(--color-primary) rgba(0,0,0,0.05);
-    border-color: rgba(0,0,0,0.08);
-}
-
-.light-mode .oncologia-img-wrapper {
-    box-shadow:
-        0 0 0 1px rgba(0, 0, 0, 0.08),
-        0 20px 60px rgba(0, 0, 0, 0.12);
-}
-
-.light-mode .oncologia-badge {
-    background: rgba(255, 255, 255, 0.7);
-    color: #a07a00;
-    border-color: rgba(160, 122, 0, 0.35);
-}
-
-.light-mode .oncologia-image-scroll::-webkit-scrollbar-track {
-    background: rgba(0, 0, 0, 0.04);
-}
-
 /* --- Responsive --- */
-@media (max-width: 900px) {
-    .oncologia-layout {
-        gap: 1.5rem;
-    }
-}
-
 @media (max-width: 768px) {
-    .oncologia-layout {
-        flex-direction: column;
-        align-items: center;
-    }
-
-    .oncologia-image-main,
-    .oncologia-image-scroll-wrap {
-        width: 100%;
-        max-width: 480px;
-    }
-
-    .oncologia-image-scroll {
-        max-height: 520px;
-    }
-
     .oncologia-header {
         margin-bottom: 3rem;
     }
-
-    .oncologia-badge {
-        font-size: 0.7rem;
-        padding: 6px 14px;
-    }
 }
-
-@media (max-width: 480px) {
-    .oncologia-image-main,
-    .oncologia-image-scroll-wrap {
-        max-width: 100%;
-    }
-
-    .oncologia-image-scroll {
-        max-height: 420px;
-    }
-}
-
-/* ── Lightbox Modal para Oncologia ────────────────────────── */
-.oncologia-lightbox {
-    display: none;
-    position: fixed;
-    z-index: 10000;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    overflow: auto;
-    background-color: rgba(11, 11, 11, 0.95);
-    backdrop-filter: blur(15px);
-    -webkit-backdrop-filter: blur(15px);
-    align-items: center;
-    justify-content: center;
-    opacity: 0;
-    transition: opacity 0.3s ease;
-}
-
-.oncologia-lightbox.active {
-    display: flex;
-    opacity: 1;
-}
-
-.oncologia-lightbox-content {
-    margin: auto;
-    display: block;
-    max-width: 90%;
-    max-height: 90vh;
-    border-radius: 20px;
-    box-shadow: 0 0 50px rgba(230, 174, 23, 0.25);
-    border: 1px solid rgba(230, 174, 23, 0.2);
-    transform: scale(0.95);
-    transition: transform 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
-}
-
-.oncologia-lightbox.active .oncologia-lightbox-content {
-    transform: scale(1);
-}
-
-.oncologia-lightbox-close {
-    position: absolute;
-    top: 30px;
-    right: 40px;
-    color: #fff;
-    font-size: 40px;
-    font-weight: 300;
-    cursor: pointer;
-    transition: var(--transition-smooth);
-    background: rgba(255, 255, 255, 0.05);
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-.oncologia-lightbox-close:hover {
-    color: var(--color-primary-text);
-    background: rgba(230, 174, 23, 0.1);
-    border-color: rgba(230, 174, 23, 0.3);
-    transform: rotate(90deg);
-}
-
-@media (max-width: 768px) {
-    .oncologia-lightbox-close {
-        top: 20px;
-        right: 20px;
-    }
-    .oncologia-lightbox-content {
-        max-width: 95%;
-    }
-}
-
-
 
 /* ==========================================================================
    [A11Y-01] Accessibility: Prefers Reduced Motion
@@ -8022,22 +7663,11 @@ a.about-hero-photo.ig-photo-link:hover .ig-feed-overlay {
     transform: rotate(45deg);
 }
 
-.oncologia-img-wrapper {
-    cursor: zoom-in;
-}
-
-.oncologia-img-wrapper:focus-visible,
 .fab-trigger:focus-visible,
 .video-facade:focus-visible,
-.pm-btn:focus-visible,
-.oncologia-lightbox-close:focus-visible {
+.pm-btn:focus-visible {
     outline: 3px solid var(--color-primary);
     outline-offset: 4px;
-}
-
-.oncologia-lightbox-close {
-    padding: 0;
-    font-family: inherit;
 }
 
 .version-label {
@@ -8411,7 +8041,19 @@ a.about-hero-photo.ig-photo-link:hover .ig-feed-overlay {
 }
 
 .sv-head.oncologia-header {
+    max-width: 960px;
     margin-bottom: clamp(2.2rem, 5vw, 3.5rem);
+}
+
+/* Títulos com mais largura e linhas equilibradas: evita uma palavra sozinha
+   ("CANCRO") numa linha; o texto por baixo mantém a largura de leitura. */
+.sv-head.oncologia-header h2 {
+    text-wrap: balance;
+}
+
+.sv-head.oncologia-header p {
+    max-width: 720px;
+    margin-inline: auto;
 }
 
 .sv-note {
@@ -9852,16 +9494,6 @@ a.about-hero-photo.ig-photo-link:hover .ig-feed-overlay {
     outline-offset: 3px;
 }
 
-.sv-band-wrap {
-    margin: 0 auto 50px;
-}
-
-.sv-band-wrap .sv-section {
-    border: 1px solid var(--sv-line);
-    border-radius: 36px;
-    padding: clamp(36px, 6vw, 64px) clamp(20px, 4vw, 48px);
-}
-
 /* ══ 5 · Pasta do plano de sobrevivência (hub) ══════════════════════════ */
 .sv-folder {
     max-width: 980px;
@@ -9984,6 +9616,21 @@ a.about-hero-photo.ig-photo-link:hover .ig-feed-overlay {
     width: 18px;
     height: 18px;
     margin-right: 6px;
+}
+
+/* Sobre Mim: a fila de serviços acompanha o texto que a apresenta (alinhada à
+   esquerda, perto dele) e fica bem separada da galeria "O Paulo:". Fica fora de
+   @layer, como .sv-folder-actions, para ganhar ao `justify-content: center`. */
+.about-yellow-intro:has(+ .sv-folder-actions) {
+    margin-bottom: 28px;
+}
+
+.about-yellow-section .sv-folder-actions {
+    justify-content: flex-start;
+}
+
+.about-yellow-section .sv-folder-actions + .gallery-container {
+    margin-top: clamp(80px, 10vw, 120px);
 }
 
 .sv-print-sheet {
@@ -10224,8 +9871,7 @@ a.about-hero-photo.ig-photo-link:hover .ig-feed-overlay {
 }
 
 /* ── Tema claro ───────────────────────────────────────────────────────── */
-.light-mode .sv-section,
-.light-mode .sv-band-wrap .sv-section {
+.light-mode .sv-section {
     border-top-color: rgba(0, 0, 0, 0.08);
 }
 
@@ -10309,6 +9955,45 @@ a.about-hero-photo.ig-photo-link:hover .ig-feed-overlay {
     .sv-star {
         flex: 1 1 100%;
         max-width: 420px;
+    }
+
+    /* Serviços do Início: duas colunas; a lista recupera o padding do .container-wide */
+    .sv-cards--duo {
+        gap: 8px;
+        max-width: none;
+        margin-inline: -40px;
+    }
+
+    .sv-cards--duo .sv-star {
+        flex: 0 1 calc(50% - 4px);
+        min-width: 0;
+        max-width: none;
+    }
+
+    .sv-cards--duo .sv-star > a {
+        gap: 8px;
+        padding: 16px 10px 14px;
+        border-radius: 18px;
+        overflow-wrap: break-word;
+    }
+
+    .sv-cards--duo .sv-star-n {
+        font-size: 0.62rem;
+        letter-spacing: 1.5px;
+    }
+
+    .sv-cards--duo .sv-star h3 {
+        font-size: 0.86rem;
+    }
+
+    .sv-cards--duo .sv-star p {
+        font-size: 0.8rem;
+        line-height: 1.45;
+    }
+
+    .sv-cards--duo .sv-star-go {
+        font-size: 0.62rem;
+        letter-spacing: 0.8px;
     }
 
     .sv-stones {
@@ -10483,6 +10168,28 @@ a.about-hero-photo.ig-photo-link:hover .ig-feed-overlay {
     margin-top: 10px;
 }
 
+/* Escudo: a lista para a consulta fica num cartão a toda a largura, por baixo,
+   para o escudo e os botões ficarem alinhados lado a lado. */
+.sv-shield-checklist {
+    max-width: 980px;
+    margin: clamp(2rem, 4vw, 3rem) auto 0;
+    padding: clamp(20px, 3vw, 28px) clamp(20px, 3vw, 32px);
+    border: 1px solid var(--sv-line);
+    border-radius: 24px;
+    background: var(--sv-card);
+}
+
+.sv-shield-checklist .sv-checklist-title {
+    margin-top: 0;
+}
+
+@media (min-width: 861px) {
+    .sv-shield-checklist .sv-checklist {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 12px 32px;
+    }
+}
+
 /* Treino oncológico: passo 0 como ligação e navegador dos passos 0 a 5 */
 a.sv-core,
 a.sv-core:hover {
@@ -10591,7 +10298,7 @@ a.sv-core:hover {
    SEO visível: subtítulos dentro do H1 e perguntas frequentes
    O H1 de cada página nomeia o serviço e o local; os blocos .pm-faq geram o
    FAQPage do JSON-LD em scripts/apply-seo.mjs (uma <article> por pergunta,
-   com <h3> e parágrafos, sem <div> aninhadas).
+   ou um <details> com o <h3> dentro do <summary>, sem <div> aninhadas).
    ========================================================================== */
 .hero-split-left h1 .hero-kicker {
     display: block;
@@ -10660,6 +10367,78 @@ a.sv-core:hover {
     text-underline-offset: 3px;
 }
 
+/* Perguntas que abrem ao tocar (Início): um <details> por pergunta, com o <h3> dentro do <summary> */
+.pm-faq--toggle {
+    align-items: start;
+}
+
+.pm-faq--toggle details {
+    background: var(--sv-card);
+    border: 1px solid var(--sv-line);
+    border-radius: 18px;
+    transition: border-color 0.3s ease;
+}
+
+.pm-faq--toggle details[open] {
+    border-color: var(--sv-accent);
+}
+
+.pm-faq--toggle summary {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 22px 26px;
+    cursor: pointer;
+    list-style: none;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.pm-faq--toggle summary::-webkit-details-marker {
+    display: none;
+}
+
+.pm-faq--toggle summary::after {
+    content: '+';
+    flex: none;
+    display: grid;
+    place-items: center;
+    width: 30px;
+    height: 30px;
+    margin-left: auto;
+    border-radius: 50%;
+    background: color-mix(in srgb, var(--sv-accent) 15%, transparent);
+    color: var(--sv-accent-text);
+    font-size: 1.3rem;
+    line-height: 1;
+    transition: transform 0.3s ease;
+}
+
+.pm-faq--toggle details[open] summary::after {
+    transform: rotate(45deg);
+}
+
+.pm-faq--toggle summary:focus-visible {
+    outline: 3px solid var(--sv-accent);
+    outline-offset: 2px;
+    border-radius: 18px;
+}
+
+.pm-faq--toggle h3 {
+    margin: 0;
+}
+
+.pm-faq--toggle details > p {
+    padding: 0 26px 24px;
+    animation: pm-faq-open 0.35s ease;
+}
+
+@keyframes pm-faq-open {
+    from {
+        opacity: 0;
+        transform: translateY(-6px);
+    }
+}
+
 @media (max-width: 800px) {
     .pm-faq {
         grid-template-columns: 1fr;
@@ -10669,6 +10448,18 @@ a.sv-core:hover {
         padding: 22px;
     }
 
+    .pm-faq--toggle {
+        gap: 12px;
+    }
+
+    .pm-faq--toggle summary {
+        padding: 18px 20px;
+    }
+
+    .pm-faq--toggle details > p {
+        padding: 0 20px 20px;
+    }
+
     .hero-split-left h1 .hero-kicker {
         font-size: 0.72rem;
         letter-spacing: 2px;
@@ -10676,5 +10467,12 @@ a.sv-core:hover {
 
     .osteopatia-title .osteopatia-title-place {
         letter-spacing: 3px;
+    }
+}
+
+/* Mesma largura que os serviços do Início em móvel (recupera o padding do .container-wide) */
+@media (max-width: 640px) {
+    .pm-faq--toggle {
+        margin-inline: -40px;
     }
 }

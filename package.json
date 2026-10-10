@@ -16,12 +16,15 @@
     "seo:apply": "node scripts/apply-seo.mjs && node scripts/normalize-internal-urls.mjs && node scripts/generate-discovery.mjs && node scripts/generate-agent-discovery.mjs",
     "seo:generate": "node scripts/generate-discovery.mjs",
     "check:seo": "node scripts/check-seo.mjs",
-    "test": "npm run check:seo",
+    "test": "npm run check:seo && npm run check:seo:behavior",
+    "check:seo:behavior": "node --test tests/seo-behavior.test.mjs",
+    "seo:articles": "node scripts/export-public-articles.mjs --fetch",
+    "seo:release": "npm run seo:articles && npm run seo:apply && npm test",
     "agents:generate": "node scripts/generate-agent-discovery.mjs",
     "check:dns": "node scripts/check-dns-aid.mjs",
     "check:mcp": "node scripts/check-mcp.mjs",
     "build:cloudflare": "node scripts/build-cloudflare-dist.mjs",
-    "deploy:cloudflare": "node scripts/build-cloudflare-dist.mjs && (cd tmp/dist && npx wrangler pages deploy . --project-name=paulo-morais --branch=main) && rm -rf tmp/dist",
+    "deploy:cloudflare": "npm run seo:release && node scripts/build-cloudflare-dist.mjs && (cd tmp/dist && npx wrangler pages deploy . --project-name=paulo-morais --branch=main) && rm -rf tmp/dist",
     "seo:indexnow": "node scripts/indexnow.mjs"
   },
   "repository": {

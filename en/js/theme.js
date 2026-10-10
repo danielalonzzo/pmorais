@@ -118,25 +118,15 @@ function applyDynamicTheme() {
     });
 
     // Update iPad video on Osteopatia page
-    const ipadVideo = document.querySelector('.page-osteopatia .ipad-video-iframe video');
+    const ipadVideo = document.querySelector('.page-osteopatia .osteopatia-video');
     if (ipadVideo) {
-        const targetVideoSrc = basePath + (isLightMode ? 'images/osteopatia/ipadclaro.mp4' : 'images/osteopatia/ipad.mp4');
-        const currentSrc = ipadVideo.src || '';
-        
-        if (!currentSrc.endsWith(targetVideoSrc)) {
-            // Set directly on the video element for cross-browser compatibility
+        const variant = isLightMode ? 'Light' : 'Dark';
+        const targetVideoSrc = ipadVideo.dataset['src' + variant];
+        // Compare resolved URLs: this page uses "../" paths and video.src is absolute.
+        if (targetVideoSrc && ipadVideo.src !== new URL(targetVideoSrc, document.baseURI).href) {
+            ipadVideo.poster = ipadVideo.dataset['poster' + variant] || '';
             ipadVideo.src = targetVideoSrc;
-            
-            // Also update the source tag for semantic consistency
-            const source = ipadVideo.querySelector('source');
-            if (source) {
-                source.setAttribute('src', targetVideoSrc);
-            }
-            
-            ipadVideo.load();
-            if (ipadVideo.hasAttribute('autoplay')) {
-                ipadVideo.play().catch(e => console.log("Playback interrupted or blocked"));
-            }
+            ipadVideo.play().catch(() => undefined);
         }
     }
 

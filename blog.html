@@ -106,7 +106,7 @@
     <title>Blog de Treino, Osteopatia e Exercício Oncológico | Paulo Morais</title>
     <!-- Preloads -->
     <link rel="preload" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700;800&family=Poppins:wght@300;400;500;600;700&display=swap" as="style">
-    <link rel="preload" href="css/style.css?v=1.6.2" as="style">
+    <link rel="preload" href="css/style.css?v=1.7.0" as="style">
 
     <link rel="shortcut icon" type="image/png" href="images/logo/logo_ios_android.png">
     <link rel="icon" type="image/png" href="images/logo/logo_ios_android.png">
@@ -131,7 +131,7 @@
     <script nonce="pmorais-2026" src="https://unpkg.com/lucide@0.460.0/dist/umd/lucide.min.js" integrity="sha384-ieG+IKD0d/ZPXyCBTMVAbqsQdns8QGJR/e26WMw7M4fkaI/rHcS/YIoi+ah9WGge" crossorigin="anonymous" defer></script>
 
     <!-- Custom Style -->
-    <link rel="stylesheet" href="css/style.css?v=1.6.2">
+    <link rel="stylesheet" href="css/style.css?v=1.7.0">
 
     <style nonce="pmorais-2026">
         .blog-grid {
@@ -330,8 +330,8 @@
         }
     </style>
 
-    <script nonce="pmorais-2026" src="js/lang.js?v=1.6.2" defer></script>
-    <script nonce="pmorais-2026" src="js/theme.js?v=1.6.2" defer></script>
+    <script nonce="pmorais-2026" src="js/lang.js?v=1.7.0" defer></script>
+    <script nonce="pmorais-2026" src="js/theme.js?v=1.7.0" defer></script>
     <!-- SEO Architecture: generated from scripts/seo-config.mjs -->
     <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
     <meta name="googlebot" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
@@ -376,7 +376,7 @@
       ],
       "slogan": "Your Own Workout",
       "url": "https://pmorais.pt/",
-      "description": "Paulo Morais é personal trainer e osteopata em Lisboa, Portugal. Não é apenas um personal trainer, um osteopata ou um serviço de treino oncológico: reúne treino personalizado e privado, treino em grupo, treino online, osteopatia e exercício depois do cancro, presencialmente em Lisboa e online para Portugal, a União Europeia e países lusófonos, anglófonos e hispanófonos.",
+      "description": "Paulo Morais é personal trainer e osteopata em Lisboa, Portugal. A oferta reúne treino personalizado e privado, treino em pequenos grupos, treino online, osteopatia e exercício adaptado durante ou depois do cancro. O acompanhamento presencial realiza-se em Lisboa; o treino online abrange Portugal, a União Europeia e países lusófonos, anglófonos e hispanófonos.",
       "telephone": "+351960471537",
       "email": "pt@pmorais.pt",
       "logo": "https://pmorais.pt/images/logo/paulo_morais-08.png",
@@ -472,7 +472,7 @@
       "name": "Paulo Morais",
       "alternateName": "Paulo Dimas Morais",
       "jobTitle": "Personal Trainer e Osteopata",
-      "description": "Paulo Morais é personal trainer e osteopata em Lisboa, Portugal. Não é apenas um personal trainer, um osteopata ou um serviço de treino oncológico: reúne treino personalizado e privado, treino em grupo, treino online, osteopatia e exercício depois do cancro, presencialmente em Lisboa e online para Portugal, a União Europeia e países lusófonos, anglófonos e hispanófonos.",
+      "description": "Paulo Morais é personal trainer e osteopata em Lisboa, Portugal. A oferta reúne treino personalizado e privado, treino em pequenos grupos, treino online, osteopatia e exercício adaptado durante ou depois do cancro. O acompanhamento presencial realiza-se em Lisboa; o treino online abrange Portugal, a União Europeia e países lusófonos, anglófonos e hispanófonos.",
       "url": "https://pmorais.pt/sobre-mim",
       "image": "https://pmorais.pt/images/sobre-mim/paulo-morais.png",
       "sameAs": [
@@ -481,6 +481,14 @@
       "worksFor": {
         "@id": "https://pmorais.pt/#business"
       },
+      "mainEntityOfPage": [
+        {
+          "@id": "https://pmorais.pt/sobre-mim#webpage"
+        },
+        {
+          "@id": "https://pmorais.pt/en/sobre-mim#webpage"
+        }
+      ],
       "workLocation": {
         "@type": "City",
         "name": "Lisboa",
@@ -532,10 +540,18 @@
       ],
       "description": "Treino individual e progressivo em Lisboa, com personal trainer e um plano adaptado aos objetivos, condição física e rotina de cada pessoa.",
       "serviceType": "Treino personalizado e privado",
-      "url": "https://pmorais.pt/treino-personalizado",
+      "url": "https://pmorais.pt/sobre-mim",
       "provider": {
         "@id": "https://pmorais.pt/#business"
       },
+      "subjectOf": [
+        {
+          "@id": "https://pmorais.pt/sobre-mim#webpage"
+        },
+        {
+          "@id": "https://pmorais.pt/en/sobre-mim#webpage"
+        }
+      ],
       "areaServed": [
         "Lisbon, Portugal"
       ]
@@ -554,6 +570,14 @@
       "provider": {
         "@id": "https://pmorais.pt/#business"
       },
+      "subjectOf": [
+        {
+          "@id": "https://pmorais.pt/treino-em-grupo#webpage"
+        },
+        {
+          "@id": "https://pmorais.pt/en/group-training#webpage"
+        }
+      ],
       "areaServed": [
         "Lisbon, Portugal"
       ]
@@ -573,6 +597,14 @@
       "provider": {
         "@id": "https://pmorais.pt/#business"
       },
+      "subjectOf": [
+        {
+          "@id": "https://pmorais.pt/treino-online#webpage"
+        },
+        {
+          "@id": "https://pmorais.pt/en/online-training#webpage"
+        }
+      ],
       "areaServed": [
         "Portugal",
         "European Union",
@@ -582,6 +614,10 @@
       ],
       "availableChannel": {
         "@type": "ServiceChannel",
+        "name": "Acompanhamento de treino online",
+        "providesService": {
+          "@id": "https://pmorais.pt/#service-online-training"
+        },
         "serviceUrl": "https://pmorais.pt/treino-online",
         "servicePhone": {
           "@type": "ContactPoint",
@@ -600,6 +636,7 @@
       "alternateName": [
         "Exercício oncológico",
         "Treino depois do cancro",
+        "Treino pós-cancro",
         "Exercício físico na oncologia"
       ],
       "description": "Exercício adaptado para pessoas a viver com ou a recuperar de cancro, em coordenação com a equipa de saúde. Integra a oferta de treino de Paulo Morais.",
@@ -608,6 +645,14 @@
       "provider": {
         "@id": "https://pmorais.pt/#business"
       },
+      "subjectOf": [
+        {
+          "@id": "https://pmorais.pt/treino-oncologico#webpage"
+        },
+        {
+          "@id": "https://pmorais.pt/en/oncology-training#webpage"
+        }
+      ],
       "areaServed": [
         "Lisbon, Portugal",
         "Portugal",
@@ -622,6 +667,10 @@
       },
       "availableChannel": {
         "@type": "ServiceChannel",
+        "name": "Acompanhamento de treino online",
+        "providesService": {
+          "@id": "https://pmorais.pt/#service-oncology-exercise"
+        },
         "serviceUrl": "https://pmorais.pt/treino-oncologico",
         "servicePhone": {
           "@type": "ContactPoint",
@@ -647,6 +696,14 @@
       "provider": {
         "@id": "https://pmorais.pt/#business"
       },
+      "subjectOf": [
+        {
+          "@id": "https://pmorais.pt/osteopatia#webpage"
+        },
+        {
+          "@id": "https://pmorais.pt/en/osteopatia#webpage"
+        }
+      ],
       "areaServed": [
         "Lisbon, Portugal"
       ]
@@ -722,7 +779,6 @@
                 <ul>
 <li><a href="/" data-i18n="nav.home">Início</a></li>
 <li><a href="/sobre-mim" data-i18n="nav.about">Sobre Mim</a></li>
-<li><a href="/treino-personalizado">Personal Trainer</a></li>
 <li><a href="/osteopatia">Osteopatia</a></li>
 <li><a href="/treino-oncologico" data-i18n="nav.onco">Treino Oncológico</a></li>
 <li><a href="/perfil" data-i18n="nav.profile">Perfil</a></li>
@@ -786,113 +842,17 @@
             <div id="public-blog-grid" class="blog-grid" style="padding-top: 0;">
                 <!-- Posts will be loaded here via JS -->
             </div>
-
-            <!-- sv:protecao:start -->
-            <div class="sv-band-wrap">
-                <section id="protecao" class="sv-section sv-watch">
-                    <div class="oncologia-glow-left"></div>
-                    <div class="oncologia-glow-right"></div>
-                    <div class="container-wide">
-                        <div class="oncologia-header sv-head">
-                            <span class="oncologia-eyebrow">Passo 3 · Proteger-te depois do cancro</span>
-                            <h2>O escudo depois do cancro<br>tem <span class="oncologia-highlight">4 peças</span></h2>
-                            <p>Depois do tratamento do cancro, as defesas podem demorar a recuperar. As vacinas contra a gripe, a COVID-19, a doença pneumocócica e o herpes zóster são das mais importantes. Marca as que já confirmaste com a tua equipa e vê o escudo a fechar.</p>
-                        </div>
-
-                        <div class="sv-shield-layout sv-watch" data-sv="shield" data-sv-piece="protecao">
-                            <svg class="sv-shield-svg" viewBox="0 0 200 240" role="img" aria-label="Escudo com quatro peças: gripe, COVID-19, pneumocócica e herpes zóster" focusable="false">
-                                <defs>
-                                    <clipPath id="sv-shield-clip"><path d="M100 10 L176 38 V112 C176 170 142 208 100 230 C58 208 24 170 24 112 V38 Z"/></clipPath>
-                                </defs>
-                                <path class="sv-shield-body" d="M100 10 L176 38 V112 C176 170 142 208 100 230 C58 208 24 170 24 112 V38 Z"/>
-                                <g clip-path="url(#sv-shield-clip)">
-                                        <rect class="sv-q" data-q="gripe" x="0" y="0" width="100" height="112"/>
-                                        <rect class="sv-q" data-q="covid" x="100" y="0" width="100" height="112"/>
-                                        <rect class="sv-q" data-q="pneumo" x="0" y="112" width="100" height="130"/>
-                                        <rect class="sv-q" data-q="zoster" x="100" y="112" width="100" height="130"/>
-                                        <rect class="sv-q-hit" data-q="gripe" x="0" y="0" width="100" height="112"/>
-                                        <rect class="sv-q-hit" data-q="covid" x="100" y="0" width="100" height="112"/>
-                                        <rect class="sv-q-hit" data-q="pneumo" x="0" y="112" width="100" height="130"/>
-                                        <rect class="sv-q-hit" data-q="zoster" x="100" y="112" width="100" height="130"/>
-                                </g>
-                                <path class="sv-shield-cross" d="M100 12V228M26 112H174"/>
-                                <g>
-                                    <use class="sv-q-ico" data-q="gripe" href="/images/sobrevivencia/sprite.svg#sv-i-thermometer" x="44" y="52" width="36" height="36"/>
-                                    <use class="sv-q-ico" data-q="covid" href="/images/sobrevivencia/sprite.svg#sv-i-virus" x="120" y="52" width="36" height="36"/>
-                                    <use class="sv-q-ico" data-q="pneumo" href="/images/sobrevivencia/sprite.svg#sv-i-lungs" x="44" y="142" width="36" height="36"/>
-                                    <use class="sv-q-ico" data-q="zoster" href="/images/sobrevivencia/sprite.svg#sv-i-flame" x="120" y="142" width="36" height="36"/>
-                                </g>
-                                <path class="sv-shield-outline" d="M100 10 L176 38 V112 C176 170 142 208 100 230 C58 208 24 170 24 112 V38 Z"/>
-                                <g class="sv-shield-check"><circle class="sv-shield-check-bg" cx="100" cy="112" r="17"/><use href="/images/sobrevivencia/sprite.svg#sv-i-check" x="88" y="100" width="24" height="24"/></g>
-                            </svg>
-
-                            <div class="sv-shield-ui">
-                                <p class="sv-vac-legend">Já confirmei com o meu médico:</p>
-                                <div class="sv-vacs" role="group" aria-label="Já confirmei com o meu médico:">
-                                    <button type="button" class="sv-vac" data-q="gripe" aria-controls="sv-p-gripe" aria-pressed="false">
-                                        <span class="sv-vac-ico"><svg class="sv-ico" aria-hidden="true" focusable="false"><use href="/images/sobrevivencia/sprite.svg#sv-i-thermometer"/></svg></span>
-                                        <span class="sv-vac-txt"><span class="sv-vac-name">Gripe</span><span class="sv-vac-state" data-off="Por confirmar" data-on="Confirmado ✓">Por confirmar</span></span>
-                                    </button>
-                                    <button type="button" class="sv-vac" data-q="covid" aria-controls="sv-p-covid" aria-pressed="false">
-                                        <span class="sv-vac-ico"><svg class="sv-ico" aria-hidden="true" focusable="false"><use href="/images/sobrevivencia/sprite.svg#sv-i-virus"/></svg></span>
-                                        <span class="sv-vac-txt"><span class="sv-vac-name">COVID-19</span><span class="sv-vac-state" data-off="Por confirmar" data-on="Confirmado ✓">Por confirmar</span></span>
-                                    </button>
-                                    <button type="button" class="sv-vac" data-q="pneumo" aria-controls="sv-p-pneumo" aria-pressed="false">
-                                        <span class="sv-vac-ico"><svg class="sv-ico" aria-hidden="true" focusable="false"><use href="/images/sobrevivencia/sprite.svg#sv-i-lungs"/></svg></span>
-                                        <span class="sv-vac-txt"><span class="sv-vac-name">Pneumocócica</span><span class="sv-vac-state" data-off="Por confirmar" data-on="Confirmado ✓">Por confirmar</span></span>
-                                    </button>
-                                    <button type="button" class="sv-vac" data-q="zoster" aria-controls="sv-p-zoster" aria-pressed="false">
-                                        <span class="sv-vac-ico"><svg class="sv-ico" aria-hidden="true" focusable="false"><use href="/images/sobrevivencia/sprite.svg#sv-i-flame"/></svg></span>
-                                        <span class="sv-vac-txt"><span class="sv-vac-name">Herpes zóster</span><span class="sv-vac-state" data-off="Por confirmar" data-on="Confirmado ✓">Por confirmar</span></span>
-                                    </button>
-                                </div>
-                                <div class="sv-panels" aria-live="polite">
-                                    <div class="sv-panel sv-panel--idle" id="sv-p-idle" data-idle>
-                                        <svg class="sv-ico" aria-hidden="true" focusable="false"><use href="/images/sobrevivencia/sprite.svg#sv-i-syringe"/></svg>
-                                        <p><strong>Toca numa vacina</strong>Vê porque importa e marca-a quando a tiveres confirmado com o teu médico.</p>
-                                    </div>
-                                    <div class="sv-panel" id="sv-p-gripe" role="region" aria-label="Gripe">
-                                        <div class="sv-panel-head"><span class="sv-panel-ico"><svg class="sv-ico" aria-hidden="true" focusable="false"><use href="/images/sobrevivencia/sprite.svg#sv-i-thermometer"/></svg></span><h3>Gripe</h3></div>
-                                        <p>Uma revisão Cochrane em adultos com cancro imunossuprimidos concluiu que a vacina da gripe é segura, e dados observacionais apontam para menor mortalidade e melhores resultados em infeções.</p>
-                                        <blockquote class="sv-ask"><small>Pergunta ao teu médico</small>«Quando devo fazer a vacina da gripe, e qual?»</blockquote>
-                                    </div>
-                                    <div class="sv-panel" id="sv-p-covid" role="region" aria-label="COVID-19">
-                                        <div class="sv-panel-head"><span class="sv-panel-ico"><svg class="sv-ico" aria-hidden="true" focusable="false"><use href="/images/sobrevivencia/sprite.svg#sv-i-virus"/></svg></span><h3>COVID-19</h3></div>
-                                        <p>A ASCO recomenda avaliar de forma sistemática o estado vacinal de quem teve cancro, incluindo a COVID-19, como parte do seguimento.</p>
-                                        <blockquote class="sv-ask"><small>Pergunta ao teu médico</small>«Que esquema contra a COVID-19 é o certo para mim?»</blockquote>
-                                    </div>
-                                    <div class="sv-panel" id="sv-p-pneumo" role="region" aria-label="Pneumocócica">
-                                        <div class="sv-panel-head"><span class="sv-panel-ico"><svg class="sv-ico" aria-hidden="true" focusable="false"><use href="/images/sobrevivencia/sprite.svg#sv-i-lungs"/></svg></span><h3>Pneumocócica</h3></div>
-                                        <p>A doença pneumocócica pode causar infeções graves, como pneumonia. Está entre as vacinas que a ASCO inclui na revisão após o cancro.</p>
-                                        <blockquote class="sv-ask"><small>Pergunta ao teu médico</small>«Estou em dia com a vacina pneumocócica?»</blockquote>
-                                    </div>
-                                    <div class="sv-panel" id="sv-p-zoster" role="region" aria-label="Herpes zóster">
-                                        <div class="sv-panel-head"><span class="sv-panel-ico"><svg class="sv-ico" aria-hidden="true" focusable="false"><use href="/images/sobrevivencia/sprite.svg#sv-i-flame"/></svg></span><h3>Herpes zóster</h3></div>
-                                        <p>O herpes zóster («cobreiro») é uma das infeções a ter em conta quando as defesas estão em baixo. A vacina também faz parte da revisão recomendada.</p>
-                                        <blockquote class="sv-ask"><small>Pergunta ao teu médico</small>«A vacina do zóster é adequada para mim, e quando?»</blockquote>
-                                    </div>
-                                </div>
-                                <p class="sv-shield-done" role="status"><strong>Escudo completo!</strong> Continua a rever o boletim vacinal com o teu médico; as defesas e as recomendações mudam com o tempo.</p>
-                                <p class="sv-checklist-title">Leva isto à consulta</p>
-                                <ul class="sv-checklist">
-                                    <li><label class="sv-check"><input type="checkbox"><span class="sv-box" aria-hidden="true"><svg class="sv-ico" aria-hidden="true" focusable="false"><use href="/images/sobrevivencia/sprite.svg#sv-i-check"/></svg></span><span>Verifica o boletim vacinal</span></label></li>
-                                    <li><label class="sv-check"><input type="checkbox"><span class="sv-box" aria-hidden="true"><svg class="sv-ico" aria-hidden="true" focusable="false"><use href="/images/sobrevivencia/sprite.svg#sv-i-check"/></svg></span><span>Anota as vacinas que faltam</span></label></li>
-                                    <li><label class="sv-check"><input type="checkbox"><span class="sv-box" aria-hidden="true"><svg class="sv-ico" aria-hidden="true" focusable="false"><use href="/images/sobrevivencia/sprite.svg#sv-i-check"/></svg></span><span>Dá preferência a vacinas inativadas (pergunta ao teu médico)</span></label></li>
-                                    <li><label class="sv-check"><input type="checkbox"><span class="sv-box" aria-hidden="true"><svg class="sv-ico" aria-hidden="true" focusable="false"><use href="/images/sobrevivencia/sprite.svg#sv-i-check"/></svg></span><span>Se tens ou tiveste imunossupressão há pouco tempo, fala primeiro com a equipa de oncologia</span></label></li>
-                                </ul>
-                            </div>
-                        </div>
-
-                        <p class="sv-note sv-note--center"><svg class="sv-ico" aria-hidden="true" focusable="false"><use href="/images/sobrevivencia/sprite.svg#sv-i-info"/></svg><span>Quem decide que vacinas fazer é o teu médico: o Paulo não receita nem aconselha vacinas. Informação geral baseada nas orientações da ASCO; não substitui a tua equipa de oncologia.</span></p>
-
-                        <div class="sv-piece-foot">
-                            <span class="sv-progress" data-sv-progress data-tpl="Descobriste {n} de 5 passos" data-done="Descobriste os 5 passos!"><span class="sv-pdots" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span><span class="sv-ptext" aria-live="polite">Descobriste 0 de 5 passos</span></span>
-                            <a class="sv-piece-link" href="/treino-oncologico">Guia do treino oncológico <svg class="sv-ico" aria-hidden="true" focusable="false"><use href="/images/sobrevivencia/sprite.svg#sv-i-arrow"/></svg></a>
-                        </div>
-                    </div>
-                </section>
-            </div>
-            <!-- sv:protecao:end -->
+        <!-- public-article-index:start -->
+            <section id="static-article-index" aria-labelledby="static-article-index-title" style="margin: 40px 0; padding-top: 26px; border-top: 1px solid #666;">
+                <h2 id="static-article-index-title" style="font-size: 1.4rem; margin-bottom: 18px;">Artigos e recursos publicados</h2>
+                <ul style="display: grid; gap: 15px; list-style: none; padding: 0;">
+                    <li><a href="/artigos/UQeTXyS1sTnJPfVqwtNT" style="color: var(--color-primary-text); text-decoration: underline;">Oncologia do Exercício: Análise Empírica do Treino de Alta Intensidade (HIIT) e da Mobilidade no Prognóstico e Tratamento Oncológico</a></li>
+                    <li><a href="/artigos/qYtSj16uhIE3RMQDSnBr" style="color: var(--color-primary-text); text-decoration: underline;">Cancro e atividade física: O papel do exercício na recuperação</a></li>
+                    <li><a href="/artigos/F7fteZLTUMT4vc4prSyA" style="color: var(--color-primary-text); text-decoration: underline;">O debate político e o conflito inter-profissional em redor da regulamentação das medicinas alternativas e complementares em Portugal</a></li>
+                    <li><a href="/artigos/XZTjfNMJGOeMB8NwF0g8" style="color: var(--color-primary-text); text-decoration: underline;">Osteopatia na população portuguesa: Um estudo observacional</a></li>
+                </ul>
+            </section>
+            <!-- public-article-index:end -->
         </div>
     </main>
 
@@ -942,25 +902,24 @@
             </div>
         </div>
         <div class="footer-bar-elysium">
-            <div class="crafted-text"><a href="https://elysiumdr.eu" target="_blank" rel="noopener noreferrer">Desenvolvido por Elysium λ Development & Research.</a><br><span class="version-label">V1.6.2</span></div>
+            <div class="crafted-text"><a href="https://elysiumdr.eu" target="_blank" rel="noopener noreferrer">Desenvolvido por Elysium λ Development & Research.</a><br><span class="version-label">V1.7.0</span></div>
         </div>
     </footer>
 
     <!-- Scripts -->
     <script nonce="pmorais-2026" type="module">
-        import { loadBlogPosts } from './js/blog.js?v=1.6.2';
+        import { loadBlogPosts } from './js/blog.js?v=1.7.0';
         document.addEventListener('DOMContentLoaded', () => {
             loadBlogPosts('public-blog-grid');
         });
     </script>
-    <script nonce="pmorais-2026" src="js/script.js?v=1.6.2" defer></script>
-    <script nonce="pmorais-2026" src="js/sobrevivencia.js?v=1.6.2" defer></script>
-    <script nonce="pmorais-2026" src="js/webmcp.js?v=1.6.2" defer></script>
+    <script nonce="pmorais-2026" src="js/script.js?v=1.7.0" defer></script>
+    <script nonce="pmorais-2026" src="js/webmcp.js?v=1.7.0" defer></script>
     <script nonce="pmorais-2026">
         document.addEventListener('DOMContentLoaded', () => {
             if (window.lucide) window.lucide.createIcons();
         });
     </script>
-    <script nonce="pmorais-2026" src="js/cookie-consent.js?v=1.6.2" defer></script>
+    <script nonce="pmorais-2026" src="js/cookie-consent.js?v=1.7.0" defer></script>
 </body>
 </html>

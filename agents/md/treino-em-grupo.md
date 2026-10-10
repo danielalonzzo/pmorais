@@ -5,7 +5,7 @@ canonical: "https://pmorais.pt/treino-em-grupo"
 language: "pt-PT"
 alternate: "https://pmorais.pt/en/group-training"
 alternates: [{"language":"pt-PT","canonical":"https://pmorais.pt/treino-em-grupo"},{"language":"en-GB","canonical":"https://pmorais.pt/en/group-training"}]
-updated: "2026-10-08"
+updated: "2026-10-10"
 source: "Rendered from the canonical HTML page. The HTML remains authoritative if the two differ."
 ---
 
@@ -91,7 +91,7 @@ Treino em grupo descreve um formato de participação, enquanto treino oncológi
 
 ## Explorar os serviços de Paulo Morais
 
-[Treino personalizado](https://pmorais.pt/treino-personalizado)
+[Treino personalizado](https://pmorais.pt/sobre-mim#treino-personalizado)
 [Treino online](https://pmorais.pt/treino-online)
 [Osteopatia](https://pmorais.pt/osteopatia)
 [Treino oncológico](https://pmorais.pt/treino-oncologico)

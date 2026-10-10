@@ -49,7 +49,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Paulo Morais | Personal Trainer e Osteopata em Lisboa</title>
     <!-- Preloads -->
-    <link rel="preload" href="css/style.css?v=1.6.2" as="style">
+    <link rel="preload" href="css/style.css?v=1.7.0" as="style">
 
     <link rel="shortcut icon" type="image/png" href="images/logo/logo_ios_android.png">
     <link rel="icon" type="image/png" href="images/logo/logo_ios_android.png">
@@ -58,10 +58,10 @@
     <!-- Patron local font is defined in style.css -->
 
     <!-- Icons (Lucide) -->
-    <script nonce="pmorais-2026" src="js/icons.js?v=1.6.2" defer></script>
+    <script nonce="pmorais-2026" src="js/icons.js?v=1.7.0" defer></script>
 
     <!-- Custom Style -->
-    <link rel="stylesheet" href="css/style.css?v=1.6.2">
+    <link rel="stylesheet" href="css/style.css?v=1.7.0">
 
     <!-- SEO Architecture: generated from scripts/seo-config.mjs -->
     <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
@@ -107,7 +107,7 @@
       ],
       "slogan": "Your Own Workout",
       "url": "https://pmorais.pt/",
-      "description": "Paulo Morais é personal trainer e osteopata em Lisboa, Portugal. Não é apenas um personal trainer, um osteopata ou um serviço de treino oncológico: reúne treino personalizado e privado, treino em grupo, treino online, osteopatia e exercício depois do cancro, presencialmente em Lisboa e online para Portugal, a União Europeia e países lusófonos, anglófonos e hispanófonos.",
+      "description": "Paulo Morais é personal trainer e osteopata em Lisboa, Portugal. A oferta reúne treino personalizado e privado, treino em pequenos grupos, treino online, osteopatia e exercício adaptado durante ou depois do cancro. O acompanhamento presencial realiza-se em Lisboa; o treino online abrange Portugal, a União Europeia e países lusófonos, anglófonos e hispanófonos.",
       "telephone": "+351960471537",
       "email": "pt@pmorais.pt",
       "logo": "https://pmorais.pt/images/logo/paulo_morais-08.png",
@@ -203,7 +203,7 @@
       "name": "Paulo Morais",
       "alternateName": "Paulo Dimas Morais",
       "jobTitle": "Personal Trainer e Osteopata",
-      "description": "Paulo Morais é personal trainer e osteopata em Lisboa, Portugal. Não é apenas um personal trainer, um osteopata ou um serviço de treino oncológico: reúne treino personalizado e privado, treino em grupo, treino online, osteopatia e exercício depois do cancro, presencialmente em Lisboa e online para Portugal, a União Europeia e países lusófonos, anglófonos e hispanófonos.",
+      "description": "Paulo Morais é personal trainer e osteopata em Lisboa, Portugal. A oferta reúne treino personalizado e privado, treino em pequenos grupos, treino online, osteopatia e exercício adaptado durante ou depois do cancro. O acompanhamento presencial realiza-se em Lisboa; o treino online abrange Portugal, a União Europeia e países lusófonos, anglófonos e hispanófonos.",
       "url": "https://pmorais.pt/sobre-mim",
       "image": "https://pmorais.pt/images/sobre-mim/paulo-morais.png",
       "sameAs": [
@@ -212,6 +212,14 @@
       "worksFor": {
         "@id": "https://pmorais.pt/#business"
       },
+      "mainEntityOfPage": [
+        {
+          "@id": "https://pmorais.pt/sobre-mim#webpage"
+        },
+        {
+          "@id": "https://pmorais.pt/en/sobre-mim#webpage"
+        }
+      ],
       "workLocation": {
         "@type": "City",
         "name": "Lisboa",
@@ -263,10 +271,18 @@
       ],
       "description": "Treino individual e progressivo em Lisboa, com personal trainer e um plano adaptado aos objetivos, condição física e rotina de cada pessoa.",
       "serviceType": "Treino personalizado e privado",
-      "url": "https://pmorais.pt/treino-personalizado",
+      "url": "https://pmorais.pt/sobre-mim",
       "provider": {
         "@id": "https://pmorais.pt/#business"
       },
+      "subjectOf": [
+        {
+          "@id": "https://pmorais.pt/sobre-mim#webpage"
+        },
+        {
+          "@id": "https://pmorais.pt/en/sobre-mim#webpage"
+        }
+      ],
       "areaServed": [
         "Lisbon, Portugal"
       ]
@@ -285,6 +301,14 @@
       "provider": {
         "@id": "https://pmorais.pt/#business"
       },
+      "subjectOf": [
+        {
+          "@id": "https://pmorais.pt/treino-em-grupo#webpage"
+        },
+        {
+          "@id": "https://pmorais.pt/en/group-training#webpage"
+        }
+      ],
       "areaServed": [
         "Lisbon, Portugal"
       ]
@@ -304,6 +328,14 @@
       "provider": {
         "@id": "https://pmorais.pt/#business"
       },
+      "subjectOf": [
+        {
+          "@id": "https://pmorais.pt/treino-online#webpage"
+        },
+        {
+          "@id": "https://pmorais.pt/en/online-training#webpage"
+        }
+      ],
       "areaServed": [
         "Portugal",
         "European Union",
@@ -313,6 +345,10 @@
       ],
       "availableChannel": {
         "@type": "ServiceChannel",
+        "name": "Acompanhamento de treino online",
+        "providesService": {
+          "@id": "https://pmorais.pt/#service-online-training"
+        },
         "serviceUrl": "https://pmorais.pt/treino-online",
         "servicePhone": {
           "@type": "ContactPoint",
@@ -331,6 +367,7 @@
       "alternateName": [
         "Exercício oncológico",
         "Treino depois do cancro",
+        "Treino pós-cancro",
         "Exercício físico na oncologia"
       ],
       "description": "Exercício adaptado para pessoas a viver com ou a recuperar de cancro, em coordenação com a equipa de saúde. Integra a oferta de treino de Paulo Morais.",
@@ -339,6 +376,14 @@
       "provider": {
         "@id": "https://pmorais.pt/#business"
       },
+      "subjectOf": [
+        {
+          "@id": "https://pmorais.pt/treino-oncologico#webpage"
+        },
+        {
+          "@id": "https://pmorais.pt/en/oncology-training#webpage"
+        }
+      ],
       "areaServed": [
         "Lisbon, Portugal",
         "Portugal",
@@ -353,6 +398,10 @@
       },
       "availableChannel": {
         "@type": "ServiceChannel",
+        "name": "Acompanhamento de treino online",
+        "providesService": {
+          "@id": "https://pmorais.pt/#service-oncology-exercise"
+        },
         "serviceUrl": "https://pmorais.pt/treino-oncologico",
         "servicePhone": {
           "@type": "ContactPoint",
@@ -378,6 +427,14 @@
       "provider": {
         "@id": "https://pmorais.pt/#business"
       },
+      "subjectOf": [
+        {
+          "@id": "https://pmorais.pt/osteopatia#webpage"
+        },
+        {
+          "@id": "https://pmorais.pt/en/osteopatia#webpage"
+        }
+      ],
       "areaServed": [
         "Lisbon, Portugal"
       ]
@@ -396,6 +453,9 @@
         "@id": "https://pmorais.pt/#business"
       },
       "about": {
+        "@id": "https://pmorais.pt/#business"
+      },
+      "mainEntity": {
         "@id": "https://pmorais.pt/#business"
       },
       "hasPart": {
@@ -478,8 +538,8 @@
     <!-- Schema.org JSON-LD: LocalBusiness + Person -->
 
 
-    <script nonce="pmorais-2026" src="js/lang.js?v=1.6.2" defer></script>
-    <script nonce="pmorais-2026" src="js/theme.js?v=1.6.2" defer></script>
+    <script nonce="pmorais-2026" src="js/lang.js?v=1.7.0" defer></script>
+    <script nonce="pmorais-2026" src="js/theme.js?v=1.7.0" defer></script>
 </head>
 
 <body>
@@ -493,7 +553,6 @@
                 <ul>
 <li><a href="/" class="active" data-i18n="nav.home">Início</a></li>
 <li><a href="/sobre-mim" data-i18n="nav.about">Sobre Mim</a></li>
-<li><a href="/treino-personalizado">Personal Trainer</a></li>
 <li><a href="/osteopatia" data-i18n="nav.osteo">OSTEOPATIA</a></li>
 <li><a href="/treino-oncologico" data-i18n="nav.onco">Treino Oncológico</a></li>
 <li><a href="/perfil" data-i18n="nav.profile">Perfil</a></li>
@@ -649,9 +708,9 @@
                     <p>Paulo Morais reúne treino personalizado, treino em grupo, treino online, osteopatia e exercício após o cancro. Escolhe o serviço que corresponde ao teu objetivo e conhece como funciona.</p>
                     <p>O centro está em Lisboa, Portugal. O treino online está disponível em Portugal, na União Europeia e em países lusófonos, de língua inglesa e de língua espanhola.</p>
                 </div>
-                <ul class="sv-constellation sv-cards is-open">
+                <ul class="sv-constellation sv-cards sv-cards--duo is-open">
                     <li class="sv-star" style="--i:0">
-                        <a href="/treino-personalizado">
+                        <a href="/sobre-mim#treino-personalizado">
                             <span class="sv-star-n">Individual</span>
                             <h3>Treino personalizado</h3>
                             <p>Treino individual e privado, adaptado aos objetivos, condição física e rotina de cada pessoa.</p>
@@ -1046,47 +1105,6 @@
                     <p>A ciência é clara: a atividade física é uma ferramenta poderosa na <strong>prevenção</strong>, <strong>tratamento</strong> e <strong>recuperação</strong> do cancro.</p>
                 </div>
 
-                <!-- Layout principal -->
-                <div class="oncologia-layout">
-
-                    <!-- Imagem principal (poster fixo) -->
-                    <div class="oncologia-image-main reveal reveal-left">
-                        <div class="oncologia-img-wrapper" id="trigger-oncologia-modal" role="button" tabindex="0" aria-label="Ampliar infografia sobre exercício e oncologia">
-                            <img src="images/oncologia-main.jpg"
-                                 alt="O exercício físico pode fazer a diferença na oncologia"
-                                 width="700" height="1138" loading="lazy">
-                            <div class="oncologia-badge">
-                                <i data-lucide="shield-check" aria-hidden="true"></i>
-                                <span>Evidência científica</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Imagem com scroll interno -->
-                    <div class="oncologia-image-scroll-wrap reveal reveal-right">
-                        <div class="oncologia-scroll-label">
-                            <i data-lucide="mouse" style="width:14px;height:14px;" aria-hidden="true"></i>
-                            Deslize para explorar
-                        </div>
-                        <div class="oncologia-image-scroll-inner">
-                            <div class="oncologia-image-scroll">
-                                <img src="images/oncologia-scroll.jpg"
-                                     alt="Atividade física e cancro"
-                                     width="426" height="1354" loading="lazy">
-                            </div>
-                            <div class="oncologia-scroll-fade"></div>
-                        </div>
-
-                        <!-- CTA inserido diretamente debaixo da imagem -->
-                        <div class="oncologia-column-cta">
-                            <a href="/perfil?booking=true" class="btn btn-primary">
-                                Agendar Avaliação Oncológica <i data-lucide="chevron-right" aria-hidden="true"></i>
-                            </a>
-                        </div>
-                    </div>
-
-                </div>
-
                 <!-- sv:ring:start -->
                 <!-- Passo 4 · Mexer-te: anel dos 150 minutos semanais -->
                 <div id="dose-semanal" class="sv-ring-wrap sv-watch reveal" data-sv="ring" data-sv-piece="exercicio" data-goal="150">
@@ -1184,7 +1202,7 @@
                         </a>
                     </li>
                     <li class="sv-star" style="--i:1" data-sv-card="emocoes">
-                        <a href="/sobre-mim#emocoes">
+                        <a href="/treino-oncologico#emocoes">
                             <span class="sv-star-n">Passo 2</span>
                             <span class="sv-star-ico"><svg class="sv-ico" aria-hidden="true" focusable="false"><use href="/images/sobrevivencia/sprite.svg#sv-i-smile"/></svg></span>
                             <h3>Cuidar da cabeça depois do cancro</h3>
@@ -1193,7 +1211,7 @@
                         </a>
                     </li>
                     <li class="sv-star" style="--i:2" data-sv-card="protecao">
-                        <a href="/blog#protecao">
+                        <a href="/treino-oncologico#protecao">
                             <span class="sv-star-n">Passo 3</span>
                             <span class="sv-star-ico"><svg class="sv-ico" aria-hidden="true" focusable="false"><use href="/images/sobrevivencia/sprite.svg#sv-i-shield"/></svg></span>
                             <h3>Proteger-te depois do cancro</h3>
@@ -1276,13 +1294,13 @@
                     <h2 id="faq-home-title">Quem é <span class="oncologia-highlight">Paulo Morais</span></h2>
                     <p>Personal trainer, osteopata e treino depois do cancro, no mesmo acompanhamento. Respostas curtas às perguntas mais comuns.</p>
                 </div>
-                <div class="pm-faq">
-                    <article><h3>Quem é Paulo Morais?</h3><p>Paulo Morais é personal trainer e osteopata em Lisboa, com mais de 20 anos de experiência em treino personalizado e exercício adaptado. Reúne <a href="/treino-personalizado">treino personalizado e privado</a>, <a href="/treino-em-grupo">treino em grupo</a>, <a href="/treino-online">treino online</a>, <a href="/osteopatia">osteopatia</a> e <a href="/treino-oncologico">treino oncológico</a>.</p></article>
-                    <article><h3>Onde decorrem as sessões?</h3><p>O treino personalizado, o treino em grupo e a osteopatia são presenciais, em Lisboa. O treino online acompanha pessoas em Portugal, na União Europeia e em países lusófonos, de língua inglesa e de língua espanhola.</p></article>
-                    <article><h3>Posso treinar com Paulo Morais fora de Portugal?</h3><p>Sim, através do <a href="/treino-online">treino online</a>, com um plano que considera o país, o fuso horário, o espaço e o equipamento disponível. A osteopatia é apenas presencial, em Lisboa.</p></article>
-                    <article><h3>Em que línguas decorrem as sessões?</h3><p>As sessões decorrem em português e inglês. Pedidos em espanhol, incluindo de países hispanófonos, são confirmados no contacto.</p></article>
-                    <article><h3>Paulo Morais é um centro de oncologia?</h3><p>Não. O <a href="/treino-oncologico">treino oncológico</a> é exercício adaptado para pessoas a viver com cancro ou depois do tratamento, em coordenação com a equipa de saúde. Não substitui o acompanhamento médico e é uma das áreas de uma oferta que inclui treino e osteopatia.</p></article>
-                    <article><h3>Como saber preços e disponibilidade?</h3><p>Preços, horários e disponibilidade são confirmados diretamente, por WhatsApp ou telefone (+351 960 471 537) ou por email (pt@pmorais.pt).</p></article>
+                <div class="pm-faq pm-faq--toggle">
+                    <details><summary><h3>Quem é Paulo Morais?</h3></summary><p>Paulo Morais é personal trainer e osteopata em Lisboa, com mais de 20 anos de experiência em treino personalizado e exercício adaptado. Reúne <a href="/sobre-mim#treino-personalizado">treino personalizado e privado</a>, <a href="/treino-em-grupo">treino em grupo</a>, <a href="/treino-online">treino online</a>, <a href="/osteopatia">osteopatia</a> e <a href="/treino-oncologico">treino oncológico</a>.</p></details>
+                    <details><summary><h3>Onde decorrem as sessões?</h3></summary><p>O treino personalizado, o treino em grupo e a osteopatia são presenciais, em Lisboa. O treino online acompanha pessoas em Portugal, na União Europeia e em países lusófonos, de língua inglesa e de língua espanhola.</p></details>
+                    <details><summary><h3>Posso treinar com Paulo Morais fora de Portugal?</h3></summary><p>Sim, através do <a href="/treino-online">treino online</a>, com um plano que considera o país, o fuso horário, o espaço e o equipamento disponível. A osteopatia é apenas presencial, em Lisboa.</p></details>
+                    <details><summary><h3>Em que línguas decorrem as sessões?</h3></summary><p>As sessões decorrem em português e inglês. Pedidos em espanhol, incluindo de países hispanófonos, são confirmados no contacto.</p></details>
+                    <details><summary><h3>Paulo Morais é um centro de oncologia?</h3></summary><p>Não. O <a href="/treino-oncologico">treino oncológico</a> é exercício adaptado para pessoas a viver com cancro ou depois do tratamento, em coordenação com a equipa de saúde. Não substitui o acompanhamento médico e é uma das áreas de uma oferta que inclui treino e osteopatia.</p></details>
+                    <details><summary><h3>Como saber preços e disponibilidade?</h3></summary><p>Preços, horários e disponibilidade são confirmados diretamente, por WhatsApp ou telefone (+351 960 471 537) ou por email (pt@pmorais.pt).</p></details>
                 </div>
             </div>
         </section>
@@ -1428,6 +1446,9 @@
                 <ul class="footer-links-list">
                     <li><a href="/" data-i18n="nav.home">Início</a></li>
                     <li><a href="/sobre-mim" data-i18n="nav.about">Sobre Mim</a></li>
+                    <li><a href="/sobre-mim#treino-personalizado">Treino personalizado</a></li>
+                    <li><a href="/treino-em-grupo">Treino em grupo</a></li>
+                    <li><a href="/treino-online">Treino online</a></li>
                     <li><a href="/osteopatia">Osteopatia</a></li>
                     <li><a href="/perfil" data-i18n="nav.profile">Perfil</a></li>
                     <li><a href="/treino-oncologico">Treino Oncológico</a></li>
@@ -1468,22 +1489,16 @@
         </div>
 
         <div class="footer-bar-elysium">
-            <div class="crafted-text"><a href="https://elysiumdr.eu" target="_blank" rel="noopener noreferrer">Desenvolvido por Elysium λ Development &amp; Research.</a><br><span class="version-label">V1.6.2</span></div>
+            <div class="crafted-text"><a href="https://elysiumdr.eu" target="_blank" rel="noopener noreferrer">Desenvolvido por Elysium λ Development &amp; Research.</a><br><span class="version-label">V1.7.0</span></div>
         </div>
     </footer>
 
-    <!-- Lightbox Modal para Oncologia -->
-    <div id="oncologia-lightbox" class="oncologia-lightbox" role="dialog" aria-modal="true" aria-label="Infografia sobre exercício e oncologia" aria-hidden="true">
-        <button type="button" class="oncologia-lightbox-close" aria-label="Fechar imagem ampliada"><i data-lucide="x" aria-hidden="true"></i></button>
-        <img class="oncologia-lightbox-content" id="oncologia-lightbox-img" src="" alt="Imagem Ampliada">
-    </div>
-
     <!-- Scripts -->
-    <script nonce="pmorais-2026" src="js/script.js?v=1.6.2" defer></script>
-    <script nonce="pmorais-2026" src="js/sobrevivencia.js?v=1.6.2" defer></script>
-    <script nonce="pmorais-2026" src="js/webmcp.js?v=1.6.2" defer></script>
-    <script nonce="pmorais-2026" src="js/home-data.js?v=1.6.2" defer></script>
-    <script nonce="pmorais-2026" src="js/cookie-consent.js?v=1.6.2" defer></script>
+    <script nonce="pmorais-2026" src="js/script.js?v=1.7.0" defer></script>
+    <script nonce="pmorais-2026" src="js/sobrevivencia.js?v=1.7.0" defer></script>
+    <script nonce="pmorais-2026" src="js/webmcp.js?v=1.7.0" defer></script>
+    <script nonce="pmorais-2026" src="js/home-data.js?v=1.7.0" defer></script>
+    <script nonce="pmorais-2026" src="js/cookie-consent.js?v=1.7.0" defer></script>
 </body>
 
 </html>

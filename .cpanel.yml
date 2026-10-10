@@ -8,6 +8,8 @@ deployment:
     - /bin/rm -f "$DEPLOYPATH/add_nonces.py" "$DEPLOYPATH/add_view_transition.py" "$DEPLOYPATH/fix_images.py" "$DEPLOYPATH/inject_critical_css.py" "$DEPLOYPATH/test_regex.py" "$DEPLOYPATH/update_firebase_sdk.py" "$DEPLOYPATH/update_html.py" "$DEPLOYPATH/.DS_Store"
     - /bin/mkdir -p "$DEPLOYPATH/assets/fonts"
     - /bin/cp assets/fonts/Patron-Light.woff2 assets/fonts/Patron-Regular.woff2 assets/fonts/Patron-Bold.woff2 "$DEPLOYPATH/assets/fonts/"
+    # Personal training was merged into sobre-mim; .htaccess answers the old URLs with a 301.
+    - /bin/rm -f "$DEPLOYPATH/treino-personalizado.html" "$DEPLOYPATH/en/personal-training.html"
     - /bin/cp -R css en images js "$DEPLOYPATH/"
     - /usr/bin/find "$DEPLOYPATH/css" "$DEPLOYPATH/en" "$DEPLOYPATH/images" "$DEPLOYPATH/js" -type f -name .DS_Store -delete
     # Source material nothing on the site links to: 62 MB of .mov logo animations,
@@ -17,8 +19,12 @@ deployment:
     - /usr/bin/find "$DEPLOYPATH/images" -type f -iname '*.mov' -delete
     - /usr/bin/find "$DEPLOYPATH/images" -type f -iname '*.eps' -delete
     - /usr/bin/find "$DEPLOYPATH/images" -type f -iname '*.heic' -delete
-    - /bin/cp admin-blog.html artigo.html auth-action.html blog.html desinscrever.html formulario.html google0ef2004b37f69f6d.html historico.html index.html osteopatia.html perfil.html perfis.html politica-privacidade.html treino-personalizado.html treino-em-grupo.html treino-online.html treino-oncologico.html sobre-mim.html termos-e-condicoes.html "$DEPLOYPATH/"
-    - /bin/cp manifest.json robots.txt sitemap.xml llms.txt llms-full.txt sw.js firebase-messaging-sw.js 29c5fae97ae9363315db62e3db72671c.txt "$DEPLOYPATH/"
+    - /bin/cp 404.html admin-blog.html artigo.html auth-action.html blog.html desinscrever.html formulario.html google0ef2004b37f69f6d.html historico.html index.html osteopatia.html perfil.html perfis.html politica-privacidade.html treino-em-grupo.html treino-online.html treino-oncologico.html sobre-mim.html termos-e-condicoes.html "$DEPLOYPATH/"
+    - /bin/cp manifest.json robots.txt sitemap.xml sitemap-articles.xml llms.txt llms-full.txt sw.js firebase-messaging-sw.js 29c5fae97ae9363315db62e3db72671c.txt "$DEPLOYPATH/"
+    # Refresh public article snapshots, including removal of deleted translations.
+    - /bin/rm -rf "$DEPLOYPATH/artigos" "$DEPLOYPATH/en/articles"
+    - /bin/cp -R artigos "$DEPLOYPATH/"
+    - /bin/cp -R en/articles "$DEPLOYPATH/en/"
     # The Spanish site lives in /es/ once it is published (scripts/seo-config.mjs).
     - /bin/sh -c 'if [ -d es ]; then /bin/cp -R es "$DEPLOYPATH/"; fi'
     - /bin/cp openapi.json auth.md mcp.php "$DEPLOYPATH/"

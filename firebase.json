@@ -19,6 +19,12 @@
   "hosting": {
     "public": ".",
     "cleanUrls": true,
+    "redirects": [
+      { "source": "/treino-personalizado", "destination": "/sobre-mim#treino-personalizado", "type": 301 },
+      { "source": "/treino-personalizado.html", "destination": "/sobre-mim#treino-personalizado", "type": 301 },
+      { "source": "/en/personal-training", "destination": "/en/sobre-mim#personal-training", "type": 301 },
+      { "source": "/en/personal-training.html", "destination": "/en/sobre-mim#personal-training", "type": 301 }
+    ],
     "ignore": [
       "firebase.json",
       "**/node_modules/**",
@@ -27,6 +33,7 @@
       "functions/**",
       "scripts/**",
       "tests/**",
+      "tmp/**",
       "scratch/**",
       "package.json",
       "js/package.json",

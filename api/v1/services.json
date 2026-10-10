@@ -1,7 +1,7 @@
 {
   "api": "https://pmorais.pt/api/v1",
   "version": "v1",
-  "generated": "2026-10-08",
+  "generated": "2026-10-10",
   "license": "https://pmorais.pt/termos-e-condicoes",
   "documentation": "https://pmorais.pt/llms-full.txt",
   "count": 5,
@@ -71,12 +71,12 @@
         "inPerson": "Lisbon, Portugal"
       },
       "page": {
-        "pt-PT": "https://pmorais.pt/treino-personalizado",
-        "en-GB": "https://pmorais.pt/en/personal-training"
+        "pt-PT": "https://pmorais.pt/sobre-mim",
+        "en-GB": "https://pmorais.pt/en/sobre-mim"
       },
       "sources": [
-        "https://pmorais.pt/treino-personalizado",
-        "https://pmorais.pt/en/personal-training"
+        "https://pmorais.pt/sobre-mim",
+        "https://pmorais.pt/en/sobre-mim"
       ],
       "constraints": []
     },
@@ -175,23 +175,19 @@
           "treino online Portugal",
           "treino virtual",
           "treino à distância",
-          "personal trainer português no estrangeiro",
-          "treino online Brasil",
-          "treino online Angola",
-          "treino online Moçambique"
+          "personal trainer português no estrangeiro"
         ],
         "en-GB": [
           "online personal trainer",
           "virtual personal training Europe",
           "remote fitness coach",
-          "online personal trainer UK",
-          "online personal trainer Ireland"
+          "online personal training Portugal"
         ],
         "es": [
           "entrenador personal online",
           "entrenamiento virtual",
-          "entrenamiento online España",
-          "entrenador personal online Latinoamérica"
+          "entrenamiento a distancia",
+          "entrenamiento online Portugal"
         ]
       },
       "delivery": [
@@ -236,16 +232,19 @@
         "pt-PT": [
           "Exercício oncológico",
           "Treino depois do cancro",
+          "Treino pós-cancro",
           "Exercício físico na oncologia"
         ],
         "en-GB": [
           "Cancer exercise",
           "Post-cancer training",
-          "Exercise after cancer"
+          "Exercise after cancer",
+          "Exercise during cancer treatment"
         ],
         "es": [
           "Ejercicio oncológico",
           "Entrenamiento después del cáncer",
+          "Entrenamiento poscáncer",
           "Ejercicio físico en oncología"
         ]
       },

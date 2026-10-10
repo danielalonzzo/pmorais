@@ -5,7 +5,7 @@ canonical: "https://pmorais.pt/"
 language: "pt-PT"
 alternate: "https://pmorais.pt/en/"
 alternates: [{"language":"pt-PT","canonical":"https://pmorais.pt/"},{"language":"en-GB","canonical":"https://pmorais.pt/en/"}]
-updated: "2026-10-08"
+updated: "2026-10-10"
 source: "Rendered from the canonical HTML page. The HTML remains authoritative if the two differ."
 ---
 
@@ -79,7 +79,7 @@ Paulo Morais reúne treino personalizado, treino em grupo, treino online, osteop
 
 O centro está em Lisboa, Portugal. O treino online está disponível em Portugal, na União Europeia e em países lusófonos, de língua inglesa e de língua espanhola.
 
-- [Individual Treino personalizado Treino individual e privado, adaptado aos objetivos, condição física e rotina de cada pessoa. Conhecer o treino individual](https://pmorais.pt/treino-personalizado)
+- [Individual Treino personalizado Treino individual e privado, adaptado aos objetivos, condição física e rotina de cada pessoa. Conhecer o treino individual](https://pmorais.pt/sobre-mim#treino-personalizado)
 
 - [Em grupo Treino em grupo Exercício em grupo com orientação profissional. Conhece o formato e confirma a disponibilidade das sessões. Conhecer o treino em grupo](https://pmorais.pt/treino-em-grupo)
 
@@ -244,14 +244,6 @@ Especialidade — Treino Oncológico
 
 A ciência é clara: a atividade física é uma ferramenta poderosa na **prevenção**, **tratamento** e **recuperação** do cancro.
 
-![O exercício físico pode fazer a diferença na oncologia](https://pmorais.pt/images/oncologia-main.jpg)
-
-Evidência científica
-
-Deslize para explorar
-
-![Atividade física e cancro](https://pmorais.pt/images/oncologia-scroll.jpg)
-
 0
 / 150 min
 + Força
@@ -301,9 +293,9 @@ Para muitas pessoas, é aqui que começa outra fase depois do cancro: efeitos qu
 
 - [Passo 1 Ouvir o corpo depois do cancro Cansaço, formigueiros, dor… podem durar anos depois do tratamento do cancro. Aprende a falar deles. Descobrir](https://pmorais.pt/osteopatia#efeitos-tardios)
 
-- [Passo 2 Cuidar da cabeça depois do cancro O medo de que o cancro volte também precisa de espaço. Não estás só. Descobrir](https://pmorais.pt/sobre-mim#emocoes)
+- [Passo 2 Cuidar da cabeça depois do cancro O medo de que o cancro volte também precisa de espaço. Não estás só. Descobrir](https://pmorais.pt/treino-oncologico#emocoes)
 
-- [Passo 3 Proteger-te depois do cancro Depois do tratamento do cancro, as defesas demoram a recuperar. Vê as 4 vacinas a confirmar com o teu médico. Descobrir](https://pmorais.pt/blog#protecao)
+- [Passo 3 Proteger-te depois do cancro Depois do tratamento do cancro, as defesas demoram a recuperar. Vê as 4 vacinas a confirmar com o teu médico. Descobrir](https://pmorais.pt/treino-oncologico#protecao)
 
 - Passo 4 Mexer-te depois do cancro 150 minutos de exercício por semana, à tua medida. Fecha o anel da tua dose semanal. Descobrir
 
@@ -332,7 +324,7 @@ Personal trainer, osteopata e treino depois do cancro, no mesmo acompanhamento. 
 
 ### Quem é Paulo Morais?
 
-Paulo Morais é personal trainer e osteopata em Lisboa, com mais de 20 anos de experiência em treino personalizado e exercício adaptado. Reúne [treino personalizado e privado](https://pmorais.pt/treino-personalizado), [treino em grupo](https://pmorais.pt/treino-em-grupo), [treino online](https://pmorais.pt/treino-online), [osteopatia](https://pmorais.pt/osteopatia) e [treino oncológico](https://pmorais.pt/treino-oncologico).
+Paulo Morais é personal trainer e osteopata em Lisboa, com mais de 20 anos de experiência em treino personalizado e exercício adaptado. Reúne [treino personalizado e privado](https://pmorais.pt/sobre-mim#treino-personalizado), [treino em grupo](https://pmorais.pt/treino-em-grupo), [treino online](https://pmorais.pt/treino-online), [osteopatia](https://pmorais.pt/osteopatia) e [treino oncológico](https://pmorais.pt/treino-oncologico).
 
 ### Onde decorrem as sessões?
 

@@ -1,10 +1,10 @@
 {
   "api": "https://pmorais.pt/api/v1",
   "version": "v1",
-  "generated": "2026-10-08",
+  "generated": "2026-10-10",
   "license": "https://pmorais.pt/termos-e-condicoes",
   "documentation": "https://pmorais.pt/llms-full.txt",
-  "count": 16,
+  "count": 14,
   "pages": [
     {
       "path": "/",
@@ -25,8 +25,8 @@
       "title": "Paulo Morais | Personal Trainer e Osteopata em Lisboa",
       "description": "Treino personalizado, privado e em grupo, osteopatia e treino oncológico em Lisboa. Treino online para Portugal, União Europeia e países lusófonos, anglófonos e hispanófonos.",
       "markdown": "https://pmorais.pt/agents/md/index.md",
-      "markdownTokens": 4654,
-      "updated": "2026-10-08"
+      "markdownTokens": 4608,
+      "updated": "2026-10-10"
     },
     {
       "path": "/osteopatia",
@@ -47,8 +47,8 @@
       "title": "Osteopata em Lisboa | Osteopatia com Paulo Morais",
       "description": "Sessões de osteopatia em Lisboa com Paulo Morais. Avaliação individual e abordagem manual orientada para mobilidade, postura, conforto e bem-estar.",
       "markdown": "https://pmorais.pt/agents/md/osteopatia.md",
-      "markdownTokens": 3987,
-      "updated": "2026-10-08"
+      "markdownTokens": 3961,
+      "updated": "2026-10-10"
     },
     {
       "path": "/sobre-mim",
@@ -66,11 +66,11 @@
         }
       ],
       "translationKey": "about",
-      "title": "Sobre Paulo Morais | Personal Trainer e Osteopata em Lisboa",
-      "description": "Conheça Paulo Morais, personal trainer e osteopata em Lisboa, com mais de 20 anos de experiência em treino personalizado e exercício adaptado.",
+      "title": "Personal Trainer em Lisboa | Sobre Paulo Morais",
+      "description": "Conheça Paulo Morais, personal trainer e osteopata em Lisboa com mais de 20 anos de experiência. Treino individual e privado, adaptado aos objetivos e à rotina.",
       "markdown": "https://pmorais.pt/agents/md/sobre-mim.md",
-      "markdownTokens": 1431,
-      "updated": "2026-10-08"
+      "markdownTokens": 1886,
+      "updated": "2026-10-10"
     },
     {
       "path": "/blog",
@@ -91,8 +91,8 @@
       "title": "Blog de Treino, Osteopatia e Exercício Oncológico | Paulo Morais",
       "description": "Artigos de Paulo Morais sobre treino personalizado, osteopatia, exercício em oncologia, recuperação, saúde e bem-estar.",
       "markdown": "https://pmorais.pt/agents/md/blog.md",
-      "markdownTokens": 864,
-      "updated": "2026-10-08"
+      "markdownTokens": 481,
+      "updated": "2026-10-10"
     },
     {
       "path": "/treino-oncologico",
@@ -113,8 +113,8 @@
       "title": "Treino Oncológico em Lisboa e Online | Paulo Morais",
       "description": "Exercício adaptado e treino depois do cancro em Lisboa e online, com Paulo Morais e coordenação com a equipa de saúde. Inclui guia de sobrevivência.",
       "markdown": "https://pmorais.pt/agents/md/treino-oncologico.md",
-      "markdownTokens": 2389,
-      "updated": "2026-10-08"
+      "markdownTokens": 4138,
+      "updated": "2026-10-10"
     },
     {
       "path": "/en/",
@@ -135,8 +135,8 @@
       "title": "Paulo Morais | Personal Trainer & Osteopath in Lisbon",
       "description": "Personal, private and group training, osteopathy and cancer exercise in Lisbon. Online coaching for Portugal, the EU and Portuguese-, English- and Spanish-speaking countries.",
       "markdown": "https://pmorais.pt/agents/md/en/index.md",
-      "markdownTokens": 4505,
-      "updated": "2026-10-08"
+      "markdownTokens": 4460,
+      "updated": "2026-10-10"
     },
     {
       "path": "/en/osteopatia",
@@ -157,8 +157,8 @@
       "title": "Osteopath in Lisbon | Osteopathy with Paulo Morais",
       "description": "Osteopathy sessions in Lisbon with Paulo Morais. Individual assessment and a manual approach focused on mobility, posture, comfort and wellbeing.",
       "markdown": "https://pmorais.pt/agents/md/en/osteopatia.md",
-      "markdownTokens": 3879,
-      "updated": "2026-10-08"
+      "markdownTokens": 3853,
+      "updated": "2026-10-10"
     },
     {
       "path": "/en/sobre-mim",
@@ -176,11 +176,11 @@
         }
       ],
       "translationKey": "about",
-      "title": "About Paulo Morais | Personal Trainer & Osteopath in Lisbon",
-      "description": "Meet Paulo Morais, a personal trainer and osteopath in Lisbon, with more than 20 years of experience in personalised and adapted exercise.",
+      "title": "Personal Trainer in Lisbon | About Paulo Morais",
+      "description": "Meet Paulo Morais, a personal trainer and osteopath in Lisbon with more than 20 years of experience. Private, one-to-one training adapted to your goals and routine.",
       "markdown": "https://pmorais.pt/agents/md/en/sobre-mim.md",
-      "markdownTokens": 1415,
-      "updated": "2026-10-08"
+      "markdownTokens": 1803,
+      "updated": "2026-10-10"
     },
     {
       "path": "/en/blog",
@@ -201,8 +201,8 @@
       "title": "Training, Osteopathy & Cancer Exercise Blog | Paulo Morais",
       "description": "Articles by Paulo Morais about personal training, osteopathy, oncology exercise, recovery, health and wellbeing.",
       "markdown": "https://pmorais.pt/agents/md/en/blog.md",
-      "markdownTokens": 851,
-      "updated": "2026-10-08"
+      "markdownTokens": 391,
+      "updated": "2026-10-10"
     },
     {
       "path": "/en/oncology-training",
@@ -223,30 +223,8 @@
       "title": "Cancer Exercise in Lisbon & Online | Paulo Morais",
       "description": "Adapted exercise and post-cancer training in Lisbon and online with Paulo Morais, coordinated with the healthcare team. Includes a survivorship guide.",
       "markdown": "https://pmorais.pt/agents/md/en/oncology-training.md",
-      "markdownTokens": 2310,
-      "updated": "2026-10-08"
-    },
-    {
-      "path": "/treino-personalizado",
-      "canonical": "https://pmorais.pt/treino-personalizado",
-      "language": "pt-PT",
-      "alternate": "https://pmorais.pt/en/personal-training",
-      "alternates": [
-        {
-          "language": "pt-PT",
-          "canonical": "https://pmorais.pt/treino-personalizado"
-        },
-        {
-          "language": "en-GB",
-          "canonical": "https://pmorais.pt/en/personal-training"
-        }
-      ],
-      "translationKey": "personal-training",
-      "title": "Treino Personalizado em Lisboa | Personal Trainer Paulo Morais",
-      "description": "Personal trainer em Lisboa: treino individual e privado adaptado aos objetivos, condição física e rotina. Acompanhamento personalizado com Paulo Morais.",
-      "markdown": "https://pmorais.pt/agents/md/treino-personalizado.md",
-      "markdownTokens": 1383,
-      "updated": "2026-10-08"
+      "markdownTokens": 4019,
+      "updated": "2026-10-10"
     },
     {
       "path": "/treino-em-grupo",
@@ -267,8 +245,8 @@
       "title": "Treino em Grupo em Lisboa | Paulo Morais",
       "description": "Treino em pequenos grupos em Lisboa com Paulo Morais. Exercício acompanhado, adaptado à condição física e aos objetivos de cada participante.",
       "markdown": "https://pmorais.pt/agents/md/treino-em-grupo.md",
-      "markdownTokens": 1376,
-      "updated": "2026-10-08"
+      "markdownTokens": 1379,
+      "updated": "2026-10-10"
     },
     {
       "path": "/treino-online",
@@ -289,30 +267,8 @@
       "title": "Treino Online e Personal Trainer Virtual | Paulo Morais",
       "description": "Treino personalizado online com Paulo Morais, a partir de Lisboa, para Portugal, União Europeia e países lusófonos, anglófonos e hispanófonos.",
       "markdown": "https://pmorais.pt/agents/md/treino-online.md",
-      "markdownTokens": 1351,
-      "updated": "2026-10-08"
-    },
-    {
-      "path": "/en/personal-training",
-      "canonical": "https://pmorais.pt/en/personal-training",
-      "language": "en-GB",
-      "alternate": "https://pmorais.pt/treino-personalizado",
-      "alternates": [
-        {
-          "language": "pt-PT",
-          "canonical": "https://pmorais.pt/treino-personalizado"
-        },
-        {
-          "language": "en-GB",
-          "canonical": "https://pmorais.pt/en/personal-training"
-        }
-      ],
-      "translationKey": "personal-training",
-      "title": "Personal Trainer in Lisbon | Private Training with Paulo Morais",
-      "description": "Personal trainer in Lisbon: private, one-to-one training adapted to individual goals, physical condition and routine, with personalised support from Paulo Morais.",
-      "markdown": "https://pmorais.pt/agents/md/en/personal-training.md",
-      "markdownTokens": 1310,
-      "updated": "2026-10-08"
+      "markdownTokens": 1354,
+      "updated": "2026-10-10"
     },
     {
       "path": "/en/group-training",
@@ -333,8 +289,8 @@
       "title": "Small Group Training in Lisbon | Paulo Morais",
       "description": "Small group training in Lisbon with Paulo Morais. Supervised exercise adapted to each participant’s physical condition and individual goals.",
       "markdown": "https://pmorais.pt/agents/md/en/group-training.md",
-      "markdownTokens": 1310,
-      "updated": "2026-10-08"
+      "markdownTokens": 1313,
+      "updated": "2026-10-10"
     },
     {
       "path": "/en/online-training",
@@ -355,8 +311,8 @@
       "title": "Online Personal Trainer & Virtual Coaching | Paulo Morais",
       "description": "Online personal training with Paulo Morais for Portugal, the European Union, Portuguese-speaking, English-speaking and Spanish-speaking countries.",
       "markdown": "https://pmorais.pt/agents/md/en/online-training.md",
-      "markdownTokens": 1290,
-      "updated": "2026-10-08"
+      "markdownTokens": 1293,
+      "updated": "2026-10-10"
     }
   ],
   "note": "Send Accept: text/markdown to any canonical URL above to receive the same markdown rendition inline."

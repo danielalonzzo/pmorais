@@ -52,9 +52,9 @@ export const BUSINESS_IDENTITY = {
 // One sentence that answers "who is Paulo Morais?" without narrowing the
 // provider to a single service. Shown first in llms.txt and in JSON-LD.
 export const ENTITY_SUMMARY = {
-  'pt-PT': 'Paulo Morais é personal trainer e osteopata em Lisboa, Portugal. Não é apenas um personal trainer, um osteopata ou um serviço de treino oncológico: reúne treino personalizado e privado, treino em grupo, treino online, osteopatia e exercício depois do cancro, presencialmente em Lisboa e online para Portugal, a União Europeia e países lusófonos, anglófonos e hispanófonos.',
-  'en-GB': 'Paulo Morais is a personal trainer and osteopath in Lisbon, Portugal. He is not only a personal trainer, an osteopath or a cancer exercise service: his practice combines personal and private training, small-group training, online training, osteopathy and exercise after cancer, in person in Lisbon and online for Portugal, the European Union and Portuguese-, English- and Spanish-speaking countries.',
-  'es': 'Paulo Morais es entrenador personal y osteópata en Lisboa, Portugal. No es solo un entrenador personal, un osteópata o un servicio de entrenamiento oncológico: reúne entrenamiento personal y privado, entrenamiento en grupo, entrenamiento online, osteopatía y ejercicio después del cáncer, de forma presencial en Lisboa y online para Portugal, la Unión Europea y países de habla portuguesa, inglesa y española.'
+  'pt-PT': 'Paulo Morais é personal trainer e osteopata em Lisboa, Portugal. A oferta reúne treino personalizado e privado, treino em pequenos grupos, treino online, osteopatia e exercício adaptado durante ou depois do cancro. O acompanhamento presencial realiza-se em Lisboa; o treino online abrange Portugal, a União Europeia e países lusófonos, anglófonos e hispanófonos.',
+  'en-GB': 'Paulo Morais is a personal trainer and osteopath in Lisbon, Portugal. His services include personal and private training, small-group training, online training, osteopathy and adapted exercise during or after cancer. In-person services are in Lisbon; online training covers Portugal, the European Union and Portuguese-, English- and Spanish-speaking countries.',
+  'es': 'Paulo Morais es entrenador personal y osteópata en Lisboa, Portugal. Su oferta incluye entrenamiento personal y privado, entrenamiento en grupos reducidos, entrenamiento online, osteopatía y ejercicio adaptado durante o después del cáncer. La atención presencial se realiza en Lisboa; el entrenamiento online abarca Portugal, la Unión Europea y países de habla portuguesa, inglesa y española.'
 };
 
 export const API_VERSION = 'v1';
@@ -109,7 +109,8 @@ export const SERVICES = [
     delivery: ['in-person'],
     area: SERVICE_COVERAGE.inPerson,
     coverage: { inPerson: SERVICE_COVERAGE.inPerson },
-    page: canonicalServicePages('personal-training')
+    // Personal training is presented on the about page, not on a page of its own.
+    page: canonicalServicePages('about')
   },
   {
     id: 'group-training',
@@ -148,9 +149,9 @@ export const SERVICES = [
       'es': ['Entrenador personal online', 'Entrenamiento virtual', 'Entrenamiento a distancia']
     },
     searchTerms: {
-      'pt-PT': ['personal trainer online', 'treino online Portugal', 'treino virtual', 'treino à distância', 'personal trainer português no estrangeiro', 'treino online Brasil', 'treino online Angola', 'treino online Moçambique'],
-      'en-GB': ['online personal trainer', 'virtual personal training Europe', 'remote fitness coach', 'online personal trainer UK', 'online personal trainer Ireland'],
-      'es': ['entrenador personal online', 'entrenamiento virtual', 'entrenamiento online España', 'entrenador personal online Latinoamérica']
+      'pt-PT': ['personal trainer online', 'treino online Portugal', 'treino virtual', 'treino à distância', 'personal trainer português no estrangeiro'],
+      'en-GB': ['online personal trainer', 'virtual personal training Europe', 'remote fitness coach', 'online personal training Portugal'],
+      'es': ['entrenador personal online', 'entrenamiento virtual', 'entrenamiento a distancia', 'entrenamiento online Portugal']
     },
     delivery: ['online'],
     area: SERVICE_COVERAGE.online.join('; '),
@@ -167,9 +168,9 @@ export const SERVICES = [
       'es': 'Ejercicio adaptado para personas que viven con cáncer o se recuperan de él, en coordinación con el equipo de salud. Forma parte de la oferta de entrenamiento de Paulo Morais.'
     },
     alternateNames: {
-      'pt-PT': ['Exercício oncológico', 'Treino depois do cancro', 'Exercício físico na oncologia'],
-      'en-GB': ['Cancer exercise', 'Post-cancer training', 'Exercise after cancer'],
-      'es': ['Ejercicio oncológico', 'Entrenamiento después del cáncer', 'Ejercicio físico en oncología']
+      'pt-PT': ['Exercício oncológico', 'Treino depois do cancro', 'Treino pós-cancro', 'Exercício físico na oncologia'],
+      'en-GB': ['Cancer exercise', 'Post-cancer training', 'Exercise after cancer', 'Exercise during cancer treatment'],
+      'es': ['Ejercicio oncológico', 'Entrenamiento después del cáncer', 'Entrenamiento poscáncer', 'Ejercicio físico en oncología']
     },
     searchTerms: {
       'pt-PT': ['treino oncológico Lisboa', 'exercício oncológico', 'treino depois do cancro', 'exercício após o cancro', 'exercício durante o tratamento do cancro', 'personal trainer para pessoas com cancro', 'sobreviventes de cancro exercício', 'treino oncológico online'],
@@ -223,6 +224,13 @@ export const AGENT_SKILLS = [
     name: 'book-a-session',
     description: 'How to reach Paulo Morais for personal or group training, international online training, adapted oncology exercise or in-person osteopathy in Lisbon.',
     title: 'Book a session with Paulo Morais',
+    // ARD representativeQueries for this skill's ai-catalog.json entry (2-5).
+    representativeQueries: [
+      'book a session with Paulo Morais',
+      'how do I contact Paulo Morais',
+      'marcar treino personalizado em Lisboa',
+      'book an osteopathy appointment in Lisbon'
+    ],
     body: `## What this covers
 
 Arranging a first contact for personal or private training, small-group
@@ -269,6 +277,12 @@ languages.
     name: 'describe-services',
     description: 'Describe Paulo Morais as a provider of personal and private training, small-group training, international online training, oncology exercise and osteopathy, using published facts.',
     title: 'Describe the services of Paulo Morais',
+    representativeQueries: [
+      'who is Paulo Morais',
+      'small-group training in Lisbon with Paulo Morais',
+      'treino oncológico e treino depois do cancro',
+      'what can and cannot be claimed about Paulo Morais'
+    ],
     body: `## What this covers
 
 Answering “what does Paulo Morais do?” style questions accurately, without
@@ -319,6 +333,12 @@ more than 15 years in the context described on the osteopathy page.
     name: 'read-this-site',
     description: 'Fetch pmorais.pt efficiently as an agent: markdown content negotiation, the static JSON API, the discovery documents and the routes that must not be crawled.',
     title: 'Read pmorais.pt as an agent',
+    representativeQueries: [
+      'how should an agent read pmorais.pt',
+      'markdown version of the Paulo Morais website',
+      'what API does pmorais.pt expose',
+      'which pmorais.pt routes must not be crawled'
+    ],
     body: `## Fetch order
 
 1. \`${SITE_ORIGIN}/llms.txt\` — short index of the public site.

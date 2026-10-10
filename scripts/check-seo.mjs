@@ -10,6 +10,9 @@ const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const failures = [];
 const notes = [];
 const fail = (message) => failures.push(message);
+const articleManifest = JSON.parse(fs.readFileSync(path.join(root, 'api/v1/articles.json'), 'utf8'));
+const articles = articleManifest.articles ?? [];
+const articleFiles = articles.map((article) => `${article.path.replace(/^\//, '')}.html`);
 
 function read(relativePath) {
   return fs.readFileSync(path.join(root, relativePath), 'utf8');
@@ -114,8 +117,9 @@ const htmlFiles = fs.readdirSync(root).filter((name) => name.endsWith('.html'))
   .concat(['en', 'es'].filter((directory) => fs.existsSync(path.join(root, directory)))
     .flatMap((directory) => fs.readdirSync(path.join(root, directory)).filter((name) => name.endsWith('.html')).map((name) => `${directory}/${name}`)))
   .concat(PUBLIC_PAGES.map((page) => page.file).filter((file) => !['.', 'en'].includes(path.dirname(file))))
+  .concat(articleFiles)
   .filter((name) => !name.startsWith('google'));
-const publicFiles = new Set(PUBLIC_PAGES.map((page) => page.file));
+const publicFiles = new Set([...PUBLIC_PAGES.map((page) => page.file), ...articleFiles]);
 const modules = localModules(root);
 for (const directory of ['js', 'en/js']) {
   for (const name of fs.readdirSync(path.join(root, directory)).filter((entry) => entry.endsWith('.js'))) {
@@ -155,7 +159,60 @@ for (const route of PRIVATE_ROUTES) {
 }
 if (!robots.includes(`Sitemap: ${SITE_ORIGIN}/sitemap.xml`)) fail('robots.txt: missing sitemap declaration');
 
+// Editorial snapshots must contain the real article before JavaScript runs.
+// The query-based reader remains a noindex fallback for unexported posts.
+if (articleManifest.count !== articles.length) fail('articles.json: incorrect article count');
+if (new Set(articles.map((article) => article.path)).size !== articles.length) fail('articles.json: duplicate article path');
+for (const [index, article] of articles.entries()) {
+  const file = articleFiles[index];
+  const html = read(file);
+  const visible = stripCode(html);
+  if (!LOCALES[article.language]?.published) fail(`${file}: article language is not published`);
+  if (article.url !== absoluteUrl(article.path)) fail(`${file}: incorrect article URL`);
+  if (!hasLink(html, 'canonical', article.url)) fail(`${file}: missing article canonical`);
+  if (/<meta\b[^>]*name=["']robots["'][^>]*content=["'][^"']*noindex/i.test(html)) fail(`${file}: exported article is noindex`);
+  if (!/<meta\b[^>]*name=["']robots["'][^>]*content=["']index, follow/i.test(html)) fail(`${file}: missing index/follow`);
+  if (!html.includes(`<html lang="${article.language}"`)) fail(`${file}: article language differs from its manifest`);
+  if (occurrences(visible, /<h1\b/gi) !== 1 || occurrences(visible, /<main\b/gi) !== 1) fail(`${file}: article requires one H1 and main`);
+  const jsonBlocks = [...html.matchAll(/<script\b[^>]*type=["']application\/ld\+json["'][^>]*>([\s\S]*?)<\/script>/gi)];
+  let articleSchema;
+  for (const [, json] of jsonBlocks) {
+    try {
+      const data = JSON.parse(json);
+      const nodes = data['@graph'] ?? [data];
+      articleSchema ??= nodes.find((node) => ['Article', 'BlogPosting'].includes(node['@type']));
+    } catch { fail(`${file}: invalid article JSON-LD`); }
+  }
+  if (articleSchema?.headline !== article.title || articleSchema?.inLanguage !== article.language) fail(`${file}: article schema differs from public content`);
+  const translations = articles.filter((candidate) => candidate.id === article.id);
+  for (const translation of translations) {
+    const lang = LOCALES[translation.language]?.hreflang ?? translation.language;
+    if (!html.includes(`hreflang="${lang}" href="${translation.url}"`)) fail(`${file}: missing real article translation`);
+  }
+  if (occurrences(html, /hreflang=/gi) > translations.length + 1) fail(`${file}: advertises an unavailable article translation`);
+  const blogFile = article.language === 'en-GB' ? 'en/blog.html' : 'blog.html';
+  if (!read(blogFile).includes(`href="${article.path}"`)) fail(`${blogFile}: static link to ${article.path} is missing`);
+  if (!llmsArticleUrlPresent(article.url)) fail(`llms.txt: missing exported article ${article.url}`);
+}
+function llmsArticleUrlPresent(url) { return read('llms.txt').includes(url); }
+const articleSitemap = read('sitemap-articles.xml');
+const articleSitemapUrls = [...articleSitemap.matchAll(/<loc>([^<]+)<\/loc>/g)].map((match) => match[1]);
+if (JSON.stringify(articleSitemapUrls) !== JSON.stringify(articles.map((article) => article.url))) fail('sitemap-articles.xml differs from the public article manifest');
+if (articles.length && !robots.includes(`Sitemap: ${SITE_ORIGIN}/sitemap-articles.xml`)) fail('robots.txt: missing article sitemap');
+if (!/<meta\b[^>]*name="robots"[^>]*content="noindex, follow"/.test(read('404.html'))) fail('404.html: missing noindex/follow');
+if (!read('.htaccess').includes('ErrorDocument 404 /404.html')) fail('.htaccess: custom 404 handler is missing');
+
 const firebaseConfig = JSON.parse(read('firebase.json'));
+for (const [legacy, destination] of [
+  ['/treino-personalizado', '/sobre-mim#treino-personalizado'],
+  ['/en/personal-training', '/en/sobre-mim#personal-training']
+]) {
+  for (const source of [legacy, `${legacy}.html`]) {
+    if (!firebaseConfig.hosting?.redirects?.some((redirect) => redirect.source === source && redirect.destination === destination && redirect.type === 301)) {
+      fail(`firebase.json: missing permanent redirect from ${source} to its replacement section`);
+    }
+  }
+}
 const globalHeaders = firebaseConfig.hosting?.headers?.find((entry) => entry.source === '**')?.headers ?? [];
 const csp = globalHeaders.find((header) => header.key === 'Content-Security-Policy')?.value ?? '';
 for (const requiredSource of [
@@ -331,16 +388,33 @@ if (openapi) {
 }
 
 // ARD capability manifest.
+const ARD_DISCOVERY_TYPES = new Set([
+  'application/ai-catalog+json',
+  'application/agent-card+json',
+  'application/a2a-agent-card+json',
+  'application/mcp-server-card+json',
+  'application/agent-skills+zip',
+  'application/agent-skills+gzip',
+  'text/markdown; profile="urn:air:agent-skills"',
+  'application/ai-registry',
+  'application/ai-registry+json'
+]);
 const aiCatalog = readJsonFile('.well-known/ai-catalog.json');
 if (aiCatalog) {
   if (typeof aiCatalog.specVersion !== 'string' || !aiCatalog.specVersion) fail('.well-known/ai-catalog.json: specVersion must be a non-empty string');
   if (!aiCatalog.host?.identifier || !aiCatalog.host?.displayName) fail('.well-known/ai-catalog.json: host needs identifier and displayName');
+  // The ARD schema closes both objects with additionalProperties: false.
+  const allowedTopLevel = new Set(['specVersion', 'host', 'entries']);
+  const allowedHost = new Set(['displayName', 'identifier', 'documentationUrl', 'logoUrl', 'trustManifest']);
+  for (const key of Object.keys(aiCatalog)) if (!allowedTopLevel.has(key)) fail(`.well-known/ai-catalog.json: '${key}' is not an ARD manifest property`);
+  for (const key of Object.keys(aiCatalog.host ?? {})) if (!allowedHost.has(key)) fail(`.well-known/ai-catalog.json: 'host.${key}' is not an ARD host property`);
   if (!Array.isArray(aiCatalog.entries) || !aiCatalog.entries.length) fail('.well-known/ai-catalog.json: entries must be a non-empty array');
   for (const entry of aiCatalog.entries ?? []) {
     const label = entry.identifier ?? '(no identifier)';
     if (!/^urn:air:pmorais\.pt:[a-z0-9-]+:[a-z0-9-]+$/.test(entry.identifier ?? '')) fail(`.well-known/ai-catalog.json: ${label} is not a urn:air:<fqdn>:<namespace>:<name> identifier`);
     if (!entry.displayName) fail(`.well-known/ai-catalog.json: ${label} has no displayName`);
     if (!entry.type) fail(`.well-known/ai-catalog.json: ${label} has no media type`);
+    else if (!ARD_DISCOVERY_TYPES.has(entry.type)) fail(`.well-known/ai-catalog.json: ${label} uses '${entry.type}', which is not an ARD standard discovery type`);
     if (Boolean(entry.url) === Boolean(entry.data)) fail(`.well-known/ai-catalog.json: ${label} needs exactly one of url or data`);
     const queries = entry.representativeQueries ?? [];
     if (queries.length < 2 || queries.length > 5) fail(`.well-known/ai-catalog.json: ${label} needs 2-5 representativeQueries, has ${queries.length}`);
@@ -502,11 +576,12 @@ if (!/RewriteRule \^\(\?:functions\|scripts\|tests\|scratch\|node_modules\|dns\)
   fail('.htaccess: dns/ must be blocked alongside the other non-public directories');
 }
 
-// Content signals and the ARD robots.txt pointer.
+// Content signals. Agentmap is optional in ARD and robots.txt validators reject
+// it as an unknown directive; the manifest is found through its well-known path.
 if (occurrences(robots, new RegExp(`^Content-Signal: ${CONTENT_SIGNAL.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}$`, 'gm')) !== 2) {
   fail('robots.txt: Content-Signal must be declared for general and named AI crawlers');
 }
-if (!robots.includes(`Agentmap: ${SITE_ORIGIN}/.well-known/ai-catalog.json`)) fail('robots.txt: missing Agentmap pointer to the ARD manifest');
+if (/^Agentmap:/im.test(robots)) fail('robots.txt: Agentmap is not a robots.txt directive and fails validation');
 
 // Every canonical page advertises the manifest and registers the WebMCP tools.
 for (const page of PUBLIC_PAGES) {
@@ -530,7 +605,8 @@ notes.push(`${MCP_SERVER.tools.length} MCP tools checked against the server card
 notes.push('RFC 9728 protected resource metadata checked against auth.md and scripts/agent-config.mjs');
 
 notes.push(`${PUBLIC_PAGES.length} canonical pages checked`);
-notes.push(`${htmlFiles.length - PUBLIC_PAGES.length} non-public/support pages checked for noindex`);
+notes.push(`${htmlFiles.length - publicFiles.size} non-public/support pages checked for noindex`);
+notes.push(`${articles.length} static article pages and their sitemap checked`);
 notes.push(`${sitemapUrls.length} sitemap URLs checked`);
 notes.push(`${htmlFiles.length} pages checked for local link targets`);
 notes.push(`${htmlFiles.length} pages checked for local assets`);

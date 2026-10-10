@@ -5,7 +5,7 @@ canonical: "https://pmorais.pt/en/group-training"
 language: "en-GB"
 alternate: "https://pmorais.pt/treino-em-grupo"
 alternates: [{"language":"pt-PT","canonical":"https://pmorais.pt/treino-em-grupo"},{"language":"en-GB","canonical":"https://pmorais.pt/en/group-training"}]
-updated: "2026-10-08"
+updated: "2026-10-10"
 source: "Rendered from the canonical HTML page. The HTML remains authoritative if the two differ."
 ---
 
@@ -91,7 +91,7 @@ Group training describes a participation format, while oncology training describ
 
 ## Explore Paulo Morais’s services
 
-[Personal training](https://pmorais.pt/en/personal-training)
+[Personal training](https://pmorais.pt/en/sobre-mim#personal-training)
 [Online training](https://pmorais.pt/en/online-training)
 [Osteopathy](https://pmorais.pt/en/osteopatia)
 [Oncology training](https://pmorais.pt/en/oncology-training)

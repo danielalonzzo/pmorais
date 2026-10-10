@@ -2,7 +2,7 @@
   "openapi": "3.1.0",
   "info": {
     "title": "Paulo Morais public content API",
-    "version": "1.0.0+2026-10-08",
+    "version": "1.0.0+2026-10-10",
     "summary": "Public facts about personal, group and online training, oncology exercise and osteopathy.",
     "description": "A static, read-only API describing the public content of https://pmorais.pt: the services published on the site, the public contact channels and the canonical pages with their markdown renditions.\nPaulo Morais — Your Own Workout offers personal and private training, small-group training, online training and osteopathy in Lisbon. Online training supports people in Portugal, the European Union and Portuguese-, English- and Spanish-speaking countries. Oncology and post-cancer training are part of this adapted exercise offering.\nService geography and website content languages are separate facts. Sessions take place in Portuguese and English. Requests in Spanish, including from Spanish-speaking countries, are confirmed directly. An unpublished translation must not be inferred.\n\nThere is no booking, payment or client-data endpoint. The client area is authenticated and human-only; see https://pmorais.pt/auth.md.\n\nNo price, schedule or availability is published anywhere on the site and none may be inferred from this API.",
     "contact": {
@@ -36,11 +36,11 @@
         ],
         "responses": {
           "200": {
-            "description": "Site identity document",
+            "description": "Site identity, full service scope, local and online coverage, and the distinction between session and website languages.",
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object"
+                  "$ref": "#/components/schemas/SiteDocument"
                 }
               }
             }
@@ -57,11 +57,11 @@
         ],
         "responses": {
           "200": {
-            "description": "Service catalogue. `pricing` is always null.",
+            "description": "Service catalogue. `pricing` is always null. Canonical page maps contain only published translations.",
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object"
+                  "$ref": "#/components/schemas/ServicesDocument"
                 }
               }
             }
@@ -82,7 +82,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object"
+                  "$ref": "#/components/schemas/ContactDocument"
                 }
               }
             }
@@ -99,11 +99,11 @@
         ],
         "responses": {
           "200": {
-            "description": "Page index",
+            "description": "Page index containing only published canonical pages and translations.",
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object"
+                  "$ref": "#/components/schemas/PagesDocument"
                 }
               }
             }
@@ -114,22 +114,722 @@
     "/status.json": {
       "get": {
         "operationId": "getStatus",
-        "summary": "Build and availability status of this API",
+        "summary": "Build-time status of this static public-content API",
         "tags": [
           "site"
         ],
         "responses": {
           "200": {
-            "description": "Status document",
+            "description": "Static build metadata; this is not a live booking or deployment-health check.",
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object"
+                  "$ref": "#/components/schemas/StatusDocument"
                 }
               }
             }
           }
         }
+      }
+    },
+    "/articles.json": {
+      "get": {
+        "operationId": "listPublishedArticles",
+        "summary": "Published article metadata and static HTML export URLs in their actual content languages",
+        "tags": [
+          "content"
+        ],
+        "responses": {
+          "200": {
+            "description": "Metadata for published article exports. No draft content or invented translations are included.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ArticlesDocument"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "ApiMetadata": {
+        "type": "object",
+        "properties": {
+          "api": {
+            "type": "string",
+            "format": "uri"
+          },
+          "version": {
+            "type": "string"
+          },
+          "generated": {
+            "type": "string",
+            "format": "date"
+          },
+          "license": {
+            "type": "string",
+            "format": "uri"
+          },
+          "documentation": {
+            "type": "string",
+            "format": "uri"
+          }
+        },
+        "required": [
+          "api",
+          "version",
+          "generated",
+          "license",
+          "documentation"
+        ]
+      },
+      "LocalizedText": {
+        "type": "object",
+        "minProperties": 1,
+        "additionalProperties": {
+          "type": "string"
+        },
+        "description": "Text keyed by language tag. Translated labels do not establish that a website translation is published."
+      },
+      "LocalizedTerms": {
+        "type": "object",
+        "minProperties": 1,
+        "additionalProperties": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "description": "Service aliases or query phrasings keyed by language tag; these are descriptive terms, not additional services or credentials."
+      },
+      "PublishedPageMap": {
+        "type": "object",
+        "minProperties": 1,
+        "additionalProperties": {
+          "type": "string",
+          "format": "uri"
+        },
+        "description": "Canonical service pages keyed only by their published content languages. Planned or unpublished translations have no URL here."
+      },
+      "Coverage": {
+        "type": "object",
+        "properties": {
+          "inPerson": {
+            "type": "string",
+            "description": "Location for services requiring physical attendance."
+          },
+          "online": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Geography for remote exercise coaching; it does not apply to manual osteopathy."
+          }
+        },
+        "required": [],
+        "minProperties": 1
+      },
+      "SessionLanguages": {
+        "type": "object",
+        "properties": {
+          "offered": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Languages publicly stated for sessions; separate from translated website content."
+          },
+          "onRequest": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Language requests subject to direct confirmation, rather than guaranteed availability."
+          },
+          "note": {
+            "$ref": "#/components/schemas/LocalizedText"
+          }
+        },
+        "required": [
+          "offered",
+          "onRequest",
+          "note"
+        ]
+      },
+      "ServiceReference": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "$ref": "#/components/schemas/LocalizedText"
+          },
+          "page": {
+            "$ref": "#/components/schemas/PublishedPageMap"
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "page"
+        ]
+      },
+      "Service": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "$ref": "#/components/schemas/LocalizedText"
+          },
+          "summary": {
+            "$ref": "#/components/schemas/LocalizedText"
+          },
+          "alternateNames": {
+            "$ref": "#/components/schemas/LocalizedTerms"
+          },
+          "searchTerms": {
+            "$ref": "#/components/schemas/LocalizedTerms"
+          },
+          "delivery": {
+            "type": "array",
+            "minItems": 1,
+            "uniqueItems": true,
+            "items": {
+              "type": "string",
+              "enum": [
+                "in-person",
+                "online"
+              ]
+            }
+          },
+          "area": {
+            "type": "string",
+            "description": "Human-readable service geography. Use coverage and delivery to distinguish local and remote service modes."
+          },
+          "coverage": {
+            "$ref": "#/components/schemas/Coverage"
+          },
+          "page": {
+            "$ref": "#/components/schemas/PublishedPageMap"
+          },
+          "sources": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "uri"
+            },
+            "description": "Published canonical pages supporting the service description."
+          },
+          "constraints": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Limits on service suitability, scope and interpretation."
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "summary",
+          "alternateNames",
+          "searchTerms",
+          "delivery",
+          "area",
+          "coverage",
+          "page",
+          "sources",
+          "constraints"
+        ]
+      },
+      "PageAlternate": {
+        "type": "object",
+        "properties": {
+          "language": {
+            "type": "string"
+          },
+          "canonical": {
+            "type": "string",
+            "format": "uri"
+          }
+        },
+        "required": [
+          "language",
+          "canonical"
+        ]
+      },
+      "PublicPage": {
+        "type": "object",
+        "properties": {
+          "path": {
+            "type": "string"
+          },
+          "canonical": {
+            "type": "string",
+            "format": "uri"
+          },
+          "language": {
+            "type": "string",
+            "description": "Published content language, expressed as a language tag."
+          },
+          "alternate": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "uri",
+            "description": "One published translation for compatibility; use alternates for the complete list."
+          },
+          "alternates": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PageAlternate"
+            }
+          },
+          "translationKey": {
+            "type": "string",
+            "description": "Stable identifier shared by published translations of the same page."
+          },
+          "title": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "markdown": {
+            "type": "string",
+            "format": "uri"
+          },
+          "markdownTokens": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "updated": {
+            "type": "string",
+            "format": "date"
+          }
+        },
+        "required": [
+          "path",
+          "canonical",
+          "language",
+          "alternate",
+          "alternates",
+          "translationKey",
+          "title",
+          "description",
+          "markdown",
+          "markdownTokens",
+          "updated"
+        ]
+      },
+      "SiteDocument": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/ApiMetadata"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "organisation": {
+                "type": "object",
+                "properties": {
+                  "brand": {
+                    "type": "string"
+                  },
+                  "legalName": {
+                    "type": "string"
+                  },
+                  "vatID": {
+                    "type": "string"
+                  },
+                  "practitioner": {
+                    "type": "string"
+                  },
+                  "locality": {
+                    "type": "string"
+                  },
+                  "country": {
+                    "type": "string"
+                  },
+                  "url": {
+                    "type": "string",
+                    "format": "uri"
+                  }
+                },
+                "required": [
+                  "brand",
+                  "legalName",
+                  "vatID",
+                  "practitioner",
+                  "locality",
+                  "country",
+                  "url"
+                ]
+              },
+              "alternateNames": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "summary": {
+                "$ref": "#/components/schemas/LocalizedText"
+              },
+              "description": {
+                "$ref": "#/components/schemas/LocalizedText"
+              },
+              "services": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/ServiceReference"
+                }
+              },
+              "sessionLanguages": {
+                "$ref": "#/components/schemas/SessionLanguages"
+              },
+              "serviceCoverage": {
+                "$ref": "#/components/schemas/Coverage"
+              },
+              "languages": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "Published website content languages only. A descriptive label in another language does not add a published translation."
+              },
+              "defaultLanguage": {
+                "type": "string"
+              },
+              "languageNote": {
+                "type": "string"
+              },
+              "contentSignal": {
+                "type": "string"
+              },
+              "resources": {
+                "type": "object",
+                "additionalProperties": {
+                  "type": "string",
+                  "format": "uri"
+                }
+              },
+              "privateRoutes": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "format": "uri"
+                }
+              },
+              "disclaimers": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            },
+            "required": [
+              "organisation",
+              "alternateNames",
+              "summary",
+              "description",
+              "services",
+              "sessionLanguages",
+              "serviceCoverage",
+              "languages",
+              "defaultLanguage",
+              "languageNote",
+              "contentSignal",
+              "resources",
+              "privateRoutes",
+              "disclaimers"
+            ]
+          }
+        ]
+      },
+      "ServicesDocument": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/ApiMetadata"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "count": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "pricing": {
+                "type": "null",
+                "description": "No public price list is published. Prices must be confirmed directly."
+              },
+              "pricingNote": {
+                "type": "string"
+              },
+              "services": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/Service"
+                }
+              },
+              "disclaimers": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            },
+            "required": [
+              "count",
+              "pricing",
+              "pricingNote",
+              "services",
+              "disclaimers"
+            ]
+          }
+        ]
+      },
+      "ContactDocument": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/ApiMetadata"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "email": {
+                "type": "string",
+                "format": "email"
+              },
+              "telephone": {
+                "type": "string"
+              },
+              "whatsapp": {
+                "type": "string"
+              },
+              "instagram": {
+                "type": "string",
+                "format": "uri"
+              },
+              "locality": {
+                "type": "string"
+              },
+              "clientArea": {
+                "type": "object",
+                "minProperties": 1,
+                "additionalProperties": {
+                  "type": "string",
+                  "format": "uri"
+                },
+                "description": "Human-only client-area links; these do not establish programmatic access."
+              },
+              "contactForms": {
+                "type": "object",
+                "minProperties": 1,
+                "additionalProperties": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "format": "uri"
+                  }
+                },
+                "description": "Published HTML pages containing public contact forms."
+              },
+              "bookingApi": {
+                "type": "null",
+                "description": "No public programmatic booking endpoint is offered."
+              },
+              "note": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "email",
+              "telephone",
+              "whatsapp",
+              "instagram",
+              "locality",
+              "clientArea",
+              "contactForms",
+              "bookingApi",
+              "note"
+            ]
+          }
+        ]
+      },
+      "PagesDocument": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/ApiMetadata"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "count": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "pages": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/PublicPage"
+                }
+              },
+              "note": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "count",
+              "pages",
+              "note"
+            ]
+          }
+        ]
+      },
+      "StatusDocument": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/ApiMetadata"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "status": {
+                "type": "string",
+                "const": "operational",
+                "description": "Build-time status of the static public-content representation; not a live health check."
+              },
+              "representation": {
+                "type": "string",
+                "const": "static"
+              },
+              "note": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "status",
+              "representation",
+              "note"
+            ]
+          }
+        ]
+      },
+      "PublishedArticle": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "language": {
+            "type": "string",
+            "description": "The actual published language of this article; no missing translation is synthesized."
+          },
+          "path": {
+            "type": "string"
+          },
+          "url": {
+            "type": "string",
+            "format": "uri",
+            "description": "Canonical URL of the static, readable HTML article export."
+          },
+          "title": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "publishedAt": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "date-time"
+          },
+          "modifiedAt": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "date-time"
+          },
+          "format": {
+            "type": "string",
+            "enum": [
+              "article",
+              "video",
+              "pdf",
+              "clinical_case"
+            ]
+          },
+          "author": {
+            "type": "string",
+            "description": "Original source attribution, when the published record contains an author."
+          }
+        },
+        "required": [
+          "id",
+          "language",
+          "path",
+          "url",
+          "title",
+          "description",
+          "publishedAt",
+          "modifiedAt",
+          "format"
+        ]
+      },
+      "ArticlesDocument": {
+        "type": "object",
+        "properties": {
+          "generatedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "source": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "type": "string"
+              },
+              "projectId": {
+                "type": "string"
+              },
+              "collection": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "type",
+              "projectId",
+              "collection"
+            ]
+          },
+          "count": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "articles": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PublishedArticle"
+            }
+          }
+        },
+        "required": [
+          "generatedAt",
+          "source",
+          "count",
+          "articles"
+        ]
       }
     }
   },

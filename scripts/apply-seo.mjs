@@ -1,13 +1,14 @@
 import fs from 'node:fs';
 import path from 'node:path';
-import { LOCALES, NON_PUBLIC_DESCRIPTIONS, PUBLIC_PAGES, SITE_ORIGIN, localizedPages, pageAlternates } from './seo-config.mjs';
+import { LOCALES, NON_PUBLIC_DESCRIPTIONS, PUBLIC_PAGES, SITE_ORIGIN, assertPublicPages, localizedPages, pageAlternates } from './seo-config.mjs';
 import { MARKDOWN_DIR } from './agent-config.mjs';
 import { structuredData } from './structured-data.mjs';
 
 const imageUrl = `${SITE_ORIGIN}/images/logo/paulo_morais-08.png`;
 
 function escapeHtml(value) {
-  return value.replaceAll('&', '&amp;').replaceAll('"', '&quot;').replaceAll('&amp;amp;', '&amp;');
+  return value.replaceAll('&', '&amp;').replaceAll('"', '&quot;')
+    .replaceAll('<', '&lt;').replaceAll('>', '&gt;').replaceAll('&amp;amp;', '&amp;');
 }
 
 function plainText(fragment) {
@@ -17,12 +18,13 @@ function plainText(fragment) {
 }
 
 // Visible FAQ blocks (`.service-faq` or `.pm-faq`, one <article> per
-// question) become FAQPage markup, so structured answers cannot drift from
-// the text a visitor reads on the page.
+// question, or one <details> with the <h3> inside <summary> when the answer
+// opens on tap) become FAQPage markup, so structured answers cannot drift
+// from the text a visitor reads on the page.
 function visibleFaq(html) {
   const faq = [];
   for (const [, block] of html.matchAll(/<div class="(?:service-faq|pm-faq)\b[^"]*">([\s\S]*?)<\/div>/g)) {
-    for (const [, question, answer] of block.matchAll(/<article>\s*<h3>([\s\S]*?)<\/h3>([\s\S]*?)<\/article>/g)) {
+    for (const [, , question, answer] of block.matchAll(/<(article|details)>\s*(?:<summary>\s*)?<h3>([\s\S]*?)<\/h3>(?:\s*<\/summary>)?([\s\S]*?)<\/\1>/g)) {
       faq.push({ question: plainText(question), answer: plainText(answer) });
     }
   }
@@ -114,6 +116,16 @@ function setRobots(html, content) {
   return html.replace(viewport, (match) => `${match}\n    ${tag}`);
 }
 
+assertPublicPages();
+// Validate every source before the first write, so an incomplete locale launch
+// cannot leave only part of the site with regenerated metadata.
+for (const page of PUBLIC_PAGES) {
+  const source = fs.readFileSync(page.file, 'utf8');
+  if (!/<head\b[^>]*>[\s\S]*?<\/head>/i.test(source) || !/<title>[\s\S]*?<\/title>/i.test(source)) {
+    throw new Error(`${page.file}: missing HTML head or title`);
+  }
+}
+
 for (const page of PUBLIC_PAGES) {
   let html = fs.readFileSync(page.file, 'utf8');
   html = html.replace(/<html\s+lang=["'][^"']+["']>/i, `<html lang="${page.language}">`);
@@ -173,16 +185,9 @@ for (const [file, description] of Object.entries(NON_PUBLIC_DESCRIPTIONS)) {
 }
 
 // Keep structured-data URLs aligned with Firebase Hosting cleanUrls.
-const cleanUrlReplacements = new Map([
-  ['/osteopatia.html', '/osteopatia'],
-  ['/sobre-mim.html', '/sobre-mim'],
-  ['/blog.html', '/blog'],
-  ['/treino-oncologico.html', '/treino-oncologico'],
-  ['/en/osteopatia.html', '/en/osteopatia'],
-  ['/en/sobre-mim.html', '/en/sobre-mim'],
-  ['/en/blog.html', '/en/blog'],
-  ['/en/oncology-training.html', '/en/oncology-training']
-]);
+const cleanUrlReplacements = new Map(PUBLIC_PAGES
+  .filter((page) => !page.file.endsWith('/index.html') && page.file !== 'index.html')
+  .map((page) => [`/${page.file}`, page.path]));
 for (const page of PUBLIC_PAGES) {
   let html = fs.readFileSync(page.file, 'utf8');
   for (const [from, to] of cleanUrlReplacements) {

@@ -5,7 +5,7 @@ canonical: "https://pmorais.pt/en/"
 language: "en-GB"
 alternate: "https://pmorais.pt/"
 alternates: [{"language":"pt-PT","canonical":"https://pmorais.pt/"},{"language":"en-GB","canonical":"https://pmorais.pt/en/"}]
-updated: "2026-10-08"
+updated: "2026-10-10"
 source: "Rendered from the canonical HTML page. The HTML remains authoritative if the two differ."
 ---
 
@@ -79,7 +79,7 @@ Paulo Morais brings together personal training, group training, online training,
 
 The centre is based in Lisbon, Portugal. Online training is available across Portugal, the European Union and Portuguese-speaking, English-speaking and Spanish-speaking countries.
 
-- [One to one Personal training Individual, private training adapted to each person’s goals, physical condition and routine. Explore personal training](https://pmorais.pt/en/personal-training)
+- [One to one Personal training Individual, private training adapted to each person’s goals, physical condition and routine. Explore personal training](https://pmorais.pt/en/sobre-mim#personal-training)
 
 - [In a group Group training Exercise in a group with professional guidance. Learn about the format and check session availability. Explore group training](https://pmorais.pt/en/group-training)
 
@@ -215,14 +215,6 @@ Specialty — Oncology Training
 
 Science is clear: physical activity is a powerful tool in cancer **prevention**, **treatment**, and **recovery**.
 
-![Physical exercise can make a difference in oncology](https://pmorais.pt/images/oncologia-main.jpg)
-
-Scientific evidence
-
-Scroll to explore
-
-![Physical activity and cancer](https://pmorais.pt/images/oncologia-scroll.jpg)
-
 0
 / 150 min
 + Strength
@@ -272,9 +264,9 @@ For many people, this is where another stage begins after cancer: effects that l
 
 - [Step 1 Listen to your body after cancer Fatigue, tingling, pain… can last for years after cancer treatment. Learn how to talk about them. Discover](https://pmorais.pt/en/osteopatia#efeitos-tardios)
 
-- [Step 2 Look after your mind after cancer The fear that the cancer will come back needs room too. You are not alone. Discover](https://pmorais.pt/en/sobre-mim#emocoes)
+- [Step 2 Look after your mind after cancer The fear that the cancer will come back needs room too. You are not alone. Discover](https://pmorais.pt/en/oncology-training#emocoes)
 
-- [Step 3 Protect yourself after cancer After cancer treatment, your defences take time to recover. See the 4 vaccines to confirm with your doctor. Discover](https://pmorais.pt/en/blog#protecao)
+- [Step 3 Protect yourself after cancer After cancer treatment, your defences take time to recover. See the 4 vaccines to confirm with your doctor. Discover](https://pmorais.pt/en/oncology-training#protecao)
 
 - Step 4 Move after cancer 150 minutes of exercise a week, at your own pace. Close the ring of your weekly dose. Discover
 
@@ -303,7 +295,7 @@ Personal trainer, osteopath and exercise after cancer, in one place. Short answe
 
 ### Who is Paulo Morais?
 
-Paulo Morais is a personal trainer and osteopath in Lisbon, with more than 20 years of experience in personalised and adapted exercise. He offers [personal and private training](https://pmorais.pt/en/personal-training), [group training](https://pmorais.pt/en/group-training), [online training](https://pmorais.pt/en/online-training), [osteopathy](https://pmorais.pt/en/osteopatia) and [cancer exercise](https://pmorais.pt/en/oncology-training).
+Paulo Morais is a personal trainer and osteopath in Lisbon, with more than 20 years of experience in personalised and adapted exercise. He offers [personal and private training](https://pmorais.pt/en/sobre-mim#personal-training), [group training](https://pmorais.pt/en/group-training), [online training](https://pmorais.pt/en/online-training), [osteopathy](https://pmorais.pt/en/osteopatia) and [cancer exercise](https://pmorais.pt/en/oncology-training).
 
 ### Where do sessions take place?
 

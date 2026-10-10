@@ -59,4 +59,4 @@ Disallow: /en/perfil
 Disallow: /en/perfis
 
 Sitemap: https://pmorais.pt/sitemap.xml
-Agentmap: https://pmorais.pt/.well-known/ai-catalog.json
+Sitemap: https://pmorais.pt/sitemap-articles.xml

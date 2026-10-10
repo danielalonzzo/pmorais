@@ -5,7 +5,7 @@ canonical: "https://pmorais.pt/osteopatia"
 language: "pt-PT"
 alternate: "https://pmorais.pt/en/osteopatia"
 alternates: [{"language":"pt-PT","canonical":"https://pmorais.pt/osteopatia"},{"language":"en-GB","canonical":"https://pmorais.pt/en/osteopatia"}]
-updated: "2026-10-08"
+updated: "2026-10-10"
 source: "Rendered from the canonical HTML page. The HTML remains authoritative if the two differ."
 ---
 
@@ -16,10 +16,6 @@ source: "Rendered from the canonical HTML page. The HTML remains authoritative i
 # Osteopatia em Lisboa
 
 Sessões presenciais de osteopatia em Lisboa com Paulo Morais. A avaliação individual orienta o acompanhamento das queixas e da mobilidade.
-
-![iPad Frame](https://pmorais.pt/images/osteopatia/ipad-model.png)
-
-[Media](https://pmorais.pt/images/osteopatia/ipad.mp4)
 
 Entidades Certificadoras e Parceiros Institucionais
 
@@ -343,7 +339,7 @@ A osteopatia é um dos serviços de Paulo Morais, a par do treino personalizado,
 
 As sessões de osteopatia realizam-se presencialmente em Lisboa. Para exercício à distância, o treino online está disponível em Portugal, na União Europeia e em países lusófonos, de língua inglesa e de língua espanhola.
 
-[Treino personalizado](https://pmorais.pt/treino-personalizado)
+[Treino personalizado](https://pmorais.pt/sobre-mim#treino-personalizado)
 [Treino em grupo](https://pmorais.pt/treino-em-grupo)
 [Treino online](https://pmorais.pt/treino-online)
 [Treino oncológico](https://pmorais.pt/treino-oncologico)
@@ -368,7 +364,7 @@ Não. A osteopatia é um serviço manual e presencial, em Lisboa. Para quem vive
 
 ### Posso combinar osteopatia com treino?
 
-Sim. Paulo Morais é osteopata e personal trainer, por isso a osteopatia pode ser combinada com [treino personalizado](https://pmorais.pt/treino-personalizado), [treino em grupo](https://pmorais.pt/treino-em-grupo) ou [treino oncológico](https://pmorais.pt/treino-oncologico), conforme as necessidades e os objetivos de cada pessoa.
+Sim. Paulo Morais é osteopata e personal trainer, por isso a osteopatia pode ser combinada com [treino personalizado](https://pmorais.pt/sobre-mim#treino-personalizado), [treino em grupo](https://pmorais.pt/treino-em-grupo) ou [treino oncológico](https://pmorais.pt/treino-oncologico), conforme as necessidades e os objetivos de cada pessoa.
 
 ### A osteopatia substitui o médico?
 

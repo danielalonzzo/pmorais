@@ -8,8 +8,8 @@ fs.rmSync(dist, { recursive: true, force: true });
 fs.mkdirSync(dist, { recursive: true });
 
 const copyList = [
-  'css', 'en', 'es', 'images', 'js', 'assets', 'agents', 'api', '.well-known',
-  'manifest.json', 'robots.txt', 'sitemap.xml', 'llms.txt', 'llms-full.txt',
+  'css', 'en', 'es', 'artigos', 'images', 'js', 'assets', 'agents', 'api', '.well-known',
+  'manifest.json', 'robots.txt', 'sitemap.xml', 'sitemap-articles.xml', 'llms.txt', 'llms-full.txt',
   'sw.js', 'firebase-messaging-sw.js', 'openapi.json', 'auth.md', 'google0ef2004b37f69f6d.html',
   '29c5fae97ae9363315db62e3db72671c.txt'
 ];
@@ -112,4 +112,13 @@ const headersContent = `/*
 `;
 
 fs.writeFileSync(path.join(dist, '_headers'), headersContent);
+
+// Mirrors the 301s in .htaccess: personal training now lives on the about page.
+const redirectsContent = `/treino-personalizado /sobre-mim#treino-personalizado 301
+/treino-personalizado.html /sobre-mim#treino-personalizado 301
+/en/personal-training /en/sobre-mim#personal-training 301
+/en/personal-training.html /en/sobre-mim#personal-training 301
+`;
+
+fs.writeFileSync(path.join(dist, '_redirects'), redirectsContent);
 console.log('Cloudflare Pages dist built successfully in tmp/dist');

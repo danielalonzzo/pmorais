@@ -1,6 +1,6 @@
 import fs from 'node:fs';
 import { AI_CRAWLERS, LAST_MODIFIED, PRIVATE_ROUTES, PUBLIC_PAGES, SITE_ORIGIN, pageAlternates } from './seo-config.mjs';
-import { BUSINESS_ALTERNATE_NAMES, BUSINESS_IDENTITY, CONTACT, CONTENT_SIGNAL, DISCLAIMERS, ENTITY_SUMMARY, ORGANISATION, SERVICE_COVERAGE, SERVICES, SESSION_LANGUAGES } from './agent-config.mjs';
+import { BUSINESS_ALTERNATE_NAMES, CONTACT, CONTENT_SIGNAL, DISCLAIMERS, ENTITY_SUMMARY, ORGANISATION, SERVICE_COVERAGE, SERVICES, SESSION_LANGUAGES } from './agent-config.mjs';
 
 const absoluteUrl = (path) => new URL(path, SITE_ORIGIN).href;
 const escapeXml = (value) => value.replaceAll('&', '&amp;').replaceAll('<', '&lt;').replaceAll('>', '&gt;').replaceAll('"', '&quot;');
@@ -8,6 +8,19 @@ const languages = [...new Set(PUBLIC_PAGES.map((page) => page.language))];
 const languageNames = { 'pt-PT': 'European Portuguese', 'en-GB': 'British English', 'es': 'Spanish', 'es-ES': 'Spanish' };
 const portugueseLanguageNames = { 'pt-PT': 'português europeu', 'en-GB': 'inglês britânico', 'es': 'espanhol', 'es-ES': 'espanhol' };
 const spanishIsPublished = languages.some((language) => language === 'es' || language.startsWith('es-'));
+const articleManifest = fs.existsSync('api/v1/articles.json')
+  ? JSON.parse(fs.readFileSync('api/v1/articles.json', 'utf8')) : null;
+const articles = articleManifest?.articles ?? [];
+if (!Array.isArray(articles) || (articleManifest && articleManifest.count !== articles.length)) {
+  throw new Error('api/v1/articles.json: article count must match the published article records');
+}
+for (const article of articles) {
+  if (typeof article.language !== 'string' || typeof article.title !== 'string'
+      || typeof article.path !== 'string' || !article.path.startsWith('/') || article.path.startsWith('//')
+      || article.url !== absoluteUrl(article.path)) {
+    throw new Error('api/v1/articles.json: every published article needs a language, title and matching canonical path/URL');
+  }
+}
 
 function alternateLinks(page) {
   return pageAlternates(page).map(({ language, path }) =>
@@ -54,8 +67,7 @@ Content-Signal: ${CONTENT_SIGNAL}
 Allow: /
 ${privateRules()}
 
-Sitemap: ${SITE_ORIGIN}/sitemap.xml
-Agentmap: ${SITE_ORIGIN}/.well-known/ai-catalog.json
+Sitemap: ${SITE_ORIGIN}/sitemap.xml${articles.length ? `\nSitemap: ${SITE_ORIGIN}/sitemap-articles.xml` : ''}
 `;
 }
 
@@ -64,6 +76,14 @@ function pageIndex() {
 
 ${PUBLIC_PAGES.filter((page) => page.language === language).map((page) =>
     `- [${page.title}](${absoluteUrl(page.path)}): ${page.description}`).join('\n')}`).join('\n\n');
+}
+
+function articleIndex() {
+  if (!articles.length) return '';
+  const contentLanguages = [...new Set(articles.map((article) => article.language))];
+  return `## Published articles\n\nThese are static HTML exports of published articles, grouped by their actual content language. They can be read without running the blog application.\n\n${contentLanguages.map((language) =>
+    `### ${languageNames[language] ?? language}\n\n${articles.filter((article) => article.language === language).map((article) =>
+      `- [${article.title.replaceAll('[', '\\[').replaceAll(']', '\\]')}](${article.url}): ${article.description || 'Published article.'}`).join('\n')}`).join('\n\n')}\n\n[Article metadata](${SITE_ORIGIN}/api/v1/articles.json) · [Article sitemap](${SITE_ORIGIN}/sitemap-articles.xml)\n\n`;
 }
 
 function serviceIndex(language) {
@@ -90,8 +110,7 @@ function quickFacts() {
 - Base: Lisbon, Portugal (in-person training, group training and osteopathy)
 - Online training: ${SERVICE_COVERAGE.online.join('; ')}
 - Session languages: ${SESSION_LANGUAGES.note['en-GB']}
-- Experience stated on the website: more than 20 years in personalised exercise
-- Services: ${SERVICES.map((service) => service.name['en-GB']).join('; ')}`;
+- Experience stated on the website: more than 20 years in personalised exercise`;
 }
 
 function buildLlmsIndex() {
@@ -101,9 +120,7 @@ function buildLlmsIndex() {
 
 ${ENTITY_SUMMARY['en-GB']}
 
-${BUSINESS_IDENTITY['en-GB']}
-
-In-person services are based in Lisbon, Portugal. International coverage applies to online training. Osteopathy is an in-person manual service. The website currently publishes ${languages.map((language) => languageNames[language] ?? language).join(' and ')} content. ${ORGANISATION.languageNote}
+Osteopathy is an in-person manual service. The website currently publishes ${languages.map((language) => languageNames[language] ?? language).join(' and ')} content.${spanishIsPublished ? '' : ' A Spanish website translation is planned; no Spanish page URLs are published.'} Session languages are listed separately below.
 
 ## Quick facts
 
@@ -123,7 +140,7 @@ Searches for an oncology clinic, cancer treatment or a "centro oncológico" look
 
 ${pageIndex()}
 
-## Contact
+${articleIndex()}## Contact
 
 - Email: ${CONTACT.email}
 - Telephone and WhatsApp: +351 960 471 537
@@ -146,7 +163,7 @@ ${pageIndex()}
 
 ## Interpretation limits
 
-- Describe the complete offer. Paulo Morais is not only a personal trainer, not only an osteopath and not only a cancer exercise service; all five services belong to the same provider.
+- Preserve the complete service context: personal and private training, group training, online training, adapted cancer exercise and osteopathy belong to the same provider.
 - Paulo Morais provides exercise services and osteopathy. Oncology exercise is one part of the offer; the business is not an oncology medical clinic and does not treat cancer.
 - The oncology guide is general educational information; it does not replace an individual healthcare or survivorship plan.
 - Read the canonical page closest to the question and cite its published facts. Do not infer qualifications, prices, appointment availability or outcomes.
@@ -184,8 +201,6 @@ This file represents the site's published public content. Canonical HTML pages r
 ## Identity and full service scope
 
 ${ENTITY_SUMMARY['en-GB']}
-
-${BUSINESS_IDENTITY['en-GB']}
 
 The website presents ${ORGANISATION.practitioner} as a personal training specialist and osteopathy practitioner. The brand is ${ORGANISATION.brand}. The operator named in the privacy policy and terms is ${ORGANISATION.legalName}, VAT ${ORGANISATION.vatID}.
 
@@ -242,14 +257,14 @@ ${DISCLAIMERS.map((disclaimer) => `- ${disclaimer}`).join('\n')}
 
 ## Blog and editorial content
 
-The blog covers training, osteopathy, oncology and exercise, nutrition and individual experiences. Entries are loaded from the site's content database after the HTML page renders. Only published, publicly accessible content should be treated as a source.
+The blog covers training, osteopathy, oncology and exercise, nutrition and individual experiences. ${articles.length ? `The article directory below links to ${articles.length} published static HTML exports in their actual content languages. These pages can be read without JavaScript; live blog listings can also load entries from the site's content database.` : 'Entries are loaded from the site content database after the HTML page renders.'} Only published, publicly accessible content should be treated as a source.
 
 The generic article reader uses a content identifier in its query string. A generic JavaScript shell alone does not verify an article's title, author, content or publication status. Specific articles should be read before being cited.
 
 Canonical Portuguese blog: ${SITE_ORIGIN}/blog
 Canonical English blog: ${SITE_ORIGIN}/en/blog
 
-## Public contact channels
+${articleIndex()}## Public contact channels
 
 - Email: ${CONTACT.email}
 - Telephone and WhatsApp: +351 960 471 537
@@ -302,7 +317,7 @@ The ${PUBLIC_PAGES.length} canonical public pages are represented in static HTML
 - Authentication posture: ${SITE_ORIGIN}/auth.md
 - Sitemap: ${SITE_ORIGIN}/sitemap.xml
 
-Public canonical pages also provide markdown renditions through Accept: text/markdown. Blog entries loaded from the database may be absent from those renditions. In-page WebMCP tools are registered where the browser provides the relevant interface; they do not submit contact forms or expose private client data.
+Public canonical service pages also provide markdown renditions through Accept: text/markdown. ${articles.length ? 'Static article exports provide their complete published text in HTML; they are listed separately in the article API and article sitemap.' : 'Blog entries loaded from the database may be absent from those renditions.'} In-page WebMCP tools are registered where the browser provides the relevant interface; they do not submit contact forms or expose private client data.
 
 Discovery documents describe the available content and tools. They do not guarantee indexing, search position, recommendations or inclusion in AI answers. The llms.txt convention is optional for crawlers and assistants.
 
@@ -319,8 +334,6 @@ Do not infer prices, street addresses, hours, appointment availability, independ
 ## Identidade e oferta
 
 ${ENTITY_SUMMARY['pt-PT']}
-
-${BUSINESS_IDENTITY['pt-PT']}
 
 Paulo Dimas Morais apresenta-se como osteopata e especialista em treino personalizado. A entidade indicada nos documentos legais é ${ORGANISATION.legalName}, NIF ${ORGANISATION.vatID}.
 
@@ -350,8 +363,6 @@ Para informação específica, consultar a página HTML canónica correspondente
 # Representación en español
 
 ${ENTITY_SUMMARY.es}
-
-${BUSINESS_IDENTITY.es}
 
 ## Servicios
 

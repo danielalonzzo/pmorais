@@ -5,7 +5,7 @@ canonical: "https://pmorais.pt/en/online-training"
 language: "en-GB"
 alternate: "https://pmorais.pt/treino-online"
 alternates: [{"language":"pt-PT","canonical":"https://pmorais.pt/treino-online"},{"language":"en-GB","canonical":"https://pmorais.pt/en/online-training"}]
-updated: "2026-10-08"
+updated: "2026-10-10"
 source: "Rendered from the canonical HTML page. The HTML remains authoritative if the two differ."
 ---
 
@@ -91,7 +91,7 @@ Sessions take place in Portuguese and English. Requests in Spanish, including fr
 
 ## Explore Paulo Morais’s services
 
-[Personal training](https://pmorais.pt/en/personal-training)
+[Personal training](https://pmorais.pt/en/sobre-mim#personal-training)
 [Group training](https://pmorais.pt/en/group-training)
 [Osteopathy](https://pmorais.pt/en/osteopatia)
 [Oncology training](https://pmorais.pt/en/oncology-training)

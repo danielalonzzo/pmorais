@@ -5,7 +5,7 @@ canonical: "https://pmorais.pt/en/osteopatia"
 language: "en-GB"
 alternate: "https://pmorais.pt/osteopatia"
 alternates: [{"language":"pt-PT","canonical":"https://pmorais.pt/osteopatia"},{"language":"en-GB","canonical":"https://pmorais.pt/en/osteopatia"}]
-updated: "2026-10-08"
+updated: "2026-10-10"
 source: "Rendered from the canonical HTML page. The HTML remains authoritative if the two differ."
 ---
 
@@ -14,10 +14,6 @@ source: "Rendered from the canonical HTML page. The HTML remains authoritative i
 # Osteopathy in Lisbon
 
 In-person osteopathy sessions in Lisbon with Paulo Morais. An individual assessment guides support for physical concerns and mobility.
-
-![iPad Frame](https://pmorais.pt/images/osteopatia/ipad-model.png)
-
-[Media](https://pmorais.pt/images/osteopatia/ipad.mp4)
 
 Certifying Entities and Institutional Partners
 
@@ -262,7 +258,7 @@ Osteopathy is one of Paulo Morais’s services, alongside personal training, gro
 
 Osteopathy sessions take place in person in Lisbon. For remote exercise support, online training is available across Portugal, the European Union and Portuguese-speaking, English-speaking and Spanish-speaking countries.
 
-[Personal training](https://pmorais.pt/en/personal-training)
+[Personal training](https://pmorais.pt/en/sobre-mim#personal-training)
 [Group training](https://pmorais.pt/en/group-training)
 [Online training](https://pmorais.pt/en/online-training)
 [Exercise after cancer](https://pmorais.pt/en/oncology-training)
@@ -287,7 +283,7 @@ No. Osteopathy is a manual, in-person service in Lisbon. For people living outsi
 
 ### Can I combine osteopathy with training?
 
-Yes. Paulo Morais is an osteopath and a personal trainer, so osteopathy can be combined with [personal training](https://pmorais.pt/en/personal-training), [group training](https://pmorais.pt/en/group-training) or [cancer exercise](https://pmorais.pt/en/oncology-training), depending on each person’s needs and goals.
+Yes. Paulo Morais is an osteopath and a personal trainer, so osteopathy can be combined with [personal training](https://pmorais.pt/en/sobre-mim#personal-training), [group training](https://pmorais.pt/en/group-training) or [cancer exercise](https://pmorais.pt/en/oncology-training), depending on each person’s needs and goals.
 
 ### Does osteopathy replace a doctor?
 

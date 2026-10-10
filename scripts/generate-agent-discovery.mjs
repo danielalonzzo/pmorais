@@ -27,6 +27,13 @@ import { estimateTokens, extractMain, htmlToMarkdown } from './html-to-markdown.
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const written = [];
+const articleManifestPath = path.join(root, 'api/v1/articles.json');
+const articleManifest = fs.existsSync(articleManifestPath)
+  ? JSON.parse(fs.readFileSync(articleManifestPath, 'utf8')) : null;
+const publishedArticles = articleManifest?.articles ?? [];
+if (!Array.isArray(publishedArticles) || (articleManifest && articleManifest.count !== publishedArticles.length)) {
+  throw new Error('api/v1/articles.json: article count must match the published article records');
+}
 
 function write(relativePath, contents) {
   const target = path.join(root, relativePath);
@@ -58,10 +65,10 @@ function frontmatter(fields) {
 const excludeLinks = PRIVATE_ROUTES.map((route) =>
   new RegExp(`^${absolute(route).replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}(?:[/?#]|$)`, 'i'));
 
-// Pages whose body is assembled client-side need to say so in the rendition.
+// The static article directory is readable here; live blog features may differ.
 const DYNAMIC_NOTES = {
-  '/blog': 'Article entries on this page are loaded from the site content database after the page renders, so they are not part of this markdown rendition. Fetch the HTML page in a browser context, or ask for a specific article by name.',
-  '/en/blog': 'Article entries on this page are loaded from the site content database after the page renders, so they are not part of this markdown rendition. Fetch the HTML page in a browser context, or ask for a specific article by name.'
+  '/blog': 'The published static article directory, including links and excerpts, is included in this rendition. Live filters and database loading require a browser and may show newer entries until the next site release.',
+  '/en/blog': 'The published static article directory, including links and excerpts, is included in this rendition. Live filters and database loading require a browser and may show newer entries until the next site release.'
 };
 
 const markdownPages = PUBLIC_PAGES.map((page) => {
@@ -189,7 +196,11 @@ write('api/v1/site.json', json({
     authentication: `${SITE_ORIGIN}/auth.md`,
     llms: `${SITE_ORIGIN}/llms.txt`,
     llmsFull: `${SITE_ORIGIN}/llms-full.txt`,
-    sitemap: `${SITE_ORIGIN}/sitemap.xml`
+    sitemap: `${SITE_ORIGIN}/sitemap.xml`,
+    ...(publishedArticles.length ? {
+      articles: `${API_BASE}/articles.json`,
+      articleSitemap: `${SITE_ORIGIN}/sitemap-articles.xml`
+    } : {})
   },
   privateRoutes: PRIVATE_ROUTES.map((route) => absolute(route)),
   disclaimers: DISCLAIMERS
@@ -255,14 +266,149 @@ write('api/v1/status.json', json({
   ...apiMeta,
   status: 'operational',
   representation: 'static',
-  note: 'This API is a set of static documents regenerated at build time. A 200 response means the origin is serving the current build.'
+  note: 'This API is a set of static documents regenerated at build time. A 200 response confirms that this document is reachable; it does not verify deployment freshness, live appointment availability or the health of private workflows.'
 }));
 
 // -------------------------------------------------------------- OpenAPI 3.1 --
 
-const jsonResponse = (description) => ({
+const schemaRef = (name) => ({ $ref: `#/components/schemas/${name}` });
+const stringSchema = { type: 'string' };
+const uriSchema = { type: 'string', format: 'uri' };
+const stringList = { type: 'array', items: stringSchema };
+const uriList = { type: 'array', items: uriSchema };
+const objectSchema = (properties, required = Object.keys(properties)) => ({ type: 'object', properties, required });
+const localizedSchema = (value, description) => ({
+  type: 'object', minProperties: 1, additionalProperties: value, description
+});
+const documentSchema = (properties, required = Object.keys(properties)) => ({
+  allOf: [schemaRef('ApiMetadata'), objectSchema(properties, required)]
+});
+
+// Actual response types let tools distinguish service geography, session
+// languages and published translations instead of treating every result as
+// an unconstrained JSON object. Localized labels may include Spanish before
+// Spanish HTML pages are published; only page maps establish available URLs.
+const responseSchemas = {
+  ApiMetadata: objectSchema({
+    api: uriSchema,
+    version: stringSchema,
+    generated: { type: 'string', format: 'date' },
+    license: uriSchema,
+    documentation: uriSchema
+  }),
+  LocalizedText: localizedSchema(stringSchema, 'Text keyed by language tag. Translated labels do not establish that a website translation is published.'),
+  LocalizedTerms: localizedSchema(stringList, 'Service aliases or query phrasings keyed by language tag; these are descriptive terms, not additional services or credentials.'),
+  PublishedPageMap: localizedSchema(uriSchema, 'Canonical service pages keyed only by their published content languages. Planned or unpublished translations have no URL here.'),
+  Coverage: {
+    ...objectSchema({
+      inPerson: { ...stringSchema, description: 'Location for services requiring physical attendance.' },
+      online: { ...stringList, description: 'Geography for remote exercise coaching; it does not apply to manual osteopathy.' }
+    }, []),
+    minProperties: 1
+  },
+  SessionLanguages: objectSchema({
+    offered: { ...stringList, description: 'Languages publicly stated for sessions; separate from translated website content.' },
+    onRequest: { ...stringList, description: 'Language requests subject to direct confirmation, rather than guaranteed availability.' },
+    note: schemaRef('LocalizedText')
+  }),
+  ServiceReference: objectSchema({ id: stringSchema, name: schemaRef('LocalizedText'), page: schemaRef('PublishedPageMap') }),
+  Service: objectSchema({
+    id: stringSchema,
+    name: schemaRef('LocalizedText'),
+    summary: schemaRef('LocalizedText'),
+    alternateNames: schemaRef('LocalizedTerms'),
+    searchTerms: schemaRef('LocalizedTerms'),
+    delivery: { type: 'array', minItems: 1, uniqueItems: true, items: { type: 'string', enum: ['in-person', 'online'] } },
+    area: { ...stringSchema, description: 'Human-readable service geography. Use coverage and delivery to distinguish local and remote service modes.' },
+    coverage: schemaRef('Coverage'),
+    page: schemaRef('PublishedPageMap'),
+    sources: { ...uriList, description: 'Published canonical pages supporting the service description.' },
+    constraints: { ...stringList, description: 'Limits on service suitability, scope and interpretation.' }
+  }),
+  PageAlternate: objectSchema({ language: stringSchema, canonical: uriSchema }),
+  PublicPage: objectSchema({
+    path: stringSchema,
+    canonical: uriSchema,
+    language: { ...stringSchema, description: 'Published content language, expressed as a language tag.' },
+    alternate: { type: ['string', 'null'], format: 'uri', description: 'One published translation for compatibility; use alternates for the complete list.' },
+    alternates: { type: 'array', items: schemaRef('PageAlternate') },
+    translationKey: { ...stringSchema, description: 'Stable identifier shared by published translations of the same page.' },
+    title: stringSchema,
+    description: stringSchema,
+    markdown: uriSchema,
+    markdownTokens: { type: 'integer', minimum: 0 },
+    updated: { type: 'string', format: 'date' }
+  }),
+  SiteDocument: documentSchema({
+    organisation: objectSchema({
+      brand: stringSchema, legalName: stringSchema, vatID: stringSchema,
+      practitioner: stringSchema, locality: stringSchema, country: stringSchema, url: uriSchema
+    }),
+    alternateNames: stringList,
+    summary: schemaRef('LocalizedText'),
+    description: schemaRef('LocalizedText'),
+    services: { type: 'array', items: schemaRef('ServiceReference') },
+    sessionLanguages: schemaRef('SessionLanguages'),
+    serviceCoverage: schemaRef('Coverage'),
+    languages: { ...stringList, description: 'Published website content languages only. A descriptive label in another language does not add a published translation.' },
+    defaultLanguage: stringSchema,
+    languageNote: stringSchema,
+    contentSignal: stringSchema,
+    resources: { type: 'object', additionalProperties: uriSchema },
+    privateRoutes: uriList,
+    disclaimers: stringList
+  }),
+  ServicesDocument: documentSchema({
+    count: { type: 'integer', minimum: 0 },
+    pricing: { type: 'null', description: 'No public price list is published. Prices must be confirmed directly.' },
+    pricingNote: stringSchema,
+    services: { type: 'array', items: schemaRef('Service') },
+    disclaimers: stringList
+  }),
+  ContactDocument: documentSchema({
+    email: { type: 'string', format: 'email' },
+    telephone: stringSchema,
+    whatsapp: stringSchema,
+    instagram: uriSchema,
+    locality: stringSchema,
+    clientArea: localizedSchema(uriSchema, 'Human-only client-area links; these do not establish programmatic access.'),
+    contactForms: localizedSchema(uriList, 'Published HTML pages containing public contact forms.'),
+    bookingApi: { type: 'null', description: 'No public programmatic booking endpoint is offered.' },
+    note: stringSchema
+  }),
+  PagesDocument: documentSchema({
+    count: { type: 'integer', minimum: 0 },
+    pages: { type: 'array', items: schemaRef('PublicPage') },
+    note: stringSchema
+  }),
+  StatusDocument: documentSchema({
+    status: { type: 'string', const: 'operational', description: 'Build-time status of the static public-content representation; not a live health check.' },
+    representation: { type: 'string', const: 'static' },
+    note: stringSchema
+  }),
+  PublishedArticle: objectSchema({
+    id: stringSchema,
+    language: { ...stringSchema, description: 'The actual published language of this article; no missing translation is synthesized.' },
+    path: stringSchema,
+    url: { ...uriSchema, description: 'Canonical URL of the static, readable HTML article export.' },
+    title: stringSchema,
+    description: stringSchema,
+    publishedAt: { type: ['string', 'null'], format: 'date-time' },
+    modifiedAt: { type: ['string', 'null'], format: 'date-time' },
+    format: { type: 'string', enum: ['article', 'video', 'pdf', 'clinical_case'] },
+    author: { ...stringSchema, description: 'Original source attribution, when the published record contains an author.' }
+  }, ['id', 'language', 'path', 'url', 'title', 'description', 'publishedAt', 'modifiedAt', 'format']),
+  ArticlesDocument: objectSchema({
+    generatedAt: { type: 'string', format: 'date-time' },
+    source: objectSchema({ type: stringSchema, projectId: stringSchema, collection: stringSchema }),
+    count: { type: 'integer', minimum: 0 },
+    articles: { type: 'array', items: schemaRef('PublishedArticle') }
+  })
+};
+
+const jsonResponse = (description, schema) => ({
   description,
-  content: { 'application/json': { schema: { type: 'object' } } }
+  content: { 'application/json': { schema: schemaRef(schema) } }
 });
 
 write('openapi.json', json({
@@ -292,7 +438,7 @@ write('openapi.json', json({
         operationId: 'getSite',
         summary: 'Site identity, languages, discovery resources and interpretation limits',
         tags: ['site'],
-        responses: { 200: jsonResponse('Site identity document') }
+        responses: { 200: jsonResponse('Site identity, full service scope, local and online coverage, and the distinction between session and website languages.', 'SiteDocument') }
       }
     },
     '/services.json': {
@@ -300,7 +446,7 @@ write('openapi.json', json({
         operationId: 'listServices',
         summary: 'Published services with delivery, geographical coverage, evidence URLs and interpretation limits',
         tags: ['content'],
-        responses: { 200: jsonResponse('Service catalogue. `pricing` is always null.') }
+        responses: { 200: jsonResponse('Service catalogue. `pricing` is always null. Canonical page maps contain only published translations.', 'ServicesDocument') }
       }
     },
     '/contact.json': {
@@ -308,7 +454,7 @@ write('openapi.json', json({
         operationId: 'getContact',
         summary: 'Public contact channels and the URLs of the contact forms',
         tags: ['content'],
-        responses: { 200: jsonResponse('Contact document. `bookingApi` is always null.') }
+        responses: { 200: jsonResponse('Contact document. `bookingApi` is always null.', 'ContactDocument') }
       }
     },
     '/pages.json': {
@@ -316,18 +462,29 @@ write('openapi.json', json({
         operationId: 'listPages',
         summary: 'Canonical public pages with all published translations and markdown rendition URLs',
         tags: ['content'],
-        responses: { 200: jsonResponse('Page index') }
+        responses: { 200: jsonResponse('Page index containing only published canonical pages and translations.', 'PagesDocument') }
       }
     },
     '/status.json': {
       get: {
         operationId: 'getStatus',
-        summary: 'Build and availability status of this API',
+        summary: 'Build-time status of this static public-content API',
         tags: ['site'],
-        responses: { 200: jsonResponse('Status document') }
+        responses: { 200: jsonResponse('Static build metadata; this is not a live booking or deployment-health check.', 'StatusDocument') }
       }
-    }
+    },
+    ...(articleManifest ? {
+      '/articles.json': {
+        get: {
+          operationId: 'listPublishedArticles',
+          summary: 'Published article metadata and static HTML export URLs in their actual content languages',
+          tags: ['content'],
+          responses: { 200: jsonResponse('Metadata for published article exports. No draft content or invented translations are included.', 'ArticlesDocument') }
+        }
+      }
+    } : {})
   },
+  components: { schemas: responseSchemas },
   tags: [
     { name: 'site', description: 'Identity and operational metadata' },
     { name: 'content', description: 'Public editorial content' }
@@ -405,65 +562,18 @@ write('.well-known/mcp/server-card.json', json({
 
 const urn = (namespace, name) => `urn:air:pmorais.pt:${namespace}:${name}`;
 
+// Only agentic resources, under ARD's standard discovery media types. The JSON
+// API, OpenAPI, llms-full.txt and RFC 9728 metadata are already discoverable
+// through api-catalog, Link headers and their own well-known paths.
 write('.well-known/ai-catalog.json', json({
   specVersion: '1.0',
   host: {
-    identifier: 'did:web:pmorais.pt',
     displayName: ORGANISATION.brand,
-    url: SITE_ORIGIN,
-    description: BUSINESS_IDENTITY['en-GB']
+    identifier: SITE_ORIGIN,
+    documentationUrl: `${SITE_ORIGIN}/llms-full.txt`,
+    logoUrl: `${SITE_ORIGIN}/images/logo/paulo_morais-08.png`
   },
   entries: [
-    {
-      identifier: urn('api', 'openapi'),
-      displayName: 'Public content API (OpenAPI 3.1)',
-      description: 'Read-only description of the static JSON API covering services, contact channels and canonical pages.',
-      type: 'application/vnd.oai.openapi+json;version=3.1',
-      url: `${SITE_ORIGIN}/openapi.json`,
-      representativeQueries: [
-        'what API does pmorais.pt expose',
-        'machine readable description of Paulo Morais services',
-        'openapi schema for pmorais.pt'
-      ]
-    },
-    {
-      identifier: urn('api', 'services'),
-      displayName: 'Services catalogue',
-      description: `${SERVICES.length} published services with translated names, delivery modes, geographical coverage, canonical evidence pages and interpretation limits.`,
-      type: 'application/json',
-      url: `${API_BASE}/services.json`,
-      representativeQueries: [
-        'treino personalizado ou privado em Lisboa com Paulo Morais',
-        'small-group training in Lisbon with Paulo Morais',
-        'treino online em Portugal e na União Europeia',
-        'osteopathy in Lisbon with Paulo Morais',
-        'treino oncológico e treino depois do cancro'
-      ]
-    },
-    {
-      identifier: urn('api', 'contact'),
-      displayName: 'Public contact channels',
-      description: 'Email, telephone, WhatsApp, Instagram and the URLs of the published contact forms.',
-      type: 'application/json',
-      url: `${API_BASE}/contact.json`,
-      representativeQueries: [
-        'how do I contact Paulo Morais',
-        'email address for pmorais.pt',
-        'book a session with Paulo Morais'
-      ]
-    },
-    {
-      identifier: urn('api', 'pages'),
-      displayName: 'Canonical page index',
-      description: `${PUBLIC_PAGES.length} canonical public pages with their published translations and markdown rendition URLs.`,
-      type: 'application/json',
-      url: `${API_BASE}/pages.json`,
-      representativeQueries: [
-        'list the pages of pmorais.pt',
-        'markdown version of the Paulo Morais website',
-        'english pages on pmorais.pt'
-      ]
-    },
     {
       identifier: urn('server', 'mcp'),
       displayName: 'Public content MCP server',
@@ -473,46 +583,19 @@ write('.well-known/ai-catalog.json', json({
       representativeQueries: [
         'MCP server for Paulo Morais',
         'connect an agent to pmorais.pt',
-        'read the Paulo Morais site through MCP',
-        'what tools does pmorais.pt expose to agents'
+        'personal and private training in Lisbon with Paulo Morais',
+        'osteopathy in Lisbon with Paulo Morais',
+        'treino online em Portugal e na União Europeia'
       ]
     },
-    {
-      identifier: urn('content', 'llms-full'),
-      displayName: 'Expanded factual representation',
-      description: 'Long-form prose description of the organisation, services, background and interpretation limits, in English and Portuguese.',
-      type: 'text/plain',
-      url: `${SITE_ORIGIN}/llms-full.txt`,
-      representativeQueries: [
-        'who is Paulo Morais',
-        'what experience does Paulo Morais have',
-        'what can and cannot be claimed about Paulo Morais'
-      ]
-    },
-    {
-      identifier: urn('skills', 'index'),
-      displayName: 'Agent skills index',
-      description: 'Discovery index for the SKILL.md artifacts published by this site.',
-      type: 'application/json',
-      url: `${SITE_ORIGIN}/.well-known/agent-skills/index.json`,
-      representativeQueries: [
-        'agent skills published by pmorais.pt',
-        'how should an agent interact with Paulo Morais',
-        'skill for booking a session with Paulo Morais'
-      ]
-    },
-    {
-      identifier: urn('auth', 'protected-resource'),
-      displayName: 'Protected resource metadata',
-      description: 'RFC 9728 metadata for this origin. Names the authorization server behind the client area and states that no scope on it is delegable to an agent.',
-      type: 'application/json',
-      url: `${SITE_ORIGIN}/.well-known/oauth-protected-resource`,
-      representativeQueries: [
-        'how does an agent authenticate with pmorais.pt',
-        'does pmorais.pt issue API keys or OAuth tokens',
-        'can an agent log in to the Paulo Morais client area'
-      ]
-    }
+    ...AGENT_SKILLS.map((skill) => ({
+      identifier: urn('skill', skill.name),
+      displayName: skill.title,
+      description: skill.description,
+      type: 'text/markdown; profile="urn:air:agent-skills"',
+      url: `${SITE_ORIGIN}/.well-known/agent-skills/${skill.name}/SKILL.md`,
+      representativeQueries: skill.representativeQueries
+    }))
   ]
 }));
 

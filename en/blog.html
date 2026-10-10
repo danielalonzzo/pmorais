@@ -106,7 +106,7 @@
     <title>Training, Osteopathy &amp; Cancer Exercise Blog | Paulo Morais</title>
     <!-- Preloads -->
     <link rel="preload" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700;800&family=Poppins:wght@300;400;500;600;700&display=swap" as="style">
-    <link rel="preload" href="../css/style.css?v=1.6.2" as="style">
+    <link rel="preload" href="../css/style.css?v=1.7.0" as="style">
 
     <link rel="shortcut icon" type="image/png" href="../images/logo/logo_ios_android.png">
     <link rel="icon" type="image/png" href="../images/logo/logo_ios_android.png">
@@ -131,7 +131,7 @@
     <script nonce="pmorais-2026" src="https://unpkg.com/lucide@0.460.0/dist/umd/lucide.min.js" integrity="sha384-ieG+IKD0d/ZPXyCBTMVAbqsQdns8QGJR/e26WMw7M4fkaI/rHcS/YIoi+ah9WGge" crossorigin="anonymous" defer></script>
 
     <!-- Custom Style -->
-    <link rel="stylesheet" href="../css/style.css?v=1.6.2">
+    <link rel="stylesheet" href="../css/style.css?v=1.7.0">
 
     <style nonce="pmorais-2026">
         .blog-grid {
@@ -214,8 +214,8 @@
         }
     </style>
 
-    <script nonce="pmorais-2026" src="../js/lang.js?v=1.6.2" defer></script>
-    <script nonce="pmorais-2026" src="../js/theme.js?v=1.6.2" defer></script>
+    <script nonce="pmorais-2026" src="../js/lang.js?v=1.7.0" defer></script>
+    <script nonce="pmorais-2026" src="../js/theme.js?v=1.7.0" defer></script>
     <!-- SEO Architecture: generated from scripts/seo-config.mjs -->
     <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
     <meta name="googlebot" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
@@ -260,7 +260,7 @@
       ],
       "slogan": "Your Own Workout",
       "url": "https://pmorais.pt/",
-      "description": "Paulo Morais is a personal trainer and osteopath in Lisbon, Portugal. He is not only a personal trainer, an osteopath or a cancer exercise service: his practice combines personal and private training, small-group training, online training, osteopathy and exercise after cancer, in person in Lisbon and online for Portugal, the European Union and Portuguese-, English- and Spanish-speaking countries.",
+      "description": "Paulo Morais is a personal trainer and osteopath in Lisbon, Portugal. His services include personal and private training, small-group training, online training, osteopathy and adapted exercise during or after cancer. In-person services are in Lisbon; online training covers Portugal, the European Union and Portuguese-, English- and Spanish-speaking countries.",
       "telephone": "+351960471537",
       "email": "pt@pmorais.pt",
       "logo": "https://pmorais.pt/images/logo/paulo_morais-08.png",
@@ -356,7 +356,7 @@
       "name": "Paulo Morais",
       "alternateName": "Paulo Dimas Morais",
       "jobTitle": "Personal Trainer and Osteopath",
-      "description": "Paulo Morais is a personal trainer and osteopath in Lisbon, Portugal. He is not only a personal trainer, an osteopath or a cancer exercise service: his practice combines personal and private training, small-group training, online training, osteopathy and exercise after cancer, in person in Lisbon and online for Portugal, the European Union and Portuguese-, English- and Spanish-speaking countries.",
+      "description": "Paulo Morais is a personal trainer and osteopath in Lisbon, Portugal. His services include personal and private training, small-group training, online training, osteopathy and adapted exercise during or after cancer. In-person services are in Lisbon; online training covers Portugal, the European Union and Portuguese-, English- and Spanish-speaking countries.",
       "url": "https://pmorais.pt/en/sobre-mim",
       "image": "https://pmorais.pt/images/sobre-mim/paulo-morais.png",
       "sameAs": [
@@ -365,6 +365,14 @@
       "worksFor": {
         "@id": "https://pmorais.pt/#business"
       },
+      "mainEntityOfPage": [
+        {
+          "@id": "https://pmorais.pt/sobre-mim#webpage"
+        },
+        {
+          "@id": "https://pmorais.pt/en/sobre-mim#webpage"
+        }
+      ],
       "workLocation": {
         "@type": "City",
         "name": "Lisboa",
@@ -416,10 +424,18 @@
       ],
       "description": "Progressive one-to-one training in Lisbon with a personal trainer and a plan adapted to each person’s goals, physical condition and routine.",
       "serviceType": "Personal and private training",
-      "url": "https://pmorais.pt/en/personal-training",
+      "url": "https://pmorais.pt/en/sobre-mim",
       "provider": {
         "@id": "https://pmorais.pt/#business"
       },
+      "subjectOf": [
+        {
+          "@id": "https://pmorais.pt/sobre-mim#webpage"
+        },
+        {
+          "@id": "https://pmorais.pt/en/sobre-mim#webpage"
+        }
+      ],
       "areaServed": [
         "Lisbon, Portugal"
       ]
@@ -438,6 +454,14 @@
       "provider": {
         "@id": "https://pmorais.pt/#business"
       },
+      "subjectOf": [
+        {
+          "@id": "https://pmorais.pt/treino-em-grupo#webpage"
+        },
+        {
+          "@id": "https://pmorais.pt/en/group-training#webpage"
+        }
+      ],
       "areaServed": [
         "Lisbon, Portugal"
       ]
@@ -457,6 +481,14 @@
       "provider": {
         "@id": "https://pmorais.pt/#business"
       },
+      "subjectOf": [
+        {
+          "@id": "https://pmorais.pt/treino-online#webpage"
+        },
+        {
+          "@id": "https://pmorais.pt/en/online-training#webpage"
+        }
+      ],
       "areaServed": [
         "Portugal",
         "European Union",
@@ -466,6 +498,10 @@
       ],
       "availableChannel": {
         "@type": "ServiceChannel",
+        "name": "Online training support",
+        "providesService": {
+          "@id": "https://pmorais.pt/#service-online-training"
+        },
         "serviceUrl": "https://pmorais.pt/en/online-training",
         "servicePhone": {
           "@type": "ContactPoint",
@@ -484,7 +520,8 @@
       "alternateName": [
         "Cancer exercise",
         "Post-cancer training",
-        "Exercise after cancer"
+        "Exercise after cancer",
+        "Exercise during cancer treatment"
       ],
       "description": "Adapted exercise for people living with or recovering from cancer, coordinated with their healthcare team. Part of Paulo Morais’s broader training services.",
       "serviceType": "Oncology and post-cancer training",
@@ -492,6 +529,14 @@
       "provider": {
         "@id": "https://pmorais.pt/#business"
       },
+      "subjectOf": [
+        {
+          "@id": "https://pmorais.pt/treino-oncologico#webpage"
+        },
+        {
+          "@id": "https://pmorais.pt/en/oncology-training#webpage"
+        }
+      ],
       "areaServed": [
         "Lisbon, Portugal",
         "Portugal",
@@ -506,6 +551,10 @@
       },
       "availableChannel": {
         "@type": "ServiceChannel",
+        "name": "Online training support",
+        "providesService": {
+          "@id": "https://pmorais.pt/#service-oncology-exercise"
+        },
         "serviceUrl": "https://pmorais.pt/en/oncology-training",
         "servicePhone": {
           "@type": "ContactPoint",
@@ -531,6 +580,14 @@
       "provider": {
         "@id": "https://pmorais.pt/#business"
       },
+      "subjectOf": [
+        {
+          "@id": "https://pmorais.pt/osteopatia#webpage"
+        },
+        {
+          "@id": "https://pmorais.pt/en/osteopatia#webpage"
+        }
+      ],
       "areaServed": [
         "Lisbon, Portugal"
       ]
@@ -606,7 +663,6 @@
                 <ul>
 <li><a href="/en/" data-i18n="nav.home">Home</a></li>
 <li><a href="/en/sobre-mim" data-i18n="nav.about">About Me</a></li>
-<li><a href="/en/personal-training">Personal Trainer</a></li>
 <li><a href="/en/osteopatia">Osteopathy</a></li>
 <li><a href="/en/oncology-training">Oncology Training</a></li>
 <li><a href="/en/perfil" data-i18n="nav.profile">Profile</a></li>
@@ -657,113 +713,15 @@
             <div id="public-blog-grid" class="blog-grid">
                 <!-- Posts will be loaded here via JS -->
             </div>
-
-            <!-- sv:protecao:start -->
-            <div class="sv-band-wrap">
-                <section id="protecao" class="sv-section sv-watch">
-                    <div class="oncologia-glow-left"></div>
-                    <div class="oncologia-glow-right"></div>
-                    <div class="container-wide">
-                        <div class="oncologia-header sv-head">
-                            <span class="oncologia-eyebrow">Step 3 · Protect yourself after cancer</span>
-                            <h2>Your shield after cancer<br>has <span class="oncologia-highlight">4 pieces</span></h2>
-                            <p>After cancer treatment, your defences can take time to recover. Vaccines against flu, COVID-19, pneumococcal disease and shingles are among the most important. Tick the ones you have already confirmed with your team and watch the shield close.</p>
-                        </div>
-
-                        <div class="sv-shield-layout sv-watch" data-sv="shield" data-sv-piece="protecao">
-                            <svg class="sv-shield-svg" viewBox="0 0 200 240" role="img" aria-label="Shield with four pieces: flu, COVID-19, pneumococcal and shingles" focusable="false">
-                                <defs>
-                                    <clipPath id="sv-shield-clip"><path d="M100 10 L176 38 V112 C176 170 142 208 100 230 C58 208 24 170 24 112 V38 Z"/></clipPath>
-                                </defs>
-                                <path class="sv-shield-body" d="M100 10 L176 38 V112 C176 170 142 208 100 230 C58 208 24 170 24 112 V38 Z"/>
-                                <g clip-path="url(#sv-shield-clip)">
-                                        <rect class="sv-q" data-q="gripe" x="0" y="0" width="100" height="112"/>
-                                        <rect class="sv-q" data-q="covid" x="100" y="0" width="100" height="112"/>
-                                        <rect class="sv-q" data-q="pneumo" x="0" y="112" width="100" height="130"/>
-                                        <rect class="sv-q" data-q="zoster" x="100" y="112" width="100" height="130"/>
-                                        <rect class="sv-q-hit" data-q="gripe" x="0" y="0" width="100" height="112"/>
-                                        <rect class="sv-q-hit" data-q="covid" x="100" y="0" width="100" height="112"/>
-                                        <rect class="sv-q-hit" data-q="pneumo" x="0" y="112" width="100" height="130"/>
-                                        <rect class="sv-q-hit" data-q="zoster" x="100" y="112" width="100" height="130"/>
-                                </g>
-                                <path class="sv-shield-cross" d="M100 12V228M26 112H174"/>
-                                <g>
-                                    <use class="sv-q-ico" data-q="gripe" href="/images/sobrevivencia/sprite.svg#sv-i-thermometer" x="44" y="52" width="36" height="36"/>
-                                    <use class="sv-q-ico" data-q="covid" href="/images/sobrevivencia/sprite.svg#sv-i-virus" x="120" y="52" width="36" height="36"/>
-                                    <use class="sv-q-ico" data-q="pneumo" href="/images/sobrevivencia/sprite.svg#sv-i-lungs" x="44" y="142" width="36" height="36"/>
-                                    <use class="sv-q-ico" data-q="zoster" href="/images/sobrevivencia/sprite.svg#sv-i-flame" x="120" y="142" width="36" height="36"/>
-                                </g>
-                                <path class="sv-shield-outline" d="M100 10 L176 38 V112 C176 170 142 208 100 230 C58 208 24 170 24 112 V38 Z"/>
-                                <g class="sv-shield-check"><circle class="sv-shield-check-bg" cx="100" cy="112" r="17"/><use href="/images/sobrevivencia/sprite.svg#sv-i-check" x="88" y="100" width="24" height="24"/></g>
-                            </svg>
-
-                            <div class="sv-shield-ui">
-                                <p class="sv-vac-legend">Already confirmed with my doctor:</p>
-                                <div class="sv-vacs" role="group" aria-label="Already confirmed with my doctor:">
-                                    <button type="button" class="sv-vac" data-q="gripe" aria-controls="sv-p-gripe" aria-pressed="false">
-                                        <span class="sv-vac-ico"><svg class="sv-ico" aria-hidden="true" focusable="false"><use href="/images/sobrevivencia/sprite.svg#sv-i-thermometer"/></svg></span>
-                                        <span class="sv-vac-txt"><span class="sv-vac-name">Flu</span><span class="sv-vac-state" data-off="To confirm" data-on="Confirmed ✓">To confirm</span></span>
-                                    </button>
-                                    <button type="button" class="sv-vac" data-q="covid" aria-controls="sv-p-covid" aria-pressed="false">
-                                        <span class="sv-vac-ico"><svg class="sv-ico" aria-hidden="true" focusable="false"><use href="/images/sobrevivencia/sprite.svg#sv-i-virus"/></svg></span>
-                                        <span class="sv-vac-txt"><span class="sv-vac-name">COVID-19</span><span class="sv-vac-state" data-off="To confirm" data-on="Confirmed ✓">To confirm</span></span>
-                                    </button>
-                                    <button type="button" class="sv-vac" data-q="pneumo" aria-controls="sv-p-pneumo" aria-pressed="false">
-                                        <span class="sv-vac-ico"><svg class="sv-ico" aria-hidden="true" focusable="false"><use href="/images/sobrevivencia/sprite.svg#sv-i-lungs"/></svg></span>
-                                        <span class="sv-vac-txt"><span class="sv-vac-name">Pneumococcal</span><span class="sv-vac-state" data-off="To confirm" data-on="Confirmed ✓">To confirm</span></span>
-                                    </button>
-                                    <button type="button" class="sv-vac" data-q="zoster" aria-controls="sv-p-zoster" aria-pressed="false">
-                                        <span class="sv-vac-ico"><svg class="sv-ico" aria-hidden="true" focusable="false"><use href="/images/sobrevivencia/sprite.svg#sv-i-flame"/></svg></span>
-                                        <span class="sv-vac-txt"><span class="sv-vac-name">Shingles</span><span class="sv-vac-state" data-off="To confirm" data-on="Confirmed ✓">To confirm</span></span>
-                                    </button>
-                                </div>
-                                <div class="sv-panels" aria-live="polite">
-                                    <div class="sv-panel sv-panel--idle" id="sv-p-idle" data-idle>
-                                        <svg class="sv-ico" aria-hidden="true" focusable="false"><use href="/images/sobrevivencia/sprite.svg#sv-i-syringe"/></svg>
-                                        <p><strong>Tap a vaccine</strong>See why it matters and tick it once you have confirmed it with your doctor.</p>
-                                    </div>
-                                    <div class="sv-panel" id="sv-p-gripe" role="region" aria-label="Flu">
-                                        <div class="sv-panel-head"><span class="sv-panel-ico"><svg class="sv-ico" aria-hidden="true" focusable="false"><use href="/images/sobrevivencia/sprite.svg#sv-i-thermometer"/></svg></span><h3>Flu</h3></div>
-                                        <p>A Cochrane review in immunosuppressed adults with cancer concluded that flu vaccination is safe, and observational data point to lower mortality and better infection-related outcomes.</p>
-                                        <blockquote class="sv-ask"><small>Ask your doctor</small>«When should I have the flu vaccine, and which one?»</blockquote>
-                                    </div>
-                                    <div class="sv-panel" id="sv-p-covid" role="region" aria-label="COVID-19">
-                                        <div class="sv-panel-head"><span class="sv-panel-ico"><svg class="sv-ico" aria-hidden="true" focusable="false"><use href="/images/sobrevivencia/sprite.svg#sv-i-virus"/></svg></span><h3>COVID-19</h3></div>
-                                        <p>ASCO recommends systematically checking the vaccination status of people who have had cancer, including COVID-19, as part of follow-up care.</p>
-                                        <blockquote class="sv-ask"><small>Ask your doctor</small>«Which COVID-19 schedule is right for me?»</blockquote>
-                                    </div>
-                                    <div class="sv-panel" id="sv-p-pneumo" role="region" aria-label="Pneumococcal">
-                                        <div class="sv-panel-head"><span class="sv-panel-ico"><svg class="sv-ico" aria-hidden="true" focusable="false"><use href="/images/sobrevivencia/sprite.svg#sv-i-lungs"/></svg></span><h3>Pneumococcal</h3></div>
-                                        <p>Pneumococcal disease can cause serious infections such as pneumonia. It is among the vaccines ASCO includes in the review after cancer.</p>
-                                        <blockquote class="sv-ask"><small>Ask your doctor</small>«Am I up to date with the pneumococcal vaccine?»</blockquote>
-                                    </div>
-                                    <div class="sv-panel" id="sv-p-zoster" role="region" aria-label="Shingles">
-                                        <div class="sv-panel-head"><span class="sv-panel-ico"><svg class="sv-ico" aria-hidden="true" focusable="false"><use href="/images/sobrevivencia/sprite.svg#sv-i-flame"/></svg></span><h3>Shingles</h3></div>
-                                        <p>Shingles (herpes zoster) is one of the infections to watch for when defences are low. The vaccine is also part of the recommended review.</p>
-                                        <blockquote class="sv-ask"><small>Ask your doctor</small>«Is the shingles vaccine suitable for me, and when?»</blockquote>
-                                    </div>
-                                </div>
-                                <p class="sv-shield-done" role="status"><strong>Shield complete!</strong> Keep reviewing your vaccination record with your doctor; your defences and the recommendations change over time.</p>
-                                <p class="sv-checklist-title">Take this to your appointment</p>
-                                <ul class="sv-checklist">
-                                    <li><label class="sv-check"><input type="checkbox"><span class="sv-box" aria-hidden="true"><svg class="sv-ico" aria-hidden="true" focusable="false"><use href="/images/sobrevivencia/sprite.svg#sv-i-check"/></svg></span><span>Check your vaccination record</span></label></li>
-                                    <li><label class="sv-check"><input type="checkbox"><span class="sv-box" aria-hidden="true"><svg class="sv-ico" aria-hidden="true" focusable="false"><use href="/images/sobrevivencia/sprite.svg#sv-i-check"/></svg></span><span>Write down any vaccines that are missing</span></label></li>
-                                    <li><label class="sv-check"><input type="checkbox"><span class="sv-box" aria-hidden="true"><svg class="sv-ico" aria-hidden="true" focusable="false"><use href="/images/sobrevivencia/sprite.svg#sv-i-check"/></svg></span><span>Prefer inactivated vaccines (ask your doctor)</span></label></li>
-                                    <li><label class="sv-check"><input type="checkbox"><span class="sv-box" aria-hidden="true"><svg class="sv-ico" aria-hidden="true" focusable="false"><use href="/images/sobrevivencia/sprite.svg#sv-i-check"/></svg></span><span>If you have, or recently had, immunosuppression, talk to your oncology team first</span></label></li>
-                                </ul>
-                            </div>
-                        </div>
-
-                        <p class="sv-note sv-note--center"><svg class="sv-ico" aria-hidden="true" focusable="false"><use href="/images/sobrevivencia/sprite.svg#sv-i-info"/></svg><span>Your doctor decides which vaccines you need: Paulo does not prescribe or recommend vaccines. General information based on ASCO guidance; it does not replace your oncology team.</span></p>
-
-                        <div class="sv-piece-foot">
-                            <span class="sv-progress" data-sv-progress data-tpl="You've found {n} of 5 steps" data-done="You've found all 5 steps!"><span class="sv-pdots" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span><span class="sv-ptext" aria-live="polite">You've found 0 of 5 steps</span></span>
-                            <a class="sv-piece-link" href="/en/oncology-training">Oncology training guide <svg class="sv-ico" aria-hidden="true" focusable="false"><use href="/images/sobrevivencia/sprite.svg#sv-i-arrow"/></svg></a>
-                        </div>
-                    </div>
-                </section>
-            </div>
-            <!-- sv:protecao:end -->
+        <!-- public-article-index:start -->
+            <section id="static-article-index" aria-labelledby="static-article-index-title" style="margin: 40px 0; padding-top: 26px; border-top: 1px solid #666;">
+                <h2 id="static-article-index-title" style="font-size: 1.4rem; margin-bottom: 18px;">Published articles and resources</h2>
+                <ul style="display: grid; gap: 15px; list-style: none; padding: 0;">
+                    <li><a href="/en/articles/UQeTXyS1sTnJPfVqwtNT" style="color: var(--color-primary-text); text-decoration: underline;">HIGH-INTENSITY TRAINING AND CANCER: ANALYSIS OF THE SCIENTIFIC EVIDENCE</a></li>
+                    <li><a href="/en/articles/rlW6Uq4OUQSZIWwc94Au" style="color: var(--color-primary-text); text-decoration: underline;">Proceedings of the OncoFit – From sports lab to cancer clinic</a></li>
+                </ul>
+            </section>
+            <!-- public-article-index:end -->
         </div>
     </main>
 
@@ -813,25 +771,24 @@
             </div>
         </div>
         <div class="footer-bar-elysium">
-            <div class="crafted-text"><a href="https://elysiumdr.eu" target="_blank" rel="noopener noreferrer">Developed by Elysium λ Development & Research.</a><br><span class="version-label">V1.6.2</span></div>
+            <div class="crafted-text"><a href="https://elysiumdr.eu" target="_blank" rel="noopener noreferrer">Developed by Elysium λ Development & Research.</a><br><span class="version-label">V1.7.0</span></div>
         </div>
     </footer>
 
     <!-- Scripts -->
     <script nonce="pmorais-2026" type="module">
-        import { loadBlogPosts } from '../js/blog.js?v=1.6.2';
+        import { loadBlogPosts } from '../js/blog.js?v=1.7.0';
         document.addEventListener('DOMContentLoaded', () => {
             loadBlogPosts('public-blog-grid');
         });
     </script>
-    <script nonce="pmorais-2026" src="../js/script.js?v=1.6.2" defer></script>
-    <script nonce="pmorais-2026" src="../js/sobrevivencia.js?v=1.6.2" defer></script>
-    <script nonce="pmorais-2026" src="../js/webmcp.js?v=1.6.2" defer></script>
+    <script nonce="pmorais-2026" src="../js/script.js?v=1.7.0" defer></script>
+    <script nonce="pmorais-2026" src="../js/webmcp.js?v=1.7.0" defer></script>
     <script nonce="pmorais-2026">
         document.addEventListener('DOMContentLoaded', () => {
             if (window.lucide) window.lucide.createIcons();
         });
     </script>
-    <script nonce="pmorais-2026" src="../js/cookie-consent.js?v=1.6.2" defer></script>
+    <script nonce="pmorais-2026" src="../js/cookie-consent.js?v=1.7.0" defer></script>
 </body>
 </html>

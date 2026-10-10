@@ -2,7 +2,7 @@
  * Developed by Elysium λ Development & Research
  * A European company
  */
-import { auth, db } from './firebase-config.js?v=1.6.2';
+import { auth, db } from './firebase-config.js?v=1.7.0';
 import {
     onAuthStateChanged
 } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";

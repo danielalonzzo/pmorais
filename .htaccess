@@ -1,4 +1,5 @@
 Options -Indexes -MultiViews
+ErrorDocument 404 /404.html
 
 RewriteEngine On
 RewriteBase /
@@ -18,6 +19,11 @@ RewriteRule ^index(?:\.html)?/?$ https://pmorais.pt/ [R=301,L,NE]
 
 RewriteCond %{THE_REQUEST} "\s/+en/index(?:\.html)?/?(?:[?\s])" [NC]
 RewriteRule ^en/index(?:\.html)?/?$ https://pmorais.pt/en/ [R=301,L,NE]
+
+# Personal training was merged into the about page on 2026-10-10. One redirect,
+# with or without .html, straight to the section that replaced the old page.
+RewriteRule ^treino-personalizado(?:\.html)?/?$ https://pmorais.pt/sobre-mim#treino-personalizado [R=301,L,NE]
+RewriteRule ^en/personal-training(?:\.html)?/?$ https://pmorais.pt/en/sobre-mim#personal-training [R=301,L,NE]
 
 # Redirect public .html requests to their clean canonical URL.
 RewriteCond %{THE_REQUEST} "\s/+[^?\s]+\.html(?:[?\s])" [NC]

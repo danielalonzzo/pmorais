@@ -1,0 +1,83 @@
+{
+  "generatedAt": "2026-10-10T13:20:33.106Z",
+  "source": {
+    "type": "public-firestore",
+    "projectId": "paulo-morais",
+    "collection": "blog_posts"
+  },
+  "count": 6,
+  "articles": [
+    {
+      "id": "UQeTXyS1sTnJPfVqwtNT",
+      "language": "en-GB",
+      "path": "/en/articles/UQeTXyS1sTnJPfVqwtNT",
+      "url": "https://pmorais.pt/en/articles/UQeTXyS1sTnJPfVqwtNT",
+      "title": "HIGH-INTENSITY TRAINING AND CANCER: ANALYSIS OF THE SCIENTIFIC EVIDENCE",
+      "description": "Empirical evidence demonstrates that regular physical exercise is associated with a decreased risk of developing multiple types of cancer and a significant improvement in qualit…",
+      "publishedAt": "2026-07-05T20:59:24.688Z",
+      "modifiedAt": "2026-07-05T21:11:44.877Z",
+      "format": "article",
+      "author": "Paulo Morais"
+    },
+    {
+      "id": "UQeTXyS1sTnJPfVqwtNT",
+      "language": "pt-PT",
+      "path": "/artigos/UQeTXyS1sTnJPfVqwtNT",
+      "url": "https://pmorais.pt/artigos/UQeTXyS1sTnJPfVqwtNT",
+      "title": "Oncologia do Exercício: Análise Empírica do Treino de Alta Intensidade (HIIT) e da Mobilidade no Prognóstico e Tratamento Oncológico",
+      "description": "A literatura empírica atual e os consensos metodológicos (incluindo revisões guarda-chuva e meta-análises) determinam que a prescrição de exercício físico constitui uma interven…",
+      "publishedAt": "2026-07-05T20:59:24.688Z",
+      "modifiedAt": "2026-07-05T21:11:44.877Z",
+      "format": "article",
+      "author": "Paulo Morais"
+    },
+    {
+      "id": "qYtSj16uhIE3RMQDSnBr",
+      "language": "pt-PT",
+      "path": "/artigos/qYtSj16uhIE3RMQDSnBr",
+      "url": "https://pmorais.pt/artigos/qYtSj16uhIE3RMQDSnBr",
+      "title": "Cancro e atividade física: O papel do exercício na recuperação",
+      "description": "Este episódio do podcast \"Dois de Conversa\", da Liga Portuguesa Contra o Cancro, aborda a importância vital da atividade física em todas as fases da jornada do doente oncológico…",
+      "publishedAt": "2026-07-05T14:05:58.518Z",
+      "modifiedAt": "2026-07-05T14:06:49.685Z",
+      "format": "video",
+      "author": "Paulo Morais"
+    },
+    {
+      "id": "rlW6Uq4OUQSZIWwc94Au",
+      "language": "en-GB",
+      "path": "/en/articles/rlW6Uq4OUQSZIWwc94Au",
+      "url": "https://pmorais.pt/en/articles/rlW6Uq4OUQSZIWwc94Au",
+      "title": "Proceedings of the OncoFit – From sports lab to cancer clinic",
+      "description": "Neoadjuvant chemotherapy (ChT) is indicated in several early breast cancer (BC) situations. Pathological complete response (PCR) is related to better outcomes. The percentage of…",
+      "publishedAt": "2026-07-05T13:58:06.650Z",
+      "modifiedAt": "2026-07-05T13:58:06.650Z",
+      "format": "pdf",
+      "author": "Paulo Morais"
+    },
+    {
+      "id": "F7fteZLTUMT4vc4prSyA",
+      "language": "pt-PT",
+      "path": "/artigos/F7fteZLTUMT4vc4prSyA",
+      "url": "https://pmorais.pt/artigos/F7fteZLTUMT4vc4prSyA",
+      "title": "O debate político e o conflito inter-profissional em redor da regulamentação das medicinas alternativas e complementares em Portugal",
+      "description": "Em julho de 2003, o Parlamento Português aprovou uma lei que regulamenta seis medicinas alternativas e complementares (MACs): acupuntura, homeopatia, osteopatia, quiroprática, n…",
+      "publishedAt": "2026-07-05T13:38:08.696Z",
+      "modifiedAt": "2026-07-05T13:42:56.756Z",
+      "format": "pdf",
+      "author": "Paulo Morais"
+    },
+    {
+      "id": "XZTjfNMJGOeMB8NwF0g8",
+      "language": "pt-PT",
+      "path": "/artigos/XZTjfNMJGOeMB8NwF0g8",
+      "url": "https://pmorais.pt/artigos/XZTjfNMJGOeMB8NwF0g8",
+      "title": "Osteopatia na população portuguesa: Um estudo observacional",
+      "description": "As cefaleias tensionais são a forma mais comum de cefaleia primária, com maior prevalência nas mulheres, associando-se a fatores hormonais e estruturais. Caracterizam-se por dor…",
+      "publishedAt": "2026-07-05T13:17:20.695Z",
+      "modifiedAt": "2026-07-05T13:19:46.609Z",
+      "format": "pdf",
+      "author": "Paulo Morais"
+    }
+  ]
+}

@@ -1,7 +1,7 @@
 {
   "api": "https://pmorais.pt/api/v1",
   "version": "v1",
-  "generated": "2026-10-08",
+  "generated": "2026-10-10",
   "license": "https://pmorais.pt/termos-e-condicoes",
   "documentation": "https://pmorais.pt/llms-full.txt",
   "organisation": {
@@ -21,9 +21,9 @@
     "Paulo Dimas Morais"
   ],
   "summary": {
-    "pt-PT": "Paulo Morais é personal trainer e osteopata em Lisboa, Portugal. Não é apenas um personal trainer, um osteopata ou um serviço de treino oncológico: reúne treino personalizado e privado, treino em grupo, treino online, osteopatia e exercício depois do cancro, presencialmente em Lisboa e online para Portugal, a União Europeia e países lusófonos, anglófonos e hispanófonos.",
-    "en-GB": "Paulo Morais is a personal trainer and osteopath in Lisbon, Portugal. He is not only a personal trainer, an osteopath or a cancer exercise service: his practice combines personal and private training, small-group training, online training, osteopathy and exercise after cancer, in person in Lisbon and online for Portugal, the European Union and Portuguese-, English- and Spanish-speaking countries.",
-    "es": "Paulo Morais es entrenador personal y osteópata en Lisboa, Portugal. No es solo un entrenador personal, un osteópata o un servicio de entrenamiento oncológico: reúne entrenamiento personal y privado, entrenamiento en grupo, entrenamiento online, osteopatía y ejercicio después del cáncer, de forma presencial en Lisboa y online para Portugal, la Unión Europea y países de habla portuguesa, inglesa y española."
+    "pt-PT": "Paulo Morais é personal trainer e osteopata em Lisboa, Portugal. A oferta reúne treino personalizado e privado, treino em pequenos grupos, treino online, osteopatia e exercício adaptado durante ou depois do cancro. O acompanhamento presencial realiza-se em Lisboa; o treino online abrange Portugal, a União Europeia e países lusófonos, anglófonos e hispanófonos.",
+    "en-GB": "Paulo Morais is a personal trainer and osteopath in Lisbon, Portugal. His services include personal and private training, small-group training, online training, osteopathy and adapted exercise during or after cancer. In-person services are in Lisbon; online training covers Portugal, the European Union and Portuguese-, English- and Spanish-speaking countries.",
+    "es": "Paulo Morais es entrenador personal y osteópata en Lisboa, Portugal. Su oferta incluye entrenamiento personal y privado, entrenamiento en grupos reducidos, entrenamiento online, osteopatía y ejercicio adaptado durante o después del cáncer. La atención presencial se realiza en Lisboa; el entrenamiento online abarca Portugal, la Unión Europea y países de habla portuguesa, inglesa y española."
   },
   "description": {
     "pt-PT": "Paulo Morais — Your Own Workout disponibiliza treino personalizado e privado, treino em pequenos grupos, treino online e osteopatia em Lisboa. O treino online acompanha pessoas em Portugal, na União Europeia e em países lusófonos, anglófonos e hispanófonos. O treino oncológico e depois do cancro integra esta oferta de exercício adaptado.",
@@ -39,8 +39,8 @@
         "es": "Entrenamiento personal y privado"
       },
       "page": {
-        "pt-PT": "https://pmorais.pt/treino-personalizado",
-        "en-GB": "https://pmorais.pt/en/personal-training"
+        "pt-PT": "https://pmorais.pt/sobre-mim",
+        "en-GB": "https://pmorais.pt/en/sobre-mim"
       }
     },
     {
@@ -135,7 +135,9 @@
     "authentication": "https://pmorais.pt/auth.md",
     "llms": "https://pmorais.pt/llms.txt",
     "llmsFull": "https://pmorais.pt/llms-full.txt",
-    "sitemap": "https://pmorais.pt/sitemap.xml"
+    "sitemap": "https://pmorais.pt/sitemap.xml",
+    "articles": "https://pmorais.pt/api/v1/articles.json",
+    "articleSitemap": "https://pmorais.pt/sitemap-articles.xml"
   },
   "privateRoutes": [
     "https://pmorais.pt/admin-blog",
