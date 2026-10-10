@@ -9500,11 +9500,16 @@ a.about-hero-photo.ig-photo-link:hover .ig-feed-overlay {
     margin: 0 auto;
 }
 
+/* Só desliza na horizontal: os separadores inativos descem com padding (não com
+   transform), para não transbordarem em altura e a barra não rolar na vertical. */
 .sv-tablist {
     display: flex;
+    align-items: flex-end;
     gap: 6px;
     padding: 0 12px;
     overflow-x: auto;
+    overflow-y: hidden;
+    overscroll-behavior-x: contain;
     scrollbar-width: thin;
 }
 
@@ -9513,7 +9518,7 @@ a.about-hero-photo.ig-photo-link:hover .ig-feed-overlay {
     display: flex;
     align-items: center;
     gap: 8px;
-    padding: 12px 16px;
+    padding: 12px 16px 4px;
     border: 1px solid var(--sv-line);
     border-bottom: 0;
     border-radius: 14px 14px 0 0;
@@ -9524,8 +9529,7 @@ a.about-hero-photo.ig-photo-link:hover .ig-feed-overlay {
     letter-spacing: 1px;
     text-transform: uppercase;
     white-space: nowrap;
-    transform: translateY(8px);
-    transition: transform 0.3s ease, background 0.3s ease, color 0.3s ease, opacity 0.5s ease;
+    transition: padding 0.3s ease, transform 0.3s ease, background 0.3s ease, color 0.3s ease, opacity 0.5s ease;
 }
 
 .sv-tab .sv-ico {
@@ -9540,7 +9544,7 @@ a.about-hero-photo.ig-photo-link:hover .ig-feed-overlay {
 .sv-tab[aria-selected="true"] {
     position: relative;
     z-index: 2;
-    transform: none;
+    padding-bottom: 12px;
     border-color: var(--sv-accent);
     background: var(--sv-card);
     color: var(--sv-accent-text);
@@ -9996,6 +10000,11 @@ a.about-hero-photo.ig-photo-link:hover .ig-feed-overlay {
         letter-spacing: 0.8px;
     }
 
+    /* Cartão ímpar no fim: ocupa a linha inteira para manter a simetria */
+    .sv-cards--duo .sv-star:last-child:nth-child(odd) {
+        flex: 1 1 100%;
+    }
+
     .sv-stones {
         grid-template-columns: repeat(2, minmax(0, 1fr));
         gap: 12px;
@@ -10003,8 +10012,6 @@ a.about-hero-photo.ig-photo-link:hover .ig-feed-overlay {
 
     .sv-stone-cell:last-child:nth-child(odd) {
         grid-column: 1 / -1;
-        justify-self: center;
-        width: calc(50% - 6px);
     }
 
     .sv-vacs {
@@ -10015,8 +10022,12 @@ a.about-hero-photo.ig-photo-link:hover .ig-feed-overlay {
         grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 
+    /* Em móvel o anel fica solto, sem a moldura do cartão */
     .sv-ring-wrap {
-        border-radius: 28px;
+        padding: 0;
+        border: 0;
+        border-radius: 0;
+        background: none;
     }
 
     .sv-tabpanels {

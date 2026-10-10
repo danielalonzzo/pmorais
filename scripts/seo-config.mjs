@@ -1,6 +1,6 @@
 export const SITE_ORIGIN = 'https://pmorais.pt';
 export const LAST_MODIFIED = '2026-10-10';
-export const ASSET_VERSION = '1.7.0';
+export const ASSET_VERSION = '1.7.1';
 
 // Add a fully translated /es/ page with a matching translationKey to activate
 // Spanish hreflang in HTML, sitemaps and discovery. Unpublished URLs stay absent.

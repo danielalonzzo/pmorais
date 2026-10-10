@@ -1,4 +1,4 @@
-const CACHE_NAME = 'paulo-morais-pwa-v170';
+const CACHE_NAME = 'paulo-morais-pwa-v171';
 // Audio and video stay out: browsers stream them with Range requests, and the
 // Cache API rejects the partial (206) responses, which broke playback.
 const STATIC_DESTINATIONS = new Set([
