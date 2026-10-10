@@ -1,5 +1,6 @@
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
+import os from 'node:os';
 import path from 'node:path';
 import vm from 'node:vm';
 import { describe, test } from 'node:test';
@@ -268,7 +269,7 @@ function publicPost(id, data = {}, { project = 'paulo-morais', collection = 'blo
 }
 
 function exporterWorkspace(t) {
-  const root = fs.mkdtempSync('/private/tmp/pmorais-seo-export-test-');
+  const root = fs.mkdtempSync(path.join(os.tmpdir(), 'pmorais-seo-export-test-'));
   t.after(() => fs.rmSync(root, { recursive: true, force: true }));
   fs.mkdirSync(path.join(root, 'en'), { recursive: true });
   for (const file of ['blog.html', 'en/blog.html']) {
