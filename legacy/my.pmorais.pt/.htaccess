@@ -1,0 +1,28 @@
+# my.pmorais.pt was the original WordPress site (2020). Nobody uses it any more,
+# so every URL answers with one 301 to its closest page on https://pmorais.pt and
+# Google consolidates the old subdomain into the current site. WordPress never
+# runs: .cpanel.yml copies this file over its .htaccess on every deploy.
+
+Options -Indexes -MultiViews
+RewriteEngine On
+RewriteBase /
+
+# Pages with a direct equivalent.
+RewriteRule ^sobre-mim/?$ https://pmorais.pt/sobre-mim [R=301,L,NE,QSD]
+RewriteRule ^osteopatia/?$ https://pmorais.pt/osteopatia [R=301,L,NE,QSD]
+RewriteRule ^privacy-policy(?:-2)?/?$ https://pmorais.pt/politica-privacidade [R=301,L,NE,QSD]
+RewriteRule ^marcacoes/?$ https://pmorais.pt/perfil?booking=true [R=301,L,NE,QSD]
+RewriteRule ^(?:perfil|profile|conta|user|members|logout|password-reset)(?:/.*)?$ https://pmorais.pt/perfil [R=301,L,NE,QSD]
+
+# The members' exercise video library became online training.
+RewriteRule ^(?:exercicios|video-category|video-tag|search-videos|user-videos|player-embed)(?:/.*)?$ https://pmorais.pt/treino-online [R=301,L,NE,QSD]
+
+# Crawlers read the current site's rules, so the redirects below stay crawlable.
+RewriteRule ^robots\.txt$ https://pmorais.pt/robots.txt [R=301,L,NE,QSD]
+
+# Posts, archives and feeds.
+RewriteRule ^(?:hey-estamos-aqui|category|tag|author|feed|comments/feed)(?:/.*)?$ https://pmorais.pt/blog [R=301,L,NE,QSD]
+RewriteRule ^wp-sitemap.*\.xml$ https://pmorais.pt/sitemap.xml [R=301,L,NE,QSD]
+
+# Everything else, including the home page, wp-admin and wp-login.
+RewriteRule ^ https://pmorais.pt/ [R=301,L,NE,QSD]

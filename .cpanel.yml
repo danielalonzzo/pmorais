@@ -25,6 +25,9 @@ deployment:
     - /bin/rm -rf "$DEPLOYPATH/artigos" "$DEPLOYPATH/en/articles"
     - /bin/cp -R artigos "$DEPLOYPATH/"
     - /bin/cp -R en/articles "$DEPLOYPATH/en/"
+    # my.pmorais.pt (the retired 2020 WordPress) answers every URL with a 301 to its
+    # page on pmorais.pt. Only a folder that still holds that WordPress is touched.
+    - /bin/sh -c 'for d in /home/pmoraisp/my.pmorais.pt /home/pmoraisp/public_html/my.pmorais.pt /home/pmoraisp/public_html/my; do if [ -f "$d/wp-config.php" ]; then /bin/cp legacy/my.pmorais.pt/.htaccess "$d/.htaccess"; fi; done'
     # The Spanish site lives in /es/ once it is published (scripts/seo-config.mjs).
     - /bin/sh -c 'if [ -d es ]; then /bin/cp -R es "$DEPLOYPATH/"; fi'
     - /bin/cp openapi.json auth.md mcp.php "$DEPLOYPATH/"

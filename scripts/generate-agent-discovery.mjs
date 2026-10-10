@@ -21,7 +21,7 @@ import {
   AGENT_AUTH, AGENT_SKILLS, API_BASE, API_VERSION, AUTHORIZATION_SERVER, BUSINESS_IDENTITY, CONTACT,
   CONTENT_SIGNAL, DNS_AID, DISCLAIMERS, LINK_HEADER_RELATIONS, MARKDOWN_DIR,
   MCP_SERVER, ORGANISATION, PROTECTED_RESOURCE, SERVICE_COVERAGE, SERVICES,
-  BUSINESS_ALTERNATE_NAMES, ENTITY_SUMMARY, SESSION_LANGUAGES
+  BUSINESS_ALTERNATE_NAMES, DEVELOPER, ENTITY_SUMMARY, SESSION_LANGUAGES
 } from './agent-config.mjs';
 import { estimateTokens, extractMain, htmlToMarkdown } from './html-to-markdown.mjs';
 
@@ -174,6 +174,7 @@ write('api/v1/site.json', json({
     country: ORGANISATION.country,
     url: ORGANISATION.url
   },
+  developer: DEVELOPER,
   alternateNames: BUSINESS_ALTERNATE_NAMES,
   summary: ENTITY_SUMMARY,
   description: BUSINESS_IDENTITY,
@@ -344,6 +345,10 @@ const responseSchemas = {
       brand: stringSchema, legalName: stringSchema, vatID: stringSchema,
       practitioner: stringSchema, locality: stringSchema, country: stringSchema, url: uriSchema
     }),
+    developer: {
+      ...objectSchema({ name: stringSchema, url: uriSchema, role: stringSchema }),
+      description: 'Developer of the website and its infrastructure. Not the owner of the business and not the author of its content.'
+    },
     alternateNames: stringList,
     summary: schemaRef('LocalizedText'),
     description: schemaRef('LocalizedText'),

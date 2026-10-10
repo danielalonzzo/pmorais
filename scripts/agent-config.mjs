@@ -60,6 +60,15 @@ export const ENTITY_SUMMARY = {
 export const API_VERSION = 'v1';
 export const API_BASE = `${SITE_ORIGIN}/api/${API_VERSION}`;
 
+// Elysium λ Development & Research designed and built this website and its whole
+// infrastructure. It is credited as the developer only: it does not own the
+// business and is not the author of Paulo Morais's content.
+export const DEVELOPER = {
+  name: 'Elysium λ Development & Research',
+  url: 'https://elysiumdr.eu',
+  role: 'Website and infrastructure developer'
+};
+
 export const ORGANISATION = {
   brand: 'Paulo Morais — Your Own Workout',
   legalName: 'Consciênciavaliativa Unipessoal Lda',

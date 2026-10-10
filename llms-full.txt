@@ -34,6 +34,7 @@ These are published website content languages. Sessions take place in Portuguese
 - Online training: Portugal; European Union; Portuguese-speaking countries; English-speaking countries; Spanish-speaking countries
 - Session languages: Sessions take place in Portuguese and English. Requests in Spanish, including from Spanish-speaking countries, are confirmed directly.
 - Experience stated on the website: more than 20 years in personalised exercise
+- Website and infrastructure developed by: Elysium λ Development & Research (https://elysiumdr.eu), as developer only; the business and its content belong to Paulo Morais
 
 ## Services and canonical evidence
 

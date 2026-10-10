@@ -474,6 +474,27 @@
                   "url"
                 ]
               },
+              "developer": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "url": {
+                    "type": "string",
+                    "format": "uri"
+                  },
+                  "role": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "name",
+                  "url",
+                  "role"
+                ],
+                "description": "Developer of the website and its infrastructure. Not the owner of the business and not the author of its content."
+              },
               "alternateNames": {
                 "type": "array",
                 "items": {
@@ -537,6 +558,7 @@
             },
             "required": [
               "organisation",
+              "developer",
               "alternateNames",
               "summary",
               "description",

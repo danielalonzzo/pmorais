@@ -1,5 +1,5 @@
 import { LOCALES, PUBLIC_PAGES, SITE_ORIGIN, localizedPages } from './seo-config.mjs';
-import { BUSINESS_ALTERNATE_NAMES, BUSINESS_IDENTITY, CONTACT, ENTITY_SUMMARY, ORGANISATION, SERVICES, SERVICE_COVERAGE, SESSION_LANGUAGES } from './agent-config.mjs';
+import { BUSINESS_ALTERNATE_NAMES, BUSINESS_IDENTITY, CONTACT, DEVELOPER, ENTITY_SUMMARY, ORGANISATION, SERVICES, SERVICE_COVERAGE, SESSION_LANGUAGES } from './agent-config.mjs';
 
 const absolute = (route) => new URL(route, SITE_ORIGIN).href;
 const businessId = `${SITE_ORIGIN}/#business`;
@@ -161,7 +161,8 @@ export function structuredData(page, { faq = [] } = {}) {
       alternateName: 'Paulo Morais',
       description: text(BUSINESS_IDENTITY),
       inLanguage: languages,
-      publisher: { '@id': businessId }
+      publisher: { '@id': businessId },
+      creator: { '@type': 'Organization', '@id': `${DEVELOPER.url}/#organization`, name: DEVELOPER.name, url: DEVELOPER.url }
     },
     ...serviceNodes,
     pageNode

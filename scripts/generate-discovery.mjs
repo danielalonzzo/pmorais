@@ -1,6 +1,6 @@
 import fs from 'node:fs';
 import { AI_CRAWLERS, LAST_MODIFIED, PRIVATE_ROUTES, PUBLIC_PAGES, SITE_ORIGIN, pageAlternates } from './seo-config.mjs';
-import { BUSINESS_ALTERNATE_NAMES, CONTACT, CONTENT_SIGNAL, DISCLAIMERS, ENTITY_SUMMARY, ORGANISATION, SERVICE_COVERAGE, SERVICES, SESSION_LANGUAGES } from './agent-config.mjs';
+import { BUSINESS_ALTERNATE_NAMES, CONTACT, CONTENT_SIGNAL, DEVELOPER, DISCLAIMERS, ENTITY_SUMMARY, ORGANISATION, SERVICE_COVERAGE, SERVICES, SESSION_LANGUAGES } from './agent-config.mjs';
 
 const absoluteUrl = (path) => new URL(path, SITE_ORIGIN).href;
 const escapeXml = (value) => value.replaceAll('&', '&amp;').replaceAll('<', '&lt;').replaceAll('>', '&gt;').replaceAll('"', '&quot;');
@@ -110,7 +110,8 @@ function quickFacts() {
 - Base: Lisbon, Portugal (in-person training, group training and osteopathy)
 - Online training: ${SERVICE_COVERAGE.online.join('; ')}
 - Session languages: ${SESSION_LANGUAGES.note['en-GB']}
-- Experience stated on the website: more than 20 years in personalised exercise`;
+- Experience stated on the website: more than 20 years in personalised exercise
+- Website and infrastructure developed by: ${DEVELOPER.name} (${DEVELOPER.url}), as developer only; the business and its content belong to Paulo Morais`;
 }
 
 function buildLlmsIndex() {
