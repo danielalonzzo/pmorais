@@ -3,10 +3,10 @@
 # Content-Signal declares how this content may be used once it has been
 # fetched (contentsignals.org). "search=yes" permits indexing and linking,
 # "ai-input=yes" permits grounding a generated answer in this content and
-# citing it, and "ai-train=no" reserves the content against use as training
-# or fine-tuning data. Fetching a page does not grant a use not listed here.
+# citing it, and "ai-train=yes" permits using it as training or fine-tuning
+# data. Fetching a page does not grant a use not listed here.
 User-agent: *
-Content-Signal: search=yes, ai-input=yes, ai-train=no
+Content-Signal: search=yes, ai-input=yes, ai-train=yes
 Allow: /
 Disallow: /admin-blog
 Disallow: /auth-action
@@ -42,7 +42,7 @@ User-agent: cohere-ai
 User-agent: MistralAI-User
 User-agent: meta-externalagent
 User-agent: meta-externalfetcher
-Content-Signal: search=yes, ai-input=yes, ai-train=no
+Content-Signal: search=yes, ai-input=yes, ai-train=yes
 Allow: /
 Disallow: /admin-blog
 Disallow: /auth-action

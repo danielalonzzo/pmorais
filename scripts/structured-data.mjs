@@ -92,7 +92,9 @@ export function structuredData(page, { faq = [] } = {}) {
     about: isProfile
       ? [{ '@id': personId }, ...(service ? [{ '@id': serviceId(service) }] : [])]
       : { '@id': service ? serviceId(service) : businessId },
-    ...(!isBlog ? { mainEntity: { '@id': isProfile ? personId : service ? serviceId(service) : businessId } } : {}),
+    ...(!isBlog ? { mainEntity: isProfile
+      ? { '@type': 'Person', '@id': personId, name: 'Paulo Morais' }
+      : { '@id': service ? serviceId(service) : businessId } } : {}),
     ...(faq.length ? { hasPart: { '@id': faqId } } : {}),
     workTranslation: localizedPages(page).filter((entry) => entry.path !== page.path)
       .map((entry) => ({ '@id': `${absolute(entry.path)}#webpage` }))

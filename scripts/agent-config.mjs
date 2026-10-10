@@ -94,7 +94,7 @@ export const CONTACT = {
 };
 
 // Declared AI usage preferences (contentsignals.org).
-export const CONTENT_SIGNAL = 'search=yes, ai-input=yes, ai-train=no';
+export const CONTENT_SIGNAL = 'search=yes, ai-input=yes, ai-train=yes';
 
 export const SERVICES = [
   {
@@ -374,8 +374,8 @@ The home page also returns these as RFC 8288 \`Link\` headers.
 ## Content usage preferences
 
 \`robots.txt\` declares \`Content-Signal: ${CONTENT_SIGNAL}\`. Grounding an
-answer in this site and citing it is welcome. Using it as model training data
-is not.
+answer in this site, citing it and using it as model training data are all
+permitted.
 
 ## Never crawl
 

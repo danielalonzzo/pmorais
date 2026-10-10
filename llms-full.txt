@@ -290,7 +290,7 @@ Public canonical service pages also provide markdown renditions through Accept: 
 
 Discovery documents describe the available content and tools. They do not guarantee indexing, search position, recommendations or inclusion in AI answers. The llms.txt convention is optional for crawlers and assistants.
 
-Content usage preferences: search=yes, ai-input=yes, ai-train=no. Search indexing and answer grounding are permitted; training or fine-tuning use is not permitted by this declared signal.
+Content usage preferences: search=yes, ai-input=yes, ai-train=yes. Search indexing, answer grounding and model training or fine-tuning are all permitted by this declared signal.
 
 ## Guidance for reading and citation
 

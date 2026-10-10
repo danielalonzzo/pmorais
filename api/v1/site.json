@@ -127,7 +127,7 @@
   ],
   "defaultLanguage": "pt-PT",
   "languageNote": "These are published website content languages. Sessions take place in Portuguese and English. Requests in Spanish, including from Spanish-speaking countries, are confirmed directly. A Spanish website translation is planned and is not yet published.",
-  "contentSignal": "search=yes, ai-input=yes, ai-train=no",
+  "contentSignal": "search=yes, ai-input=yes, ai-train=yes",
   "resources": {
     "services": "https://pmorais.pt/api/v1/services.json",
     "contact": "https://pmorais.pt/api/v1/contact.json",

@@ -26,7 +26,7 @@
       "type": "skill-md",
       "description": "Fetch pmorais.pt efficiently as an agent: markdown content negotiation, the static JSON API, the discovery documents and the routes that must not be crawled.",
       "url": "https://pmorais.pt/.well-known/agent-skills/read-this-site/SKILL.md",
-      "digest": "sha256:b026267c213bc3d1043c22584f218419d758307c4d3fdfee4016ac484ff0fd71"
+      "digest": "sha256:53c5de00c85d4d696b1fe9686a87e36e50f63428d35a7b76ef9c477d11534069"
     }
   ]
 }

@@ -54,8 +54,8 @@ function buildRobots() {
 # Content-Signal declares how this content may be used once it has been
 # fetched (contentsignals.org). "search=yes" permits indexing and linking,
 # "ai-input=yes" permits grounding a generated answer in this content and
-# citing it, and "ai-train=no" reserves the content against use as training
-# or fine-tuning data. Fetching a page does not grant a use not listed here.
+# citing it, and "ai-train=yes" permits using it as training or fine-tuning
+# data. Fetching a page does not grant a use not listed here.
 User-agent: *
 Content-Signal: ${CONTENT_SIGNAL}
 Allow: /
@@ -322,7 +322,7 @@ Public canonical service pages also provide markdown renditions through Accept: 
 
 Discovery documents describe the available content and tools. They do not guarantee indexing, search position, recommendations or inclusion in AI answers. The llms.txt convention is optional for crawlers and assistants.
 
-Content usage preferences: ${CONTENT_SIGNAL}. Search indexing and answer grounding are permitted; training or fine-tuning use is not permitted by this declared signal.
+Content usage preferences: ${CONTENT_SIGNAL}. Search indexing, answer grounding and model training or fine-tuning are all permitted by this declared signal.
 
 ## Guidance for reading and citation
 

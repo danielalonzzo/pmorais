@@ -163,9 +163,9 @@ commit to a date, time, price or clinical outcome — none of those are publishe
 
 ## Content usage
 
-`https://pmorais.pt/robots.txt` declares `Content-Signal: search=yes, ai-input=yes, ai-train=no`.
-Grounding an answer in this site and citing it is welcome; using it as model
-training data is not.
+`https://pmorais.pt/robots.txt` declares `Content-Signal: search=yes, ai-input=yes, ai-train=yes`.
+Grounding an answer in this site, citing it and using it as model training
+data are all permitted.
 
 ## Changes
 

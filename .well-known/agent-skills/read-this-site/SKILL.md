@@ -30,9 +30,9 @@ The home page also returns these as RFC 8288 `Link` headers.
 
 ## Content usage preferences
 
-`robots.txt` declares `Content-Signal: search=yes, ai-input=yes, ai-train=no`. Grounding an
-answer in this site and citing it is welcome. Using it as model training data
-is not.
+`robots.txt` declares `Content-Signal: search=yes, ai-input=yes, ai-train=yes`. Grounding an
+answer in this site, citing it and using it as model training data are all
+permitted.
 
 ## Never crawl
 

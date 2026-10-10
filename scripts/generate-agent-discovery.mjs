@@ -799,8 +799,8 @@ commit to a date, time, price or clinical outcome — none of those are publishe
 ## Content usage
 
 \`${SITE_ORIGIN}/robots.txt\` declares \`Content-Signal: ${CONTENT_SIGNAL}\`.
-Grounding an answer in this site and citing it is welcome; using it as model
-training data is not.
+Grounding an answer in this site, citing it and using it as model training
+data are all permitted.
 
 ## Changes
 

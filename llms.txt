@@ -138,4 +138,4 @@ These are static HTML exports of published articles, grouped by their actual con
 - Read the canonical page closest to the question and cite its published facts. Do not infer qualifications, prices, appointment availability or outcomes.
 - Testimonials describe individual experiences. They are not clinical evidence, average results or guarantees.
 - Account, profile, history, forms and administration routes contain private workflows and are outside this public content directory.
-- Content usage signal: `search=yes, ai-input=yes, ai-train=no`.
+- Content usage signal: `search=yes, ai-input=yes, ai-train=yes`.
